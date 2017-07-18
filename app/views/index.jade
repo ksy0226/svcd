@@ -64,7 +64,7 @@ html
           .hpanel
             .panel-body
               img(src='/isu/image/isusystem_logo.jpg', alt='ISU LOGO')
-              #myCarousel.carousel.slide(data-ride='carousel', data-interval='1200')
+              #myCarousel.carousel.slide(data-ride='carousel', data-interval='5000')
                 // Indicators
                 ol.carousel-indicators
                   li.active(data-target='#myCarousel', data-slide-to='0')
@@ -73,21 +73,20 @@ html
                 // Wrapper for slides
                 .carousel-inner
                   .item.active
-                    // <img src="la.jpg" alt="Los Angeles" style="width:100%;">
-                    img.tales(src='/isu/image/la.jpg', alt='Los Angeles', style='width:100%;')
+                    img.tales(src='/isu/image/img1.jpg', alt='Los Angeles', style='width:100%;')
                     .carousel-caption
-                      h3 Los Angeles
-                      p LA is always so much fun!
+                      h4 인사시스템
+                      p 클라우드와 모바일 활용
                   .item
-                    img(src='/isu/image/chicago.jpg', alt='Chicago', style='width:100%;')
+                    img(src='/isu/image/img2.jpg', alt='Chicago', style='width:100%;')
                     .carousel-caption
-                      h3 Chicago
-                      p Thank you, Chicago!
+                      h4 전자펜(AFP), SmartDocs
+                      p 업무자동화 솔루션
                   .item
                     img(src='/isu/image/ny.jpg', alt='New York', style='width:100%;')
                     .carousel-caption
-                      h3 New York
-                      p We love the Big Apple!
+                      h4 BizPTT솔루션
+                      p LTE무전기 솔루션
                 // Left and right controls
                 a.left.carousel-control(href='#myCarousel', data-slide='prev')
                   span.glyphicon.glyphicon-chevron-left
@@ -138,13 +137,4 @@ html
           | Copyright ⓒ 2017 by 
           strong ISUSYSTEM
           br
-    // Vendor scripts
-    script(src='vendor/jquery/dist/jquery.min.js')
-    script(src='vendor/jquery-ui/jquery-ui.min.js')
-    script(src='vendor/slimScroll/jquery.slimscroll.min.js')
-    script(src='vendor/bootstrap/dist/js/bootstrap.min.js')
-    script(src='vendor/metisMenu/dist/metisMenu.min.js')
-    script(src='vendor/iCheck/icheck.min.js')
-    script(src='vendor/sparkline/index.js')
-    // App scripts
-    script(src='scripts/homer.js')
+

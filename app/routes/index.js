@@ -7,10 +7,10 @@ require('../util/cookie');
 const controller = require('../controllers/login');
 
 /* GET home page. */
-//router.get('/', ssc.sessionCheck);
+router.get('/', ssc.sessionCheck);
 
-router.route('/').post(controller.logincheck)
-                           .get(ssc.sessionCheck, controller.retry);
+router.route('/index').post(controller.logincheck)
+                           .get(ssc.sessionCheck, controller.retry);                           
 router.route('/logout').get(controller.logout);
 
 module.exports = router;
