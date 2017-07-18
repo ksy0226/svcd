@@ -1,0 +1,5 @@
+[2017-07-18 15:12:44.699] [WARN] http - ::1 - - "GET / HTTP/1.1" 302 80 "" "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko"
+[2017-07-18 15:12:47.864] [INFO] http - ::1 - - "GET / HTTP/1.1" 200 - "" "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko"
+[2017-07-18 15:12:48.084] [INFO] http - ::1 - - "GET /favicon.ico HTTP/1.1" 200 - "" "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko"
+[2017-07-18 15:14:43.706] [WARN] http - ::1 - - "GET / HTTP/1.1" 304 - "" "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko"
+[2017-07-18 15:16:10.169] [WARN] http - ::1 - - "GET / HTTP/1.1" 304 - "" "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko"
