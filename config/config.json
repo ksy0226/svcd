@@ -1,6 +1,6 @@
 {
     "port": 443,
-    "port_80" : 80,
+    "port_80" : 8080,
     "companyName": "ISU SYSTEM, Inc.",
     "projectName": "SERVICE DESK",
     "systemEmail": "servicedesk@isu.co.kr",
