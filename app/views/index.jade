@@ -64,7 +64,7 @@ html
           .hpanel
             .panel-body
               img(src='/isu/image/isusystem_logo.jpg', alt='ISU LOGO')
-              #myCarousel.carousel.slide(data-ride='carousel', data-interval='5000')
+              #myCarousel.carousel.slide(data-ride='carousel', data-interval='1200')
                 // Indicators
                 ol.carousel-indicators
                   li.active(data-target='#myCarousel', data-slide-to='0')
@@ -73,20 +73,21 @@ html
                 // Wrapper for slides
                 .carousel-inner
                   .item.active
+                    // <img src="la.jpg" alt="Los Angeles" style="width:100%;">
                     img.tales(src='/isu/image/img1.jpg', alt='Los Angeles', style='width:100%;')
                     .carousel-caption
-                      h4 ÀÎ»ç½Ã½ºÅÛ
-                      p Å¬¶ó¿ìµå¿Í ¸ğ¹ÙÀÏ È°¿ë
+                      //h3 Los Angeles
+                      //p LA is always so much fun!
                   .item
                     img(src='/isu/image/img2.jpg', alt='Chicago', style='width:100%;')
                     .carousel-caption
-                      h4 ÀüÀÚÆæ(AFP), SmartDocs
-                      p ¾÷¹«ÀÚµ¿È­ ¼Ö·ç¼Ç
+                      //h3 Chicago
+                      //p Thank you, Chicago!
                   .item
                     img(src='/isu/image/ny.jpg', alt='New York', style='width:100%;')
                     .carousel-caption
-                      h4 BizPTT¼Ö·ç¼Ç
-                      p LTE¹«Àü±â ¼Ö·ç¼Ç
+                      //h3 New York
+                      //p We love the Big Apple!
                 // Left and right controls
                 a.left.carousel-control(href='#myCarousel', data-slide='prev')
                   span.glyphicon.glyphicon-chevron-left
@@ -96,24 +97,24 @@ html
                   span.sr-only Next
               .hpanel
                 .panel-body
-                  a(href='http://www.isusystem.com', target='blank') È¸»ç¼Ò°³
+                  a(href='http://www.isusystem.com', target='blank') íšŒì‚¬ì†Œê°œ
         .col-md-3
           .text-center.m-b-md
           .hpanel
             .panel-body
-              form#loginForm(action='/index' method='post' name='login')
+              form#loginForm(action='/auth/login' method='post' name='login')
                 label.control-label(for='login', style='height:35px')
                   h4
                     b
                 .form-group
                   // <label class="control-label" for="companynm">COMPANY</label></label>
                   select.form-control
-                    option ¼±ÅÃÇÏ¼¼¿ä
-                    option ÁÖ½ÄÈ¸»ç ÀÌ¼ö½Ã½ºÅÛ
-                    option (ÁÖ)ÀÌ¼ö
-                    option (ÁÖ)ÀÌ¼öÈ­ÇĞ
-                    option ÀÌ¼öÆäÅ¸½Ã½º
-                    option ÁÖ½ÄÈ¸»ç ÀÌ¼öC&E
+                    option ì„ íƒí•˜ì„¸ìš”
+                    option ì£¼ì‹íšŒì‚¬ ì´ìˆ˜ì‹œìŠ¤í…œ
+                    option (ì£¼)ì´ìˆ˜
+                    option (ì£¼)ì´ìˆ˜í™”í•™
+                    option ì´ìˆ˜í˜íƒ€ì‹œìŠ¤
+                    option ì£¼ì‹íšŒì‚¬ ì´ìˆ˜C&E
                 .form-group
                   input#username.form-control(type='text', placeholder='12001', title='Please enter you username', required='', value= '#{nameCookie}', name='username')
                   span.help-block.small Your unique ID
@@ -122,7 +123,7 @@ html
                   span.help-block.small Your strong password
                 .checkbox(style='padding-left: 20px;')
                   input.i-checks(type='checkbox', id='idsavecheck' name='idsavecheck' checked=('true'==='#{saveCookie}' ? 'checked' : undefined)) 
-                  |  ID ÀúÀå
+                  |  ID ì €ì¥
                 button.btn.btn-success.btn-block Login
                 a.btn.btn-default.btn-block(href='login2.html', target='blank') Register
         .col-md-2
@@ -134,6 +135,16 @@ html
       br
       .row
         .col-md-12.text-center
-          | Copyright ¨Ï 2017 by 
+          | Copyright â“’ 2017 by 
           strong ISUSYSTEM
           br
+    // Vendor scripts
+    script(src='vendor/jquery/dist/jquery.min.js')
+    script(src='vendor/jquery-ui/jquery-ui.min.js')
+    script(src='vendor/slimScroll/jquery.slimscroll.min.js')
+    script(src='vendor/bootstrap/dist/js/bootstrap.min.js')
+    script(src='vendor/metisMenu/dist/metisMenu.min.js')
+    script(src='vendor/iCheck/icheck.min.js')
+    script(src='vendor/sparkline/index.js')
+    // App scripts
+    script(src='scripts/homer.js')
