@@ -63,8 +63,8 @@ html
           .text-center.m-b-md
           .hpanel
             .panel-body
-              img(src='/isu/image/isusystem_logo.jpg', alt='ISU LOGO')
-              #myCarousel.carousel.slide(data-ride='carousel', data-interval='1200')
+              img(src='/isu/image/logo.png', alt='ISU LOGO')
+              #myCarousel.carousel.slide(data-ride='carousel', data-interval='4000')
                 // Indicators
                 ol.carousel-indicators
                   li.active(data-target='#myCarousel', data-slide-to='0')
@@ -73,19 +73,25 @@ html
                 // Wrapper for slides
                 .carousel-inner
                   .item.active
-                    // <img src="la.jpg" alt="Los Angeles" style="width:100%;">
+                    // <img src="/isu/image/img1.jpg" alt="Los Angeles" style="width:100%;">
                     img.tales(src='/isu/image/img1.jpg', alt='Los Angeles', style='width:100%;')
                     .carousel-caption
+                      h4 인사시스템
+                      p 클라우드와 모바일 활용  
                       //h3 Los Angeles
                       //p LA is always so much fun!
                   .item
                     img(src='/isu/image/img2.jpg', alt='Chicago', style='width:100%;')
                     .carousel-caption
+                      h4 전자펜(AFP), SmartDocs
+                      p 업무자동화 솔루션
                       //h3 Chicago
                       //p Thank you, Chicago!
                   .item
-                    img(src='/isu/image/ny.jpg', alt='New York', style='width:100%;')
+                    img(src='/isu/image/img3.jpg', alt='New York', style='width:100%;')
                     .carousel-caption
+                      h4 BizPTT솔루션
+                      p LTE무전기 솔루션 
                       //h3 New York
                       //p We love the Big Apple!
                 // Left and right controls
@@ -102,7 +108,7 @@ html
           .text-center.m-b-md
           .hpanel
             .panel-body
-              form#loginForm(action='/auth/login' method='post' name='login')
+              form#loginForm(action='/index' method='post' name='login')
                 label.control-label(for='login', style='height:35px')
                   h4
                     b
