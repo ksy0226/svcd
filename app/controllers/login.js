@@ -13,7 +13,7 @@ module.exports = {
   index: (req, res) => {
     if (req.session.username) {
       console.log("index page");
-      res.render('main');
+      res.render('main/main');
     } else {
       console.log("login page");
       res.render('index');
@@ -27,7 +27,6 @@ module.exports = {
       username = req.body.username;
       idsave = req.body.idsavecheck;
     } else {
-      console.log("2 : " + req.body.idsavecheck);
       res.clearCookie('username');
       res.clearCookie('idsave');
     }
@@ -54,7 +53,7 @@ module.exports = {
           req.session.save(function () {
             req.session.username = uname;
             req.session.password = pwd;
-            res.render('main');
+            res.render('main/main');
           });
 
         } else { //ID, PW 일치하지 않으면,
@@ -101,7 +100,7 @@ module.exports = {
     idsave = req.cookies.idsave;
 
     if (req.session.username) {
-      res.render('main');
+      res.render('main/main');
     } else {
       if (username == null) username = "";
       res.render('index', {
