@@ -13,4 +13,6 @@ router.route('/index').post(controller.logincheck)
                            .get(ssc.sessionCheck, controller.retry);                           
 router.route('/logout').get(controller.logout);
 
+
+
 module.exports = router;

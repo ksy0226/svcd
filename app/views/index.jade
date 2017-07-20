@@ -23,6 +23,7 @@ html
     script(src='https://code.jquery.com/jquery-2.2.4.min.js', integrity='sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=', crossorigin='anonymous')
     script(src='/vendor/jquery/jquery.js')
     script(src='/views/login/login.js')
+    
   style(type='text/css').
     .container,
     .carousel-inner>.item>img,
@@ -70,30 +71,37 @@ html
                   li.active(data-target='#myCarousel', data-slide-to='0')
                   li(data-target='#myCarousel', data-slide-to='1')
                   li(data-target='#myCarousel', data-slide-to='2')
+                  li(data-target='#myCarousel', data-slide-to='3')
                 // Wrapper for slides
                 .carousel-inner
                   .item.active
                     // <img src="/isu/image/img1.jpg" alt="Los Angeles" style="width:100%;">
-                    img.tales(src='/isu/image/img1.jpg', alt='Los Angeles', style='width:100%;')
+                    img.tales(src='/isu/image/img1.jpg', style='width:100%;')
                     .carousel-caption
                       h4 인사시스템
                       p 클라우드와 모바일 활용  
                       //h3 Los Angeles
                       //p LA is always so much fun!
                   .item
-                    img(src='/isu/image/img2.jpg', alt='Chicago', style='width:100%;')
+                    img(src='/isu/image/img2.jpg', style='width:100%;')
                     .carousel-caption
                       h4 전자펜(AFP), SmartDocs
                       p 업무자동화 솔루션
                       //h3 Chicago
                       //p Thank you, Chicago!
                   .item
-                    img(src='/isu/image/img444.jpg', alt='New York', style='width:100%;')
+                    img(src='/isu/image/img3.jpg', style='width:100%;')
                     .carousel-caption
-                      h4 BizPTT솔루션
-                      p LTE무전기 솔루션 
+                      h4 BI도구
+                      p Qlik Sense(클릭센스) 
                       //h3 New York
                       //p We love the Big Apple!
+                  .item
+                    img(src='/isu/image/img4.jpg', style='width:100%;')
+                    .carousel-caption
+                      h4 하이브리드 클라우드
+                      p 전자증빙시스템
+                      p ISU-EDS 
                 // Left and right controls
                 a.left.carousel-control(href='#myCarousel', data-slide='prev')
                   span.glyphicon.glyphicon-chevron-left
@@ -114,24 +122,25 @@ html
                     b
                 .form-group
                   // <label class="control-label" for="companynm">COMPANY</label></label>
-                  select.form-control
-                    option 선택하세요
-                    option 주식회사 이수시스템
-                    option (주)이수
-                    option (주)이수화학
-                    option 이수페타시스
-                    option 주식회사 이수C&E
+                  //select.form-control
+                  //  option 선택하세요
+                  //  option 주식회사 이수시스템
+                  //  option (주)이수
+                  //  option (주)이수화학
+                  //  option 이수페타시스
+                  //  option 주식회사 이수C&E
                 .form-group
-                  input#username.form-control(type='text', placeholder='12001', title='Please enter you username', required='', value= '#{nameCookie}', name='username')
-                  span.help-block.small Your unique ID
+                  input#username.form-control(type='text', placeholder='EMAIL', title='Please enter you ID', required='', value= '#{nameCookie}', name='username')
+                  //span.help-block.small Your unique ID
                 .form-group
-                  input#password.form-control(type='password', title='Please enter your password', placeholder='******', required='', value='', name='password')
-                  span.help-block.small Your strong password
+                  input#password.form-control(type='password', title='Please enter your PASSWORD', placeholder='******', required='', value='', name='password')
+                  //span.help-block.small Your strong password
                 .checkbox(style='padding-left: 20px;')
                   input.i-checks(type='checkbox', id='idsavecheck' name='idsavecheck' checked=('true'==='#{saveCookie}' ? 'checked' : undefined)) 
-                  |  ID 저장
+                  |  ID 저장 
+                a.btn.btn-danger.btn-block(style='width:90px, size:small')원격지원
                 button.btn.btn-success.btn-block Login
-                a.btn.btn-default.btn-block(href='login2.html', target='blank') Register
+                a.btn.btn-default.btn-block(href='register', target='blank') Register
         .col-md-2
           .text-center.m-b-md
           .hpanel
