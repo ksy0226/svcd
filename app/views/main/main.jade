@@ -1,0 +1,189 @@
+extends ../layouts/default
+
+block head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    link(rel='stylesheet', href='vendor/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', href='vendor/metisMenu/metisMenu.min.css')
+    link(rel='stylesheet', href='layouts/sb-admin-2.css')
+    link(rel='stylesheet', href='vendor/morrisjs/morris.css')
+    link(rel='stylesheet', href='vendor/font-awesome/css/font-awesome.min.css', type='text/css')
+block content
+    #wrapper
+    // Navigation
+    nav.navbar-default.navbar-static-top.sidebar(role='navigation', style='margin-top: 0')
+        .sidebar-nav.navbar-collapse
+            ul#side-menu.nav
+                li.sidebar-search
+                .input-group.custom-search-form
+                    input.form-control(type='text', placeholder='Search...')
+                    span.input-group-btn
+                        button.btn.btn-default(type='button')
+                            i.fa.fa-search
+                li
+                a(href='/main')
+                    i.fa.fa-dashboard.fa-fw
+                    |  HOME
+            // /.sidebar-collapse
+        // /.navbar-static-side
+      #page-wrapper
+        // /.row
+        .row
+          .col-lg-3.col-md-6(style='margin-top:20px;')
+            .panel.panel-default
+              .panel-heading
+                .row
+                  .col-xs-3
+                    i.fa.fa-comments.fa-5x
+                  .col-xs-9.text-right
+                    .huge 11
+                    div 접수 대기
+              a(href='/question')
+                .panel-footer
+                  span.pull-left 리스트
+                  span.pull-right
+                    i.fa.fa-arrow-circle-right
+                  .clearfix
+          .col-lg-3.col-md-6(style='margin-top:20px;')
+            .panel.panel-default
+              .panel-heading
+                .row
+                  .col-xs-3
+                    i.fa.fa-tasks.fa-5x
+                  .col-xs-9.text-right
+                    .huge 12
+                    div 처리 중
+              a(href='#')
+                .panel-footer
+                  span.pull-left 리스트
+                  span.pull-right
+                    i.fa.fa-arrow-circle-right
+                  .clearfix
+          .col-lg-3.col-md-6(style='margin-top:20px;')
+            .panel.panel-default
+              .panel-heading
+                .row
+                  .col-xs-3
+                    i.fa.fa-folder-open.fa-5x
+                  .col-xs-9.text-right
+                    .huge 124
+                    div 처리 완료
+              a(href='#')
+                .panel-footer
+                  span.pull-left 리스트
+                  span.pull-right
+                    i.fa.fa-arrow-circle-right
+                  .clearfix
+          .col-lg-3.col-md-6(style='margin-top:20px;')
+            .panel.panel-default
+              .panel-heading
+                .row
+                  .col-xs-3
+                    i.fa.fa-file-code-o.fa-5x
+                  .col-xs-9.text-right
+                    .huge 13
+                    div 보류
+              a(href='#')
+                .panel-footer
+                  span.pull-left 리스트
+                  span.pull-right
+                    i.fa.fa-arrow-circle-right
+                  .clearfix
+          .col-lg-12
+            .panel.panel-default
+              .panel-heading
+                i.fa.fa-clock-o.fa-fw
+                |  유지보수
+              // /.panel-heading
+              // Services
+              .service(style='padding: 20px 0 20px 20px')
+                // Default block header
+                .default-header
+                  // Small border
+                  span 유지보수 계약 기간 입니다.
+                .default-body
+                  // Heading with font awesome icon
+                  h4
+                    i.fa.fa-briefcase
+                    |  계약기간 : 2017-01-01 ~ 2018-01-01 (365일 남음)
+              // /.panel-body
+            // /.panel
+        // /.row
+        .row
+          .col-lg-7
+            // /.panel
+            .panel.panel-default
+              .panel-heading
+                i.fa.fa-bar-chart-o.fa-fw
+                |  당월 현황 조회
+              // /.panel-heading
+              .panel-body
+                .row
+                  .col-lg-12
+                    #morris-bar-chart
+                  // /.col-lg-8 (nested)
+                // /.row
+              // /.panel-body
+            // /.panel
+          // /.col-lg-8
+          .col-lg-5
+            .panel.panel-default
+              .panel-heading
+                i.fa.fa-bar-chart-o.fa-fw
+                |  증감표
+              // /.panel-heading
+              .panel-body
+                #morris-area-chart
+              // /.panel-body
+          // /.col-lg-4
+          .col-lg-12
+            .panel.panel-default
+              .panel-heading
+                i.fa.fa-clock-o.fa-fw
+                |  접수현황
+              // /.panel-heading
+              // Services
+              .service
+                // Default block header
+                .default-header(style='margin-top:20px; padding:0 0 0 20px')
+                  // Small border
+                  span  최근 접수 순서대로 나열합니다.
+                .row(style='margin-top:20px;padding:0 20px 0 20px')
+                  .col-sm-4
+                    .panel.panel-default
+                      .panel-heading
+                        | test1
+                      .panel-body
+                        p test1
+                  .col-sm-4
+                    .panel.panel-default
+                      .panel-heading
+                        | test2
+                      .panel-body
+                        p test2
+                  .col-sm-4
+                    .panel.panel-default
+                      .panel-heading
+                        | test4
+                      .panel-body
+                        p test4
+              // /.panel-body
+            // /.panel
+        // /.row
+      // /#page-wrapper
+    // /#wrapper
+    // jQuery
+    script(src='public/vendor/jquery/jquery.min.js')
+    // Bootstrap Core JavaScript
+    script(src='public/vendor/bootstrap/js/bootstrap.min.js')
+    // Metis Menu Plugin JavaScript
+    script(src='public/vendor/metisMenu/metisMenu.min.js')
+    // Morris Charts JavaScript
+    script(src='public/vendor/raphael/raphael.min.js')
+    script(src='public/vendor/morrisjs/morris.min.js')
+    script(src='data/morris-data.js')
+    // Custom Theme JavaScript
+    script(src='public/layouts/sb-admin-2.js')
