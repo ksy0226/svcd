@@ -80,10 +80,7 @@ module.exports = {
 
     new: (req, res, next) => {
         res.render("question/new");
-    },
-    test : (req, res, next) => {
-        res.render("question/company");
-    },
+    }
 
     save: (req, res, next) => {
         async.waterfall([function(callback) {

@@ -27,7 +27,5 @@ router.route('/:id/edit').get(controller.edit)
                          .post(controller.update);
 router.route('/:id/delete').get(controller.delete);
 
-router.route('/company').get(controller.test);
-
 
 module.exports = router;
