@@ -6,55 +6,22 @@ block head
     meta(name='viewport', content='width=device-width, initial-scale=1')
     meta(name='description', content='')
     meta(name='author', content='')
-    link(href='vendor/bootstrap/css/bootstrap.min.css', rel='stylesheet')
-    link(href='vendor/metisMenu/metisMenu.min.css', rel='stylesheet')
-    link(href='layouts/sb-admin-2.css', rel='stylesheet')
-    link(href='vendor/morrisjs/morris.css', rel='stylesheet')
-    link(type='text/css', href='vendor/font-awesome/css/font-awesome.min.css', rel='stylesheet')
-    script(src='public/vendor/jquery/jquery.min.js')
-    script(src='public/vendor/bootstrap/js/bootstrap.min.js')
-    script(src='public/vendor/metisMenu/metisMenu.min.js')
-    script(src='public/vendor/raphael/raphael.min.js')
-    script(src='public/vendor/morrisjs/morris.min.js')
-    script(src='data/morris-data.js')
-    script(src='public/layouts/sb-admin-2.js')
+    link(href='/vendor/bootstrap/css/bootstrap.min.css', rel='stylesheet')
+    link(href='/vendor/metisMenu/metisMenu.min.css', rel='stylesheet')
+    link(href='/layouts/sb-admin-2.css', rel='stylesheet')
+    link(href='/vendor/morrisjs/morris.css', rel='stylesheet')
+    link(type='text/css', href='/vendor/font-awesome/css/font-awesome.min.css', rel='stylesheet')
+    script(src='/vendor/jquery/jquery.min.js')
+    script(src='/vendor/bootstrap/js/bootstrap.min.js')
+    script(src='/vendor/metisMenu/metisMenu.min.js')
+    script(src='/vendor/raphael/raphael.min.js')
+    script(src='/vendor/morrisjs/morris.min.js')
+    script(src='/data/morris-data.js')
+    script(src='/layouts/sb-admin-2.js')
 
 block content
     #wrapper
-        
- 
-        
-        .navbar-default.sidebar(role='navigation')
-            .sidebar-nav.navbar-collapse
-                ul#side-menu.nav
-                    li
-                        a(href='#')
-                            i.fa.fa-sitemap.fa-fw
-                            span.fa.arrow
-                        ul.nav.nav-second-level
-                            li
-                                a(href='#') Second Level Item
-                            li
-                                a(href='#') Second Level Item
-                            li
-                                a(href='#')
-                                    span.fa.arrow
-                                ul.nav.nav-third-level
-                                    li
-                                        a(href='#') Third Level Item
-                                    li
-                                        a(href='#') Third Level Item
-                                    li
-                                        a(href='#') Third Level Item
-                                    li
-                                        a(href='#') Third Level Item
-               
-
-
-
-
-
-        nav.navbar-default.sidebar(role='navigation', style='margin-top: 0')
+        .sidebar(role='navigation', style='margin-top: 0')
             .sidebar-nav.navbar-collapse
                 ul#side-menu.nav
                     li.sidebar-search
@@ -77,8 +44,6 @@ block content
                                 a(href='#') Second Level Item
                             li
                                 a(href='#') Second Level Item
-
-
     #page-wrapper
         .row
             .col-lg-3.col-md-6(style='margin-top:20px;')
