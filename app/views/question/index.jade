@@ -34,26 +34,26 @@ block content
                         //button.btn.btn-primary.btn-info(onclick='search()') 조회
         div.row
             div.col-md-12
-                                            table.table.table-striped
-                                                thead
-                                                    tr
-                                                        th Num     
-                                                        th.stretch Title    
-                                                        th Content      
-                                                        th Date     
-                                                        th Author 
-                                                tbody
-                                                    - if (question.length > 0) {
-                                                        // - for( var i = 0 ; length = question.length > i ; i++ ){ //속도가 빠르다고 알고 있음.
-                                                        - for( var i in question ){ //속도가 느리다고 알고 있음.
-                                                            tr(onclick="onclick=location.href='/question/#{question[i]._id}/show'")
-                                                                td  #{question[i].numId}  
-                                                                td.highlight(data-highlight='search.highlight.title') #{question[i].title}
-                                                                td #{question[i].content}
-                                                                td #{question[i].createdAt}
-                                                                td #{question[i].views}
-                                                        - }
-                                                    - }else{
-                                                        tr
-                                                            td(colspan='5' align='center') 조회된 데이타가 없습니다.
-                                                    - }
+                table.table.table-striped
+                    thead
+                        tr
+                            th Num     
+                            th.stretch Title    
+                            th Content      
+                            th Date     
+                            th Author 
+                    tbody
+                        - if (question.length > 0) {
+                            // - for( var i = 0 ; length = question.length > i ; i++ ){ //속도가 빠르다고 알고 있음.
+                            - for( var i in question ){ //속도가 느리다고 알고 있음.
+                                tr(onclick="onclick=location.href='/question/#{question[i]._id}/show'")
+                                    td  #{question[i].numId}  
+                                    td.highlight(data-highlight='search.highlight.title') #{question[i].title}
+                                    td #{question[i].content}
+                                    td #{question[i].createdAt}
+                                    td #{question[i].views}
+                            - }
+                        - }else{
+                            tr
+                                td(colspan='5' align='center') 조회된 데이타가 없습니다.
+                        - }
