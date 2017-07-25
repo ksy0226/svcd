@@ -2,13 +2,14 @@ doctype html
 html
     head
         title #{title}
-        meta(http-equiv='Content-Type' content='text/html,charset=utf-8')
-        meta(name='viewport', content='width=device-width, initial-scale=1.0')
-        link(hrel='stylesheet', href='/layouts/core.min.css?#{cacheBreaker}')
-        link(href='//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css' rel='stylesheet' id='bootstrap-css')
-        script(src='/vendor/jquery/jquery.js')
-        script(src='//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js')
 
+        meta(name='viewport', content='width=device-width, initial-scale=1.0')
+        link(rel='stylesheet', href='/vendor/bootstrap-3.3.7/css/bootstrap.min.css')
+        link(rel='stylesheet', href='/vendor/bootstrap-3.3.7/css/bootstrap-theme.min.css')
+        script(src='/vendor/bootstrap-3.3.7/js/bootstrap.min.js')
+        script(src='/vendor/jquery/jquery.js')
+        style.
+            * { font-family: 'Malgun Gothic'; }
         style.
                 html,
                 body {
@@ -110,7 +111,7 @@ html
                         updateDisplay();
                         // Inject the icon if applicable
                         if ($button.find('.state-icon').length == 0) {
-                            $button.prepend('<i class="state-icon ' + settings[$button.data('state')].icon + '"></i>?');
+                            $button.prepend('<i class="state-icon ' + settings[$button.data('state')].icon + '"></i>');
                         }
                     }
                     init();
@@ -123,24 +124,25 @@ html
         //-          source(src='/m-bg.mp4', type='video/mp4')
                 
         .content
-                .container                      
-                    .row(style='margin-top:20px')
-                        .col-xs-12.col-sm-8.col-md-6.col-sm-offset-2.col-md-offset-3
-                            form(role='form')
-                                fieldset
-                                    h2 로그인하세요.
-                                    hr.colorgraph
-                                    .form-group
-                                        input#email.form-control.input-lg(type='email', name='email', placeholder='Email Address')
-                                    .form-group
-                                        input#password.form-control.input-lg(type='password', name='password', placeholder='Password')
-                                    span.button-checkbox
-                                        button.btn(type='button', data-color='info') 아이디 저장
-                                        input#remember_me.hidden(type='checkbox', name='remember_me', checked='checked')
-                                        a.btn.btn-link.pull-right(href='') 비밀번호 찾기
-                                    hr.colorgraph
-                                    .row
-                                        .col-xs-6.col-sm-6.col-md-6
-                                            input.btn.btn-lg.btn-success.btn-block(type='submit', value='로그인')
-                                        .col-xs-6.col-sm-6.col-md-6
-                                            a.btn.btn-lg.btn-primary.btn-block(href='') 계정신청
+            .container                      
+                .row(style='margin-top:20px')
+                    .col-xs-12.col-sm-8.col-md-6.col-sm-offset-2.col-md-offset-3
+                        form#loginForm(action='/index' method='post' name='login')
+                            fieldset
+                                h2 로그인하세요.
+                                hr.colorgraph
+                                .form-group
+                                    input#email.form-control.input-lg(type='email', name='email', placeholder='Email Address')
+                                .form-group
+                                    input#password.form-control.input-lg(type='password', name='password', placeholder='Password')
+                                span.button-checkbox
+                                    button.btn(type='button', data-color='info') 아이디 저장
+                                    input#remember_me.hidden(type='checkbox', name='remember_me', checked='checked')
+                                    a.btn.btn-link.pull-right(href='') 비밀번호 찾기
+                                hr.colorgraph
+                                .row
+                                    .col-xs-6.col-sm-6.col-md-6
+                                        input.btn.btn-lg.btn-success.btn-block(type='submit', value='로그인')
+                                    .col-xs-6.col-sm-6.col-md-6
+                                        a.btn.btn-lg.btn-primary.btn-block(href='') 계정신청
+
