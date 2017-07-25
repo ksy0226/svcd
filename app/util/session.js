@@ -5,17 +5,17 @@ module.exports = {
   sessionCheck: (req, res, next) => {
     var minute = 60 * 1000;
 
-    if (req.session.username) {
+    if (req.session.email) {
       res.render('index');
 
     } else { //세션값이 없으면
 
-      var username = req.cookies.username;
+      var email = req.cookies.email;
       var idsave = req.cookies.idsavecheck;
 
-      if (username == null) username = "";
+      if (email == null) email = "";
       res.render('index', {
-        nameCookie: username,
+        nameCookie: email,
         saveCookie: idsave
       });
     }
