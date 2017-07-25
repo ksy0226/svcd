@@ -60,122 +60,56 @@ html
 
         block neck
     body
+    - if(false){ //외부사용자
+            div.navbar.navbar-default.navbar-fixed-top
+                div.container
+                    div.navbar-header
+                        a.navbar-brand(href='/')
+                            img.navbar-logo(src='/isu/image/logonew.gif', alt='Logo')
+                            //img(src='/isu/image/logonew.gif', alt='Logo')
+                            span.navbar-brand-label #{projectName}
+                        button.navbar-toggle.collapsed(data-toggle='collapse', data-target='.my-navbar-collapse')
+                            span.icon-bar
+                            span.icon-bar
+                            span.icon-bar
+                    div.navbar-collapse.my-navbar-collapse.collapse
+                        ul.nav.navbar-nav
+                            li: a(href='/main') Home
+                            li: a(href='/account/') FAQ
+                            li: a(href='/question/new') 문의하기
+                            li: a(href='/question/') 처리진행현황
+                            li: a(href='/account/') 자주묻는질문과답
+                            li: a(href='/register/') 계정등록
+                            li: a(href='/manage/company') 회사정보관리
+                        ul.nav.navbar-nav.navbar-right
+                            if user && user.username
+                                li: a(href='#{user.defaultReturnUrl}')
+                                    i.fa.fa-user
+                                    |  #{user.username}
+                            else
+                                li: a(href='/logout')
+                                    i.fa.fa-user
+                                    |  로그아웃
 
+            div.page
+                div.container
+                    block content
 
+            div.footer
+                div.container
+                    span.copyright.pull-right
+                        |&#169; #{copyrightYear} #{copyrightName}
+                    ul.links
+                        li: a(href='/') Home
+                        li: a(href='/contact/') Contact
+                    div.clearfix
 
-        .container
-            // Topper w/ logo
-            .row.hidden-xs.topper
-                .col-xs-7.col-sm-7
-                    a(href='//convertify.io')
-                        img.img-responsive(am-toplogo='', alt='isu servicedesk', src='/isu/image/logonew.gif')
-                .col-xs-5.col-xs-offset-1.col-sm-5.col-sm-offset-0.text-right
-                    p(am-callnow='') 전화번호
-            // End Topper
-            // Navigation
-            .row
-                nav.navbar.navbar-inverse(role='navigation')
-                    .container
-                        // Brand and toggle get grouped for better mobile display
-                        .navbar-header
-                            button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-ex1-collapse')
-                                span.sr-only Toggle navigation
-                                span.icon-bar
-                                span.icon-bar
-                                span.icon-bar
-                            a.navbar-brand.visible-xs-inline-block.nav-logo(href='/')
-                                img.img-responsive(src='/images/logo-dark-inset.png', alt='')
-                        // Collect the nav links, forms, and other content for toggling
-                        .collapse.navbar-collapse.navbar-ex1-collapse
-                            ul.nav.navbar-nav.js-nav-add-active-class
-                                li
-                                    a(href='/index.html') Home
-                                li.active
-                                    a(href='/markets.html') Markets
-                                li
-                                    a(href='/buy.html') Buy
-                                li
-                                    a(href='/svstrike.html') svStrike
-                                li
-                                    a(href='/training.html') Training
-                                li
-                                    a(href='/contact.html') Contact Us
-                                li.visible-xs-block
-                                    a(href='/about.html') About Us
-                                li.visible-xs-block
-                                    a(href='/careers.html') Careers
-                                li.visible-xs-block
-                                    a(href='/press-release.html') Press Release
-                                li.visible-xs-block
-                                    a(href='https://susteen7.zendesk.com/hc/en-us') Support
-                                li.dropdown
-                                    a.dropdown-toggle(href='#', data-toggle='dropdown')
-                                        b.caret
-                                    ul.dropdown-menu(role='menu')
-                                        li
-                                            a(href='about.html') About Us
-                                        li
-                                            a(href='careers.html') Careers
-                                        li
-                                            a(href='press-release.html') Press Release
-                            ul.nav.navbar-nav.navbar-right.hidden-xs
-                                a.navbar-btn.btn.btn-gradient-blue(type='button', am-latosans='bold', href='https://susteen7.zendesk.com/hc/en-us') Support
-                        // /.navbar-collapse
-
-
-
-
-
-
-
-        div.navbar.navbar-default.navbar-fixed-top
-            div.container
-                div.navbar-header
-                    a.navbar-brand(href='/')
-                        img.navbar-logo(src='/isu/image/logonew.gif', alt='Logo')
-                        //img(src='/isu/image/logonew.gif', alt='Logo')
-                        span.navbar-brand-label #{projectName}
-                    button.navbar-toggle.collapsed(data-toggle='collapse', data-target='.my-navbar-collapse')
-                        span.icon-bar
-                        span.icon-bar
-                        span.icon-bar
-                div.navbar-collapse.my-navbar-collapse.collapse
-                    ul.nav.navbar-nav
-                        li: a(href='/main') Home
-                        li: a(href='/account/') FAQ
-                        li: a(href='/question/new') 문의하기
-                        li: a(href='/question/') 처리진행현황
-                        li: a(href='/account/') 자주묻는질문과답
-                        li: a(href='/register/') 계정등록
-                        li: a(href='/manage/company') 회사정보관리
-                    ul.nav.navbar-nav.navbar-right
-                        if user && user.username
-                            li: a(href='#{user.defaultReturnUrl}')
-                                i.fa.fa-user
-                                |  #{user.username}
-                        else
-                            li: a(href='/logout')
-                                i.fa.fa-user
-                                |  로그아웃
-
+            div.ajax-spinner
+                img(src='/isu/image/ajax-pulse.gif', alt='Loading')
+    - }else{ // 내부사용자
         div.page
-            div.container
-                block content
-
-        div.footer
-            div.container
-                span.copyright.pull-right
-                    |&#169; #{copyrightYear} #{copyrightName}
-                ul.links
-                    li: a(href='/') Home
-                    li: a(href='/contact/') Contact
-                div.clearfix
-
-        div.ajax-spinner
-            img(src='/isu/image/ajax-pulse.gif', alt='Loading')
-
-        //if lte IE 9
-            script(src='/layouts/ie-sucks.min.js?#{cacheBreaker}')
-        script(src='/layouts/core.min.js?#{cacheBreaker}')
+                div.container
+                    block content
+    -}
 
         block feet
