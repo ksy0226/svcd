@@ -21,137 +21,247 @@ block head
 
     //추후 삭제
     script(src='/data/morris-data.js')
+    style.
+        #left ul.nav {
+            margin-bottom: 2px;
+            font-size: 12px; /* to change font-size, please change instead .lbl */
+        }
+        #left ul.nav ul,
+        #left ul.nav ul li {
+            list-style: none!important;
+            list-style-type: none!important;
+            margin-top: 1px;
+            margin-bottom: 1px;
+        }
+        #left ul.nav ul {
+            padding-left: 0;
+            width: auto;
+        }
+        #left ul.nav ul.children {
+            padding-left: 12px;
+            width: auto;
+        }
+        #left ul.nav ul.children li{
+            margin-left: 0px;
+        }
+        #left ul.nav li a:hover {
+            text-decoration: none;
+        }
+
+        #left ul.nav li a:hover .lbl {
+            color: #999!important;
+        }
+
+        #left ul.nav li.current>a .lbl {
+            background-color: #999;
+            color: #fff!important;
+        }
+
+        /* parent item */
+        #left ul.nav li.parent a {
+            padding: 0px;
+            color: #ccc;
+        }
+        #left ul.nav>li.parent>a {
+            border: solid 1px #999;
+            text-transform: uppercase;
+        }    
+        #left ul.nav li.parent a:hover {
+            background-color: #fff;
+            -webkit-box-shadow:inset 0 3px 8px rgba(0,0,0,0.125);
+            -moz-box-shadow:inset 0 3px 8px rgba(0,0,0,0.125);
+            box-shadow:inset 0 3px 8px rgba(0,0,0,0.125);    
+        }
+
+        /* link tag (a)*/
+        #left ul.nav li.parent ul li a {
+            color: #222;
+            border: none;
+            display:block;
+            padding-left: 5px;    
+        }
+
+        #left ul.nav li.parent ul li a:hover {
+            background-color: #fff;
+            -webkit-box-shadow:none;
+            -moz-box-shadow:none;
+            box-shadow:none;  
+        }
+
+        /* sign for parent item */
+        #left ul.nav li .sign {
+            display: inline-block;
+            width: 14px;
+            padding: 5px 8px;
+            background-color: transparent;
+            color: #fff;
+        }
+        #left ul.nav li.parent>a>.sign{
+            margin-left: 0px;
+            background-color: #999;
+        }
+
+        /* label */
+        #left ul.nav li .lbl {
+            padding: 5px 12px;
+            display: inline-block;
+        }
+        #left ul.nav li.current>a>.lbl {
+            color: #fff;
+        }
+        #left ul.nav  li a .lbl{
+            font-size: 12px;
+        }
+
+        /* THEMATIQUE
+        ------------------------- */
+        /* theme 1 */
+        #left ul.nav>li.item-1.parent>a {
+            border: solid 1px #ff6307;
+        }
+        #left ul.nav>li.item-1.parent>a>.sign,
+        #left ul.nav>li.item-1 li.parent>a>.sign{
+            margin-left: 0px;
+            background-color: #ff6307;
+        }
+        #left ul.nav>li.item-1 .lbl {
+            color: #ff6307;
+        }
+        #left ul.nav>li.item-1 li.current>a .lbl {
+            background-color: #ff6307;
+            color: #fff!important;
+        }
+
+        /* theme 2 */
+        #left ul.nav>li.item-8.parent>a {
+            border: solid 1px #51c3eb;
+        }
+        #left ul.nav>li.item-8.parent>a>.sign,
+        #left ul.nav>li.item-8 li.parent>a>.sign{
+            margin-left: 0px;
+            background-color: #51c3eb;
+        }
+        #left ul.nav>li.item-8 .lbl {
+            color: #51c3eb;
+        }
+        #left ul.nav>li.item-8 li.current>a .lbl {
+            background-color: #51c3eb;
+            color: #fff!important;
+        }
+
+        /* theme 3 */
+        #left ul.nav>li.item-15.parent>a {
+            border: solid 1px #94cf00;
+        }
+        #left ul.nav>li.item-15.parent>a>.sign,
+        #left ul.nav>li.item-15 li.parent>a>.sign{
+            margin-left: 0px;
+            background-color: #94cf00;
+        }
+        #left ul.nav>li.item-15 .lbl {
+            color: #94cf00;
+        }
+        #left ul.nav>li.item-15 li.current>a .lbl {
+            background-color: #94cf00;
+            color: #fff!important;
+        }
+
+        /* theme 4 */
+        #left ul.nav>li.item-22.parent>a {
+            border: solid 1px #ef409c;
+        }
+        #left ul.nav>li.item-22.parent>a>.sign,
+        #left ul.nav>li.item-22 li.parent>a>.sign{
+            margin-left: 0px;
+            background-color: #ef409c;
+        }
+        #left ul.nav>li.item-22 .lbl {
+            color: #ef409c;
+        }
+        #left ul.nav>li.item-22 li.current>a .lbl {
+            background-color: #ef409c;
+            color: #fff!important;
+        }
 
 block content
-    #wrapper
-        .col-lg-3.visible-lg
-            .sidebar(role='navigation', style='margin-top: 0')
-                .sidebar-nav.navbar-collapse
-                    ul#side-menu.nav
-                        li.sidebar-search
-                            .input-group.custom-search-form
-                                input.form-control(type='text', placeholder='Search...')
-                                span.input-group-btn
-                                    button.btn.btn-default(type='button')
-                                        i.fa.fa-search
-                        li
-                            a(href='#')
-                                i.fa.fa-dashboard.fa-fw
-                                |  HOME
-                        li
-                            a(href='#')
-                                i.fa.fa-sitemap.fa-fw
-                                |  Multi-Level Dropdown
-                                span.fa.arrow
-                            ul.nav.nav-second-level
-                                li
-                                    a(href='#') Second Level Item
-                                li
-                                    a(href='#') Second Level Item
-    #page-wrapper
-        .col-lg-9
-            .row
-                .col-lg-3(style='margin-top:20px;')
-                    .panel.panel-default
-                        .panel-heading
-                            .row
-                                .col-xs-3
-                                    i.fa.fa-comments.fa-5x
-                                .col-xs-9.text-right
-                                    .huge 11
-                                    div 접수 대기
-                        a(href='/question')
-                            .panel-footer
-                                span.pull-left 리스트
-                                span.pull-right
-                                    i.fa.fa-arrow-circle-right
-                                .clearfix
-                .col-lg-3(style='margin-top:20px;')
-                    .panel.panel-default
-                        .panel-heading
-                            .row
-                                .col-xs-3
-                                    i.fa.fa-tasks.fa-5x
-                                .col-xs-9.text-right
-                                    .huge 12
-                                    div 처리 중
+    .container
+        .row
+            #left.span3
+            ul#menu-group-1.nav.menu
+                li.item-1.deeper.parent.active
+                a(href='#')
+                    span.sign(data-toggle='collapse', data-parent='#menu-group-1', href='#sub-item-1')
+                    i.icon-plus.icon-white
+                    span.lbl Menu Group i
+                ul#sub-item-1.children.nav-child.unstyled.small.collapse
+                    li.item-2.deeper.parent.active
+                    a(href='#')
+                        span.sign(data-toggle='collapse', data-parent='#menu-group-1', href='#sub-item-2')
+                        i.icon-plus.icon-white
+                        span.lbl Menu 1
+                    ul#sub-item-2.children.nav-child.unstyled.small.collapse
+                        li.item-3.current.active
                         a(href='#')
-                            .panel-footer
-                                span.pull-left 리스트
-                                span.pull-right
-                                    i.fa.fa-arrow-circle-right
-                                .clearfix
-                .col-lg-3(style='margin-top:20px;')
-                    .panel.panel-default
-                        .panel-heading
-                            .row
-                                .col-xs-3
-                                    i.fa.fa-folder-open.fa-5x
-                                .col-xs-9.text-right
-                                    .huge 124
-                                    div 처리 완료
+                            span.sign
+                            i.icon-play
+                            span.lbl Menu 1.1
+                            |  (current menu)
+                        li.item-4
                         a(href='#')
-                            .panel-footer
-                                span.pull-left 리스트
-                                span.pull-right
-                                    i.fa.fa-arrow-circle-right
-                                .clearfix
-                .col-lg-3(style='margin-top:20px;')
-                    .panel.panel-default
-                        .panel-heading
-                            .row
-                                .col-xs-3
-                                    i.fa.fa-file-code-o.fa-5x
-                                .col-xs-9.text-right
-                                    .huge 13
-                                    div 보류
+                            span.sign
+                            i.icon-play
+                            span.lbl Menu 1.2
+                    li.item-5.deeper.parent
+                    a(href='#')
+                        span.sign(data-toggle='collapse', data-parent='#menu-group-1', href='#sub-item-5')
+                        i.icon-plus.icon-white
+                        span.lbl Menu 2
+                    ul#sub-item-5.children.nav-child.unstyled.small.collapse
+                        li.item-6
                         a(href='#')
-                            .panel-footer
-                                span.pull-left 리스트
-                                span.pull-right
-                                    i.fa.fa-arrow-circle-right
-                                .clearfix
-                .col-lg-12
-                    .panel.panel-default
-                        .panel-heading
-                            i.fa.fa-clock-o.fa-fw
-                            |  유지보수
-                        .service(style='padding: 20px 0 20px 20px')
-                            .default-header
-                                span 유지보수 계약 기간 입니다.
-                            .default-body
-                                h4
-                                    i.fa.fa-briefcase
-                                    |  계약기간 : 2017-01-01 ~ 2018-01-01 (365일 남음)
-                    .row
-                        .col-lg-7
-                            .panel.panel-default
-                                .panel-heading
-                                    i.fa.fa-bar-chart-o.fa-fw
-                                    |  당월 현황 조회
-                                .panel-body
-                                    .row
-                                        .col-lg-12
-                                            #morris-bar-chart
-                        .col-lg-5
-                            .panel.panel-default
-                                .panel-heading
-                                    i.fa.fa-bar-chart-o.fa-fw
-                                    |  증감표
-                                .panel-body
-                                    #morris-area-chart
-                .col-lg-12
-                    .panel.panel-default
-                        .panel-heading
-                            i.fa.fa-clock-o.fa-fw
-                            |  접수현황
-                        .service
-                            .default-header(style='margin-top:20px; padding:0 0 0 20px')
-                                span  최근 접수 순서대로 나열합니다.
-                            .row(style='margin-top:20px;padding:0 20px 0 20px')
-                                .col-lg-12
-                                    .panel.panel-default
-                                        .panel-heading
-                                            | test1
-                                        .panel-body
-                                            p test1
+                            span.sign
+                            i.icon-play
+                            span.lbl Menu 2.1
+                        li.item-7
+                        a(href='#')
+                            span.sign
+                            i.icon-play
+                            span.lbl Menu 2.2
+                li.item-8.deeper.parent
+                a(href='#')
+                    span.sign(data-toggle='collapse', data-parent='#menu-group-1', href='#sub-item-8')
+                    i.icon-plus.icon-white
+                    span.lbl Menu Group ii
+                ul#sub-item-8.children.nav-child.unstyled.small.collapse
+                    li.item-9.deeper.parent
+                    a(href='#')
+                        span.sign(data-toggle='collapse', data-parent='#menu-group-1', href='#sub-item-9')
+                        i.icon-plus.icon-white
+                        span.lbl Menu 1
+                    ul#sub-item-9.children.nav-child.unstyled.small.collapse
+                        li.item-10
+                        a(href='#')
+                            span.sign
+                            i.icon-play
+                            span.lbl Menu 1.1
+                        li.item-11
+                        a(href='#')
+                            span.sign
+                            i.icon-play
+                            span.lbl Menu 1.2
+                    li.item-12.deeper.parent
+                    a(href='#')
+                        span.sign(data-toggle='collapse', data-parent='#menu-group-1', href='#sub-item-12')
+                        i.icon-plus.icon-white
+                        span.lbl Menu 2
+                    ul#sub-item-12.children.nav-child.unstyled.small.collapse
+                        li.item-13
+                        a(href='#')
+                            span.sign
+                            i.icon-play
+                            span.lbl Menu 2.1
+                        li.item-14
+                        a(href='#')
+                            span.sign
+                            i.icon-play
+                            span.lbl Menu 2.2
