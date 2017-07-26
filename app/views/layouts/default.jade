@@ -11,7 +11,6 @@ html
             style.
                 * { font-family: 'Malgun Gothic' !important; }
 
-
                 .topper {
                 display: flex;
                 justify-content: space-between;
@@ -55,13 +54,11 @@ html
                 text-shadow: 0 -1px 0 rgba(31, 31, 31, 0.29);
                 -webkit-font-smoothing: antialiased;
                 }
-
-
-
         block neck
+
     body
     - if(true){ //외부사용자
-            div.navbar.navbar-default.navbar-fixed-top
+            div.navbar.navbar-default.navbar-top
                 div.container
                     div.navbar-header
                         a.navbar-brand(href='/')
@@ -90,7 +87,6 @@ html
                                 li: a(href='/logout')
                                     i.fa.fa-user
                                     |  로그아웃
-
             div.page
                 div.container
                     block content
@@ -111,5 +107,4 @@ html
                 div.container
                     block content
     -}
-
         block feet

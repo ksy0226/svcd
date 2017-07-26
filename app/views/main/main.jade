@@ -22,6 +22,7 @@ block head
     //추후 삭제(도표 표시용)
     script(src='/data/morris-data.js')
     script(src='/data/flot-data.js')
+<<<<<<< HEAD
     style.
         /* MENU-LEFT
         -------------------------- */
@@ -268,6 +269,123 @@ block content
                             i.icon-play
                             span.lbl Menu 1.1
                         li.item-11
+=======
+
+block content
+    #wrapper
+        .sidebar(role='navigation', style='margin-top: 0').col-lg-3.visible-lg
+            .sidebar-nav.navbar-collapse
+                ul#side-menu.nav
+                    li.sidebar-search
+                        .input-group.custom-search-form
+                            input.form-control(type='text', placeholder='Search...')
+                            span.input-group-btn
+                                button.btn.btn-default(type='button')
+                                    i.fa.fa-search
+                    li
+                        a(href='#')
+                            i.fa.fa-dashboard.fa-fw
+                            |  HOME
+                    li
+                        a(href='#')
+                            i.fa.fa-sitemap.fa-fw
+                            |  문의방법 및 담당자
+                            span.fa.arrow
+                        ul.nav.nav-second-level
+                            li
+                                a(href='#') 문의하기
+                            li
+                                a(href='#') 처리진행현황
+                            li
+                                a(href='#') 자주묻는질문과답
+                            li
+                                a(href='#') 처리된내용검색
+                    li
+                        a(href='#')
+                            i.fa.fa-sitemap.fa-fw
+                            |  SD 담당자
+                            span.fa.arrow
+                        ul.nav.nav-second-level
+                            li
+                                a(href='#') 상담접수(전화)
+                            li
+                                a(href='#') 나의업무처리현황
+                            li
+                                a(href='#') 나의업무지정
+                            li
+                                a(href='#') 월별처리내역
+                    li
+                        a(href='#')
+                            i.fa.fa-sitemap.fa-fw
+                            |  SD 검색/통계
+                            span.fa.arrow
+                        ul.nav.nav-second-level
+                            li
+                                a(href='#') 전체내용검색
+                            li
+                                a(href='#') 회사별 상위업무통계
+                            li
+                                a(href='#') 상위별 하위업무통계
+                            li
+                                a(href='#') 미해결 현황
+                            li
+                                a(href='#') 담당자별월별처리내역
+                            li
+                                a(href='#') 처리구분별처리내역
+                    li
+                        a(href='#')
+                            i.fa.fa-sitemap.fa-fw
+                            |  SD 기본정보
+                            span.fa.arrow
+                        ul.nav.nav-second-level
+                            li
+                                a(href='#') 상위업무조회
+                            li
+                                a(href='#') 하위업무조회
+                            li
+                                a(href='#') 회사정보관리(외부)
+                            li
+                                a(href='#') 사원정보관리(내외)
+                            li
+                                a(href='#') 회사별상위업무지정
+                            li
+                                a(href='#') 처리구분코드조회
+                            li
+                                a(href='#') 업무별담당자현황
+                            li
+                                a(href='#') 자주묻는질문과답
+                    li
+                        a(href='#')
+                            i.fa.fa-sitemap.fa-fw
+                            |  SD Dashboard
+                            span.fa.arrow
+        #page-wrapper
+            .row
+                .col-lg-3(style='margin-top:20px;')
+                    .panel.panel-default
+                        .panel-heading
+                            .row
+                                .col-xs-3
+                                    i.fa.fa-comments.fa-5x
+                                .col-xs-9.text-right
+                                    .huge 11
+                                    div 접수 대기
+                        a(href='/question')
+                            .panel-footer
+                                span.pull-left 리스트
+                                span.pull-right
+                                    i.fa.fa-arrow-circle-right
+                                .clearfix
+                .col-lg-3(style='margin-top:20px;')
+                    .panel.panel-default
+                        .panel-heading
+                            .row
+                                .col-xs-3
+                                    i.fa.fa-tasks.fa-5x
+                                .col-xs-9.text-right
+                                    .huge 12
+                                    div 처리 중
+>>>>>>> master
                         a(href='#')
                             span.sign
                             i.icon-play
