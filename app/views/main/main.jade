@@ -25,32 +25,30 @@ block head
 
 block content
     #wrapper
-        .col-lg-3.visible-lg
-            .sidebar(role='navigation', style='margin-top: 0')
-                .sidebar-nav.navbar-collapse
-                    ul#side-menu.nav
-                        li.sidebar-search
-                            .input-group.custom-search-form
-                                input.form-control(type='text', placeholder='Search...')
-                                span.input-group-btn
-                                    button.btn.btn-default(type='button')
-                                        i.fa.fa-search
-                        li
-                            a(href='#')
-                                i.fa.fa-dashboard.fa-fw
-                                |  HOME
-                        li
-                            a(href='#')
-                                i.fa.fa-sitemap.fa-fw
-                                |  Multi-Level Dropdown
-                                span.fa.arrow
-                            ul.nav.nav-second-level
-                                li
-                                    a(href='#') Second Level Item
-                                li
-                                    a(href='#') Second Level Item
-    #page-wrapper
-        .col-lg-9
+        .sidebar(role='navigation', style='margin-top: 0').col-lg-3.visible-lg
+            .sidebar-nav.navbar-collapse
+                ul#side-menu.nav
+                    li.sidebar-search
+                        .input-group.custom-search-form
+                            input.form-control(type='text', placeholder='Search...')
+                            span.input-group-btn
+                                button.btn.btn-default(type='button')
+                                    i.fa.fa-search
+                    li
+                        a(href='#')
+                            i.fa.fa-dashboard.fa-fw
+                            |  HOME
+                    li
+                        a(href='#')
+                            i.fa.fa-sitemap.fa-fw
+                            |  Multi-Level Dropdown
+                            span.fa.arrow
+                        ul.nav.nav-second-level
+                            li
+                                a(href='#') Second Level Item
+                            li
+                                a(href='#') Second Level Item
+        #page-wrapper
             .row
                 .col-lg-3(style='margin-top:20px;')
                     .panel.panel-default
