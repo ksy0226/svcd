@@ -8,8 +8,7 @@ const options = CONFIG.DATABASE.options;
 
 //mongoose.connect(CONN_STR, options);
 //mongoose.connect('mongodb://mysd:mysd123qwe@127.0.0.1/servicedesk');
-//mongoose.connect('mongodb://175.119.100.184:27017/servicedesk');
-mongoose.connect('mongodb://127.0.0.1:27017/servicedesk');
+mongoose.connect('mongodb://175.119.100.184:27017/servicedesk');
 
 mongoose.connection.on('connected', () => {
     console.log(`Mongoose default connection open to ${CONN_STR}`);

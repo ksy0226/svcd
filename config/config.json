@@ -10,7 +10,7 @@
         "level": "DEBUG"
     },
     "DATABASE": {
-        "DATABASE_URL": "mongodb://127.0.0.1:27017/servicedesk",
+        "DATABASE_URL": "mongodb://175.119.100.184:27017/servicedesk",
         "RECONNECT": true,
         "RECONNECTION_INTERVAL": 5000,
         "options": {
