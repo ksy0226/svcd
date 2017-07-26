@@ -1,9 +1,8 @@
 var mongoose = require('mongoose');
 
 var employeeSchema = mongoose.Schema({
-  id: {type:String, required:true},
-  pw: {type:String, required:true}
-
+  email: {type:String, required:true},
+  pwd: {type:String, required:true}
 });
 
 
