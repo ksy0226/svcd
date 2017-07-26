@@ -19,9 +19,13 @@ block head
     script(src='/vendor/morrisjs/morris.min.js')
     script(src='/layouts/sb-admin-2.js')
 
-    //추후 삭제
+    //추후 삭제(도표 표시용)
     script(src='/data/morris-data.js')
+    script(src='/data/flot-data.js')
     style.
+        /* MENU-LEFT
+        -------------------------- */
+        /* layout */
         #left ul.nav {
             margin-bottom: 2px;
             font-size: 12px; /* to change font-size, please change instead .lbl */
@@ -182,6 +186,25 @@ block head
             background-color: #ef409c;
             color: #fff!important;
         }
+
+    script(type='text/javascript').
+        $(function(){
+        // Le left-menu sign
+        /* for older jquery version
+        $('#left ul.nav li.parent > a > span.sign').click(function () {
+            $(this).find('i:first').toggleClass("icon-minus");
+        }); */
+        
+        $(document).on("click","#left ul.nav li.parent > a > span.sign", function(){          
+            $(this).find('i:first').toggleClass("icon-minus");      
+        }); 
+        
+        // Open Le current menu
+        $("#left ul.nav li.parent.active > a > span.sign").find('i:first').addClass("icon-minus");
+        $("#left ul.nav li.current").parents('ul.children').addClass("in");
+
+    });
+            
 
 block content
     .container
