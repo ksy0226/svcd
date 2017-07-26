@@ -137,18 +137,11 @@ html
                                     input#password.form-control.input-lg(type='password', name='password', placeholder='Password')
                                 span.button-checkbox
                                     button.btn(type='button', data-color='info') 아이디 저장
-<<<<<<< HEAD
-                                    input#remember_me.hidden(type='checkbox', name='remember_me', checked='checked')
-                                    a.btn.btn-link.pull-right(href='') 비밀번호 찾기마스터
-                                    a.btn.btn-link.pull-right(href='') 비밀번호 찾기테스트
-=======
                                     input#remember_me.hidden(type='checkbox', name='idsavecheck', checked=('true'==='#{saveCookie}' ? 'checked' : undefined))
                                     a.btn.btn-link.pull-right(href='') 비밀번호 찾기
->>>>>>> LTest
                                 hr.colorgraph
                                 .row
                                     .col-xs-6.col-sm-6.col-md-6
                                         input.btn.btn-lg.btn-success.btn-block(type='submit', value='로그인')
                                     .col-xs-6.col-sm-6.col-md-6
                                         a.btn.btn-lg.btn-primary.btn-block(href='') 계정신청
-
