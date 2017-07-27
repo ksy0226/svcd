@@ -62,7 +62,7 @@ app.set('view engine', 'jade');
  * http-to-https
  */
 var redirectToHTTPS = require('express-http-to-https')
-app.use(redirectToHTTPS(['localhost:8080'], ['/insecure']));
+app.use(redirectToHTTPS(['localhost:3000'], ['/test']));
 
 /**
  * routes
