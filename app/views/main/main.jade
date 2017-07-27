@@ -1,0 +1,219 @@
+extends ../layouts/default
+
+block head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    link(href='/vendor/bootstrap-3.3.7/css/bootstrap.min.css', rel='stylesheet')
+    link(href='/vendor/bootstrap-3.3.7/css/bootstrap-theme.min.css', rel='stylesheet')
+    link(href='/vendor/metisMenu/metisMenu.min.css', rel='stylesheet')
+    link(href='/layouts/sb-admin-2.min.css', rel='stylesheet')
+    link(href='/vendor/morrisjs/morris.css', rel='stylesheet')
+    link(type='text/css', href='/vendor/font-awesome/css/font-awesome.min.css', rel='stylesheet')
+    script(src='/vendor/jquery/jquery.min.js')
+    script(src='/vendor/bootstrap-3.3.7/js/bootstrap.min.js')
+    script(src='/vendor/metisMenu/metisMenu.min.js')
+    script(src='/vendor/raphael/raphael.min.js')
+    script(src='/vendor/morrisjs/morris.min.js')
+    script(src='/layouts/sb-admin-2.js')
+
+    //추후 삭제(도표 표시용)
+    script(src='/data/morris-data.js')
+    script(src='/data/flot-data.js')
+
+block content
+    #wrapper
+        .sidebar(role='navigation', style='margin-top: 0').visible-lg
+            .sidebar-nav.navbar-collapse
+                ul#side-menu.nav
+                    li.sidebar-search
+                        .input-group.custom-search-form
+                            input.form-control(type='text', placeholder='Search...')
+                            span.input-group-btn
+                                button.btn.btn-default(type='button')
+                                    i.fa.fa-search
+                    li
+                        a(href='#')
+                            i.fa.fa-desktop.fa-fw
+                            |  HOME
+                    li.active
+                        a(href='#')
+                            i.fa.fa-th-list.fa-fw
+                            |  문의방법 및 담당자
+                            span.fa.arrow
+                        ul.nav.nav-second-level
+                            li
+                                a(href='#') 문의하기
+                            li
+                                a(href='#') 처리진행현황
+                            li
+                                a(href='#') 자주묻는질문과답
+                            li
+                                a(href='#') 처리된내용검색
+                    li.active
+                        a(href='#')
+                            i.fa.fa-th-list.fa-fw
+                            |  SD 담당자
+                            span.fa.arrow
+                        ul.nav.nav-second-level
+                            li
+                                a(href='#') 상담접수(전화)
+                            li
+                                a(href='#') 나의업무처리현황
+                            li
+                                a(href='#') 나의업무지정
+                            li
+                                a(href='#') 월별처리내역
+                    li
+                        a(href='#')
+                            i.fa.fa-th-list.fa-fw
+                            |  SD 검색/통계
+                            span.fa.arrow
+                        ul.nav.nav-second-level
+                            li
+                                a(href='#') 전체내용검색
+                            li
+                                a(href='#') 회사별 상위업무통계
+                            li
+                                a(href='#') 상위별 하위업무통계
+                            li
+                                a(href='#') 미해결 현황
+                            li
+                                a(href='#') 담당자별월별처리내역
+                            li
+                                a(href='#') 처리구분별처리내역
+                    li
+                        a(href='#')
+                            i.fa.fa-th-list.fa-fw
+                            |  SD 기본정보
+                            span.fa.arrow
+                        ul.nav.nav-second-level
+                            li
+                                a(href='#') 상위업무조회
+                            li
+                                a(href='#') 하위업무조회
+                            li
+                                a(href='#') 회사정보관리(외부)
+                            li
+                                a(href='#') 사원정보관리(내외)
+                            li
+                                a(href='#') 회사별상위업무지정
+                            li
+                                a(href='#') 처리구분코드조회
+                            li
+                                a(href='#') 업무별담당자현황
+                            li
+                                a(href='#') 자주묻는질문과답
+                    li
+                        a(href='#')
+                            i.fa.fa-th-list.fa-fw
+                            |  SD Dashboard
+                            span.fa.arrow
+        #page-wrapper
+            .row
+                .col-lg-3(style='margin-top:20px;')
+                    .panel.panel-default
+                        .panel-heading
+                            .row
+                                .col-xs-3
+                                    i.fa.fa-comments.fa-5x
+                                .col-xs-9.text-right
+                                    .huge 11
+                                    div 접수 대기
+                        a(href='/question')
+                            .panel-footer
+                                span.pull-left 리스트
+                                span.pull-right
+                                    i.fa.fa-arrow-circle-right
+                                .clearfix
+                .col-lg-3(style='margin-top:20px;')
+                    .panel.panel-default
+                        .panel-heading
+                            .row
+                                .col-xs-3
+                                    i.fa.fa-tasks.fa-5x
+                                .col-xs-9.text-right
+                                    .huge 12
+                                    div 처리 중
+                        a(href='#')
+                            .panel-footer
+                                span.pull-left 리스트
+                                span.pull-right
+                                    i.fa.fa-arrow-circle-right
+                                .clearfix
+                .col-lg-3(style='margin-top:20px;')
+                    .panel.panel-default
+                        .panel-heading
+                            .row
+                                .col-xs-3
+                                    i.fa.fa-folder-open.fa-5x
+                                .col-xs-9.text-right
+                                    .huge 124
+                                    div 처리 완료
+                        a(href='#')
+                            .panel-footer
+                                span.pull-left 리스트
+                                span.pull-right
+                                    i.fa.fa-arrow-circle-right
+                                .clearfix
+                .col-lg-3(style='margin-top:20px;')
+                    .panel.panel-default
+                        .panel-heading
+                            .row
+                                .col-xs-3
+                                    i.fa.fa-file-code-o.fa-5x
+                                .col-xs-9.text-right
+                                    .huge 13
+                                    div 보류
+                        a(href='#')
+                            .panel-footer
+                                span.pull-left 리스트
+                                span.pull-right
+                                    i.fa.fa-arrow-circle-right
+                                .clearfix
+                .col-lg-12
+                    .panel.panel-default
+                        .panel-heading
+                            i.fa.fa-clock-o.fa-fw
+                            |  유지보수
+                        .service(style='padding: 20px 0 20px 20px')
+                            .default-header
+                                span 유지보수 계약 기간 입니다.
+                            .default-body
+                                h4
+                                    i.fa.fa-briefcase
+                                    |  계약기간 : 2017-01-01 ~ 2018-01-01 (365일 남음)
+                    .row
+                        .col-lg-7
+                            .panel.panel-default
+                                .panel-heading
+                                    i.fa.fa-bar-chart-o.fa-fw
+                                    |  당월 현황 조회
+                                .panel-body
+                                    .row
+                                        .col-lg-12
+                                            #morris-bar-chart
+                        .col-lg-5
+                            .panel.panel-default
+                                .panel-heading
+                                    i.fa.fa-bar-chart-o.fa-fw
+                                    |  증감표
+                                .panel-body
+                                    #morris-area-chart
+                .col-lg-12
+                    .panel.panel-default
+                        .panel-heading
+                            i.fa.fa-clock-o.fa-fw
+                            |  접수현황
+                        .service
+                            .default-header(style='margin-top:20px; padding:0 0 0 20px')
+                                span  최근 접수 순서대로 나열합니다.
+                            .row(style='margin-top:20px;padding:0 20px 0 20px')
+                                .col-lg-12
+                                    .panel.panel-default
+                                        .panel-heading
+                                            | test1
+                                        .panel-body
+                                            p test1
