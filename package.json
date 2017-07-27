@@ -8,7 +8,7 @@
     "start": "supervisor ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "KSY",
+  "author": "LHI",
   "license": "UNLICENSED",
   "repository": {
     "type": "git",
