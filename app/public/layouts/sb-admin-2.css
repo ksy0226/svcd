@@ -14,7 +14,7 @@ body {
   min-height: 568px;
   background-color: white;
 }
-@media (min-width: 768px) {
+@media (min-width: 1200px) {
   #page-wrapper {
     position: inherit;
     margin: 0 0 0 250px;
