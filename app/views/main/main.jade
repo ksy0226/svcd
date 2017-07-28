@@ -9,7 +9,7 @@ block head
     link(href='/vendor/bootstrap-3.3.7/css/bootstrap.min.css', rel='stylesheet')
     link(href='/vendor/bootstrap-3.3.7/css/bootstrap-theme.min.css', rel='stylesheet')
     link(href='/vendor/metisMenu/metisMenu.min.css', rel='stylesheet')
-    link(href='/layouts/sb-admin-2.min.css', rel='stylesheet')
+    link(href='/layouts/sb-admin-2.css', rel='stylesheet')
     link(href='/vendor/morrisjs/morris.css', rel='stylesheet')
     link(type='text/css', href='/vendor/font-awesome/css/font-awesome.min.css', rel='stylesheet')
     script(src='/vendor/jquery/jquery.min.js')
@@ -25,7 +25,7 @@ block head
 
 block content
     #wrapper
-        .sidebar(role='navigation', style='margin-top: 0').visible-lg.col-lg-3
+        .sidebar(role='navigation', style='margin-top: 0').visible-lg
             .sidebar-nav.navbar-collapse
                 ul#side-menu.nav
                     li.sidebar-search
@@ -97,7 +97,7 @@ block content
                             li
                                 a(href='#') 회사정보관리(외부)
                             li
-                                a(href='#') 사원정보관리(내외)
+                                a(href='/usermanage/new') 사원정보관리(내외)
                             li
                                 a(href='#') 회사별상위업무지정
                             li
@@ -112,7 +112,7 @@ block content
                             |  SD Dashboard
                             span.fa.arrow
         #page-wrapper
-            .row.col-lg-9
+            .row
                 .col-lg-3(style='margin-top:20px;')
                     .panel.panel-default
                         .panel-heading
@@ -122,7 +122,7 @@ block content
                                 .col-xs-9.text-right
                                     .huge 11
                                     div 접수 대기
-                        a(href='/question')
+                        a(href='/question/new')
                             .panel-footer
                                 span.pull-left 리스트
                                 span.pull-right
@@ -137,7 +137,7 @@ block content
                                 .col-xs-9.text-right
                                     .huge 12
                                     div 처리 중
-                        a(href='#')
+                        a(href='/usermanage/new')
                             .panel-footer
                                 span.pull-left 리스트
                                 span.pull-right
