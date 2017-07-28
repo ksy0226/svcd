@@ -25,7 +25,7 @@ block head
 
 block content
     #wrapper
-        .sidebar(role='navigation', style='margin-top: 0').visible-lg.col-lg-3
+        .sidebar(role='navigation', style='margin-top: 0').visible-lg
             .sidebar-nav.navbar-collapse
                 ul#side-menu.nav
                     li.sidebar-search
@@ -97,7 +97,7 @@ block content
                             li
                                 a(href='#') 회사정보관리(외부)
                             li
-                                a(href='/usermanage/new') 사원정보관리(내외)
+                                a(href='/usermanage/') 사원정보관리(내외)
                             li
                                 a(href='#') 회사별상위업무지정
                             li
@@ -112,7 +112,7 @@ block content
                             |  SD Dashboard
                             span.fa.arrow
         #page-wrapper
-            .row.col-lg-9
+            .row
                 .col-lg-3(style='margin-top:20px;')
                     .panel.panel-default
                         .panel-heading
@@ -137,7 +137,7 @@ block content
                                 .col-xs-9.text-right
                                     .huge 12
                                     div 처리 중
-                        a(href='/usermanage/new')
+                        a(href='/usermanage/usermanageNew')
                             .panel-footer
                                 span.pull-left 리스트
                                 span.pull-right
