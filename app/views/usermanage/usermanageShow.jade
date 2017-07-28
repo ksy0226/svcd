@@ -1,0 +1,18 @@
+extends ../layouts/default
+
+block content
+    div.container
+        div
+            button.btn.btn-primary.btn-signup(onclick="location.href='/usermanage'") Back
+            button.btn.btn-primary.btn-info(onclick="location.href='/usermanage/#{usermanage._id}/usermanageEdit'") Edit
+            button.btn.btn-primary.btn-danger(onclick="location.href='/usermanage/#{usermanage._id}/usermanageDelete'") Delete
+        h3
+            span Title : #{usermanage.title}
+        div
+            div
+                div
+                | 작성자 : #{usermanage.name}
+                div
+                    span 아이디 : #{usermanage.user_id}
+        div #{usermanage.content}    
+    
