@@ -7,132 +7,12 @@ html
         meta(name='google-site-verification', content='8dL8-JtafRwPb9mqiolYLGX-gJQ6iWrzWrHkZRnE2Uo')
         link(rel='stylesheet', href='/vendor/bootstrap-3.3.7/css/bootstrap.min.css')
         link(rel='stylesheet', href='/vendor/bootstrap-3.3.7/css/bootstrap-theme.min.css')
+        link(rel='stylesheet', href='/isu/css/isu.css')
         script(src='/vendor/jquery/jquery.js')
         script(src='/vendor/bootstrap-3.3.7/js/bootstrap.min.js')
+        script(src='/isu/js/index.js')
+        script(src='https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyCxP37XXc7zDZDaiewUvyyvpTPk_oIoOwU&callback=initMap')
 
-        style.
-            html,
-            body {
-                width: 100%;
-                height: 100%;
-                margin: 0;
-                font-family: 'Malgun Gothic';
-                color: black;
-                line-height: 1.3em;
-            }
-            .video-wrapper {
-                position: fixed;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                overflow: hidden;
-                z-index:-1;
-            }
-            .video-wrapper video {
-                position: fixed;
-                top: 0;
-                right: 0;
-                min-width: 100%;
-                min-height: 100%;
-                width: auto;
-                height: auto;
-            }
-            .content {
-                position: relative;
-                margin: 60px auto;
-                width: 80%;
-                max-width: 640px;
-                z-index: 1;
-            }
-            .colorgraph {
-                height: 5px;
-                border-top: 0;
-                background: #c4e17f;
-                border-radius: 5px;
-
-                background-image: linear-gradient(to right, #008FD4, #008FD4 70%, #A7A9AC 70%, #A7A9AC 80%, #99CA3C 80%, #99CA3C );
-                //- 크롬,사파리
-                background-image: -webkit-linear-gradient(left, #008FD4, #008FD4 70%, #A7A9AC 70%, #A7A9AC 80%, #99CA3C 80%, #99CA3C );
-                //- 파아이폭스
-                background-image: -moz-linear-gradient(left, #008FD4, #008FD4 70%, #A7A9AC 70%, #A7A9AC 80%, #99CA3C 80%, #99CA3C );
-                //- 오페라
-                background-image: -o-linear-gradient(left, #008FD4, #008FD4 70%, #A7A9AC 70%, #A7A9AC 80%, #99CA3C 80%, #99CA3C );
-            }
-            .modal {
-                text-align: center;
-                padding: 0!important;
-            }
-            .modal:before {
-                content: '';
-                display: inline-block;
-                height: 100%;
-                vertical-align: middle;
-                margin-right: -4px;
-            }
-            .modal-dialog {
-                display: inline-block;
-                text-align: left;
-                vertical-align: middle;
-            }
-
-        script(type='text/javascript').
-            $(function(){
-                $('.button-checkbox').each(function(){
-                    var $widget = $(this),
-                        $button = $widget.find('button'),
-                        $checkbox = $widget.find('input:checkbox'),
-                        color = $button.data('color'),
-                        settings = {
-                            on: {
-                                icon: 'glyphicon glyphicon-check'
-                            },
-                            off: {
-                                icon: 'glyphicon glyphicon-unchecked'
-                            }
-                        };
-
-                    $button.on('click', function () {
-                        $checkbox.prop('checked', !$checkbox.is(':checked'));
-                        $checkbox.triggerHandler('change');
-                        updateDisplay();
-                    });
-
-                    $checkbox.on('change', function () {
-                        updateDisplay();
-                    });
-
-                    function updateDisplay() {
-                        var isChecked = $checkbox.is(':checked');
-                        // Set the button's state
-                        $button.data('state', (isChecked) ? "on" : "off");
-
-                        // Set the button's icon
-                        $button.find('.state-icon')
-                            .removeClass()
-                            .addClass('state-icon ' + settings[$button.data('state')].icon);
-
-                        // Update the button's color
-                        if (isChecked) {
-                            $button
-                                .removeClass('btn-default')
-                                .addClass('btn-' + color + ' active');
-                        }else{
-                            $button
-                                .removeClass('btn-' + color + ' active')
-                                .addClass('btn-default');
-                        }
-                    }
-                    function init() {
-                        updateDisplay();
-                        // Inject the icon if applicable
-                        if ($button.find('.state-icon').length == 0) {
-                            $button.prepend('<i class="state-icon ' + settings[$button.data('state')].icon + '"></i>');
-                        }
-                    }
-                    init();
-                });
-            });     
     body
         //- #video-wrapper.video-wrapper
         //-     video#bgvid(autoplay='', loop='')
@@ -146,11 +26,11 @@ html
                     .col-xs-12.col-sm-8.col-md-6.col-sm-offset-2.col-md-offset-3
                         form#loginForm(action='/index' method='post' name='login')
                             fieldset
-                                -if(messege == null){
+                                -if(message == null){
                                     h2 로그인하세요.
                                 -}else{
                                     h3 #{message}
-                                -} 
+                                -}
                                 hr.colorgraph
                                 .form-group
                                     input#email.form-control.input-lg(type='email', name='email', value=('#{email}' == 'undefined' ? '' : '#{email}') placeholder='Email Address')
@@ -177,10 +57,12 @@ html
                 //회사정보
                 .row(style='margin-top:60px')
                     .col-xs-12.col-sm-12.col-md-12.col-sm-offset-2.col-md-offset-3
+                        hr
                         img(src='/isu/image/isusystem_logo.jpg', alt='ISU SYSTEM')
                         p
-                        address TEL : 02)590-6799&nbsp;&nbsp;&nbsp; 06575&nbsp;&nbsp;&nbsp;서울시 서초구 사평대로 84 (반포동)
-                        .copyright COPYRIGHT ISU SYSTEM Co. Ltd. ALL RIGHT RESERVED.
+                            | 06575) 서울시 서초구 사평대로 84
+                        p
+                            | .copyright COPYRIGHT ISU SYSTEM Co. Ltd. ALL RIGHT RESERVED.
 
         //찾아오는 길
         #myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
@@ -188,57 +70,43 @@ html
                 .modal-content
                     .modal-header
                         button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
-                        h4#myModalLabel.modal-title 찾아오시는 길
+                        h4#myModalLabel.text-primary 
+                            찾아오시는 길
                     .modal-body         
                         #container(style='margin-top: 0px;')
-                            .sub_content
-                                script(type='text/javascript', src='https://maps.google.com/maps/api/js?key=AIzaSyCxP37XXc7zDZDaiewUvyyvpTPk_oIoOwU')
-                                #map_canvas.map_area
-                                script(type='text/javascript').
-                                    $(function() {
-                                        google.maps.event.addDomListener(window, 'load', initialize);
-                                        function initialize(){
-                                            if($("#map_canvas").length) {
-                                                var mapOptions = { //구글 맵 옵션 설정
-                                                    zoom : 15, //기본 확대율
-                                                    center : new google.maps.LatLng(37.497983,126.9938672), // 지도 중앙 위치
-                                                    scrollwheel : false, //마우스 휠로 확대 축소 사용 여부
-                                                    mapTypeControl : false //맵 타입 컨트롤 사용 여부
-                                                };
-
-                                                var map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions); //구글 맵을 사용할 타겟
-                                                var marker = new google.maps.Marker({ //마커 설정
-                                                    map : map,
-                                                    icon: '/favicon.ico',
-                                                    position : map.getCenter(), //마커 위치
-                                                });
-
-                                                google.maps.event.addDomListener(window, "resize", function() { //리사이즈에 따른 마커 위치
-                                                    var center = map.getCenter();
-                                                    google.maps.event.trigger(map, "resize");
-                                                    map.setCenter(center);
-                                                });
-                                            }//if-end
-                                        }//function-end
-                                    });
+                            .sub_content                                    
+                                #map.map_area
+                                hr.colorgraph
                                 .cus-con
                                     .row
                                         .col-md-3.text-center
                                             img(src='/isu/image/cus03.png', alt='자가용 이용시')
-                                        .col-md-7
-                                            h4 자가용 이용 시
-                                            p 팔레스 호텔 방면에서 오시면 반포전화국 앞에서 유턴가능. 건물 내 지하주하장 이용
+                                        .col-md-9
+                                            h4.text-point
+                                                자가용 이용 시
+                                            p.text-default 
+                                                팔레스 호텔 방면에서 오시면 반포전화국 앞에서 유턴가능. 건물 내 지하주하장 이용
+                                hr
                                 .cus-con
                                     .row
                                         .col-md-3.text-center
                                             img(src='/isu/image/cus04.png', alt='지하철 이용시')
-                                        .col-md-7
-                                            h4 지하철 이용 시
-                                            p
-                                                span.text-green 2호선 서초역 강남성모병원 7번 출구 → 21번 마을버스 → 반포전화국 하차
-                                            p
-                                                span.text-blue 4호선 총신대역 신세대웨딩홀 1번 출구 → 14번 마을버스 → 이수화학 빌딩
-                                            p
-                                                span.text-brown 9호선 신반포역 반포종합운동장 4번 출구 → 10번/14번 마을버스 → 반포전화국 하차
-                                            p
-                                                span.text-orange 3/7/9호선 고속버스터미널역 고속버스터미널역 8-1번 출구 → 10번/14번 마을버스 → 반포전화국 하차
+                                        .col-md-9
+                                            h4.text-point 
+                                                지하철 이용 시
+                                            p.text-default
+                                                span.text-green
+                                                    | 2호선 
+                                                서초역 강남성모병원 7번 출구 → 21번 마을버스 → 반포전화국 하차
+                                            p.text-default
+                                                span.text-blue
+                                                    | 4호선 
+                                                총신대역 신세대웨딩홀 1번 출구 → 14번 마을버스 → 이수화학 빌딩
+                                            p.text-default
+                                                span.text-brown
+                                                    | 9호선
+                                                신반포역 반포종합운동장 4번 출구 → 10번/14번 마을버스 → 반포전화국 하차
+                                            p.text-default   
+                                                span.text-orange
+                                                    | 3/7/9호선 
+                                                고속버스터미널역 고속버스터미널역 8-1번 출구 → 10번/14번 마을버스 → 반포전화국 하차

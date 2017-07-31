@@ -12,7 +12,7 @@ module.exports = {
      * Validation action
      */
     index: (req, res) => {
-        logger.debug('index is called ');
+        //logger.debug('index is called ');
         if (req.session.email) {
             res.render('main/main');
         } else {
@@ -21,17 +21,16 @@ module.exports = {
     },
     
     logincheck: (req, res) => {
-        logger.debug('logincheck is called '+req.body.remember_me);
-
+        //logger.debug('logincheck is called '+req.body.remember_me);
 
         if (req.body.remember_me === "on") {
-            logger.debug('req.body.remember_me is on ');
+            //logger.debug('req.body.remember_me is on ');
             res.cookie('email', req.body.email);
             res.cookie('remember_me', req.body.remember_me === "on" ? "true" : "undefined");
             email = req.body.email;
             remember_me = req.body.remember_me;
         } else {
-            logger.debug('req.body.remember_me is off ');
+            //logger.debug('req.body.remember_me is off ');
             res.clearCookie('email');
             res.clearCookie('remember_me');
         }
@@ -49,21 +48,11 @@ module.exports = {
                         res.render('main/main');
                     });
                 }else{ //계정이 존재하지 않으면
-                    if (req.body.remember_me != null){
-                        logger.debug('req.body.remember_me is not null '+req.body.remember_me);
-                        email = req.body.email;
-                        remember_me = req.body.remember_me;
-                    }else{
-                        logger.debug('req.body.remember_me is null '+req.body.remember_me);
-                        email = "";
-                        remember_me = "";
-                    }
-
                     if(req.body.remember_me === "on"){
-                        logger.debug('req.body.remember_me === '+req.body.remember_me)
+                        //logger.debug('req.body.remember_me === '+req.body.remember_me)
                         remember_me = "true";
                     }else{
-                        logger.debug('req.body.remember_me !== '+req.body.remember_me)
+                        //logger.debug('req.body.remember_me !== '+req.body.remember_me)
                         remember_me = "false";
                     }
 
@@ -77,7 +66,7 @@ module.exports = {
             });
     },
     logout: (req, res) => {
-        logger.debug('logout is called ');
+        //logger.debug('logout is called ');
         //세션삭제
         delete req.session.email;
 
@@ -91,7 +80,7 @@ module.exports = {
         });
     },
     retry: (req, res) => {
-        logger.debug('login.js retry is called ');
+        //logger.debug('login.js retry is called ');
         email = req.cookies.email;
         remember_me = req.cookies.remember_me;
 
