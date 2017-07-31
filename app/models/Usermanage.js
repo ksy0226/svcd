@@ -6,6 +6,8 @@ var usermanageSchema = mongoose.Schema({
   //author: {type:mongoose.Schema.Types.ObjectId, ref:'user', required:true},
   author: {type:String},
   views: {type:Number, default: 0},
+  email: {type:String},
+  user_id: {type:String},
   numId: {type:Number, required:true},
   createdAt: {type:Date, default:Date.now},
   updatedAt: Date
