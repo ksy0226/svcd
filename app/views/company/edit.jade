@@ -1,0 +1,60 @@
+extends ../layouts/default
+block head
+    link(rel='stylesheet', href='/vendor/bootstrap-3.3.7/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/vendor/bootstrap-3.3.7/css/bootstrap-theme.min.css')
+    script(src='/vendor/jquery/jquery.js')
+    script(src='/vendor/bootstrap-3.3.7/js/bootstrap.min.js')
+    script(src='/vendor/jquery/jquery.js')        
+
+block content
+    .masthead.clearfix
+        .inner
+            h3.masthead-brand 수정
+            br
+            div
+            button.btn.btn-primary.btn-signup(onclick="location.href=history.go(-1)") Back
+            button.btn.btn-primary.btn-info(onclick="location.href='/company/#{company._id}/edit'") Edit
+            button.btn.btn-primary.btn-danger(onclick="location.href='/company/#{company._id}/delete'") Delete
+            h3
+            .row
+                .col-md-12
+                    form.form-horizontal(role='form' name='form' action='/company/#{company._id}/edit' method='post')
+                        .form-group
+                        label.col-sm-3.control-label(for='example-input-small')
+                        .col-sm-6
+                            input#example-input-small.form-control.input-sm(type='text', name='company[com_cd]', value='#{company.com_cd}')
+                        .form-group
+                        label.col-sm-3.control-label(for='example-input-small') 
+                        .col-sm-6
+                            input#example-input-small.form-control.input-sm(type='text', name='company[com_nm]', value='#{company.com_nm}')
+                        .form-group
+                        label.col-sm-3.control-label(for='example-input-small')
+                        .col-sm-6
+                            input#example-input-small.form-control.input-sm(type='text', name='company[ceo_nm]', value='#{company.ceo_nm}')
+                        .form-group
+                        label.col-sm-3.control-label(for='example-input-small')
+                        .col-sm-6
+                            input#example-input-small.form-control.input-sm(type='text', name='company[zip_cd]', value='#{company.zip_cd}')
+                        .form-group
+                        label.col-sm-3.control-label(for='example-input-small')
+                        .col-sm-6
+                            input#example-input-small.form-control.input-sm(type='text', name='company[addr]', value='#{company.addr}')
+                        .form-group
+                        label.col-sm-3.control-label(for='example-input-small')
+                        .col-sm-6
+                            input#example-input-small.form-control.input-sm(type='text', name='company[type]', value='#{company.type}')
+                        .form-group
+                        label.col-sm-3.control-label(for='example-input-small')
+                        .col-sm-6
+                            input#example-input-small.form-control.input-sm(type='text', name='company[telno]', value='#{company.telno}')
+                        .form-group
+                        label.col-sm-3.control-label(for='example-input-small')
+                        .col-sm-6
+                            input#example-input-small.form-control.input-sm(type='text', name='company[faxno]', value='#{company.faxno}')
+                        .form-group
+                        label.col-sm-3.control-label(for='example-input-normal') 
+                        .col-sm-6
+                            input#example-input-normal.form-control.input-sm(type='text', name='company[bigo]', value='#{company.bigo}')
+                                
+                        button.btn.btn-success.btn-md(type='submit') Save
+            br

@@ -1,0 +1,45 @@
+extends ../layouts/default
+block head
+    link(rel='stylesheet', href='/vendor/bootstrap-3.3.7/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/vendor/bootstrap-3.3.7/css/bootstrap-theme.min.css')
+    script(src='/vendor/jquery/jquery.js')
+    script(src='/vendor/bootstrap-3.3.7/js/bootstrap.min.js')
+    script(src='/vendor/jquery/jquery.js')
+    link(rel='stylesheet', href='https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css')   
+
+block content
+    .masthead.clearfix
+        .inner
+            h3.masthead-brand 회사정보관리
+            br
+            .row
+                .col-sm-12
+                    a.button.btn.btn-info.btn-md(href='/company/new') 추가
+                    br
+                    br
+                    
+                    p.text-muted.font-13
+                        | 
+                    table.tablesaw.table.m-b-0(data-tablesaw-mode='swipe')
+                        thead
+                        tr
+                            th.title(scope='col', data-tablesaw-sortable-col='', data-tablesaw-priority='persist') 회사명
+                            th(scope='col', data-tablesaw-sortable-col='', data-tablesaw-sortable-default-col='', data-tablesaw-priority='3') 대표자명
+                            th(scope='col', data-tablesaw-sortable-col='', data-tablesaw-priority='2') 주소
+                            th(scope='col', data-tablesaw-sortable-col='', data-tablesaw-priority='1') TEL
+                            th(scope='col', data-tablesaw-sortable-col='', data-tablesaw-priority='4') FAX
+                        tbody
+                        - if (company.length > 0) {
+                            // - for( var i = 0 ; length = question.length > i ; i++ ){ //속도가 빠르다고 알고 있음.
+                            - for( var i in company ){ //속도가 느리다고 알고 있음.
+                                tr(onclick="onclick=location.href='/company/#{company[i]._id}/show'")
+                                    td  #{company[i].com_nm}  
+                                    td.highlight(data-highlight='search.highlight.title') #{company[i].ceo_nm}
+                                    td #{company[i].addr}
+                                    td #{company[i].telno}
+                                    td #{company[i].faxno}
+                            - }
+                        - }else{
+                            tr
+                                td(colspan='5' align='center') 조회된 데이타가 없습니다.
+                        - }
