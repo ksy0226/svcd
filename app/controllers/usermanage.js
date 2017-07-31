@@ -11,7 +11,7 @@ const Iconv = require('iconv-lite');
 
 module.exports = {
 
-    usermanageIndex: (req, res, next) => {
+    index: (req, res, next) => {
 
         logger.debug('req.params.searchType : ' + req.query.searchType);
         logger.debug('req.params.searchText : ' + req.query.searchText);
@@ -48,7 +48,7 @@ module.exports = {
             if (search.findUser && !search.findUsermanage.$or) return callback(null, [], 0);
             logger.debug("search : " + JSON.stringify(search));
             Usermanage.find(search.findUsermanage)
-                .populate("author")
+                .populate("numid")
                 .sort('-createdAt')
                 .skip(skip).limit(limit)
                 .exec(function (err, usermanage) {
@@ -65,7 +65,7 @@ module.exports = {
                 });
             }
             //logger.debug(usermanage);
-            res.render("usermanage/usermanageIndex", {
+            res.render("usermanage/index", {
                 usermanage: usermanage,
                 user: req.user,
                 page: page,
@@ -78,11 +78,11 @@ module.exports = {
         });
     },
 
-    usermanageNew: (req, res, next) => {
-        res.render("usermanage/usermanageNew");
+    new: (req, res, next) => {
+        res.render("usermanage/new");
     },
 
-    usermanageSave: (req, res, next) => {
+    save: (req, res, next) => {
         async.waterfall([function (callback) {
             console.log('Trace777');
             Counter.findOne({
@@ -133,9 +133,9 @@ module.exports = {
         });
     },
 
-    usermanageShow: (req, res, next) => {
-        console.log("Trace11");
-        Usermanage.findById(req.params.id).populate("author").exec(function (err, usermanage) {
+    show: (req, res, next) => {
+        console.log(req.params);
+        Usermanage.findById(req.params.id).populate("_id").exec(function (err, usermanage) {
             if (err) return res.json({
                 success: false,
                 message: err
@@ -143,7 +143,7 @@ module.exports = {
             usermanage.views++;
             //usermanage.save();
             //console.log('aaa : %s',req._parsedUrl.query);
-            res.render("usermanage/usermanageShow", {
+            res.render("usermanage/show", {
                 usermanage: usermanage,
                 urlQuery: req._parsedUrl.query,
                 user: req.user,
@@ -151,7 +151,8 @@ module.exports = {
             });
         });
     },
-    usermanageEdit: (req, res, next) => {
+    
+    edit: (req, res, next) => {
         console.log("Trace edit", req.params.id);
         Usermanage.findById(req.params.id, function (err, usermanage) {
             if (err) return res.json({
@@ -162,13 +163,13 @@ module.exports = {
             //    success: false,
             //    message: "Unauthrized Attempt"
             //});
-            res.render("usermanage/usermanageEdit", {
+            res.render("usermanage/edit", {
                 usermanage: usermanage,
                 user: req.user
             });
         });
     },
-    usermanageUpdate: (req, res, next) => {
+    update: (req, res, next) => {
         console.log("Trace update", req.params.id);
         console.log(req.body);
         req.body.usermanage.updatedAt = Date.now();
@@ -184,10 +185,10 @@ module.exports = {
                 success: false,
                 message: "No data found to update"
             });
-            res.redirect('/usermanage/' + req.params.id + '/usermanageShow');
+            res.redirect('/usermanage/' + req.params.id + '/show');
         });
     },
-    usermanageDelete: (req, res, next) => {
+    delete: (req, res, next) => {
         console.log("Trace delete", req.params.id);
 
         Usermanage.findOneAndRemove({

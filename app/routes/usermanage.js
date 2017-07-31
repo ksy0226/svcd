@@ -16,16 +16,16 @@ router.post('/edit/:id', controller.update);
 router.get('/delete/:id', controller.delete);
 */
 
-router.route('/').get(controller.usermanageIndex);
+router.route('/').get(controller.index);
 //                 .post(controller.index);
 //router.route('/:searchType/:searchText').get(controller.index);
-router.route('/usermanageNew').get(controller.usermanageNew)
-                              .post(controller.usermanageSave);
+router.route('/new').get(controller.new)
+                    .post(controller.save);
 
-router.route('/:id/usermanageShow').get(controller.usermanageShow);
-router.route('/:id/usermanageEdit').get(controller.usermanageEdit)
-                         .post(controller.usermanageUpdate);
-router.route('/:id/usermanageDelete').get(controller.usermanageDelete);
+router.route('/:id/show').get(controller.show);
+router.route('/:id/edit').get(controller.edit)
+                         .post(controller.update);
+router.route('/:id/delete').get(controller.delete);
 
 
 module.exports = router;
