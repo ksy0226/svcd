@@ -7,7 +7,6 @@ const Question = require('../models/Question');
 const Counter = require('../models/Counter');
 const service = require('../services/question');
 const logger = require('log4js').getLogger('app');
-const Iconv = require('iconv-lite');
 
 module.exports = {
 
@@ -15,9 +14,6 @@ module.exports = {
 
         logger.debug('req.params.searchType : ' + req.query.searchType);
         logger.debug('req.params.searchText : ' + req.query.searchText);
-
-        //logger.debug('req.params.searchText : ' + Iconv.decode(req.query.searchText, 'UTF-8'));
-
 
         var vistorCounter = null;
         var page = Math.max(1, req.params.page) > 1 ? parseInt(req.query.page) : 1;
@@ -35,11 +31,7 @@ module.exports = {
                         message: err
                     });
                 }
-                /*
-                res.render("http/500", {
-                    err: err
-                });
-                */
+
                 var skip = (page - 1) * limit;
                 var maxPage = Math.ceil(count / limit);
                 callback(null, skip, maxPage);
@@ -58,7 +50,7 @@ module.exports = {
 
         }], function (err, question, maxPage) {
             if (err) {
-                console.log('Trace8', err);
+                logger.debug('Trace8', err);
                 return res.json({
                     success: false,
                     message: err
@@ -84,7 +76,7 @@ module.exports = {
 
     save: (req, res, next) => {
         async.waterfall([function (callback) {
-            console.log('Trace777');
+            logger.debug('Trace777');
             Counter.findOne({
                 name: "question"
             }, function (err, counter) {
@@ -106,13 +98,13 @@ module.exports = {
             });
         }], function (callback, counter) {
             var newQuestion = req.body.question;
-            console.log('body', req.body);
-            console.log('newQuestion', newQuestion);
-            console.log('etcInfo', req.body.etcInfo);
+            logger.debug('body', req.body);
+            logger.debug('newQuestion', newQuestion);
+            logger.debug('etcInfo', req.body.etcInfo);
             //newQuestion.author = req.body.etcInfo.name;
             newQuestion.numId = counter.totalCount + 1;
             Question.create(req.body.question, function (err, question) {
-                console.log('err', err, '\n');
+                logger.debug('err', err, '\n');
                 /*
                 if (err) return res.json({
                     success: false,
@@ -134,7 +126,7 @@ module.exports = {
     },
 
     show: (req, res, next) => {
-        console.log("Trace11");
+        logger.debug("Trace11");
         Question.findById(req.params.id).populate("author").exec(function (err, question) {
             if (err) return res.json({
                 success: false,
@@ -142,7 +134,7 @@ module.exports = {
             });
             question.views++;
             //question.save();
-            //console.log('aaa : %s',req._parsedUrl.query);
+            //logger.debug('aaa : %s',req._parsedUrl.query);
             res.render("question/show", {
                 question: question,
                 urlQuery: req._parsedUrl.query,
@@ -152,7 +144,7 @@ module.exports = {
         });
     },
     edit: (req, res, next) => {
-        console.log("Trace edit", req.params.id);
+        logger.debug("Trace edit", req.params.id);
         Question.findById(req.params.id, function (err, question) {
             if (err) return res.json({
                 success: false,
@@ -169,8 +161,8 @@ module.exports = {
         });
     },
     update: (req, res, next) => {
-        console.log("Trace update", req.params.id);
-        console.log(req.body);
+        logger.debug("Trace update", req.params.id);
+        logger.debug(req.body);
         req.body.question.updatedAt = Date.now();
         Question.findOneAndUpdate({
             _id: req.params.id
@@ -188,7 +180,7 @@ module.exports = {
         });
     },
     delete: (req, res, next) => {
-        console.log("Trace delete", req.params.id);
+        logger.debug("Trace delete", req.params.id);
 
         Question.findOneAndRemove({
             _id: req.params.id
