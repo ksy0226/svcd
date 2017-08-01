@@ -1,20 +1,20 @@
 extends ../layouts/default
 
-
 block content
-    div.alert.alert-danger.alert-dismissible(style='display:none')
-      a.close(href='#', data-dismiss='alert')
-      strong 
-      |  검색어를 입력하세요!!!
+    .alert.alert-danger.alert-dismissible(style='display:none')
+        a.close(href='#', data-dismiss='alert')
+            strong 
+            | 검색어를 입력하세요!
 
-    p
-    div.container-fluid
-        div.row
-            div.col-md-8
-            div.col-md-2
+    .container-fluid
+        .row
+            .col-md-7
+                a.button#addToTable.btn.btn-primary.waves-effect.waves-light(href='/usermanage/new')
+                    | 추가 
+            .col-md-3
                 input.form-control(type='text' id='searchText' name='searchText')
-            div.col-md-2   
-                div.dropdown
+            .col-md-2   
+                .dropdown
                     button.btn.btn-default.dropdown-toggle(type='button' data-toggle='dropdown' style='width:100%') 검색유형
                         span.span.caret
                     ul.dropdown-menu.dropdown-menu(role='menu', aria-labelledby='menu1')
@@ -30,26 +30,30 @@ block content
                         //li(role='presentation')
                         //    a(role='menuitem', tabindex='-1', href='#') About Us                            
                         //button.btn.btn-primary.btn-info(onclick='search()') 조회
-        div.row
-            div.col-md-12
+        .row
+            .col-md-12
                 table.table.table-striped
                     thead
                         tr
-                            th Num     
-                            th.stretch Title    
-                            th Content      
-                            th Date     
-                            th Author 
+                            th.stretch 회사명
+                            th 아이디
+                            th 사원명
+                            th 부서명
+                            th 직위
+                            th 직책
+                            th 핸드폰번호
                     tbody
                         - if (usermanage.length > 0) {
                             // - for( var i = 0 ; length = usermanage.length > i ; i++ ){ //속도가 빠르다고 알고 있음.
                             - for( var i in usermanage ){ //속도가 느리다고 알고 있음.
-                                tr(onclick="onclick=location.href='/usermanage/#{usermanage[i]._id}/show'")
-                                    td #{usermanage[i].numId}  
-                                    td.highlight(data-highlight='search.highlight.title') #{usermanage[i].title}
-                                    td #{usermanage[i].content}
-                                    td #{usermanage[i].createdAt}
-                                    td #{usermanage[i].author}
+                                tr(onclick="onclick=location.href='/usermanage/#{usermanage[i]._id}/edit'")
+                                    td.highlight(data-highlight='search.highlight.title') #{usermanage[i].compannyNm}
+                                    td #{usermanage[i].userId}
+                                    td #{usermanage[i].userNm}
+                                    td #{usermanage[i].deptNm}
+                                    td #{usermanage[i].jikwe}
+                                    td #{usermanage[i].jikchk}
+                                    td #{usermanage[i].hpNo}
                             - }
                         - }else{
                             tr

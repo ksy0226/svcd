@@ -22,7 +22,7 @@ router.route('/').get(controller.index);
 router.route('/new').get(controller.new)
                     .post(controller.save);
 
-router.route('/:id/show').get(controller.show);
+//router.route('/:id/show').get(controller.show);
 router.route('/:id/edit').get(controller.edit)
                          .post(controller.update);
 router.route('/:id/delete').get(controller.delete);
