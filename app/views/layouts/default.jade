@@ -1,110 +1,156 @@
 doctype html
 html
     head
-        block head
-            title #{title}
-            meta(http-equiv='Content-Type' content='text/html,charset=utf-8')
-            meta(name='viewport', content='width=device-width, initial-scale=1.0')
-            link(rel='stylesheet', href='/vendor/bootstrap-3.3.7/css/bootstrap.min.css')
-            link(rel='stylesheet', href='/vendor/bootstrap-3.3.7/css/bootstrap-theme.min.css')
-            script(src='/vendor/bootstrap-3.3.7/js/bootstrap.min.js')
-            style.
-                * { font-family: 'Malgun Gothic' !important; }
+        title #{title}
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        meta(name='description', content='')
+        meta(name='author', content='')
+        link(href='/vendor/bootstrap-3.3.7/css/bootstrap.min.css', rel='stylesheet')
+        link(href='/vendor/bootstrap-3.3.7/css/bootstrap-theme.min.css', rel='stylesheet')
+        link(type='text/css', href='/vendor/font-awesome/css/font-awesome.min.css', rel='stylesheet')        
+        link(href='/layouts/sb-admin-2.css', rel='stylesheet')
+        script(src='/vendor/jquery/jquery.min.js')
+        script(src='/vendor/bootstrap-3.3.7/js/bootstrap.min.js')  
+        script(src='/layouts/sb-admin-2.js')
 
-                .topper {
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-end;
-                }
+        link(href='/vendor/metisMenu/metisMenu.min.css', rel='stylesheet')     
+        link(href='/vendor/morrisjs/morris.css', rel='stylesheet')
+        script(src='/vendor/metisMenu/metisMenu.min.js')
+        script(src='/vendor/raphael/raphael.min.js')
+        script(src='/vendor/morrisjs/morris.min.js')
 
-                .navbar.navbar-inverse {
-                background-image: linear-gradient(#9f9f9f, #535353 3%, #1f1f1f 17%, #212121 49%, #191919 89%, #000000 100%);
-                border-top: 1px inset rgba(255, 255, 255, 0.1);
-                box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5);
-                border-radius: 10px;
-                margin-top: 10px;
-                }
+        //추후 삭제(도표 표시용)
+        script(src='/data/morris-data.js')
+        script(src='/data/flot-data.js')
 
-                .navbar .navbar-nav > li > a {
-                color: #d1d1d1;
-                font-weight: 700;
-                text-rendering: optimizeLegibility;
-                text-shadow: 0px -1px black, 0px 1px rgba(255, 255, 255, 0.25);
-                line-height: 18px;
-                }
-
-                .navbar .navbar-nav > li.active {
-
-                color: #f8f8f8;
-                background-color: #080808;
-                box-shadow: inset 0px -28px 23px -21px rgba(255, 255, 255, 0.15);
-                border-left: 1px solid #2A2A2A;
-                border-right: 1px solid #272727;
-                }
-
-                .btn.btn-gradient-blue {
-                background-color: #0c5497 !important;
-                background-image: -webkit-linear-gradient(top, #127bde 0%, #072d50 100%);
-                background-image: -o-linear-gradient(top, #127bde 0%, #072d50 100%);
-                background-image: linear-gradient(to bottom, #127bde 0%, #072d50 100%);
-                background-repeat: repeat-x;
-                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff127bde', endColorstr='#ff072d50', GradientType=0);
-                border-color: #072d50 #072d50 #0c5497;
-                color: #fff !important;
-                text-shadow: 0 -1px 0 rgba(31, 31, 31, 0.29);
-                -webkit-font-smoothing: antialiased;
-                }
-        block neck
+    block head
 
     body
-    - if(true){ //외부사용자
-            div.navbar.navbar-default.navbar-top
-                div.container
-                    div.navbar-header
-                        a.navbar-brand(href='/')
-                            img.navbar-logo(src='/isu/image/logonew.gif', alt='Logo')
-                            //img(src='/isu/image/logonew.gif', alt='Logo')
-                            span.navbar-brand-label #{projectName}
-                        button.navbar-toggle.collapsed(data-toggle='collapse', data-target='.my-navbar-collapse')
-                            span.icon-bar
-                            span.icon-bar
-                            span.icon-bar
-                    div.navbar-collapse.my-navbar-collapse.collapse
-                        ul.nav.navbar-nav
-                            li: a(href='/main/') Home
-                            li: a(href='/account/') FAQ
-                            li: a(href='/question/new') 문의하기
-                            li: a(href='/question/') 처리진행현황
-                            li: a(href='/account/') 자주묻는질문과답
-                            li: a(href='/register/') 계정등록
-                            li: a(href='/manage/company') 회사정보관리
-                        ul.nav.navbar-nav.navbar-right
-                            if user && user.username
-                                li: a(href='#{user.defaultReturnUrl}')
-                                    i.fa.fa-user
-                                    |  #{user.username}
-                            else
-                                li: a(href='/logout')
-                                    i.fa.fa-user
-                                    |  로그아웃
-            div.page
-                div.container
-                    block content
-
-            div.footer
-                div.container
-                    span.copyright.pull-right
-                        |&#169; #{copyrightYear} #{copyrightName}
-                    ul.links
-                        li: a(href='/') Home
-                        li: a(href='/contact/') Contact
-                    div.clearfix
-
-            div.ajax-spinner
-                img(src='/isu/image/ajax-pulse.gif', alt='Loading')
-    - }else{ // 내부사용자
-        div.page
-                div.container
-                    block content
-    -}
+        - if(true){
+        .navbar.navbar-default.navbar-top
+            .container
+                .navbar-header
+                    a.navbar-brand(href='/')
+                        img.navbar-logo(src='/isu/image/logonew.gif', alt='Logo')
+                        // img(src='/isu/image/logonew.gif', alt='Logo')
+                        span.navbar-brand-label
+                    button.navbar-toggle.collapsed(data-toggle='collapse', data-target='.my-navbar-collapse')
+                        span.icon-bar
+                        span.icon-bar
+                        span.icon-bar
+                .navbar-collapse.my-navbar-collapse.collapse
+                    ul.nav.navbar-nav
+                        li
+                            a(href='/main/') Home
+                        li
+                            a(href='/account/') FAQ
+                        li
+                            a(href='/question/new') 문의하기
+                        li
+                            a(href='/question/') 처리진행현황
+                        li
+                            a(href='/account/') 자주묻는질문과답
+                        li
+                            a(href='/register/') 계정등록
+                        li
+                            a(href='/manage/company') 회사정보관리
+                    ul.nav.navbar-nav.navbar-right
+                        li
+                            a(href='/logout')
+                                i.fa.fa-user
+                                |  로그아웃
+        -}
+        .page
+            .container
+                #wrapper
+                    .sidebar.visible-lg(role='navigation', style='margin-top: 0')
+                        .sidebar-nav.navbar-collapse
+                            ul#side-menu.nav
+                                li.sidebar-search
+                                    .input-group.custom-search-form
+                                        input.form-control(type='text', placeholder='Search...')
+                                        span.input-group-btn
+                                            button.btn.btn-default(type='button')
+                                                i.fa.fa-search
+                                li
+                                    a(href='#')
+                                        i.fa.fa-desktop.fa-fw
+                                        |  HOME
+                                li.active
+                                    a(href='#')
+                                        i.fa.fa-th-list.fa-fw
+                                        |  문의방법 및 담당자
+                                        span.fa.arrow
+                                    ul.nav.nav-second-level
+                                        li
+                                            a(href='#') 문의하기
+                                        li
+                                            a(href='#') 처리진행현황
+                                        li
+                                            a(href='#') 자주묻는질문과답
+                                        li
+                                            a(href='#') 처리된내용검색
+                                li.active
+                                    a(href='#')
+                                        i.fa.fa-th-list.fa-fw
+                                        |  SD 담당자
+                                        span.fa.arrow
+                                    ul.nav.nav-second-level
+                                        li
+                                            a(href='#') 상담접수(전화)
+                                        li
+                                            a(href='#') 나의업무처리현황
+                                        li
+                                            a(href='#') 나의업무지정
+                                        li
+                                            a(href='#') 월별처리내역
+                                li
+                                    a(href='#')
+                                        i.fa.fa-th-list.fa-fw
+                                        |  SD 검색/통계
+                                        span.fa.arrow
+                                    ul.nav.nav-second-level
+                                        li
+                                            a(href='#') 전체내용검색
+                                        li
+                                            a(href='#') 회사별 상위업무통계
+                                        li
+                                            a(href='#') 상위별 하위업무통계
+                                        li
+                                            a(href='#') 미해결 현황
+                                        li
+                                            a(href='#') 담당자별월별처리내역
+                                        li
+                                            a(href='#') 처리구분별처리내역
+                                li
+                                    a(href='#')
+                                        i.fa.fa-th-list.fa-fw
+                                        |  SD 기본정보
+                                        span.fa.arrow
+                                    ul.nav.nav-second-level
+                                        li
+                                            a(href='#') 상위업무조회
+                                        li
+                                            a(href='#') 하위업무조회
+                                        li
+                                            a(href='#') 회사정보관리(외부)
+                                        li
+                                            a(href='/usermanage/') 사원정보관리(내외)
+                                        li
+                                            a(href='#') 회사별상위업무지정
+                                        li
+                                            a(href='#') 처리구분코드조회
+                                        li
+                                            a(href='#') 업무별담당자현황
+                                        li
+                                            a(href='#') 자주묻는질문과답
+                                li
+                                    a(href='#')
+                                        i.fa.fa-th-list.fa-fw
+                                        |  SD Dashboard
+                                        span.fa.arrow
+                    #page-wrapper
+                            block content
         block feet

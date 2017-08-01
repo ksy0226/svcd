@@ -22,10 +22,10 @@ router.route('/').get(controller.index);
 router.route('/new').get(controller.new)
                  .post(controller.save);
                
-router.route('/:id/show').get(controller.show);
-router.route('/:id/edit').get(controller.edit)
+router.route('/show/:id').get(controller.show);
+router.route('/edit/:id').get(controller.edit)
                          .post(controller.update);
-router.route('/:id/delete').get(controller.delete);
+router.route('/delete/:id').get(controller.delete);
 
 
 module.exports = router;
