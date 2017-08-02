@@ -13,6 +13,7 @@ module.exports = () => {
     //router.use('/register', require('../app/routes/register'));
     //router.use('/account', require('../app/routes/account'));
     router.use('/question', require('../app/routes/question'));
+    router.use('/incident', require('../app/routes/incident'));
     router.use('/manage', require('../app/routes/manage'));
     router.use('/usermanage', require('../app/routes/usermanage'));
     router.use('/company', require('../app/routes/company'));

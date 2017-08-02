@@ -11,13 +11,9 @@ const Iconv = require('iconv-lite');
 
 module.exports = {
 
-    usermanageIndex: (req, res, next) => {
-
+    index: (req, res, next) => {
         logger.debug('req.params.searchType : ' + req.query.searchType);
         logger.debug('req.params.searchText : ' + req.query.searchText);
-
-        //logger.debug('req.params.searchText : ' + Iconv.decode(req.query.searchText, 'UTF-8'));
-
 
         var vistorCounter = null;
         var page = Math.max(1, req.params.page) > 1 ? parseInt(req.query.page) : 1;
@@ -28,18 +24,12 @@ module.exports = {
             if (search.findUser && !search.findUsermanage.$or) return callback(null, null, 0);
             logger.debug("search : " + JSON.stringify(search));
             Usermanage.count(search.findUsermanage, function (err, count) {
-
                 if (err) {
                     return res.json({
                         success: false,
                         message: err
                     });
                 }
-                /*
-                res.render("http/500", {
-                    err: err
-                });
-                */
                 var skip = (page - 1) * limit;
                 var maxPage = Math.ceil(count / limit);
                 callback(null, skip, maxPage);
@@ -48,7 +38,7 @@ module.exports = {
             if (search.findUser && !search.findUsermanage.$or) return callback(null, [], 0);
             logger.debug("search : " + JSON.stringify(search));
             Usermanage.find(search.findUsermanage)
-                .populate("author")
+                .populate("_id")
                 .sort('-createdAt')
                 .skip(skip).limit(limit)
                 .exec(function (err, usermanage) {
@@ -58,14 +48,12 @@ module.exports = {
 
         }], function (err, usermanage, maxPage) {
             if (err) {
-                console.log('Trace8', err);
                 return res.json({
                     success: false,
                     message: err
                 });
             }
-            //logger.debug(usermanage);
-            res.render("usermanage/usermanageIndex", {
+            res.render("usermanage/index", {
                 usermanage: usermanage,
                 user: req.user,
                 page: page,
@@ -78,11 +66,11 @@ module.exports = {
         });
     },
 
-    usermanageNew: (req, res, next) => {
-        res.render("usermanage/usermanageNew");
+    new: (req, res, next) => {
+        res.render("usermanage/new");
     },
 
-    usermanageSave: (req, res, next) => {
+    save: (req, res, next) => {
         async.waterfall([function (callback) {
             console.log('Trace777');
             Counter.findOne({
@@ -106,19 +94,8 @@ module.exports = {
             });
         }], function (callback, counter) {
             var newUsermanage = req.body.usermanage;
-            console.log('body', req.body);
-            console.log('newUsermanage', newUsermanage);
-            console.log('etcInfo', req.body.etcInfo);
-            //newUsermanage.author = req.body.etcInfo.name;
             newUsermanage.numId = counter.totalCount + 1;
             Usermanage.create(req.body.usermanage, function (err, usermanage) {
-                console.log('err', err, '\n');
-                /*
-                if (err) return res.json({
-                    success: false,
-                    message: err
-                });
-                */
                 if (err) {
                     res.render("http/500", {
                         err: err
@@ -128,22 +105,19 @@ module.exports = {
                 counter.save();
                 res.redirect('/usermanage');
             });
-
             //res.redirect('/usermanage');
         });
     },
 
-    usermanageShow: (req, res, next) => {
-        console.log("Trace11");
-        Usermanage.findById(req.params.id).populate("author").exec(function (err, usermanage) {
+    /*
+    show: (req, res, next) => {
+        Usermanage.findById(req.params.id).populate("_id").exec(function (err, usermanage) {
             if (err) return res.json({
                 success: false,
                 message: err
             });
             usermanage.views++;
-            //usermanage.save();
-            //console.log('aaa : %s',req._parsedUrl.query);
-            res.render("usermanage/usermanageShow", {
+            res.render("usermanage/show", {
                 usermanage: usermanage,
                 urlQuery: req._parsedUrl.query,
                 user: req.user,
@@ -151,30 +125,25 @@ module.exports = {
             });
         });
     },
-    usermanageEdit: (req, res, next) => {
-        console.log("Trace edit", req.params.id);
+    */
+
+    edit: (req, res, next) => {
         Usermanage.findById(req.params.id, function (err, usermanage) {
             if (err) return res.json({
                 success: false,
                 message: err
             });
-            //if (!req.user._id.equals(usermanage.author)) return res.json({
-            //    success: false,
-            //    message: "Unauthrized Attempt"
-            //});
-            res.render("usermanage/usermanageEdit", {
+            res.render("usermanage/edit", {
                 usermanage: usermanage,
                 user: req.user
             });
         });
     },
-    usermanageUpdate: (req, res, next) => {
-        console.log("Trace update", req.params.id);
-        console.log(req.body);
+
+    update: (req, res, next) => {
         req.body.usermanage.updatedAt = Date.now();
         Usermanage.findOneAndUpdate({
             _id: req.params.id
-            //,author: req.user._id
         }, req.body.usermanage, function (err, usermanage) {
             if (err) return res.json({
                 success: false,
@@ -184,15 +153,13 @@ module.exports = {
                 success: false,
                 message: "No data found to update"
             });
-            res.redirect('/usermanage/' + req.params.id + '/usermanageShow');
+            res.redirect('/usermanage/' + req.params.id + '/edit');
         });
     },
-    usermanageDelete: (req, res, next) => {
-        console.log("Trace delete", req.params.id);
 
+    delete: (req, res, next) => {
         Usermanage.findOneAndRemove({
             _id: req.params.id
-            //,author: req.user._id
         }, function (err, usermanage) {
             if (err) return res.json({
                 success: false,
@@ -205,5 +172,4 @@ module.exports = {
             res.redirect('/usermanage');
         });
     }
-
 };
