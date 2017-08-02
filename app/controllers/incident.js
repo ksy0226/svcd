@@ -110,7 +110,7 @@ module.exports = {
                     success: false,
                     message: err
                 });
-                */
+                */ 
                 if (err) {
                     res.render("http/500", {
                         err: err
