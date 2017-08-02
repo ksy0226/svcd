@@ -11,22 +11,18 @@ html
         link(href='/vendor/bootstrap-3.3.7/css/bootstrap-theme.min.css', rel='stylesheet')
         link(type='text/css', href='/vendor/font-awesome/css/font-awesome.min.css', rel='stylesheet')        
         link(href='/layouts/sb-admin-2.css', rel='stylesheet')
+        link(href='/vendor/metisMenu/metisMenu.min.css', rel='stylesheet')
+        link(href='/vendor/morrisjs/morris.css', rel='stylesheet')
         script(src='/vendor/jquery/jquery.min.js')
         script(src='/vendor/bootstrap-3.3.7/js/bootstrap.min.js')  
         script(src='/layouts/sb-admin-2.js')
-
-        link(href='/vendor/metisMenu/metisMenu.min.css', rel='stylesheet')     
-        link(href='/vendor/morrisjs/morris.css', rel='stylesheet')
-        script(src='/vendor/metisMenu/metisMenu.min.js')
         script(src='/vendor/raphael/raphael.min.js')
+        script(src='/vendor/metisMenu/metisMenu.min.js')
         script(src='/vendor/morrisjs/morris.min.js')
 
         //추후 삭제(도표 표시용)
         script(src='/data/morris-data.js')
         script(src='/data/flot-data.js')
-
-
-    block head
 
     body
         - if(true){ //외부사용자
@@ -44,7 +40,7 @@ html
                 .navbar-collapse.my-navbar-collapse.collapse
                     ul.nav.navbar-nav
                         li
-                            a(href='/main/') Home
+                            a(href='/index') Home
                         li
                             a(href='/account/') FAQ
                         li
@@ -76,7 +72,7 @@ html
                                             button.btn.btn-default(type='button')
                                                 i.fa.fa-search
                                 li
-                                    a(href='#')
+                                    a(href='/index')
                                         i.fa.fa-desktop.fa-fw
                                         |  HOME
                                 li.active
