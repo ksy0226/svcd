@@ -11,14 +11,15 @@ html
         link(href='/vendor/bootstrap-3.3.7/css/bootstrap-theme.min.css', rel='stylesheet')
         link(type='text/css', href='/vendor/font-awesome/css/font-awesome.min.css', rel='stylesheet')        
         link(href='/layouts/sb-admin-2.css', rel='stylesheet')
+        link(href='/vendor/metisMenu/metisMenu.min.css', rel='stylesheet')
         script(src='/vendor/jquery/jquery.min.js')
         script(src='/vendor/bootstrap-3.3.7/js/bootstrap.min.js')  
         script(src='/layouts/sb-admin-2.js')
-
-    block head
+        script(src='/vendor/raphael/raphael.min.js')
+        script(src='/vendor/metisMenu/metisMenu.min.js')
 
     body
-        - if(true){
+        - if(true){ //외부사용자
         .navbar.navbar-default.navbar-top
             .container
                 .navbar-header
@@ -75,9 +76,9 @@ html
                                         span.fa.arrow
                                     ul.nav.nav-second-level
                                         li
-                                            a(href='#') 문의하기
+                                            a(href='/incident/new') 문의하기
                                         li
-                                            a(href='#') 처리진행현황
+                                            a(href='/incident') 처리진행현황
                                         li
                                             a(href='#') 자주묻는질문과답
                                         li
