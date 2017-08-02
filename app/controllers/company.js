@@ -8,7 +8,9 @@ const Iconv  = require('iconv-lite');
 
 module.exports = {
 
+
     list: (req, res, next) => {
+        
         CompanyModel.find(req.body.company, function(err, company) {
             //logger.debug('err', err, '\n');
             logger.debug('list 호출');
@@ -22,6 +24,8 @@ module.exports = {
                 company: company
             });
         });
+       
+        /*bootbox.alert("This is an alert with a callback!", function(){ console.log('This was logged in the callback!'); });*/
     },
 
     new: (req, res, next) => {
@@ -104,6 +108,7 @@ module.exports = {
     },
     delete: (req, res, next) => {
         logger.debug("Trace delete", req.params.id);
+
         CompanyModel.findOneAndRemove({
             _id: req.params.id
             //,author: req.user._id
@@ -116,6 +121,7 @@ module.exports = {
                 success: false,
                 message: "No data found to delete"
             });
+            //res.render('index', {messages: req.flash('info')});
             res.redirect('/company/list');
         });
     }

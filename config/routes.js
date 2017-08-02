@@ -15,6 +15,7 @@ module.exports = () => {
     router.use('/question', require('../app/routes/question'));
     router.use('/manage', require('../app/routes/manage'));
     router.use('/usermanage', require('../app/routes/usermanage'));
+    router.use('/company', require('../app/routes/company'));
 
     /// catch 404 and forward to error handler
     router.use(function(req, res, next) {

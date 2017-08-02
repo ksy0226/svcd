@@ -4,7 +4,16 @@ block head
     link(rel='stylesheet', href='/vendor/bootstrap-3.3.7/css/bootstrap-theme.min.css')
     script(src='/vendor/jquery/jquery.js')
     script(src='/vendor/bootstrap-3.3.7/js/bootstrap.min.js')
-    script(src='/vendor/jquery/jquery.js')        
+    script(src='/vendor/jquery/jquery.js')
+    script(src='/vendor/bootbox/bootbox.min.js')
+    script.
+        myConfirm = function(url) {
+            bootbox.confirm("sure?", function(okay) {
+                if(okay)
+                    location.href = url;
+            });
+            return false;
+        }
 
 block content
     .masthead.clearfix
@@ -12,9 +21,10 @@ block content
             h3.masthead-brand 수정
             br
             div
-            button.btn.btn-primary.btn-signup(onclick="location.href=history.go(-1)") Back
+            button.btn.btn-primary.btn-signup(onclick="location.href='/company/list'") List
             button.btn.btn-primary.btn-info(onclick="location.href='/company/#{company._id}/edit'") Edit
             button.btn.btn-primary.btn-danger(onclick="location.href='/company/#{company._id}/delete'") Delete
+            button.btn.btn-default.btn-default(onclick="alert(1)") default
             h3
             .row
                 .col-md-12
@@ -58,3 +68,4 @@ block content
                                 
                         button.btn.btn-success.btn-md(type='submit') Save
             br
+          
