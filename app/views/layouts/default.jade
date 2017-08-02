@@ -25,10 +25,11 @@ html
         script(src='/data/morris-data.js')
         script(src='/data/flot-data.js')
 
+
     block head
 
     body
-        - if(true){
+        - if(true){ //외부사용자
         .navbar.navbar-default.navbar-top
             .container
                 .navbar-header
@@ -85,9 +86,9 @@ html
                                         span.fa.arrow
                                     ul.nav.nav-second-level
                                         li
-                                            a(href='#') 문의하기
+                                            a(href='/incident/new') 문의하기
                                         li
-                                            a(href='#') 처리진행현황
+                                            a(href='/incident') 처리진행현황
                                         li
                                             a(href='#') 자주묻는질문과답
                                         li
