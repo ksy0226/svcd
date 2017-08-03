@@ -2,20 +2,21 @@ extends ../layouts/default
 
 block content
     .content
-            .container
-                .row(style='margin-top:20px')
+        .container
+            .row(style='margin-top:20px')
+                .col-xs-12.col-sm-10.col-md-8
+                    h3.masthead-brand 사원정보관리(내외) > 상세정보
+                    hr.colorgraph
+            form.form.col-md-12.center-block(name='form' action='/usermanage/#{usermanage._id}/edit' method='post')
+                .row(style='margin-top:-15px')
                     .col-xs-12.col-sm-10.col-md-8
-                        h3.masthead-brand 사원정보관리(내외) > 상세정보
-                        hr.colorgraph
-                form.form.col-md-12.center-block(name='form' action='/usermanage/#{usermanage._id}/edit' method='post')
-                    .row(style='margin-top:-15px')
-                        .col-xs-12.col-sm-10.col-md-8
-                            .form-group
-                                button.btn.btn-primary.btn-signup(onclick="location.href='/usermanage'") 목록
-                                button.btn.btn-primary.btn-danger(onclick="location.href='/usermanage/#{usermanage._id}/delete'") 삭제
-                                button.btn.btn-primary.btn-success(type='submit') 저장
-                    .row(style='margin-top:20px') 
-                        .col-xs-12.col-sm-10.col-md-8
+                        .form-group
+                            .btn.btn-primary.btn-signup(onclick="location.href='/usermanage'") 목록
+                            .btn.btn-primary.btn-danger(onclick="location.href='/usermanage/#{usermanage._id}/delete'") 삭제
+                            button.btn.btn-success.btn-md(type='submit') 저장
+                .row(style='margin-top:20px') 
+                    .col-xs-12.col-sm-10.col-md-8
+                        form.form.center-block(name='form' action='/usermanage/#{usermanage._id}/edit' method='post')
                             .form-group
                                 input.form-control.input-lg(name='usermanage[compannyNm]' type='text' placeholder='회사명' required value='#{usermanage.compannyNm}')
                             .form-group

@@ -9,14 +9,14 @@ block content
                         hr.colorgraph
                 form.form.col-md-12.center-block(name='form' action='/usermanage/new' method='post')
                     .row(style='margin-top:-15px')
-                        .col-md-2
-                            a.button#addToTable.btn.btn-primary.waves-effect.waves-light(href='/usermanage/new')
+                        .col-xs-3.col-sm-3.col-md-3
+                            a.btn.btn-primary(href='/usermanage/new')
                                 | 추가 
-                        .col-md-3
+                        .col-xs-3.col-sm-3.col-md-3
                             input.form-control(type='text' id='searchText' name='searchText')
-                        .col-md-2
+                        .col-xs-2.col-sm-2.col-md-2
                             .dropdown
-                                button.btn.btn-default.dropdown-toggle(type='button' data-toggle='dropdown' style='width:100%') 검색유형
+                                button.btn.btn-default.dropdown-toggle(type='button' data-toggle='dropdown') 검색유형
                                     span.span.caret
                                 ul.dropdown-menu.dropdown-menu(role='menu', aria-labelledby='menu1')
                                     li(role='presentation')
