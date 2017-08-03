@@ -93,5 +93,9 @@ module.exports = {
                 remember_me : remember_me
             });
         }
-    }
+    },
+    index1: (req, res, next) => {
+        res.render("index1");
+    },
+
 };
