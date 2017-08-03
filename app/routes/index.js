@@ -10,7 +10,8 @@ const controller = require('../controllers/login');
 router.get('/', ssc.sessionCheck);
 
 router.route('/index').post(controller.logincheck)
-                      .get(ssc.sessionCheck, controller.retry);                           
+                      .get(ssc.sessionCheck, controller.retry);   
+router.route('/index1').get(controller.index1);                          
 router.route('/logout').get(controller.logout);
 
 module.exports = router;
