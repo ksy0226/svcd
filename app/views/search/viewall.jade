@@ -1,0 +1,54 @@
+extends ../layouts/default
+block head
+    link(rel='stylesheet', href='/isu/css/board_style.css')
+    link(rel='stylesheet', href='/isu/css/css_style.css')
+    link(rel='stylesheet', href='/isu/css/jquery-ui.css')
+
+block content
+    .content
+        .container
+            .row(style='margin-top:20px')
+                .col-xs-12.col-sm-10.col-md-8
+                    h3.masthead-brand 처리된 내용 > 조회하기
+                    hr.colorgraph
+                .col-xs-12.col-sm-10.col-md-8    
+                    .msearch
+                        strong 검색
+                            select#search_gbn.islt(name='search_gbn', onchange='setInput(this);doView();')
+                                option(value='com') 업체
+                                option(value='cpurpose') 목적
+                                option(value='cgubun') 구분
+                                option(value='clevel') 영업단계
+                            input#search_text(type='text')
+                    .cont_area
+                    hr
+                .col-xs-12.col-sm-10.col-md-8 
+                    .row(style='margin-left:10px; margin-top:10px')
+                            .col-md-1(style='margin-top:25px')
+                                span.wstate2 진행
+                            .col-md-9
+                                dd
+                                    ol
+                                    .ititle
+                                        h5.list-group-item-heading  [그룹웨어] 
+                                            Strong 
+                                                a.more_view(href='#') 전자증빙시스템 상태값 추가 요청
+                                            
+                                        2017-04-27  [박현숙과장] 
+                                    br
+                                    .icont
+                                        [담당자] 박선우 
+                                        p.list-group-item-text
+                                            | - 현재(변경전) : 한가지 결재조건 지정 가능
+                                            br
+                                            |  ① 그룹웨어 < 발신부서 < 수신부서(재경팀, 총무1과, 총무2과)
+                                            br
+                                            | : 현업에서 전표 발생 후 관리부서에 수신
+                                            br
+                                            |   - 개선(변경후) : 두가지 결재조건 지정 가능
+                                br
+                            .col-md-2
+                                a.more_view(href='#') 더보기
+                        hr
+                .col-xs-12.col-sm-10.col-md-8
+                    a.more_view(href='#')처리된 내용 더보기 >>>
