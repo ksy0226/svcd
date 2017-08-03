@@ -1,23 +1,18 @@
 extends ../layouts/default
-block head
-    link(rel='stylesheet', href='/vendor/bootstrap-3.3.7/css/bootstrap.min.css')
-    link(rel='stylesheet', href='/vendor/bootstrap-3.3.7/css/bootstrap-theme.min.css')
-    script(src='/vendor/jquery/jquery.js')
-    script(src='/vendor/bootstrap-3.3.7/js/bootstrap.min.js')
-    script(src='/vendor/jquery/jquery.js')
-    link(rel='stylesheet', href='https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css')   
 
 block content
-    .masthead.clearfix
-        .inner
-            h3.masthead-brand 회사정보관리
-            br
+    .content
+        .container
+            .row(style='margin-top:20px')
+                .col-xs-12.col-sm-10.col-md-8
+                    h3.masthead-brand 회사리스트
+                    hr.colorgraph      
+            .row(style='margin-top:-15px')
+                .col-xs-1.col-sm-1.col-md-1.col-sm-offset-7.col-md-offset-7
+                    .form-group
+                        a.button.btn.btn-info.btn-sm(href='/company/new') 추가         
             .row
-                .col-sm-12
-                    a.button.btn.btn-info.btn-md(href='/company/new') 추가
-                    br
-                    br
-                    
+                .col-xs-12.col-sm-10.col-md-8       
                     p.text-muted.font-13
                         | 
                     table.tablesaw.table.m-b-0(data-tablesaw-mode='swipe')
@@ -42,4 +37,7 @@ block content
                         - }else{
                             tr
                                 td(colspan='5' align='center') 조회된 데이타가 없습니다.
-                        - }
+                        - }  
+
+
+

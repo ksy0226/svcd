@@ -25,7 +25,6 @@ module.exports = {
             });
         });
        
-        /*bootbox.alert("This is an alert with a callback!", function(){ console.log('This was logged in the callback!'); });*/
     },
 
     new: (req, res, next) => {

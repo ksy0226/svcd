@@ -8,7 +8,8 @@ var companySchema = mongoose.Schema({
     com_nm: { type: String, required: true },     //회사명
     ceo_nm: { type: String },                     //대표자명
     zip_cd: { type: String },                     //우편번호
-    addr: { type: String },                       //주소
+    addr: { type: String },                       //주소1
+    addr2: { type: String },                       //주소2
     type: { type: String },                       //업종
     telno: { type: String },                      //전화번호
     faxno: { type: String },                      //팩스번호
