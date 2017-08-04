@@ -1,0 +1,99 @@
+extends ../layouts/default
+
+block content
+    .content
+        .container
+            .row(style='margin-top:20px')
+                .col-xs-12.col-sm-10.col-md-8
+                    h3.masthead-brand 처리된 내용 > 조회하기 > 상세조회
+                    hr.colorgraph
+            form.form.col-md-12.center-block(name='form' action='' method='post')
+                .row(style='margin-top:-15px')
+                    .col-xs-12.col-sm-10.col-md-8
+                        .form-group
+                            .btn.btn-primary.btn-signup(onclick="location.href='/search/viewall'") 목록
+                            button.btn.btn-success.btn-md(type='submit') 저장
+                .row(style='margin-top:20px') 
+                    .col-xs-12.col-sm-10.col-md-8
+                        .panel.panel-default
+                            .panel-heading
+                                h4
+                                    |  접수내용
+                                ol.article_info
+                                    li.iname(onclick='javascript:showNamecard()') 박선우
+                                    li.bar
+                                    li.idate 2017-07-31 15:49
+                            .panel-body
+                                p
+                                | 안녕하세요 
+                                br
+                                | 이수시스템 박선우입니다. 
+                                br
+                                br
+                                | **내용 : 메일 삭제 후 용량 확보하였는데도, 90% 이상 찼다는 알림창 뜨는 문제
+                                br
+                                br
+                                | 아래 두 개의 계정에서 발생하는 것으로 보입니다. 
+                                br
+                                | **계정 : 생관1(wendeng1@isu.co.kr) 박용익(yong63@isu.co.kr) 
+                                br
+                                br
+                                | 확인 및 신속한 조치 부탁드립니다. 
+                                br
+                                br
+                                br
+
+                            .panel.panel-default(style='margin: 0 20px 20px 20px')
+                                .panel-heading
+                                    h4
+                                    strong
+                                        img.ico_sb(src='/images/b.gif')
+                                        | 조치사항
+                                    span.idate 2017-07-31 16:02
+                                .panel-body
+                                    p
+                                    .irps
+                                    | 안녕하세요. ㈜나라비전 김성회입니다.
+                                    br
+                                    br
+                                    | 쓰레기 데이터 정리 완료하였습니다. 해당 계정 재로그인 바랍니다.
+                                    br
+                                    br
+                                    | 추가 문의사항 발생 시, 고객센터로 문의 바랍니다. 감사합니다.
+                                    br
+                                .panel-footer
+                                    dl
+                                    dt
+                                        img(src='/images/photo/hwahwoi4@nara.co.kr', style='width:73px;height:78px')
+                                    dd
+                                        p.iaction
+                                        img.ico_staff(src='/images/b.gif')
+                                        | 담당자
+                                        p.iposition
+                                        strong 서비스사업부
+                                        em.bar
+                                        strong 김성회
+                                        span 대리
+                                        p.iemail
+                                        img.ico_mail(src='/images/b.gif')
+                                        |  hwahwoi4@nara.co.kr
+                                        // <button class="gotalk"><span class="blind">1:1</span></button>
+
+                        .panel.panel-default
+                                .panel-heading
+                                   h6
+                                    | 서비스 만족도 결과
+                                    span.r_arrow
+                                    span.blind 화살표
+                                .panel-body
+                                    .vc_cont
+                                    .icont_text
+                                        strong 조치내역에 대해 만족도
+                                        span.gt_base >
+                                        |                   매우 만족
+                                        p.con_bar
+                                        strong 불편사항 및 개선사항
+                                        .con_txt
+
+                        .actionarea
+                            .btn.btn-primary.btn-signup(onclick="location.href='/search/viewall'") 목록
