@@ -25,7 +25,7 @@ block content
                     .col-xs-12.col-sm-10.col-md-8
                         h3.masthead-brand 서비스요청
                         hr.colorgraph
-                form.form.col-md-12.center-block(name='form' action='/incident/new' method='post' enctype="multipart/form-data")        
+                form.form.col-md-12.center-block(name='form' action='' method='post' enctype="multipart/form-data")        
                     .row(style='margin-top:-15px')
                         .col-xs-12.col-sm-4.col-md-1.col-sm-offset-7.col-md-offset-7
                             .form-group
@@ -57,8 +57,6 @@ block content
 
                     .row 
                         .col-xs-12.col-sm-10.col-md-8
-                            form(enctype='multipart/form-data')
                                 .form-group
-                                input#attach-file.file(name='attach-file', type='file', multiple='')
-                                hr   
+                                input#attach-file.file(name='incident[attach-file]', type='file', multiple='') 
 

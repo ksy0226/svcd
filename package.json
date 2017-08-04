@@ -5,7 +5,7 @@
   "main": "Gruntfile.js",
   "devDependencies": {},
   "scripts": {
-    "start": "supervisor ./bin/www",
+    "start": "nodemon ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "LHI",

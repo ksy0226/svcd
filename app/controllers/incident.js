@@ -5,7 +5,8 @@ const async = require('async');
 const Incident = require('../models/Incident');
 const Counter = require('../models/Counter');
 const service = require('../services/incident');
-
+const fs = require('fs');
+const path = require('path');
 const logger = require('log4js').getLogger('app');
 
 module.exports = {
@@ -31,12 +32,10 @@ module.exports = {
     },
 
     save: (req, res, next) => {
-        logger.debug('====> Incident save......');
-        
-
         
         var newincident = req.body.incident;
-        logger.debug('====> Incident save......',req.body);
+        var uploadDir = path.join('D:/999.prj-nodejs/svcd/upload-file' );
+        logger.debug("newincident = ",newincident);
         Incident.create(newincident, function(err, incident) {
             if (err) {
                 res.render("http/500", {
@@ -44,14 +43,12 @@ module.exports = {
                 });
             }else{
                 if(req.file){
-                    logger.debug('====> req.file');
-                    fs.rename( req.file.path , uploadDir +'/' + req.file.filename , function (err){ 
+                    fs.rename( req.file.path[0] , uploadDir +'/' + req.file.filename , function (err){ 
                         res.render("incident", {
                             incident: incident
                         });
                     });
                 }else{
-                    logger.debug('====> req.file not');
                     res.render("incident", {
                             incident: incident
                         });

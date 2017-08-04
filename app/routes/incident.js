@@ -8,11 +8,13 @@ const multer = require('multer');
 
 const controller = require('../controllers/incident');
 
+
 var path = require('path');
-var uploadDir = path.join( __dirname , '/upload-file' );
+//var uploadDir = path.join( __dirname , '/upload-file' );
+var uploadDir = path.join('D:/999.prj-nodejs/svcd/upload-file' );
 var storage = multer.diskStorage({
     destination : function (req, file, callback) {
-        callback(null, '/tmp/uploads');
+        callback(null, uploadDir);
     },
     filename : function (req, file, callback) {
         callback(null, 'posts-' + Date.now() + '.'+ file.mimetype.split('/')[1] );
@@ -25,7 +27,7 @@ var upload = multer({ storage: storage });
 //                 .post(controller.index);
 //router.route('/:searchType/:searchText').get(controller.index);
 router.get('/new', ssc.sessionCheck, controller.new)
-router.post('/new', upload.single('thumbnail') , ssc.sessionCheck, controller.save);             
+router.post('/new', upload.array('incident[attach-file]'), ssc.sessionCheck, controller.save);             
 router.get('/show/:id', ssc.sessionCheck, controller.show);
 router.get('/edit/:id', ssc.sessionCheck, controller.edit)
 router.put('/edit/:id', ssc.sessionCheck, controller.update);
