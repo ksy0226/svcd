@@ -97,5 +97,8 @@ module.exports = {
     index1: (req, res, next) => {
         res.render("index1");
     },
+    index2: (req, res, next) => {
+        res.render("index2");
+    },
 
 };
