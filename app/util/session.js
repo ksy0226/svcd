@@ -7,8 +7,8 @@ module.exports = {
         logger.debug('sessionCheck '+req.session.email);
         if (req.session.email) {
             logger.debug('sessionCheck succeed');
-            res.render('main/main');
-            //next();
+            //res.render('main/main');
+            next();
         } else { //세션값이 없으면
             logger.debug('sessionCheck failed');
             //next(); //임시로 통과
