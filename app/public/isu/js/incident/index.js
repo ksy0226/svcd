@@ -49,4 +49,38 @@
           maxFilesNum: 10
       });
 
+
+      /*
+      $('#summernote').summernote({
+          lang: 'ko-KR',
+          height: 300,
+      });
+      */
+      $('#summernote').summernote({
+          lang: 'ko-KR',
+          height: 300,
+          callbacks: {
+              onImageUpload: function (files) {
+                  sendFile(files[0]);
+              }
+          }
+      });
+
   });
+
+
+  function sendFile(file, editor, welEditable) {
+          data = new FormData();
+          data.append("thumbnail", file);
+          $.ajax({
+              data: data,
+              type: "POST",
+              url: '#',
+              cache: false,
+              contentType: false,
+              processData: false,
+              success: function (url) {
+                  $('#summernote').summernote("insertImage", url);
+              }
+          });
+      }
