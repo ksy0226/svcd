@@ -1,6 +1,12 @@
 extends ../layouts/default
 block head
     link(href='/isu/css/board_style.css', rel='stylesheet')
+    script(src='/isu/js/incident/index.js', type='text/javascript')
+    script(src='/isu/js/search/datepicker.js' type='text/javascript')
+    script(src='https://code.jquery.com/ui/1.12.1/jquery-ui.js')
+    link(rel='stylesheet', href='//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css')
+
+    
 block content
     .content
         .container
@@ -11,18 +17,20 @@ block content
                 form         
                     .row(style='margin-top:-15px') 
                         .col-xs-12.col-sm-10.col-md-8
-                            .col-md-6
-                                h4 검색
+                            .col-md-3
+                                input#datepicker.form-control(type='text', placeholder='Choose') 
+                            .col-md-3
+                                input#datepicker2.form-control(type='text', placeholder='Choose')
                             .col-md-6  
                                 a.form-group.btn.btn-info.btn-select.btn-select-light
                                     input.btn-select-input(type='hidden', id='', name='search_gbn', value='')
                                     span.btn-select-value 처리구분
                                     span.btn-select-arrow.glyphicon.glyphicon-chevron-down
-                                        ul
-                                            li 접수대기
-                                            li 처리중
-                                            li 미평가
-                                            li 완료    
+                                    ul
+                                        li 접수대기
+                                        li 처리중
+                                        li 미평가
+                                        li 완료    
                     .row(style='margin-top:-15px') 
                         .col-xs-12.col-sm-10.col-md-8 
                             hr 
@@ -54,7 +62,7 @@ block content
                                             |   - 개선(변경후) : 두가지 결재조건 지정 가능
                                 br
                             .col-md-2
-                                a.more_view(href='#') 더보기
+                                a.more_view(href='/search/viewdetail') 더보기
                     .row
                         .col-xs-12.col-sm-10.col-md-8 
                             hr
@@ -82,7 +90,7 @@ block content
                                             | 문서를 회수할 수 있도록 요청합니다.
                                 br
                             .col-md-2
-                                a.more_view(href='#') 더보기
+                                a.more_view(href='/search/viewdetail') 더보기
                     .row
                         .col-xs-12.col-sm-10.col-md-8 
                             hr
@@ -114,7 +122,7 @@ block content
                                             | 통상임금(급여, 상여, 식대) 100% 정상지급 되어야 함. 
                                 br
                             .col-md-2
-                                a.more_view(href='#') 더보기
+                                a.more_view(href='/search/viewdetail') 더보기
                         .row
                         .col-xs-12.col-sm-10.col-md-8 
                             hr
