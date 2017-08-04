@@ -1,0 +1,112 @@
+extends ../layouts/default
+block head
+    link(href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css', rel='stylesheet', type='text/css')
+    //link(href='/isu/css/board_style.css', rel='stylesheet')
+block content
+    .content
+        .container
+            .row(style='margin-top:20px')
+                .col-xs-12.col-sm-10.col-md-8
+                    h3.masthead-brand 처리된 내용 > 조회하기 > 상세조회
+                    hr.colorgraph
+            form.form.col-md-12.center-block(name='form' action='' method='post')
+                .row(style='margin-top:-15px')
+                    .col-xs-12.col-sm-10.col-md-8
+                        .form-group
+                            .btn.btn-primary.btn-signup(onclick="location.href='/search/viewall'") 목록
+                        hr
+                        .form-group
+                            dl.topic
+                                dt
+                                    span.wstate3 완료
+                                dd.ititle
+                                    a.span
+                                        | 전자전표시스템 결재프로세스 개선 요청
+                .row
+                    .col-xs-12.col-sm-10.col-md-8
+                        .panel.panel-default
+                            .panel-heading
+                                .row
+                                    .col-sm-8
+                                        h4
+                                            | 접수내용
+                                    .col-sm-4.text-right
+                                        span
+                                            | 박선우 | 2017-07-31 15:49
+                            .panel-body
+                                p
+                                | - 현재(변경전) : 한가지 결재조건 지정 가능 
+                                br
+                                | ① 그룹웨어 < 발신부서 < 수신부서(재경팀, 총무1과, 총무2과) 
+                                br
+                                br
+                                br
+                                | - 개선(변경후) : 두가지 결재조건 지정 가능 
+                                br
+                                | ① 그룹웨어 < 발신부서 < 수신부서(재경팀, 총무1과, 총무2과) 
+                                br
+                                | : 현업에서 전표 발생 후 관리부서에 수신 
+                                br
+                                br
+                                | ② 그룹웨어 < 수신부서(재경팀, 총무1과, 총무2과) 
+                                br
+                                | : 현업이 관리부서일 경우 처리방법(내부품의 형식)
+                                br
+                                br
+                                br
+                            .panel.panel-default(style='margin: 0 20px 20px 20px')
+                                .panel-heading
+                                    .row
+                                        .col-sm-8
+                                            h4
+                                                | 조치사항
+                                        .col-sm-4.text-right
+                                            span
+                                                | 2017-07-31 16:02
+                                .panel-body
+                                    p
+                                    .irps
+                                    | 안녕하세요. 이수시스템 박선우입니다.
+                                    br
+                                    br
+                                    | 해당 요청건 처리완료하였습니다. 
+                                    br
+                                    br
+                                    | 추가 문의사항 있으시면 연락주시기 바랍니다. 감사합니다.
+                                    br
+                                .panel-footer
+                                    .row
+                                        .col-sm-2
+                                            a.btn.btn-sq.btn-primary(href='#')
+                                                i.fa.fa-user.fa-5x
+                                                br
+                                                | ISU
+                                                br
+                                                | SYSYEM
+                                        .col-sm-10
+                                            p.iaction
+                                                | 담당자
+                                            p.iposition
+                                                strong 전략사업팀 | 
+                                                strong 박선우 
+                                                span 대리
+                                            p.iemail
+                                                | psw@isu.co.kr
+
+                        .panel.panel-default
+                                .panel-heading
+                                   h6
+                                    | 서비스 만족도 결과
+                                    span.r_arrow
+                                .panel-body
+                                    .vc_cont
+                                    .icont_text
+                                        strong 조치내역에 대해 만족도
+                                        span.gt_base > 
+                                        | 매우 만족
+                                        p.con_bar
+                                        strong 불편사항 및 개선사항
+                                        .con_txt
+
+                        .actionarea
+                            .btn.btn-primary.btn-signup(onclick="location.href='/search/viewall'") 목록
