@@ -8,13 +8,13 @@ block content
                     h3.masthead-brand 회사정보 > 수정하기
                     hr.colorgraph
             br
-            .row(style='margin-left:30px;margin-top:-15px')
-                button.btn.btn-primary.btn-sm.btn-signup(onclick="location.href='/company/list'") 목록      
-                button.btn.btn-primary.btn-sm.btn-info(onclick="location.href='/company/#{company._id}/edit'") 수정
-                button.btn.btn-success.btn-sm(onclick="location.href='/company/#{company._id}/save'") 저장
-                button.btn.btn-primary.btn-sm.btn-danger(onclick="location.href='/company/#{company._id}/delete'") 삭제     
-            br
-            form.form.col-md-12.center-block(name='form' action='/company/#{company._id}/edit' method='post')     
+            form.form.col-md-12.center-block(name='form' action='/company/#{company._id}/edit' method='post')   
+                .row(style='margin-left:30px;margin-top:-15px')
+                    button.btn.btn-primary.btn-sm.btn-signup(onclick="location.href='/company/list'") 목록      
+                    button.btn.btn-primary.btn-sm.btn-info(onclick="location.href='/company/#{company._id}/edit'") 수정
+                    button.btn.btn-success.btn-sm(type='submit') 저장 
+                    button.btn.btn-primary.btn-sm.btn-danger(onclick="location.href='/company/#{company._id}/delete'") 삭제     
+                br
                 .row(style='margin-left:30px')
                     .col-xs-3.col-sm-3.col-md-3
                         .form-group
@@ -56,4 +56,4 @@ block content
                         .form-group
                             input.form-control.input-sm(type='text', name='company[bigo]', value='#{company.bigo}',placeholder='비고')
                 .row
-                    
+                     
