@@ -28,5 +28,19 @@ module.exports = {
         });
         */
         res.render("search/viewall");
-    }
+    },
+
+    viewdetail: (req, res, next) => {
+        /*
+        Usermanage.findById(req.params.id, function (err, usermanage) {
+            if (err) return res.json({
+                success: false,
+                message: err
+            });
+            res.render("search/viedetail");
+        });
+        */
+
+        res.render("search/viewdetail");
+    },
 };
