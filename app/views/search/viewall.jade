@@ -1,27 +1,33 @@
 extends ../layouts/default
 block head
-
+    link(href='/isu/css/board_style.css', rel='stylesheet')
 block content
     .content
         .container
             .row(style='margin-top:20px')
-                .col-xs-12.col-sm-10.col-md-8
-                    h3.masthead-brand 처리된 내용 > 조회하기
-                    hr.colorgraph
-                    
-                .col-xs-12.col-sm-10.col-md-8   
-                    .row(style='margin-top:30px')
-                        .msearch
-                            strong 검색
-                                select#search_gbn.islt(name='search_gbn', onchange='setInput(this);doView();')
-                                    option(value='com') 업체
-                                    option(value='cpurpose') 목적
-                                    option(value='cgubun') 구분
-                                    option(value='clevel') 영업단계
-                                input#search_text(type='text')
-                    hr
-                .col-xs-12.col-sm-10.col-md-8 
+                    .col-xs-12.col-sm-10.col-md-8
+                        h3.masthead-brand 처리된 내용 > 조회하기
+                        hr.colorgraph
+                form         
+                    .row(style='margin-top:-15px') 
+                        .col-xs-12.col-sm-10.col-md-8
+                            .col-md-6
+                                h4 검색
+                            .col-md-6  
+                                a.form-group.btn.btn-info.btn-select.btn-select-light
+                                    input.btn-select-input(type='hidden', id='', name='search_gbn', value='')
+                                    span.btn-select-value 처리구분
+                                    span.btn-select-arrow.glyphicon.glyphicon-chevron-down
+                                        ul
+                                            li 접수대기
+                                            li 처리중
+                                            li 미평가
+                                            li 완료    
+                    .row(style='margin-top:-15px') 
+                        .col-xs-12.col-sm-10.col-md-8 
+                            hr 
                     .row(style='margin-left:20px; margin-top:10px')
+                        .col-xs-12.col-sm-10.col-md-8 
                             .col-md-2(style='margin-top:25px')
                                 dl.topic
                                     dt
@@ -49,9 +55,11 @@ block content
                                 br
                             .col-md-2
                                 a.more_view(href='#') 더보기
-                        hr
-                .col-xs-12.col-sm-10.col-md-8 
+                    .row
+                        .col-xs-12.col-sm-10.col-md-8 
+                            hr
                     .row(style='margin-left:20px; margin-top:10px')
+                        .col-xs-12.col-sm-10.col-md-8 
                             .col-md-2(style='margin-top:25px')
                                 dl.topic
                                     dt
@@ -75,9 +83,11 @@ block content
                                 br
                             .col-md-2
                                 a.more_view(href='#') 더보기
-                        hr
-                .col-xs-12.col-sm-10.col-md-8 
-                    .row(style='margin-left:20px; margin-top:10px')
+                    .row
+                        .col-xs-12.col-sm-10.col-md-8 
+                            hr
+                    .row(style='margin-left:20px; margin-top:10px')    
+                        .col-xs-12.col-sm-10.col-md-8 
                             .col-md-2(style='margin-top:25px')
                                 dl.topic
                                     dt
@@ -105,6 +115,9 @@ block content
                                 br
                             .col-md-2
                                 a.more_view(href='#') 더보기
-                        hr
+                        .row
+                        .col-xs-12.col-sm-10.col-md-8 
+                            hr
                 .col-xs-12.col-sm-10.col-md-8
                     a.more_view(href='#')처리된 내용 더보기 >>>
+
