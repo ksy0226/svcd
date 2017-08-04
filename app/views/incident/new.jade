@@ -8,6 +8,15 @@ block head
         script(src='/vendor/fileupload/js/locales/kr.js', type='text/javascript')
         script(src='/vendor/fileupload/themes/explorer/theme.js', type='text/javascript')
         script(src='/isu/js/incident/index.js', type='text/javascript')
+        
+        // 스타일관련
+        link(href='https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.6/summernote.css', rel='stylesheet')
+        // 자바스크립트관련
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.6/summernote.js')
+        // 한글관련
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.6/lang/summernote-ko-KR.min.js')
+
+
 
 block content
     .content
@@ -16,15 +25,15 @@ block content
                     .col-xs-12.col-sm-10.col-md-8
                         h3.masthead-brand 서비스요청
                         hr.colorgraph
-                form.form.col-md-12.center-block(name='form' action='/incident/new' method='post')        
+                form.form.col-md-12.center-block(name='form' action='/incident/new' method='post' enctype="multipart/form-data")        
                     .row(style='margin-top:-15px')
-                        .col-xs-1.col-sm-1.col-md-1.col-sm-offset-7.col-md-offset-7
+                        .col-xs-12.col-sm-4.col-md-1.col-sm-offset-7.col-md-offset-7
                             .form-group
                                     button.btn.btn-success.btn-md.btn-block(type='submit') 저장         
                     .row(style='margin-top:20px') 
                         .col-xs-12.col-sm-10.col-md-8       
                                 a.form-group.btn.btn-info.btn-select.btn-select-light
-                                    input.btn-select-input(type='hidden', id='', name='incident[name]', value='')
+                                    input.btn-select-input(type='hidden', id='', name='incident[taskL1]', value='')
                                     span.btn-select-value 서비스
                                     span.btn-select-arrow.glyphicon.glyphicon-chevron-down
                                     ul
@@ -33,26 +42,23 @@ block content
                                         li Sap ERP
                                         li 네트워크
                                 a.form-group.btn.btn-info.btn-select.btn-select-light
-                                    input.btn-select-input(type='hidden', id='', name='incident[name]', value='')
+                                    input.btn-select-input(type='hidden', id='', name='incident[taskL2]', value='')
                                     span.btn-select-value 긴급구분
                                     span.btn-select-arrow.glyphicon.glyphicon-chevron-down
                                     ul
                                         li 긴급
                                         li 보통       
                                 .form-group
-                                    input.form-control.input-md(type='email' placeholder='요청완료일' name='incident[email]' value='')
+                                    input.form-control.input-md(type='text' placeholder='요청완료일' name='incident[req_finish_date]' value='')
                                 .form-group
-                                    input.form-control.input-md(type='text' placeholder='제목' name='incident[user_id]' value='')
+                                    input.form-control.input-md(type='text' placeholder='제목' name='incident[title]' value='')
                                 .form-group
-                                    textarea.form-control.textarea(placeholder='내용' name='incident[content]' style='height:150px' value='')
-                                .form-group
-                                    input.form-control.input-md(type='hidden'  name='etcInfo[name]' value='Mr.Lee')
-                                .form-group
-                                    input.form-control.input-md(type='hidden'  name='etcInfo[age]' value='22')
+                                    textarea#summernote.form-control.textarea(placeholder='내용' name='incident[content]' value='')
+
                     .row 
                         .col-xs-12.col-sm-10.col-md-8
                             form(enctype='multipart/form-data')
                                 .form-group
-                                input#attach-file.file(name='file-fr[]', data-upload-url='#', type='file', multiple='')
+                                input#attach-file.file(name='attach-file', type='file', multiple='')
                                 hr   
-     
+
