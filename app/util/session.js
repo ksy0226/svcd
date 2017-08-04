@@ -7,12 +7,12 @@ module.exports = {
         logger.debug('sessionCheck '+req.session.email);
         if (req.session.email) {
             logger.debug('sessionCheck succeed');
-            //res.render('main/main');
-            next();
+            res.render('main/main');
+            //next();
         } else { //세션값이 없으면
             logger.debug('sessionCheck failed');
-            next(); //임시로 통과
-            /*
+            //next(); //임시로 통과
+            
             var email = req.cookies.email;
             var remember_me = req.cookies.remember_me;
 
@@ -21,7 +21,7 @@ module.exports = {
                 email: email,
                 remember_me: remember_me
             });
-            */
+            
         }
     }
 }
