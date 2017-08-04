@@ -274,3 +274,22 @@ body {
   padding:2px;
 }
 /* square buttons end */
+
+.topic{zoom:1;width:100%}
+.topic:after{content:""; display:block; float:none; clear:both}
+.topic dt{float:left;box-sizing:border-box;width:8.2%} 
+.topic dd{float:left;box-sizing:border-box;width:91.8%} 
+.topic dt span{display:block;width:45px;height:45px;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;font-size:18px;color:#fff;text-align:center;line-height:40px}
+.topic dt span.wstate1{background:#61ce00;font-size:14px;}
+.topic dt span.wstate2{background:#4c80f5;font-size:14px;}
+.topic dt span.wstate3{background:#a0a2a4;font-size:14px;}
+
+.topic .ititle{font-size:20px;color:#010101;line-height:27px;margin-top:-4px;}
+.topic .ititle a{color:#000}
+.topic .ititle strong{font-weight:bold;color:#393939}
+.topic .ititle .ico_siren,.topic .ititle .ico_sales{font-size:11px;color:#f00;display:inline-block;border:1px solid #f00;padding:0 6px;background:#fff;cursor:default;height:18px;line-height:14px;border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px;vertical-align:top;margin-top:5px}
+.topic .ititle .ico_siren2{font-size:11px;color:#3DB7CC;display:inline-block;border:1px solid #3DB7CC;padding:0 6px;background:#fff;cursor:default;height:18px;line-height:14px;border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px;vertical-align:top;margin-top:5px}
+.topic .ititle .ico_sales{color:#61abf4;border-color:#61abf4}
+.topic .idate{font-size:16px;color:#949494;line-height:18px;padding:2px 0 4px}
+.topic .idate strong{color:#000;font-weight:normal;font-size:16px;}
+.topic .icont{font-size:12px;color:#444;line-height:20px}
