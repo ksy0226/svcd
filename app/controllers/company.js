@@ -87,8 +87,8 @@ module.exports = {
         });
     },
     update: (req, res, next) => {
-        logger.debug("Trace update", req.params.id);
-        logger.debug(req.body);
+        console.log("Trace update", req.params.id);
+        console.log(req.body);
         req.body.company.updatedAt = Date.now();
         CompanyModel.findOneAndUpdate({
             _id: req.params.id
