@@ -1,4 +1,6 @@
 extends ../layouts/default
+block head
+    link(href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css', rel='stylesheet', type='text/css')
 
 block content
     .content
@@ -12,17 +14,25 @@ block content
                     .col-xs-12.col-sm-10.col-md-8
                         .form-group
                             .btn.btn-primary.btn-signup(onclick="location.href='/search/viewall'") 목록
-                            button.btn.btn-success.btn-md(type='submit') 저장
-                .row(style='margin-top:20px') 
+                        hr
+                        .form-group
+                            dl.topic
+                                dt
+                                span.wstate3 완료
+                                dd.ititle
+                                span
+                                    | [이수시스템] 메일 정리 후에도 쓰레기 데이터 남는 문제
+                .row
                     .col-xs-12.col-sm-10.col-md-8
                         .panel.panel-default
                             .panel-heading
-                                h4
-                                    |  접수내용
-                                ol.article_info
-                                    li.iname(onclick='javascript:showNamecard()') 박선우
-                                    li.bar
-                                    li.idate 2017-07-31 15:49
+                                .row
+                                    .col-sm-8
+                                        h4
+                                            | 접수내용
+                                    .col-sm-4
+                                        span
+                                            | 박선우 | 2017-07-31 15:49
                             .panel-body
                                 p
                                 | 안녕하세요 
@@ -42,14 +52,15 @@ block content
                                 br
                                 br
                                 br
-
                             .panel.panel-default(style='margin: 0 20px 20px 20px')
                                 .panel-heading
-                                    h4
-                                    strong
-                                        img.ico_sb(src='/images/b.gif')
-                                        | 조치사항
-                                    span.idate 2017-07-31 16:02
+                                    .row
+                                        .col-sm-8
+                                            h4
+                                                | 조치사항
+                                        .col-sm-4
+                                            span
+                                                | 2017-07-31 16:02
                                 .panel-body
                                     p
                                     .irps
@@ -62,35 +73,33 @@ block content
                                     | 추가 문의사항 발생 시, 고객센터로 문의 바랍니다. 감사합니다.
                                     br
                                 .panel-footer
-                                    dl
-                                    dt
-                                        img(src='/images/photo/hwahwoi4@nara.co.kr', style='width:73px;height:78px')
-                                    dd
-                                        p.iaction
-                                        img.ico_staff(src='/images/b.gif')
-                                        | 담당자
-                                        p.iposition
-                                        strong 서비스사업부
-                                        em.bar
-                                        strong 김성회
-                                        span 대리
-                                        p.iemail
-                                        img.ico_mail(src='/images/b.gif')
-                                        |  hwahwoi4@nara.co.kr
-                                        // <button class="gotalk"><span class="blind">1:1</span></button>
+                                    .row
+                                        .col-sm-2
+                                            a.btn.btn-sq.btn-primary(href='#')
+                                                i.fa.fa-user.fa-5x
+                                                br
+                                                | Admin
+                                        .col-sm-10
+                                            p.iaction
+                                                | 담당자
+                                            p.iposition
+                                                strong 서비스사업부 | 
+                                                strong 김성회 
+                                                span 대리
+                                            p.iemail
+                                                | hwahwoi4@nara.co.kr
 
                         .panel.panel-default
                                 .panel-heading
                                    h6
                                     | 서비스 만족도 결과
                                     span.r_arrow
-                                    span.blind 화살표
                                 .panel-body
                                     .vc_cont
                                     .icont_text
                                         strong 조치내역에 대해 만족도
                                         span.gt_base >
-                                        |                   매우 만족
+                                        | 매우 만족
                                         p.con_bar
                                         strong 불편사항 및 개선사항
                                         .con_txt
