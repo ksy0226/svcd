@@ -24,8 +24,8 @@ html
         //추후 삭제(도표 표시용)
         script(src='/data/morris-data.js')
         script(src='/data/flot-data.js')
-    block head
 
+        block head
 
     body
         - if(true){ //외부사용자
@@ -91,7 +91,7 @@ html
                                         li
                                             a(href='#') 자주묻는질문과답
                                         li
-                                            a(href='#') 처리된내용검색
+                                            a(href='/search/viewall') 처리된내용검색
                                 li.active
                                     a(href='#')
                                         i.fa.fa-th-list.fa-fw
