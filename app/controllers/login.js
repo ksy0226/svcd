@@ -2,7 +2,8 @@
 var express = require('express');
 var session = require('express-session');
 var bodyParser = require('body-parser');
-var Employee = require('../models/Employee');
+//var Employee = require('../models/Employee');
+var Usermanage = require('../models/Usermanage');
 const logger = require('log4js').getLogger('app');
 
 var email = "";
@@ -27,6 +28,7 @@ module.exports = {
             //logger.debug('req.body.remember_me is on ');
             res.cookie('email', req.body.email);
             res.cookie('remember_me', req.body.remember_me === "on" ? "true" : "undefined");
+            //res.cookie('password', req.body.password);
             email = req.body.email;
             remember_me = req.body.remember_me;
         } else {
@@ -34,17 +36,15 @@ module.exports = {
             res.clearCookie('email');
             res.clearCookie('remember_me');
         }
-
-        Employee.findOne({ //계정이 존재하면
+        Usermanage.findOne({ //계정이 존재하면
                 email : req.body.email,
-                pwd : req.body.password
-            }).exec(function (err, employee) {
+                password : req.body.password
+            }).exec(function (err, usermanage) {
                 if (err) callback(err);
-
-                if(employee){
+                if(usermanage){
                     req.session.save(function () {
-                        req.session.email = employee.email;
-                        req.session.password = employee.pwd;
+                        req.session.email = usermanage.email;
+                        req.session.password = usermanage.password;
                         res.render('main/main');
                     });
                 }else{ //계정이 존재하지 않으면
