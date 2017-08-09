@@ -43,3 +43,16 @@ block content
                                 input.form-control.input-lg(name='usermanage[address]' type='text' placeholder='회사주소' required value='#{usermanage.address}')
                             .form-group
                                 input.form-control.input-lg(name='usermanage[callNo]' type='text' placeholder='회사전화번호' value='#{usermanage.callNo}')
+                            .form-group
+                                label 사용자권한구분
+                                select.form-control.input-lg(name='usermanage[userFlag]' selected='#{usermanage.userFlag}')
+                                    option(value='1' selected='1') 그룹관리자 
+                                    option(value='2' selected='2') 회사관리자
+                                    option(value='3' selected='3') 업무관리자
+                                    option(value='4' selected='4') 업무담당자
+                                    option(value='9' selected='9') 일반사용자
+                            .form-group
+                                label 그룹사권한구분
+                                select.form-control.input-lg(name='usermanage[groupFlag]' selected='#{usermanage.groupFlag}')
+                                    option(value='out' selected='out') 외부사용자 
+                                    option(value='in' selected='in') 내부사용자
