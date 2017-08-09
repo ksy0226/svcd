@@ -15,6 +15,8 @@ var usermanageSchema = mongoose.Schema({
     address: { type: String },
     callNo: { type: String },
     hpNo: { type: String },
+    userFlag: { type: String },
+    groupFlag: { type: String },
     createdAt: { type: Date, default: Date.now },
     updatedAt: Date
 });
