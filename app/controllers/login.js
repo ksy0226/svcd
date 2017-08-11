@@ -8,6 +8,7 @@ const logger = require('log4js').getLogger('app');
 
 var email = "";
 var remember_me = "";
+var userFlag ="";
 module.exports = {
     /**
      * Validation action
@@ -28,6 +29,7 @@ module.exports = {
             //logger.debug('req.body.remember_me is on ');
             res.cookie('email', req.body.email);
             res.cookie('remember_me', req.body.remember_me === "on" ? "true" : "undefined");
+            res.cookie('userFlag', req.body.userFlag);
             //res.cookie('password', req.body.password);
             email = req.body.email;
             remember_me = req.body.remember_me;
@@ -35,6 +37,7 @@ module.exports = {
             //logger.debug('req.body.remember_me is off ');
             res.clearCookie('email');
             res.clearCookie('remember_me');
+            res.clearCookie('userFlag');
         }
         Usermanage.findOne({ //계정이 존재하면
                 email : req.body.email,
@@ -45,6 +48,8 @@ module.exports = {
                     req.session.save(function () {
                         req.session.email = usermanage.email;
                         req.session.password = usermanage.password;
+                        req.session.userFlag = usermanage.userFlag;
+                        console.log('req.session.userFlag'+req.session.userFlag);
                         res.render('main/main');
                     });
                 }else{ //계정이 존재하지 않으면
@@ -83,6 +88,7 @@ module.exports = {
         //logger.debug('login.js retry is called ');
         email = req.cookies.email;
         remember_me = req.cookies.remember_me;
+        userFlag = req.cookies.userFlag;
 
         if(req.session.email){
             res.render('main/main');

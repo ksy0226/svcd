@@ -15,6 +15,7 @@ module.exports = {
             
             var email = req.cookies.email;
             var remember_me = req.cookies.remember_me;
+            var userFlag = req.cookies.userFlag;
 
             if (email == null) email = "";
             res.render('index', {
