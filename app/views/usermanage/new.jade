@@ -28,7 +28,7 @@ block content
                                 .form-group
                                     input.form-control.input-lg(name='usermanage[jikwe]' type='text' placeholder='직위' value='')
                                 .form-group
-                                    input.form-control.input-lg(name='usermanage[jikchk]' type='text' placeholder='직책'  value='')
+                                    input.form-control.input-lg(name='usermanage[jikchk]' type='text' placeholder='직책' value='')
                                 .form-group
                                     input.form-control.input-lg(name='usermanage[email]' type='email' placeholder='e-mail' value='')
                                 .form-group
@@ -44,15 +44,13 @@ block content
                                 .form-group
                                     label 사용자권한구분
                                     select.form-control.input-lg(name='usermanage[userFlag]')
-                                        option(value='') 
                                         option(value='1') 그룹관리자 
                                         option(value='2') 회사관리자
                                         option(value='3') 업무관리자
                                         option(value='4') 업무담당자
-                                        option(value='9') 일반사용자
+                                        option(value='9' Selected) 일반사용자
                                 .form-group
                                     label 그룹사권한구분
                                     select.form-control.input-lg(name='usermanage[groupFlag]')
-                                        option(value='') 
-                                        option(value='out') 외부사용자 
+                                        option(value='out' Selected) 외부사용자 
                                         option(value='in') 내부사용자
