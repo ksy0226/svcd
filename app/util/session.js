@@ -20,7 +20,8 @@ module.exports = {
             if (email == null) email = "";
             res.render('index', {
                 email: email,
-                remember_me: remember_me
+                remember_me: remember_me,
+                userFlag : userFlag
             });
             
         }

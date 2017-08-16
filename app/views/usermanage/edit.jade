@@ -1,9 +1,7 @@
 extends ../layouts/default
 block head 
-    script(src="http://code.jquery.com/jquery-1.4.4.min.js")
     script(type='text/javascript').
         $(document).ready(function() { 
-            alert("로딩 완료"); 
             $('#userFlag').val('#{usermanage.userFlag}');
             $('#groupFlag').val('#{usermanage.groupFlag}');   
         });

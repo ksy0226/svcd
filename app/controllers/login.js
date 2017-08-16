@@ -9,6 +9,7 @@ const logger = require('log4js').getLogger('app');
 var email = "";
 var remember_me = "";
 var userFlag ="";
+var groupFlag ="";
 module.exports = {
     /**
      * Validation action
@@ -16,9 +17,9 @@ module.exports = {
     index: (req, res) => {
         //logger.debug('index is called ');
         if (req.session.email) {
-            res.render('main/main');
+            res.render('main/main, {userFlag : req.session.userFlag}');
         } else {
-            res.render('index');
+            res.render('index, {userFlag : req.session.userFlag}');
         }
     },
     
@@ -30,6 +31,7 @@ module.exports = {
             res.cookie('email', req.body.email);
             res.cookie('remember_me', req.body.remember_me === "on" ? "true" : "undefined");
             res.cookie('userFlag', req.body.userFlag);
+            res.cookie('groupFlag', req.body.groupFlag);
             //res.cookie('password', req.body.password);
             email = req.body.email;
             remember_me = req.body.remember_me;
@@ -38,6 +40,7 @@ module.exports = {
             res.clearCookie('email');
             res.clearCookie('remember_me');
             res.clearCookie('userFlag');
+            res.clearCookie('groupFlag');
         }
         Usermanage.findOne({ //계정이 존재하면
                 email : req.body.email,
@@ -49,8 +52,14 @@ module.exports = {
                         req.session.email = usermanage.email;
                         req.session.password = usermanage.password;
                         req.session.userFlag = usermanage.userFlag;
+                        req.session.groupFlag = usermanage.groupFlag;
+                        
                         console.log('req.session.userFlag'+req.session.userFlag);
-                        res.render('main/main');
+                        res.render('main/main',
+                                {   userFlag : req.session.userFlag, 
+                                    groupFlag : req.session.groupFlag 
+                                });
+                        console.log('req.session.userFlag2222'+req.session.userFlag);
                     });
                 }else{ //계정이 존재하지 않으면
                     if(req.body.remember_me === "on"){
