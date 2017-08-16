@@ -8,8 +8,7 @@ const logger = require('log4js').getLogger('app');
 
 var email = "";
 var remember_me = "";
-var userFlag ="";
-var groupFlag ="";
+var userNm = "";
 module.exports = {
     /**
      * Validation action
@@ -53,13 +52,16 @@ module.exports = {
                         req.session.password = usermanage.password;
                         req.session.userFlag = usermanage.userFlag;
                         req.session.groupFlag = usermanage.groupFlag;
+                        req.session.userNm = usermanage.userNm;
                         
-                        console.log('req.session.userFlag'+req.session.userFlag);
+                        //logger.debug('req.session.userFlag'+req.session.userFlag);
                         res.render('main/main',
                                 {   userFlag : req.session.userFlag, 
-                                    groupFlag : req.session.groupFlag 
+                                    groupFlag : req.session.groupFlag,
+                                    userNm : req.session.userNm
                                 });
-                        console.log('req.session.userFlag2222'+req.session.userFlag);
+                        //logger.debug('req.session.userFlag2222'+req.session.userFlag);
+                        //logger.debug('userNm'+req.session.userNm);
                     });
                 }else{ //계정이 존재하지 않으면
                     if(req.body.remember_me === "on"){

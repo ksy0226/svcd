@@ -28,7 +28,7 @@ module.exports = {
     },
 
     new: (req, res, next) => {
-        res.render("incident/new");
+        res.render("incident/new", {userFlag : req.session.userFlag, groupFlag : req.session.groupFlag});
     },
 
     save: (req, res, next) => {
