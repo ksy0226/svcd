@@ -1,4 +1,31 @@
 extends ../layouts/default
+block head
+    script(type='text/javascript').
+        $(document).ready(function() {
+            $("#btnExport").click(function(e) {
+                //getting values of current time for generating the file name
+                var dt = new Date();
+                var day = dt.getDate();
+                var month = dt.getMonth() + 1;
+                var year = dt.getFullYear();
+                var hour = dt.getHours();
+                var mins = dt.getMinutes();
+                var postfix = year + "." + month + "." + day;
+                //creating a temporary HTML link element (they support setting file names)
+                var a = document.createElement('a');
+                //getting data from our div that contains the HTML table
+                var data_type = 'data:application/vnd.ms-excel';
+                var table_div = document.getElementById('dvData');
+                var table_html = table_div.outerHTML.replace(/ /g, '%20');
+                a.href = data_type + ', ' + table_html;
+                //setting the file name
+                a.download = 'exported_table_' + postfix + '.xls';
+                //triggering the function
+                a.click();
+                //just in case, prevent default behaviour
+                e.preventDefault();
+            });
+        });
 
 block content
     .content
@@ -10,12 +37,13 @@ block content
             br
             .row(style='margin-left:30px;margin-top:-15px')
                 a.button.btn.btn-primary.btn-sm(href='/company/new') 추가
+                a.button.btn.btn-primary.btn-sm(id='btnExport') ExcelDownload
             br         
             .row
                 .col-xs-12.col-sm-10.col-md-8       
                     p.text-muted.font-13
                         | 
-                    table.tablesaw.table.m-b-0(data-tablesaw-mode='swipe')
+                    table.tablesaw.table.m-b-0(id='dvData' data-tablesaw-mode='swipe')
                         thead
                         tr
                             th.title(scope='col', data-tablesaw-sortable-col='', data-tablesaw-priority='persist') 회사명
