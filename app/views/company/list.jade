@@ -1,31 +1,64 @@
 extends ../layouts/default
 block head
-    script(type='text/javascript').
-        $(document).ready(function() {
-            $("#btnExport").click(function(e) {
-                //getting values of current time for generating the file name
-                var dt = new Date();
-                var day = dt.getDate();
-                var month = dt.getMonth() + 1;
-                var year = dt.getFullYear();
-                var hour = dt.getHours();
-                var mins = dt.getMinutes();
-                var postfix = year + "." + month + "." + day;
-                //creating a temporary HTML link element (they support setting file names)
-                var a = document.createElement('a');
-                //getting data from our div that contains the HTML table
-                var data_type = 'data:application/vnd.ms-excel';
-                var table_div = document.getElementById('dvData');
-                var table_html = table_div.outerHTML.replace(/ /g, '%20');
-                a.href = data_type + ', ' + table_html;
-                //setting the file name
-                a.download = 'exported_table_' + postfix + '.xls';
-                //triggering the function
-                a.click();
-                //just in case, prevent default behaviour
-                e.preventDefault();
-            });
-        });
+            script(type='text/javascript').
+                //크롬에서만 잘 진행됨.
+                $(document).ready(function() {
+                    $("#btnExportTest").click(function(e) {
+                        //getting values of current time for generating the file name
+                        var dt = new Date();
+                        var day = dt.getDate();
+                        var month = dt.getMonth() + 1;
+                        var year = dt.getFullYear();
+                        var hour = dt.getHours();
+                        var mins = dt.getMinutes();
+                        var postfix = year + "." + month + "." + day;
+                        //creating a temporary HTML link element (they support setting file names)
+                        var a = document.createElement('a');
+                        //getting data from our div that contains the HTML table
+                        var data_type = 'data:application/octet-stream'; //application/octet-stream
+                        var table_div = document.getElementById('dvData');
+                        var table_html = table_div.outerHTML.replace(/ /g, '%20');
+                        a.href = data_type + ', ' + table_html;
+                        //setting the file name
+                        a.download = 'exported_table_' + postfix + '.xls';
+                        //triggering the function
+                        a.click();
+                        //just in case, prevent default behaviour
+                        e.preventDefault();
+                    });
+                });
+                
+                //IE, CHROME 진행
+                function fnExcelReport(){
+                    var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+                    var textRange; var j=0;
+                    tab = document.getElementById('dvData'); // id of table
+                    
+                    for(j = 0 ; j < tab.rows.length ; j++) {     
+                        tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+                        //tab_text=tab_text+"</tr>";
+                    }
+
+                    tab_text=tab_text+"</table>";
+                    tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+                    tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+                    tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+                    var ua = window.navigator.userAgent;
+                    var msie = ua.indexOf("MSIE "); 
+
+                    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+                    {
+                        txtArea1.document.open("txt/html","replace");
+                        txtArea1.document.write(tab_text);
+                        txtArea1.document.close();
+                        txtArea1.focus(); 
+                        sa=txtArea1.document.execCommand("SaveAs",true,"exceldownload.xls");
+                    }  
+                    else                 //other browser not tested on IE 11
+                        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));  
+                        return (sa);
+                }
 
 block content
     .content
@@ -37,7 +70,7 @@ block content
             br
             .row(style='margin-left:30px;margin-top:-15px')
                 button.btn.btn-primary.btn-sm(href='/company/new') 추가      
-                button.btn.btn-primary.btn-sm.btn-info(id='btnExport') ExcelDownload
+                button.btn.btn-primary.btn-sm.btn-info(id='btnExport' onclick="fnExcelReport();") ExcelDownload
             br         
             .row
                 .col-xs-12.col-sm-10.col-md-8       
@@ -66,6 +99,6 @@ block content
                             tr
                                 td(colspan='5' align='center') 조회된 데이타가 없습니다.
                         - }  
-
+                    iframe#txtArea1(style='display:none')
 
 
