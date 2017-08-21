@@ -26,7 +26,7 @@ var upload = multer({ storage: storage });
  router.route('/').get(ssc.sessionCheck, controller.index);
 //                 .post(controller.index);
 //router.route('/:searchType/:searchText').get(controller.index);
-router.get('/new', ssc.sessionCheck, controller.new)
+router.get('/new/:title', ssc.sessionCheck, controller.new)
 router.post('/new', upload.array('incident[attach-file]'), ssc.sessionCheck, controller.save);             
 router.get('/show/:id', ssc.sessionCheck, controller.show);
 router.get('/edit/:id', ssc.sessionCheck, controller.edit)

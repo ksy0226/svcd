@@ -56,8 +56,7 @@ html
                     ul.nav.navbar-nav.navbar-right
                         li
                             a(href='#')
-                                #{userNm}
-                                | 님
+                                | #{session.userNm} 님
                         li
                             a(href='/logout')
                                 i.fa.fa-user
@@ -66,7 +65,10 @@ html
         
         .page
             .container
-                - if(groupFlag =="in" && userFlag != null){
+                p
+                    | #{session.userFlag}
+                    | #{session.groupFlag}
+                - if(session.groupFlag =="in" && session.userFlag != null){
                 #wrapper
                     .sidebar.visible-lg(role='navigation', style='margin-top: 0')
                         .sidebar-nav.navbar-collapse
@@ -88,7 +90,7 @@ html
                                         span.fa.arrow
                                     ul.nav.nav-second-level
                                         li
-                                            a(href='/incident/new') 문의하기
+                                            a(href='/incident/new/문의하기') 문의하기
                                         li
                                             a(href='/incident') 처리진행현황
                                         li
@@ -97,7 +99,7 @@ html
                                             a(href='/search/viewall') 처리된내용검색
 
                                 //그룹관리자, 업무관리자,업무담당자 오픈
-                                - if(userFlag ==1 || userFlag ==3 || userFlag ==4){    
+                                - if(session.userFlag ==1 || session.userFlag ==3 || session.userFlag ==4){    
                                 li.active
                                     a(href='#')
                                         i.fa.fa-th-list.fa-fw
@@ -113,7 +115,7 @@ html
                                         li
                                             a(href='#') 월별처리내역
                                 - }
-                                - if(userFlag !=9){
+                                - if(session.userFlag !=9){
                                 li
                                     a(href='#')
                                         i.fa.fa-th-list.fa-fw
@@ -133,7 +135,7 @@ html
                                         li
                                             a(href='#') 처리구분별처리내역
                                 - }
-                                - if(userFlag ==1 || userFlag ==4){
+                                - if(session.userFlag ==1 || session.userFlag ==4){
                                 li
                                     a(href='#')
                                         i.fa.fa-th-list.fa-fw
@@ -157,7 +159,7 @@ html
                                         li
                                             a(href='#') 자주묻는질문과답
                                 - }
-                                - if(userFlag ==1){            
+                                - if(session.userFlag ==1){            
                                 li
                                     a(href='#')
                                         i.fa.fa-th-list.fa-fw
