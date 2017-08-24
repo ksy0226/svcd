@@ -122,5 +122,21 @@ module.exports = {
             //res.render('index', {messages: req.flash('info')});
             res.redirect('/company/list');
         });
+    },
+    exceldownload: (req, res, next) => {
+        console.log(1);
+        CompanyModel.find(req.body.company, function(err, companyJsonData) {
+            if (err) return res.json({
+                success: false,
+                message: err
+            });
+            console.log(companyJsonData);
+            //res.json(companyJsonData);
+            //res.send({companyJsonData: companyJsonData});
+            /*res.render("company/list", {
+            companyJsonData: companyJsonData
+        });*/
+            res.json(companyJsonData);
+        });
     }
 };
