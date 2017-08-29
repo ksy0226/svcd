@@ -28,7 +28,8 @@ var upload = multer({ storage: storage });
 //router.route('/:searchType/:searchText').get(controller.index);
 router.get('/new', ssc.sessionCheck, controller.new)
 router.post('/new', upload.array('incident[attach-file]'), ssc.sessionCheck, controller.save);             
-router.get('/show/:id', ssc.sessionCheck, controller.show);
+//router.get('/show/:id', ssc.sessionCheck, controller.show);
+router.get('/show', ssc.sessionCheck, controller.show);
 router.get('/edit/:id', ssc.sessionCheck, controller.edit)
 router.put('/edit/:id', ssc.sessionCheck, controller.update);
 router.delete('/delete/:id', ssc.sessionCheck, controller.delete);

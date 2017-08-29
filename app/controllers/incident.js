@@ -32,7 +32,7 @@ module.exports = {
     },
 
     save: (req, res, next) => {
-        
+ 
         var newincident = req.body.incident;
         var uploadDir = path.join('D:/999.prj-nodejs/svcd/upload-file' );
         logger.debug("newincident = ",newincident);
@@ -42,19 +42,27 @@ module.exports = {
                     err: err
                 });
             }else{
-                if(req.file){
+                if(req.files){
+                    logger.debug("req.file");
+                    res.render("incident", {
+                            incident: incident
+                        });
+                    /*
                     fs.rename( req.file.path[0] , uploadDir +'/' + req.file.filename , function (err){ 
                         res.render("incident", {
                             incident: incident
                         });
                     });
+                    */
                 }else{
+                    logger.debug("req.file not ",req.file.path[0]);
                     res.render("incident", {
                             incident: incident
                         });
                 }
             }
         });
+
 
     },
 

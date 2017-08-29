@@ -16,7 +16,7 @@ var IncidentSchema = new Schema({
     ans_nm_l1 : String, //1차 담당자명
     ans_id_l2 : String, //2차 담당자계정
     ans_nm_l2 : String, //2차 담당자명
-    attach_file : String, //첨부이미지
+    attach_file : [String], //첨부이미지
     delete_flag : { type : String, default : 'N' }, //삭제여부 
     created_at : { type : Date, default : Date.now() }
 });
