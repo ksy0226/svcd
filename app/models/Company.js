@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 const CompanyModel = require('../models/Company');
-require('../util/date');
 
 
 var companySchema = mongoose.Schema({

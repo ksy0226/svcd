@@ -65,6 +65,15 @@ var redirectToHTTPS = require('express-http-to-https')
 app.use(redirectToHTTPS(['localhost:3000'], ['/test']));
 
 /**
+ * JADE에서 Session 사용
+ */
+app.use(function(req,res,next){
+   res.locals.session = req.session;
+   next();
+});
+
+
+/**
  * routes
  */
 app.use(routes);

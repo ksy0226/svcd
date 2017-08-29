@@ -5,6 +5,7 @@ const router = express.Router();
 
 
 const controller = require('../controllers/usermanage');
+const logincontroller = require('../controllers/login');
 
 /*
 router.get('/', controller.index);

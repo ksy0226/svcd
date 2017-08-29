@@ -1,4 +1,66 @@
 extends ../layouts/default
+block head
+            script(type='text/javascript').
+                //IE, CHROME 진행
+                function fnTableToExcel(dvData){
+                    var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+                    var textRange; var j=0;
+                    tab = dvData; // id of table
+                    
+                    for(j = 0 ; j < tab.rows.length ; j++) {     
+                        tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+                        //tab_text=tab_text+"</tr>";
+                    }
+
+                    tab_text=tab_text+"</table>";
+                    tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+                    tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+                    tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+                    var ua = window.navigator.userAgent;
+                    var msie = ua.indexOf("MSIE "); 
+
+                    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {     // If Internet Explorer
+                        txtArea1.document.open("txt/html","replace");
+                        txtArea1.document.write(tab_text);
+                        txtArea1.document.close();
+                        txtArea1.focus(); 
+                        sa=txtArea1.document.execCommand("SaveAs",true,"exceldownload.xls");
+                    } else {                //other browser not tested on IE 11
+                        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+                    }  
+                    return (sa);
+                }
+
+                function fnJsonToExcel(data){
+                    var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+                    var textRange; var j=0;
+                    tab = data; // id of table
+                    
+                    for(j = 0 ; j < tab.rows.length ; j++) {     
+                        tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+                        //tab_text=tab_text+"</tr>";
+                    }
+
+                    tab_text=tab_text+"</table>";
+                    tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+                    tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+                    tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+                    var ua = window.navigator.userAgent;
+                    var msie = ua.indexOf("MSIE "); 
+
+                    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {     // If Internet Explorer
+                        txtArea1.document.open("txt/html","replace");
+                        txtArea1.document.write(tab_text);
+                        txtArea1.document.close();
+                        txtArea1.focus(); 
+                        sa=txtArea1.document.execCommand("SaveAs",true,"exceldownload.xls");
+                    } else {                //other browser not tested on IE 11
+                        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+                    }  
+                    return (sa);
+                }
 
 block content
     .content
@@ -9,13 +71,14 @@ block content
                     hr.colorgraph      
             br
             .row(style='margin-left:30px;margin-top:-15px')
-                a.button.btn.btn-primary.btn-sm(href='/company/new') 추가
+                button.btn.btn-primary.btn-sm(href='/company/new') 추가      
+                button.btn.btn-primary.btn-sm.btn-info(id='btnExport' onclick="fnTableToExcel(document.getElementById('dvData'));") ExcelDownload
             br         
             .row
                 .col-xs-12.col-sm-10.col-md-8       
                     p.text-muted.font-13
                         | 
-                    table.tablesaw.table.m-b-0(data-tablesaw-mode='swipe')
+                    table.tablesaw.table.m-b-0(id='dvData' data-tablesaw-mode='swipe')
                         thead
                         tr
                             th.title(scope='col', data-tablesaw-sortable-col='', data-tablesaw-priority='persist') 회사명
@@ -38,6 +101,6 @@ block content
                             tr
                                 td(colspan='5' align='center') 조회된 데이타가 없습니다.
                         - }  
-
+                    iframe#txtArea1(style='display:none')
 
 

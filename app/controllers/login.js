@@ -2,11 +2,13 @@
 var express = require('express');
 var session = require('express-session');
 var bodyParser = require('body-parser');
-var Employee = require('../models/Employee');
+//var Employee = require('../models/Employee');
+var Usermanage = require('../models/Usermanage');
 const logger = require('log4js').getLogger('app');
 
 var email = "";
 var remember_me = "";
+var userNm = "";
 module.exports = {
     /**
      * Validation action
@@ -14,9 +16,9 @@ module.exports = {
     index: (req, res) => {
         //logger.debug('index is called ');
         if (req.session.email) {
-            res.render('main/main');
+            res.render('main/main, {userFlag : req.session.userFlag}');
         } else {
-            res.render('index');
+            res.render('index, {userFlag : req.session.userFlag}');
         }
     },
     
@@ -27,25 +29,39 @@ module.exports = {
             //logger.debug('req.body.remember_me is on ');
             res.cookie('email', req.body.email);
             res.cookie('remember_me', req.body.remember_me === "on" ? "true" : "undefined");
+            res.cookie('userFlag', req.body.userFlag);
+            res.cookie('groupFlag', req.body.groupFlag);
+            //res.cookie('password', req.body.password);
             email = req.body.email;
             remember_me = req.body.remember_me;
         } else {
             //logger.debug('req.body.remember_me is off ');
             res.clearCookie('email');
             res.clearCookie('remember_me');
+            res.clearCookie('userFlag');
+            res.clearCookie('groupFlag');
         }
-
-        Employee.findOne({ //계정이 존재하면
+        Usermanage.findOne({ //계정이 존재하면
                 email : req.body.email,
-                pwd : req.body.password
-            }).exec(function (err, employee) {
+                password : req.body.password
+            }).exec(function (err, usermanage) {
                 if (err) callback(err);
-
-                if(employee){
+                if(usermanage){
                     req.session.save(function () {
-                        req.session.email = employee.email;
-                        req.session.password = employee.pwd;
-                        res.render('main/main');
+                        req.session.email = usermanage.email;
+                        req.session.password = usermanage.password;
+                        req.session.userFlag = usermanage.userFlag;
+                        req.session.groupFlag = usermanage.groupFlag;
+                        req.session.userNm = usermanage.userNm;
+                        
+                        //logger.debug('req.session.userFlag'+req.session.userFlag);
+                        res.render('main/main',
+                                {   userFlag : req.session.userFlag, 
+                                    groupFlag : req.session.groupFlag,
+                                    userNm : req.session.userNm
+                                });
+                        //logger.debug('req.session.userFlag2222'+req.session.userFlag);
+                        //logger.debug('userNm'+req.session.userNm);
                     });
                 }else{ //계정이 존재하지 않으면
                     if(req.body.remember_me === "on"){
@@ -83,6 +99,7 @@ module.exports = {
         //logger.debug('login.js retry is called ');
         email = req.cookies.email;
         remember_me = req.cookies.remember_me;
+        userFlag = req.cookies.userFlag;
 
         if(req.session.email){
             res.render('main/main');

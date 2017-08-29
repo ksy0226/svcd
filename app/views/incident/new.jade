@@ -15,15 +15,16 @@ block head
         script(src='https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.6/summernote.js')
         // 한글관련
         script(src='https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.6/lang/summernote-ko-KR.min.js')
-
+        script(src='../../util/session.js')
 
 
 block content
     .content
             .container
+                
                 .row(style='margin-top:20px')
                     .col-xs-12.col-sm-10.col-md-8
-                        h3.masthead-brand 서비스요청
+                        h3.masthead-brand #{title}
                         hr.colorgraph
                 form.form.col-md-12.center-block(name='form' action='' method='post' enctype="multipart/form-data")        
                     .row(style='margin-top:-15px')

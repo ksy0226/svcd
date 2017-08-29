@@ -28,7 +28,7 @@ module.exports = {
     },
 
     new: (req, res, next) => {
-        res.render("incident/new");
+        res.render("incident/new", {title : req.params.title});
     },
 
     save: (req, res, next) => {

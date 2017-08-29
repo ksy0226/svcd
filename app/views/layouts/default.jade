@@ -20,15 +20,18 @@ html
         script(src='/vendor/raphael/raphael.min.js')
         script(src='/vendor/metisMenu/metisMenu.min.js')
         script(src='/vendor/morrisjs/morris.min.js')
+        script(src='http://dmaps.daum.net/map_js_init/postcode.v2.js')
 
         //추후 삭제(도표 표시용)
         script(src='/data/morris-data.js')
         script(src='/data/flot-data.js')
+        script(src='/isu/js/postcode.js')
+        //script(src='../../util/session.js')
 
         block head
-
+        
     body
-        - if(true){ //외부사용자
+        - if(true){ //모든사용자
         .navbar.navbar-default.navbar-top
             .container
                 .navbar-header
@@ -45,39 +48,35 @@ html
                         li
                             a(href='/index') Home
                         li
-                            a(href='/account/') FAQ
-                        li
                             a(href='/question/new') 문의하기
                         li
                             a(href='/question/') 처리진행현황
                         li
                             a(href='/account/') 자주묻는질문과답
-                        li
-                            a(href='/register/') 계정등록
-                        li
-                            a(href='/manage/company') 회사정보관리
                     ul.nav.navbar-nav.navbar-right
+                        li
+                            a(href='#')
+                                | #{session.userNm} 님
                         li
                             a(href='/logout')
                                 i.fa.fa-user
                                 |  로그아웃
-        -}
+        - }
+        
         .page
             .container
+                p
+                    | #{session.userFlag}
+                    | #{session.groupFlag}
+                - if(session.groupFlag =="in" && session.userFlag != null){
                 #wrapper
                     .sidebar.visible-lg(role='navigation', style='margin-top: 0')
                         .sidebar-nav.navbar-collapse
                             ul#side-menu.nav
-                                li.sidebar-search
-                                    .input-group.custom-search-form
-                                        input.form-control(type='text', placeholder='Search...')
-                                        span.input-group-btn
-                                            button.btn.btn-default(type='button')
-                                                i.fa.fa-search
                                 li
                                     a(href='/index')
                                         i.fa.fa-desktop.fa-fw
-                                        |  HOME
+                                        |  HOME   
                                 li.active
                                     a(href='#')
                                         i.fa.fa-th-list.fa-fw
@@ -85,13 +84,16 @@ html
                                         span.fa.arrow
                                     ul.nav.nav-second-level
                                         li
-                                            a(href='/incident/new') 문의하기
+                                            a(href='/incident/new/문의하기') 문의하기
                                         li
                                             a(href='/incident') 처리진행현황
                                         li
                                             a(href='#') 자주묻는질문과답
                                         li
                                             a(href='/search/viewall') 처리된내용검색
+
+                                //그룹관리자, 업무관리자,업무담당자 오픈
+                                - if(session.userFlag ==1 || session.userFlag ==3 || session.userFlag ==4){    
                                 li.active
                                     a(href='#')
                                         i.fa.fa-th-list.fa-fw
@@ -106,6 +108,8 @@ html
                                             a(href='#') 나의업무지정
                                         li
                                             a(href='#') 월별처리내역
+                                - }
+                                - if(session.userFlag !=9){
                                 li
                                     a(href='#')
                                         i.fa.fa-th-list.fa-fw
@@ -124,6 +128,8 @@ html
                                             a(href='#') 담당자별월별처리내역
                                         li
                                             a(href='#') 처리구분별처리내역
+                                - }
+                                - if(session.userFlag ==1 || session.userFlag ==4){
                                 li
                                     a(href='#')
                                         i.fa.fa-th-list.fa-fw
@@ -146,11 +152,15 @@ html
                                             a(href='#') 업무별담당자현황
                                         li
                                             a(href='#') 자주묻는질문과답
+                                - }
+                                - if(session.userFlag ==1){            
                                 li
                                     a(href='#')
                                         i.fa.fa-th-list.fa-fw
                                         |  SD Dashboard
-                                        span.fa.arrow
+                                        span.fa.arrow 
+                                -}
+                - }       
                     #page-wrapper
                             block content
         block feet

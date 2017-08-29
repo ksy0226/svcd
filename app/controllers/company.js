@@ -43,11 +43,10 @@ module.exports = {
                     err: err
                 });
             }
-            //res.send('<script>alert("성공");location.href="/company/new";</script>');
-
+            /*
             res.render("company/list", {
                 company: company
-            });
+            });*/
         });
         res.redirect('/company/list');
     },

@@ -1,6 +1,6 @@
 {
     "port": 443,
-    "port_80" : 8080,
+    "port_80": 8080,
     "companyName": "ISU SYSTEM, Inc.",
     "projectName": "SERVICE DESK",
     "systemEmail": "hilee.em@gmail.com",
@@ -14,14 +14,21 @@
         "RECONNECT": true,
         "RECONNECTION_INTERVAL": 5000,
         "options": {
-                "db": {
-                    "native_parser": true,
-                    "server": {
-                        "poolSize": 10
-                    },
+            "db": {
+                "native_parser": true,
+                "server": {
+                    "poolSize": 10
+                },
                 "user": "mysd",
                 "pass": "mysd123qwe"
             }
         }
+    },
+    "mailer": {
+        "service": "Isu",
+        "host": "mail.isu.co.kr",
+        "port": "25",
+        "user": "ksy0226@isu.co.kr",
+        "password": "tkdduq2"
     }
 }

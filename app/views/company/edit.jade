@@ -42,15 +42,16 @@ block content
                 .row(style='margin-left:30px')
                     .col-xs-3.col-sm-3.col-md-3
                         .form-group
-                            input.form-control.input-sm(type='text', name='company[zip_cd]', value='#{company.zip_cd}',placeholder='우편번호')
+                            input.form-control.input-sm(type='text', id='zip_cd' name='company[zip_cd]', value='#{company.zip_cd}',placeholder='우편번호')
                 .row(style='margin-left:30px')
                     .col-xs-6.col-sm-6.col-md-6
                         .form-group
-                            input.form-control.input-sm(type='text', name='company[addr]', value='#{company.addr}',placeholder='회사주소1')
+                            input.form-control.input-sm(type='text', id='addr' name='company[addr]', value='#{company.addr}',placeholder='회사주소1' readonly)
+                            span.btn.btn-sm.btn-primary(style='margin-top:10px', id='postcode' onclick='setDaumPostcode()') 우편번호 찾기
                 .row(style='margin-left:30px')
                     .col-xs-6.col-sm-6.col-md-6
                         .form-group
-                            input.form-control.input-sm(type='text', name='company[addr2]', value='#{company.addr2}',placeholder='회사주소2')
+                            input.form-control.input-sm(type='text', id='addr2' name='company[addr2]', value='#{company.addr2}',placeholder='회사주소2')
                 .row(style='margin-left:30px')
                     .col-xs-6.col-sm-6.col-md-6
                         .form-group

@@ -1,5 +1,4 @@
 extends ../layouts/default
-
 block content
     .content
         .container
@@ -11,7 +10,7 @@ block content
             .row(style='margin-left:30px;margin-top:-15px')
                 button.btn.btn-primary.btn-sm.btn-signup(onclick="location.href='/company/list'") 목록      
                 button.btn.btn-primary.btn-sm.btn-info(onclick="location.href='/company/#{company._id}/edit'") 수정
-                button.btn.btn-primary.btn-sm.btn-danger(onclick="location.href='/company/#{company._id}/delete'") 삭제
+                button.btn.btn-primary.btn-sm.btn-danger(onclick="location.href='/company/#{company._id}/delete'" id="deleteBtn") 삭제
             br
             form.form.col-md-12.center-block
                 .row(style='margin-left:30px')
@@ -54,4 +53,3 @@ block content
                     .col-xs-6.col-sm-6.col-md-6
                         .form-group
                             input.form-control.input-sm(type='text', name='company[bigo]', readonly value='#{company.bigo}',placeholder='비고')
-                    
