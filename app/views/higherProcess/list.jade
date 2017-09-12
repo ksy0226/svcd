@@ -1,0 +1,54 @@
+extends ../layouts/default
+block head
+    selectedUserflagChanged
+    script(type='text/javascript').
+        function selectedUserflagChanged(){
+            
+        }
+block content
+    .content
+        .container
+            .row(style='margin-top:20px')
+                .col-xs-12.col-sm-10.col-md-8
+                    h3.masthead-brand 상위업무 > 목록
+                    hr.colorgraph      
+            br
+            .row(style='margin-left:30px;margin-top:-15px')
+                a.button.btn.btn-primary.btn-sm(href='/higherProcess/new') 추가
+                //-
+                //-.row
+                //-    .col-xs-3.col-sm-3.col-md-3
+                //-        .form-group
+                //-            select.form-control.input-sm(name='higherProcess[user_flag]')
+                //-                option(value='사용') 사용 
+                //-                option(value='미사용') 미사용
+                
+            br         
+            .row
+                .col-xs-12.col-sm-10.col-md-8       
+                    p.text-muted.font-13
+                        | 
+                    table.tablesaw.table.m-b-0(id='dvData' data-tablesaw-mode='swipe')
+                        thead
+                        tr
+                            th.title(scope='col', data-tablesaw-sortable-col='', data-tablesaw-priority='persist') 상위업무명
+                            th(scope='col', data-tablesaw-sortable-col='', data-tablesaw-sortable-default-col='', data-tablesaw-priority='3') 설명
+                            th(scope='col', data-tablesaw-sortable-col='', data-tablesaw-priority='2') 등록일
+                            th(scope='col', data-tablesaw-sortable-col='', data-tablesaw-priority='1') 사용여부
+                        tbody
+                        - if (higherProcess.length > 0) {
+                            // - for( var i = 0 ; length = question.length > i ; i++ ){ //속도가 빠르다고 알고 있음.
+                            - for( var i in higherProcess ){ //속도가 느리다고 알고 있음.
+                                tr(onclick="onclick=location.href='/higherProcess/#{higherProcess[i]._id}/show'")
+                                    td  #{higherProcess[i].higher_nm}  
+                                    td.highlight(data-highlight='search.highlight.title') #{higherProcess[i].description}
+                                    td #{higherProcess[i].createdAt}
+                                    td #{higherProcess[i].user_flag}
+                            - }
+                        - }else{
+                            tr
+                                td(colspan='5' align='center') 조회된 데이타가 없습니다.
+                        - }  
+                    iframe#txtArea1(style='display:none')
+
+

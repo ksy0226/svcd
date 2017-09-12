@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 
-const controller = require('../controllers/company');
+const controller = require('../controllers/higherProcess');
 
 router.route('/new').get(controller.new)
                     .post(controller.save);
@@ -14,6 +14,6 @@ router.route('/:id/edit').get(controller.edit)
 router.route('/:id/save').post(controller.update);
 router.route('/:id/delete').get(controller.delete);
 
-router.route('/exceldownload').get(controller.exceldownload);
+//router.route('/exceldownload').get(controller.exceldownload);
 
 module.exports = router;

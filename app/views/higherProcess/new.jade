@@ -1,0 +1,44 @@
+extends ../layouts/default
+block head
+    
+block content
+    .content
+            .container
+                .row(style='margin-top:20px')
+                    .col-xs-12.col-sm-10.col-md-8
+                        h3.masthead-brand 상위업무관리
+                        hr.colorgraph
+                form.form.col-md-12.center-block(name='form' action='/higherProcess/new' method='post')        
+                    .row(style='margin-top:-15px')
+                        .col-xs-1.col-sm-1.col-md-1.col-sm-offset-7.col-md-offset-7
+                            .form-group
+                                    button.btn.btn-success.btn-sm.btn-block(type='submit') 저장
+                    .row(style='margin-left:30px')
+                        .col-xs-3.col-sm-3.col-md-3
+                            .form-group
+                                input.form-control.input-sm(type='text', name='higherProcess[higher_cd]', placeholder='상위업무코드')
+                    .row(style='margin-left:30px')
+                        .col-xs-3.col-sm-3.col-md-3
+                            .form-group
+                                input.form-control.input-sm(type='text', name='higherProcess[higher_nm]', placeholder='상위업무명')
+                    .row(style='margin-left:30px')
+                        .col-xs-3.col-sm-3.col-md-6
+                            .form-group
+                                input.form-control.input-sm(type='text', name='higherProcess[description]', placeholder='설명')
+                    .row(style='margin-left:30px')
+                        .col-xs-3.col-sm-3.col-md-3
+                            .form-group
+                                input.form-control.input-sm(type='text', name='higherProcess[com_cd]', placeholder='회사코드')
+                    .row(style='margin-left:30px')
+                        .col-xs-3.col-sm-3.col-md-3
+                            .form-group
+                                input.form-control.input-sm(type='text', name='higherProcess[sabun]', placeholder='사번')
+                    .row(style='margin-left:30px')
+                        .col-xs-3.col-sm-3.col-md-3
+                            .form-group
+                                label 사용여부
+                                select.form-control.input-sm(name='higherProcess[user_flag]')
+                                    option(value='사용' Selected) 사용 
+                                    option(value='미사용') 미사용
+                    
+                    

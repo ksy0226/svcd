@@ -2,40 +2,42 @@
 
 const mongoose = require('mongoose');
 const async = require('async');
-const CompanyModel = require('../models/Company');
+//const CompanyModel = require('../models/Company');
+const HigherProcessModel = require('../models/HigherProcess');
 const logger = require('log4js').getLogger('app');
 const Iconv  = require('iconv-lite');
 
 module.exports = {
 
-
     list: (req, res, next) => {
+        console.log('HigherProcess test');
+        //res.send('<script>alert("성공");</script>');
         
-        CompanyModel.find(req.body.company, function(err, company) {
+        HigherProcessModel.find(req.body.higherProcess, function(err, higherProcess) {
             //logger.debug('err', err, '\n');
+            //console.log(higherProcess);
             logger.debug('list 호출');
             if (err) {
                 res.render("http/500", {
                     err: err
                 });
             }
-            //res.send('<script>alert("성공");location.href="/company/new";</script>');
-            res.render("company/list", {
-                company: company
+            res.render("higherProcess/list", {
+                
+                higherProcess: higherProcess
             });
         });
-       
     },
 
     new: (req, res, next) => {
-        res.render("company/new");
+        res.render("higherProcess/new");
     },
 
     save: (req, res, next) => {
-        var company = req.body.company;
+        var higherProcess = req.body.higherProcess;
         logger.debug('body', req.body);
 
-        CompanyModel.create(req.body.company, function(err, company) {
+        HigherProcessModel.create(req.body.higherProcess, function(err, higherProcess) {
             //logger.debug('err', err, '\n');
             logger.debug('save 호출');    
             if (err) {
@@ -43,25 +45,20 @@ module.exports = {
                     err: err
                 });
             }
-            /*
-            res.render("company/list", {
-                company: company
-            });*/
         });
-        res.redirect('/company/list');
+        res.redirect('/higherProcess/list');
     },
 
     show: (req, res, next) => {
-       
         logger.debug("Trace Show");
-        CompanyModel.findById(req.params.id).exec(function(err, company) {
+        HigherProcessModel.findById(req.params.id).exec(function(err, higherProcess) {
             if (err) return res.json({
                 success: false,
                 message: err
             });
             logger.debug('aaa : %s',req._parsedUrl.query);
-            res.render("company/show", {
-                company: company,
+            res.render("higherProcess/show", {
+                higherProcess: higherProcess,
                 urlQuery: req._parsedUrl.query
                 //user: req.user,
                 //search: service.createSearch(req)
@@ -70,7 +67,7 @@ module.exports = {
     },
 
     edit: (req, res, next) => {
-        CompanyModel.findById(req.params.id, function(err, company) {
+        HigherProcessModel.findById(req.params.id, function(err, higherProcess) {
             if (err) return res.json({
                 success: false,
                 message: err
@@ -79,64 +76,50 @@ module.exports = {
             //    success: false,
             //    message: "Unauthrized Attempt"
             //});
-            res.render("company/edit", {
-                company: company
+            res.render("higherProcess/edit", {
+                higherProcess: higherProcess
                 //,user: req.user
             });
         });
     },
+
     update: (req, res, next) => {
         console.log("Trace update", req.params.id);
         console.log(req.body);
-        req.body.company.updatedAt = Date.now();
-        CompanyModel.findOneAndUpdate({
+        //req.body.higherProcess.updatedAt = Date.now();
+        HigherProcessModel.findOneAndUpdate({
             _id: req.params.id
             //,author: req.user._id
-        }, req.body.company, function(err, company) {
+        }, req.body.higherProcess, function(err, higherProcess) {
             if (err) return res.json({
                 success: false,
                 message: err
             });
-            if (!company) return res.json({
+            if (!higherProcess) return res.json({
                 success: false,
                 message: "No data found to update"
             });
-            res.redirect('/company/' + req.params.id + '/show');
+            res.redirect('/higherProcess/' + req.params.id + '/show');
         });
     },
+
     delete: (req, res, next) => {
         logger.debug("Trace delete", req.params.id);
 
-        CompanyModel.findOneAndRemove({
+        HigherProcessModel.findOneAndRemove({
             _id: req.params.id
             //,author: req.user._id
-        }, function(err, company) {
+        }, function(err, higherProcess) {
             if (err) return res.json({
                 success: false,
                 message: err
             });
-            if (!company) return res.json({
+            if (!higherProcess) return res.json({
                 success: false,
                 message: "No data found to delete"
             });
             //res.render('index', {messages: req.flash('info')});
-            res.redirect('/company/list');
-        });
-    },
-    exceldownload: (req, res, next) => {
-        console.log(1);
-        CompanyModel.find(req.body.company, function(err, companyJsonData) {
-            if (err) return res.json({
-                success: false,
-                message: err
-            });
-            console.log(companyJsonData);
-            //res.json(companyJsonData);
-            //res.send({companyJsonData: companyJsonData});
-            /*res.render("company/list", {
-            companyJsonData: companyJsonData
-        });*/
-            res.json(companyJsonData);
+            res.redirect('/higherProcess/list');
         });
     }
 };

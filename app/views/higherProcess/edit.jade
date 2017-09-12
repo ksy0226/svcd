@@ -1,0 +1,48 @@
+extends ../layouts/default
+block head
+    script(type='text/javascript').
+        $(document).ready(function() { 
+            $('#user_flag').val('#{higherProcess.user_flag}');
+        });
+block content
+    .content
+        .container
+            .row(style='margin-top:20px')
+                .col-xs-12.col-sm-10.col-md-8
+                    h3.masthead-brand 상위업무 > 수정하기
+                    hr.colorgraph
+            br
+            form.form.col-md-12.center-block(name='form' action='/higherProcess/#{higherProcess._id}/edit' method='post')   
+                .row(style='margin-left:30px;margin-top:-15px')
+                    button.btn.btn-primary.btn-sm.btn-signup(onclick="location.href='/higherProcess/list'") 목록      
+                    button.btn.btn-primary.btn-sm.btn-info(onclick="location.href='/higherProcess/#{higherProcess._id}/edit'") 수정
+                    button.btn.btn-success.btn-sm(type='submit') 저장 
+                    button.btn.btn-primary.btn-sm.btn-danger(onclick="location.href='/higherProcess/#{higherProcess._id}/delete'") 삭제     
+                br
+                .row(style='margin-left:30px')
+                    .col-xs-3.col-sm-3.col-md-3
+                        .form-group
+                            input.form-control.input-sm(type='text', name='higherProcess[higher_cd]', value='#{higherProcess.higher_cd}', placeholder='상위업무코드')
+                .row(style='margin-left:30px')
+                    .col-xs-3.col-sm-3.col-md-3
+                        .form-group
+                            input.form-control.input-sm(type='text', name='higherProcess[higher_nm]', value='#{higherProcess.higher_nm}', placeholder='상위업무명')
+                .row(style='margin-left:30px')
+                    .col-xs-3.col-sm-3.col-md-3
+                        .form-group
+                            input.form-control.input-sm(type='text', name='higherProcess[description]', value='#{higherProcess.description}',placeholder='설명')
+                .row(style='margin-left:30px')
+                    .col-xs-3.col-sm-3.col-md-3
+                        .form-group
+                            input.form-control.input-sm(type='text', name='higherProcess[com_cd]', value='#{higherProcess.com_cd}', placeholder='회사코드')
+                .row(style='margin-left:30px')
+                    .col-xs-3.col-sm-3.col-md-3
+                        .form-group
+                            input.form-control.input-sm(type='text', name='higherProcess[sabun]', value='#{higherProcess.sabun}', placeholder='사번')
+                .row(style='margin-left:30px')
+                    .col-xs-3.col-sm-3.col-md-3
+                        .form-group
+                            label 사용여부
+                            select.form-control.input-sm(id='user_flag' name='higherProcess[user_flag]' type='text' value='#{higherProcess.user_flag}')
+                                option(value='사용') 사용 
+                                option(value='미사용') 미사용
