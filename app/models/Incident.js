@@ -3,22 +3,58 @@ var Schema = mongoose.Schema;
 var autoIncrement = require('mongoose-auto-increment');
 
 var IncidentSchema = new Schema({
-    seq : {type : Number, required:true}, //순서
-    status : String, //진행상태
-    taskL1 : String, //상위업무
-    taskL2 : String, //하위업무
-    title : { type : String, required:true, validate : [isEmpty, "제목은 꼭 입력해주세요."] }, //제목
-    content : String, //내용
-    req_finish_date : String, //완료요청일
-    req_id : String, //요청자계정
-    req_nm : String, //요청자명
-    ans_id_l1 : String, //1차 담당자계정
-    ans_nm_l1 : String, //1차 담당자명
-    ans_id_l2 : String, //2차 담당자계정
-    ans_nm_l2 : String, //2차 담당자명
-    attach_file : String, //첨부이미지
-    delete_flag : { type : String, default : 'N' }, //삭제여부 
-    created_at : { type : Date, default : Date.now() }
+    register_num            : {type : Number, require : true},                                                                                                                      
+    process_flag            : {type : String},  //진행상태 (1:접수대기,2:처리중,3:미평가,4:완료,5:결재처리중)                
+    process_speed           : {type : String},  //긴급구분                                                                   
+    course_flag             : {type : String},                                                                           
+    title                   : {type : String, required:true, validate : [isEmpty, "제목은 꼭 입력해주세요."] }, //제목                                                             ."] }},
+    content                 : {type : String},  //내용                                                                       
+    request_company_cd      : {type : String},  //요청자 회사명                                                              
+    request_sabun           : {type : String},  //요청자 사번                                                                
+    request_complete_date   : {type : String},                    
+    register_company_cd     : {type : String},  //등록자 회사명                                                              
+    register_sabun          : {type : String},  //등록자 사번                                                                
+    register_date           : {type : String},  //등록일                                                                     
+    register_yyyy           : {type : String},  //등록년                                                                     
+    register_mm             : {type : String},  //등록월                                                                     
+    register_dd             : {type : String},  //등록일                                                                     
+    receipt_content         : {type : String},                                                                           
+    manager_company_cd      : {type : String},                                                                           
+    manager_sabun           : {type : String},                                                                           
+    receipt_date            : {type : Date},                                                                           
+    business_level          : {type : String},                                                                           
+    complete_reserve_date   : {type : Date},                                                                           
+    solution_flag           : {type : String},                                                                           
+    complete_content        : {type : String},                                                                           
+    add_complete_content    : {type : String},                                                                           
+    program_id              : {type : String},                                                                           
+    delay_reason            : {type : String},                                                                           
+    need_minute             : {type : Number},                                                                           
+    complete_date           : {type : Date},                                                                           
+    valuation               : {type : Number},                                                                           
+    reading_cnt             : {type : Number},                                                                           
+    complete_open_flag      : {type : String},                                                                           
+    higher_cd               : {type : String},  //상위업무 코드                                                              
+    lower_cd                : {type : String},  //하위업무 코드('BC , 하드웨어 관련 오류','L044','공장/설비관리 부문','L045',
+    customer_flag           : {type : String},                                                                           
+    add_solution_content    : {type : String},                                                                           
+    process_gubun           : {type : String},                                                                           
+    valuation_content       : {type : String},                                                                           
+    approval_gbn            : {type : String},                                                                           
+    modify_yn               : {type : String, default : 'N'},                                                                           
+    sharing_content         : {type : String},  //내부공유사항                                                              
+    delete_flag : { type : String, default : 'N' }, //삭제여부
+    attach_file : [{    fieldname: {type : String},
+                            originalname: {type : String},
+                            encoding: {type : String},
+                            mimetype: {type : String},
+                            destination: {type : String},
+                            filename: {type : String},
+                            path: {type : String},
+                            size: {type : Number}  }], //첨부이미지
+    created_at : { type : Date, default : Date.now() },
+    update_at : { type : Date },
+    delete_at : { type : Date }
 });
 
 function isEmpty(value){
@@ -39,5 +75,5 @@ IncidentSchema.virtual('getDate').get(function(){
 });
 
 autoIncrement.initialize(mongoose.connection);
-IncidentSchema.plugin( autoIncrement.plugin , { model : "incident", field : "seq" , startAt : 1 } );
+IncidentSchema.plugin( autoIncrement.plugin , { model : "incident", field : "register_num" , startAt : 1 } );
 module.exports = mongoose.model('incident' , IncidentSchema);

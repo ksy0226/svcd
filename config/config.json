@@ -30,5 +30,8 @@
         "port": "25",
         "user": "ksy0226@isu.co.kr",
         "password": "tkdduq2"
+    },
+    "fileUpload":{
+        "directory":"upload-file"
     }
 }

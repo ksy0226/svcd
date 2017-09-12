@@ -15,18 +15,16 @@ block head
         script(src='https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.6/summernote.js')
         // 한글관련
         script(src='https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.6/lang/summernote-ko-KR.min.js')
-        script(src='../../util/session.js')
 
 
 block content
     .content
             .container
-                
                 .row(style='margin-top:20px')
                     .col-xs-12.col-sm-10.col-md-8
-                        h3.masthead-brand #{title}
+                        h3.masthead-brand 서비스요청
                         hr.colorgraph
-                form.form.col-md-12.center-block(name='form' action='' method='post' enctype="multipart/form-data")        
+                form.form.col-md-12.center-block(name='form' action='/incident/new' method='post' enctype="multipart/form-data")        
                     .row(style='margin-top:-15px')
                         .col-xs-12.col-sm-4.col-md-1.col-sm-offset-7.col-md-offset-7
                             .form-group
@@ -34,7 +32,7 @@ block content
                     .row(style='margin-top:20px') 
                         .col-xs-12.col-sm-10.col-md-8       
                                 a.form-group.btn.btn-info.btn-select.btn-select-light
-                                    input.btn-select-input(type='hidden', id='', name='incident[taskL1]', value='')
+                                    input.btn-select-input(type='hidden', id='', name='incident[higher_cd]', value='')
                                     span.btn-select-value 서비스
                                     span.btn-select-arrow.glyphicon.glyphicon-chevron-down
                                     ul
@@ -43,14 +41,14 @@ block content
                                         li Sap ERP
                                         li 네트워크
                                 a.form-group.btn.btn-info.btn-select.btn-select-light
-                                    input.btn-select-input(type='hidden', id='', name='incident[taskL2]', value='')
+                                    input.btn-select-input(type='hidden', id='', name='incident[lower_cd]', value='')
                                     span.btn-select-value 긴급구분
                                     span.btn-select-arrow.glyphicon.glyphicon-chevron-down
                                     ul
                                         li 긴급
                                         li 보통       
                                 .form-group
-                                    input.form-control.input-md(type='text' placeholder='요청완료일' name='incident[req_finish_date]' value='')
+                                    input.form-control.input-md(type='text' placeholder='요청완료일' name='incident[request_complete_date]' value='')
                                 .form-group
                                     input.form-control.input-md(type='text' placeholder='제목' name='incident[title]' value='')
                                 .form-group
