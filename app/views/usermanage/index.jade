@@ -12,19 +12,45 @@ block content
                         .col-xs-3.col-sm-3.col-md-3
                             a.btn.btn-primary(href='/usermanage/new')
                                 | 추가 
+                            // Button trigger modal
+                            a.btn.btn-info(data-toggle='modal', data-target='#myModal') mailer
+                            #myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+                                .modal-dialog
+                                    .modal-content
+                                        .modal-header
+                                            button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
+                                            h4#myModalLabel.modal-title 메일 전송
+                                            p#msg.bg-info
+                                                form#emailForm.form-horizontal(role='form', method='post')
+                                                    .form-group
+                                                        label.control-label.col-sm-2(for='email') Email:
+                                                        .col-sm-10
+                                                            input.form-control(name='email', type='email', placeholder='Enter email')
+                                                    .form-group
+                                                        label.control-label.col-sm-2(for='subject') Subject:
+                                                        .col-sm-10
+                                                            input.form-control(name='subject', type='text', placeholder='Enter subject')
+                                                    .form-group
+                                                        label.control-label.col-sm-2(for='description') Description:
+                                                        .col-sm-10
+                                                            textarea.form-control(name='description', placeholder='Enter Description')
+                                        .modal-footer
+                                            button.btn.btn-default(type='button', data-dismiss='modal') 취소
+                                            button#send.btn.btn-primary(type='button') 보내기
+                                                span.glyphicon.glyphicon-send
                         .col-xs-3.col-sm-3.col-md-3
-                            input.form-control(type='text' id='searchText' name='searchText')
+                            input.form-control(id='searchText' name='searchText' type='text')
                         .col-xs-2.col-sm-2.col-md-2
                             .dropdown
-                                button.btn.btn-default.dropdown-toggle(type='button' data-toggle='dropdown') 검색유형
+                                button.btn.btn-default.dropdown-toggle(data-toggle='dropdown' type='button') 검색유형
                                     span.span.caret
                                 ul.dropdown-menu.dropdown-menu(role='menu', aria-labelledby='menu1')
                                     li(role='presentation')
-                                        a(role='menuitem', tabindex='-1', href='#' data-type='title,content') 제목,본문
+                                        a(data-type='title,content', href='#', role='menuitem', tabindex='-1') 제목,본문
                                     li(role='presentation')
-                                        a(role='menuitem', tabindex='-1', href='#' data-type='title') 제목
+                                        a(data-type='title', href='#', role='menuitem', tabindex='-1') 제목
                                     li(role='presentation')
-                                        a(role='menuitem', tabindex='-1', href='#' data-type='content') 본문
+                                        a(data-type='content', href='#', role='menuitem', tabindex='-1') 본문
                     .row(style='margin-top:20px') 
                         .col-xs-12.col-sm-10.col-md-8
                             table.table.table-striped

@@ -22,6 +22,9 @@ require('./config/mongoose');
 const logger = log4js.getLogger('app');
 const routes = require('./config/routes')();
 
+//const nodemailer = require('nodemailer');
+//const smtpPool = require('nodemailer-smtp-pool');
+
 /**
  * 운영환경
  */
@@ -33,7 +36,6 @@ app.settings.env = 'development';
  * app.use(logger('dev'));
  */
 app.use(log4js.connectLogger(log4js.getLogger("http"), { level: 'auto' }));
-
 app.use(flash());
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -65,13 +67,18 @@ var redirectToHTTPS = require('express-http-to-https')
 app.use(redirectToHTTPS(['localhost:3000'], ['/test']));
 
 /**
+ * mailer
+ */
+//app.use(nodemailer);
+//app.use(smtpPool);
+
+/**
  * JADE에서 Session 사용
  */
 app.use(function(req,res,next){
    res.locals.session = req.session;
    next();
 });
-
 
 /**
  * routes
@@ -84,9 +91,6 @@ app.use(routes);
 require('./config/mongoose');
 
 module.exports = app;
-
-
-
 
 /**
  * listen up
