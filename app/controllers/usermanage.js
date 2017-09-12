@@ -171,5 +171,22 @@ module.exports = {
             });
             res.redirect('/usermanage');
         });
+    },
+
+    sendmail: (req, res, next) => {
+        if(req.body.email == "" || req.body.subject == "") {
+            res.send("Error: Email & Subject should not blank");
+            return false;
+        }
+        // Sending Email Without SMTP
+        nodemailer.mail({
+            from: "ksy0226 ✔ <ksy0226@isu.co.kr>", // sender address
+            to: req.body.email, // list of receivers
+            subject: req.body.subject+" ✔", // Subject line
+            //text: "Hello world ✔", // plaintext body
+            html: "<b>"+req.body.description+"</b>" // html body
+        });
+        res.send("Email has been sent successfully");
+          
     }
 };

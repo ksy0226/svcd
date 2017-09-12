@@ -1,4 +1,27 @@
 extends ../layouts/default
+block head
+    script(type='text/javascript').
+        $(function(){
+            $("#send").click(function(){
+                var formData = $("#usermanage").serialize();
+                alert(formData);
+                $("#msg").text("Email sending Please wait..");
+                $.ajax({
+                    url: '/usermanage/sendmail',
+                    contentType: "application/json",
+                    type: 'GET',
+                    data: JSON.stringify(formData),
+                    success: function(result) {
+                        $("#msg").empty().text(result);
+                    },
+                    error: function(e) {
+                        $("#msg").empty().text("There is some error to send email, Error code:"+e.status +", Error message:"+e.statusText);
+                    },
+                    dataType: "json",
+                    timeout: 60000
+                });
+            });
+        });
 
 block content
     .content
@@ -7,21 +30,21 @@ block content
                     .col-xs-12.col-sm-10.col-md-8
                         h3.masthead-brand 사원정보관리(내외) > 리스트 조회
                         hr.colorgraph
-                form.form.col-md-12.center-block(name='form' action='/usermanage/new' method='post')
+                form.form.col-md-12.center-block(id='usermanage' name='form' action='/usermanage/new' method='post')
                     .row(style='margin-top:-15px')
                         .col-xs-3.col-sm-3.col-md-3
                             a.btn.btn-primary(href='/usermanage/new')
                                 | 추가 
                             // Button trigger modal
-                            a.btn.btn-info(data-toggle='modal', data-target='#myModal') mailer
-                            #myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+                            a.btn.btn-info(data-target='#myModal', data-toggle='modal') mailer
+                            #myModal.modal.fade(role='dialog', aria-hidden='true', aria-labelledby='myModalLabel', tabindex='-1')
                                 .modal-dialog
                                     .modal-content
                                         .modal-header
-                                            button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
+                                            button.close(data-dismiss='modal', type='button', aria-hidden='true') &times;
                                             h4#myModalLabel.modal-title 메일 전송
                                             p#msg.bg-info
-                                                form#emailForm.form-horizontal(role='form', method='post')
+                                                form.form-horizontal(id='emailForm', role='form', method='post')
                                                     .form-group
                                                         label.control-label.col-sm-2(for='email') Email:
                                                         .col-sm-10
@@ -35,8 +58,8 @@ block content
                                                         .col-sm-10
                                                             textarea.form-control(name='description', placeholder='Enter Description')
                                         .modal-footer
-                                            button.btn.btn-default(type='button', data-dismiss='modal') 취소
-                                            button#send.btn.btn-primary(type='button') 보내기
+                                            button.btn.btn-default(data-dismiss='modal', type='button') 취소
+                                            button.btn.btn-primary(id='send' type='button') 보내기
                                                 span.glyphicon.glyphicon-send
                         .col-xs-3.col-sm-3.col-md-3
                             input.form-control(id='searchText' name='searchText' type='text')
