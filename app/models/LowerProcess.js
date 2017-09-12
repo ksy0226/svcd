@@ -2,10 +2,13 @@
 
 var mongoose = require('mongoose');
 
-var higherProcessSchema = mongoose.Schema({
+var lowerProcessSchema = mongoose.Schema({
+    lower_cd: { type: String, required: true },     //하위업무코드
+    lower_nm: { type: String},                      //하위업무명
     higher_cd: { type: String, required: true },     //상위업무코드
     higher_nm: { type: String},                      //상위업무명
     description: { type: String },                   //설명
+    need_hour: { type: String },                   //hour
     com_cd: { type: String },                        //회사코드
     sabun: { type: String },                         //사번
     createdAt: { type: Date, default: Date.now },    //생성일자 
@@ -15,5 +18,5 @@ var higherProcessSchema = mongoose.Schema({
 
 
 
-var HigherProcess = mongoose.model('higherProcess', higherProcessSchema);
-module.exports = HigherProcess;
+var LowerProcess = mongoose.model('lower', lowerProcessSchema);
+module.exports = LowerProcess;

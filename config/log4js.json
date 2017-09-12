@@ -3,6 +3,7 @@
         "type": "clustered",
         "appenders": [{
                 "type": "dateFile",
+                "level": "INFO",
                 "filename": "logs/access.log",
                 "pattern": "-yyyy-MM-dd",
                 "category": "http"
@@ -10,8 +11,8 @@
             {
                 "type": "file",
                 "filename": "logs/app.log",
-                "maxLogSize": 10485760,
-                "numBackups": 3,
+                "level": "DEBUG",
+                "pattern": "-yyyy-MM-dd",
                 "encoding" : "UTF-8"
             },
             {

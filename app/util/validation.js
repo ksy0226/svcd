@@ -42,5 +42,18 @@ module.exports = {
         }
 
         return errors;
+    },
+
+    /**
+     * value true, false 체크
+     */
+    isEmpty : (value) => {
+        var isValid = false;
+        if(value){
+            isValid = true;
+        }
+        return isValid;
     }
+
+
 };
