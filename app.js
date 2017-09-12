@@ -57,7 +57,7 @@ app.use(require('serve-static')(path.join(__dirname, 'app/public')));
  */
 app.set('views', path.join(__dirname, 'app/views'));
 app.set('view engine', 'jade');
- 
+
 /**
  * http-to-https
  */

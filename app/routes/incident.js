@@ -4,24 +4,9 @@ const express = require('express');
 const router = express.Router();
 const ssc = require('../util/session');
 const logger = require('log4js').getLogger('app');
-const multer = require('multer');
+const upload = require('../util/multer');
 
 const controller = require('../controllers/incident');
-
-
-var path = require('path');
-//var uploadDir = path.join( __dirname , '/upload-file' );
-var uploadDir = path.join('D:/999.prj-nodejs/svcd/upload-file' );
-var storage = multer.diskStorage({
-    destination : function (req, file, callback) {
-        callback(null, uploadDir);
-    },
-    filename : function (req, file, callback) {
-        callback(null, 'posts-' + Date.now() + '.'+ file.mimetype.split('/')[1] );
-    }
-});
-var upload = multer({ storage: storage });
-     
 
  router.route('/').get(ssc.sessionCheck, controller.index);
 //                 .post(controller.index);
