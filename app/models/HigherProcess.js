@@ -1,5 +1,6 @@
+'use strict';
+
 var mongoose = require('mongoose');
-const HigherProcessModel = require('../models/HigherProcess');
 
 var higherProcessSchema = mongoose.Schema({
     higher_cd: { type: String, required: true },     //상위업무코드
@@ -14,5 +15,5 @@ var higherProcessSchema = mongoose.Schema({
 
 
 
-var HigherProcess = mongoose.model('higher', higherProcessSchema);
+var HigherProcess = mongoose.model('higherProcess', higherProcessSchema);
 module.exports = HigherProcess;
