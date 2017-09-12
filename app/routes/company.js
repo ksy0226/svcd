@@ -14,4 +14,6 @@ router.route('/:id/edit').get(controller.edit)
 router.route('/:id/save').post(controller.update);
 router.route('/:id/delete').get(controller.delete);
 
+router.route('/exceldownload').get(controller.exceldownload);
+
 module.exports = router;
