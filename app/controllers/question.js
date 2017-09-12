@@ -57,6 +57,7 @@ module.exports = {
                 });
             }
             //logger.debug(question);
+        
             res.render("question/index", {
                 question: question,
                 user: req.user,
