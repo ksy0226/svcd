@@ -51,11 +51,13 @@ app.use(compression());
  */
 app.use(favicon(path.join(__dirname, 'app/public/favicon.ico')));
 app.use(require('serve-static')(path.join(__dirname, 'app/public')));
+//app.use(require('serve-static')(path.join(__dirname, 'app/util')));
 
 /**
  * view engine setup
  */
 app.set('views', path.join(__dirname, 'app/views'));
+//app.set('utils', path.join(__dirname, 'app/util'));
 app.set('view engine', 'jade');
  
 /**
