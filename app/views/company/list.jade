@@ -35,8 +35,6 @@ block head
                 }
                 
                 function fnJsonToExcel(JsonData){
-                    alert("call fnJsonToExcel");
-                    alert("JSONTOEXCEL 함수 : "+JsonData);
 
                     var arrData = typeof JsonData != 'object' ? JSON.parse(JsonData) : JsonData;
                     var tab_text = '';
@@ -79,7 +77,6 @@ block head
                 }
                 
                 function getJsonData(){
-                    alert(123);
                     $.ajax({
                         type: "GET",
                         url: "/company/exceldownload",
