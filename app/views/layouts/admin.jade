@@ -1,73 +1,167 @@
 doctype html
 html
-  head
-    block head
-      title #{title}
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    link(rel='stylesheet', href='/layouts/core.min.css?#{cacheBreaker}')
-    link(rel='stylesheet', href='/layouts/admin.min.css?#{cacheBreaker}')
-    block neck
-  body
-    div.navbar.navbar-inverse.navbar-fixed-top
-      div.container
-        div.navbar-header
-          a.navbar-brand(href='/admin/')
-            img.navbar-logo(src='/media/logo-symbol-64x64.png', alt='Logo')
-            span.navbar-brand-label #{projectName}
-          button.navbar-toggle.collapsed(data-toggle='collapse', data-target='.my-navbar-collapse')
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-        div.navbar-collapse.my-navbar-collapse.collapse
-          ul.nav.navbar-nav
-            li.dropdown
-              a.dropdown-toggle(href='#', data-toggle='dropdown')
-                | System&nbsp;
-                span.caret
-              ul.dropdown-menu
-                li.dropdown-header Pivoted Settings
-                li: a(href='/admin/statuses/') Statuses
-                li: a(href='/admin/categories/') Categories
-                li.divider
-                li.dropdown-header User Admin
-                li: a(href='/admin/users/') Users
-                li: a(href='/admin/accounts/') Accounts
-                li: a(href='/admin/administrators/') Administrators
-                li: a(href='/admin/admin-groups/') Admin Groups
-          form.navbar-form.pull-right#_search
+    head
+        title #{title}
+        meta(charset='UTF-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        meta(name='description', content='')
+        meta(name='author', content='')
+        link(href='/vendor/bootstrap-3.3.7/css/bootstrap.min.css', rel='stylesheet')
+        link(href='/vendor/bootstrap-3.3.7/css/bootstrap-theme.min.css', rel='stylesheet')
+        link(type='text/css', href='/vendor/font-awesome/css/font-awesome.min.css', rel='stylesheet')        
+        link(href='/layouts/sb-admin-2.css', rel='stylesheet')
+        link(href='/vendor/metisMenu/metisMenu.min.css', rel='stylesheet')
+        link(href='/vendor/morrisjs/morris.css', rel='stylesheet')
+        link(href='/isu/css/isu.css', rel='stylesheet')
+        script(src='/vendor/jquery/jquery.min.js')
+        script(src='/vendor/bootstrap-3.3.7/js/bootstrap.min.js')  
+        script(src='/layouts/sb-admin-2.js')
+        script(src='/vendor/raphael/raphael.min.js')
+        script(src='/vendor/metisMenu/metisMenu.min.js')
+        script(src='/vendor/morrisjs/morris.min.js')
+        script(src='http://dmaps.daum.net/map_js_init/postcode.v2.js')
 
-    div.page
-      div.container
-        block body
-    div.footer
-      div.container
-        div.inner
-          span.copyright.pull-right
-            |&#169; #{copyrightYear} #{copyrightName}
-          ul.links
-            li: a(href='/') Home
-            li: a(href='/logout/') Sign Out
-          div.clearfix
+        //추후 삭제(도표 표시용)
+        script(src='/data/morris-data.js')
+        script(src='/data/flot-data.js')
+        script(src='/isu/js/postcode.js')
+        
+        script(src='/util/download.js')
 
-    div.ajax-spinner
-      img(src='/media/ajax-pulse.gif', alt='Loading')
+        block head
+        
+    body
+        - if(true){ //모든사용자
+        .navbar.navbar-default.navbar-top
+            .container
+                .navbar-header
+                    a.navbar-brand(href='/')
+                        //img.navbar-logo(src='/isu/images/logonew.gif', alt='Logo')
+                        // img(src='/isu/images/logonew.gif', alt='Logo')
+                        span.navbar-brand-label
+                    button.navbar-toggle.collapsed(data-toggle='collapse', data-target='.my-navbar-collapse')
+                        span.icon-bar
+                        span.icon-bar
+                        span.icon-bar
+                .navbar-collapse.my-navbar-collapse.collapse
+                    ul.nav.navbar-nav
+                        li
+                            a(href='/index') Home
+                        li
+                            a(href='/question/new') 문의하기
+                        li
+                            a(href='/question/') 처리진행현황
+                        li
+                            a(href='/account/') 자주묻는질문과답
+                    ul.nav.navbar-nav.navbar-right
+                        li
+                            a(href='#')
+                                | #{session.userNm} 님
+                        li
+                            a(href='/logout')
+                                i.fa.fa-user
+                                |  로그아웃
+        - }
+        
+        .page
+            .container
+                p
+                    | #{session.userFlag}
+                    | #{session.groupFlag}
+                - if(session.groupFlag =="in" && session.userFlag != null){
+                #wrapper
+                    .sidebar.visible-lg(role='navigation', style='margin-top: 0')
+                        .sidebar-nav.navbar-collapse
+                            ul#side-menu.nav
+                                li
+                                    a(href='/index')
+                                        i.fa.fa-desktop.fa-fw
+                                        |  HOME   
+                                li.active
+                                    a(href='#')
+                                        i.fa.fa-th-list.fa-fw
+                                        |  문의방법 및 담당자
+                                        span.fa.arrow
+                                    ul.nav.nav-second-level
+                                        li
+                                            a(href='/incident/new/문의하기') 문의하기
+                                        li
+                                            a(href='/incident') 처리진행현황
+                                        li
+                                            a(href='#') 자주묻는질문과답
+                                        li
+                                            a(href='/search/viewall') 처리된내용검색
 
-    script(type='text/template', id='tmpl-_search')
-      div.dropdown
-        input.form-control(name='_search', type='text', placeholder='search', tab-index='1')
-        ul#_search-results-rows.dropdown-menu
-    script(type='text/template', id='tmpl-_search-results-row')
-      |<% if (type && type == 'header') { %>
-      |<%- name %>
-      |<% } else { %>
-      a(href!='<%= url %>') <%- name %>
-      |<% } %>
-    script(type='text/template', id='tmpl-_search-results-empty-row')
-      li.dropdown-header no docs matched
-
-    //if lte IE 9
-      script(src='/layouts/ie-sucks.min.js?#{cacheBreaker}')
-    script(src='/layouts/core.min.js?#{cacheBreaker}')
-    script(src='/layouts/admin.min.js?#{cacheBreaker}')
-
-    block feet
+                                //그룹관리자, 업무관리자,업무담당자 오픈
+                                - if(session.userFlag ==1 || session.userFlag ==3 || session.userFlag ==4){    
+                                li.active
+                                    a(href='#')
+                                        i.fa.fa-th-list.fa-fw
+                                        |  SD 담당자
+                                        span.fa.arrow
+                                    ul.nav.nav-second-level
+                                        li
+                                            a(href='#') 상담접수(전화)
+                                        li
+                                            a(href='#') 나의업무처리현황
+                                        li
+                                            a(href='#') 나의업무지정
+                                        li
+                                            a(href='#') 월별처리내역
+                                - }
+                                - if(session.userFlag !=9){
+                                li
+                                    a(href='#')
+                                        i.fa.fa-th-list.fa-fw
+                                        |  SD 검색/통계
+                                        span.fa.arrow
+                                    ul.nav.nav-second-level
+                                        li
+                                            a(href='#') 전체내용검색
+                                        li
+                                            a(href='#') 회사별 상위업무통계
+                                        li
+                                            a(href='#') 상위별 하위업무통계
+                                        li
+                                            a(href='#') 미해결 현황
+                                        li
+                                            a(href='#') 담당자별월별처리내역
+                                        li
+                                            a(href='#') 처리구분별처리내역
+                                - }
+                                - if(session.userFlag ==1 || session.userFlag ==4){
+                                li
+                                    a(href='#')
+                                        i.fa.fa-th-list.fa-fw
+                                        |  SD 기본정보
+                                        span.fa.arrow
+                                    ul.nav.nav-second-level
+                                        li
+                                            a(href='/higherProcess/list') 상위업무조회
+                                        li
+                                            a(href='#') 하위업무조회
+                                        li
+                                            a(href='/company/list') 회사정보관리(외부)
+                                        li
+                                            a(href='/usermanage/') 사원정보관리(내외)
+                                        li
+                                            a(href='#') 회사별상위업무지정
+                                        li
+                                            a(href='#') 처리구분코드조회
+                                        li
+                                            a(href='#') 업무별담당자현황
+                                        li
+                                            a(href='#') 자주묻는질문과답
+                                - }
+                                - if(session.userFlag ==1){            
+                                li
+                                    a(href='#')
+                                        i.fa.fa-th-list.fa-fw
+                                        |  SD Dashboard
+                                        span.fa.arrow 
+                                -}
+                - }       
+                    #page-wrapper
+                            block content
+        block feet
