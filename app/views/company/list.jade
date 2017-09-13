@@ -1,6 +1,8 @@
 extends ../layouts/default
 block head
+            script(src='/vendor/jquery/jquery.min.js')
             script(type='text/javascript').
+
                 //IE, CHROME 진행
                 function fnTableToExcel(dvData){
                     var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
@@ -77,6 +79,7 @@ block head
                 }
                 
                 function getJsonData(){
+                    alert(123);
                     $.ajax({
                         type: "GET",
                         url: "/company/exceldownload",
@@ -85,7 +88,7 @@ block head
                         dataType: "json",
                         success: function(data, status){
                             console.log(data);
-                            fnJsonToExcel(JSON.stringify(data);
+                            fnJsonToExcel(JSON.stringify(data));
                             //fnJsonToExcel(data);
                         },
                         error: function(data, status, err) {
@@ -107,7 +110,7 @@ block content
             .row(style='margin-left:30px;margin-top:-15px')
                 a.button.btn.btn-primary.btn-sm(href='/company/new') 추가      
                 button.btn.btn-primary.btn-sm.btn-info(id='btnExport' onclick="fnTableToExcel(document.getElementById('dvData'));") ExcelDownload
-                a.button.btn.btn-primary.btn-sm.btn-info(onclick="getJsonData();") JsonDataDownload
+                button.btn.btn-primary.btn-sm.btn-info(onclick="getJsonData();") JsonDataDownload
             br         
             .row
                 .col-xs-12.col-sm-10.col-md-8       
