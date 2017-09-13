@@ -1,25 +1,32 @@
 extends ../layouts/default
 block head
+    //script(src='../../util/nodemailer.js', type='text/javascript')
     script(type='text/javascript').
         $(function(){
-            $("#send").click(function(){
+            $("#sendmail").click(function(){
                 var formData = $("#usermanage").serialize();
-                alert(formData);
                 $("#msg").text("Email sending Please wait..");
                 $.ajax({
-                    url: '/usermanage/sendmail',
+                    type: "GET",
+                    url: "/usermanage/sendmail",
                     contentType: "application/json",
-                    type: 'GET',
                     data: JSON.stringify(formData),
-                    success: function(result) {
-                        $("#msg").empty().text(result);
+                    dataType: "json",
+                    success: function(data, status) {
+                        $("#msg").empty().text(status);
                     },
                     error: function(e) {
-                        $("#msg").empty().text("There is some error to send email, Error code:"+e.status +", Error message:"+e.statusText);
+                        fnJsonToEmail(data);
+                        $("#msg").empty().text("Error to send email, Error code: ["+ e.status +"], Error message: ["+ e.statusText +"]");
+                        //$("#msg").empty().text("data: "+data+", status: "+status);
+                        return;
                     },
-                    dataType: "json",
                     timeout: 60000
                 });
+
+                function fnJsonToEmail(JsonData){
+                    alert(data);
+                }
             });
         });
 
@@ -48,21 +55,21 @@ block content
                                                     .form-group
                                                         label.control-label.col-sm-2(for='email') Email:
                                                         .col-sm-10
-                                                            input.form-control(name='email', type='email', placeholder='Enter email')
+                                                            input.form-control(name='usermanage[email]', type='email', placeholder='Enter email')
                                                     .form-group
                                                         label.control-label.col-sm-2(for='subject') Subject:
                                                         .col-sm-10
-                                                            input.form-control(name='subject', type='text', placeholder='Enter subject')
+                                                            input.form-control(name='usermanage[subject]', type='text', placeholder='Enter subject')
                                                     .form-group
                                                         label.control-label.col-sm-2(for='description') Description:
                                                         .col-sm-10
-                                                            textarea.form-control(name='description', placeholder='Enter Description')
+                                                            textarea.form-control(name='usermanage[description]', placeholder='Enter Description')
                                         .modal-footer
                                             button.btn.btn-default(data-dismiss='modal', type='button') 취소
-                                            button.btn.btn-primary(id='send' type='button') 보내기
+                                            button.btn.btn-primary(id='sendmail' type='button') 보내기
                                                 span.glyphicon.glyphicon-send
                         .col-xs-3.col-sm-3.col-md-3
-                            input.form-control(id='searchText' name='searchText' type='text')
+                            input.form-control(id='searchText' name='usermanage[searchText]' type='text')
                         .col-xs-2.col-sm-2.col-md-2
                             .dropdown
                                 button.btn.btn-default.dropdown-toggle(data-toggle='dropdown' type='button') 검색유형

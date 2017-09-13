@@ -8,6 +8,7 @@ const Counter = require('../models/Counter');
 const service = require('../services/usermanage');
 const logger = require('log4js').getLogger('app');
 const Iconv = require('iconv-lite');
+const nodemailer = require('nodemailer');
 
 module.exports = {
 
@@ -174,6 +175,7 @@ module.exports = {
     },
 
     sendmail: (req, res, next) => {
+        alert('Enter sendmail!!!');
         if(req.body.email == "" || req.body.subject == "") {
             res.send("Error: Email & Subject should not blank");
             return false;
@@ -187,6 +189,5 @@ module.exports = {
             html: "<b>"+req.body.description+"</b>" // html body
         });
         res.send("Email has been sent successfully");
-          
     }
 };
