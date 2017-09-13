@@ -7,11 +7,12 @@ block head
                 type: "GET",
                 url: "/usermanage/sendmail",
                 contentType: "application/json",
-                data: JSON.stringify({usermanage : usermanage}),
+                data: JSON.stringify({}),
                 dataType: "json",
                 success: function(data, status){
                     alert(data);
-                    console.log("test : "+data);
+                    alert(JSON.stringify(data));
+                    //console.log("test : "+data);
                     //fnJsonToExcel(JSON.stringify(data));
 
                     //fnJsonToExcel(data);

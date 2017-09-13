@@ -181,14 +181,15 @@ module.exports = {
                 success: false,
                 message: err
             });
-            console.log(req.userId);
+
             console.log(usermanageData);
             //res.json(companyJsonData);
-            //res.send({companyJsonData: companyJsonData});
-            //res.render("usermanage", {
+            //res.send({usermanageData : usermanageData});
+
+            //res.render("usermanage/index", {
             //usermanageData : usermanageData
             //});
-            //res.json(usermanageData);
+            res.json(usermanageData);
         });
 
         /*

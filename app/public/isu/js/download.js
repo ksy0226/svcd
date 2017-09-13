@@ -82,6 +82,7 @@ function getJsonData(){
         success: function(data, status){
             console.log(data);
             fnJsonToExcel(JSON.stringify(data));
+            alert(JSON.stringify(data));
             //fnJsonToExcel(data);
         },
         error: function(data, status, err) {
