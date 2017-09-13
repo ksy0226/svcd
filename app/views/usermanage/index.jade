@@ -2,33 +2,26 @@ extends ../layouts/default
 block head
     //script(src='../../util/nodemailer.js', type='text/javascript')
     script(type='text/javascript').
-        $(function(){
-            $("#sendmail").click(function(){
-                var formData = $("#usermanage").serialize();
-                $("#msg").text("Email sending Please wait..");
-                $.ajax({
-                    type: "GET",
-                    url: "/usermanage/sendmail",
-                    contentType: "application/json",
-                    data: JSON.stringify(formData),
-                    dataType: "json",
-                    success: function(data, status) {
-                        $("#msg").empty().text(status);
-                    },
-                    error: function(e) {
-                        fnJsonToEmail(data);
-                        $("#msg").empty().text("Error to send email, Error code: ["+ e.status +"], Error message: ["+ e.statusText +"]");
-                        //$("#msg").empty().text("data: "+data+", status: "+status);
-                        return;
-                    },
-                    timeout: 60000
-                });
-
-                function fnJsonToEmail(JsonData){
+        function sendMail(){
+            $.ajax({
+                type: "GET",
+                url: "/usermanage/sendmail",
+                contentType: "application/json",
+                data: JSON.stringify({usermanage : usermanage}),
+                dataType: "json",
+                success: function(data, status){
                     alert(data);
+                    console.log("test : "+data);
+                    //fnJsonToExcel(JSON.stringify(data));
+
+                    //fnJsonToExcel(data);
+                },
+                error: function(data, status, err) {
+                    console.log("err : "+err);
+                    return;
                 }
             });
-        });
+        }
 
 block content
     .content
@@ -43,31 +36,8 @@ block content
                             a.btn.btn-primary(href='/usermanage/new')
                                 | 추가 
                             // Button trigger modal
-                            a.btn.btn-info(data-target='#myModal', data-toggle='modal') mailer
-                            #myModal.modal.fade(role='dialog', aria-hidden='true', aria-labelledby='myModalLabel', tabindex='-1')
-                                .modal-dialog
-                                    .modal-content
-                                        .modal-header
-                                            button.close(data-dismiss='modal', type='button', aria-hidden='true') &times;
-                                            h4#myModalLabel.modal-title 메일 전송
-                                            p#msg.bg-info
-                                                form.form-horizontal(id='emailForm', role='form', method='post')
-                                                    .form-group
-                                                        label.control-label.col-sm-2(for='email') Email:
-                                                        .col-sm-10
-                                                            input.form-control(name='usermanage[email]', type='email', placeholder='Enter email')
-                                                    .form-group
-                                                        label.control-label.col-sm-2(for='subject') Subject:
-                                                        .col-sm-10
-                                                            input.form-control(name='usermanage[subject]', type='text', placeholder='Enter subject')
-                                                    .form-group
-                                                        label.control-label.col-sm-2(for='description') Description:
-                                                        .col-sm-10
-                                                            textarea.form-control(name='usermanage[description]', placeholder='Enter Description')
-                                        .modal-footer
-                                            button.btn.btn-default(data-dismiss='modal', type='button') 취소
-                                            button.btn.btn-primary(id='sendmail' type='button') 보내기
-                                                span.glyphicon.glyphicon-send
+                            a.btn.btn-info(id='sendmail' onclick="sendMail();") mailer
+                            
                         .col-xs-3.col-sm-3.col-md-3
                             input.form-control(id='searchText' name='usermanage[searchText]' type='text')
                         .col-xs-2.col-sm-2.col-md-2
