@@ -81,7 +81,7 @@ function initMap() {
             //position: map.getCenter(), //마커 위치
             position : new google.maps.LatLng(37.497983,126.9938672), // 지도 중앙 위치
             map: map,
-            icon: '/isu/image/isu_map_icon.png',
+            icon: '/isu/images/isu_map_icon.png',
         });
     }
 }
