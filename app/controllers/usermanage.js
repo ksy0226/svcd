@@ -8,6 +8,7 @@ const Counter = require('../models/Counter');
 const service = require('../services/usermanage');
 const logger = require('log4js').getLogger('app');
 const Iconv = require('iconv-lite');
+const nodemailer = require('nodemailer');
 
 module.exports = {
 
@@ -174,6 +175,23 @@ module.exports = {
     },
 
     sendmail: (req, res, next) => {
+        console.log('Enter sendmail!!!');
+        Usermanage.find(req.body.usermanage, function(err, usermanageData) {
+            if (err) return res.json({
+                success: false,
+                message: err
+            });
+            console.log(req.userId);
+            console.log(usermanageData);
+            //res.json(companyJsonData);
+            //res.send({companyJsonData: companyJsonData});
+            //res.render("usermanage", {
+            //usermanageData : usermanageData
+            //});
+            //res.json(usermanageData);
+        });
+
+        /*
         if(req.body.email == "" || req.body.subject == "") {
             res.send("Error: Email & Subject should not blank");
             return false;
@@ -187,6 +205,24 @@ module.exports = {
             html: "<b>"+req.body.description+"</b>" // html body
         });
         res.send("Email has been sent successfully");
-          
+        */
     }
+    /*
+
+    exceldownload: (req, res, next) => {
+        console.log(1);
+        CompanyModel.find(req.body.company, function(err, companyJsonData) {
+            if (err) return res.json({
+                success: false,
+                message: err
+            });
+            console.log(companyJsonData);
+            //res.json(companyJsonData);
+            //res.send({companyJsonData: companyJsonData});
+            /*res.render("company/list", {
+            companyJsonData: companyJsonData
+        });
+            res.json(companyJsonData);
+        });
+    }*/
 };

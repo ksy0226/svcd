@@ -28,6 +28,6 @@ router.route('/:id/edit').get(controller.edit)
                          .post(controller.update);
 router.route('/:id/delete').get(controller.delete);
 
-router.route('/sendmail').post(controller.sendmail);
+router.route('/sendmail').get(controller.sendmail);
 
 module.exports = router;
