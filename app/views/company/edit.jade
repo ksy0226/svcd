@@ -1,60 +1,111 @@
 extends ../layouts/default
+block head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width,initial-scale=1')
+    meta(name='description', content='A fully featured admin theme which can be used to build CRM, CMS, etc.')
+    meta(name='author', content='Coderthemes')
+    link(rel='shortcut icon', href='assets/images/favicon_1.ico')
+    title 4-3 회사정보 입력
+    link(href='/plugins/dropzone/dist/dropzone.css', rel='stylesheet', type='text/css')
+    link(href='/plugins/summernote/dist/summernote.css', rel='stylesheet')
+    link(href='/plugins/switchery/switchery.min.css', rel='stylesheet')
+    link(href='/assets/css/bootstrap.min.css', rel='stylesheet', type='text/css')
+    link(href='/assets/css/core.css', rel='stylesheet', type='text/css')
+    link(href='/assets/css/icons.css', rel='stylesheet', type='text/css')
+    link(href='/assets/css/components.css', rel='stylesheet', type='text/css')
+    link(href='/assets/css/pages.css', rel='stylesheet', type='text/css')
+    link(href='/assets/css/menu_light.css', rel='stylesheet', type='text/css')
+    link(href='/assets/css/responsive.css', rel='stylesheet', type='text/css')
+    script(src='/assets/js/modernizr.min.js')
+    // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+    // WARNING: Respond.js doesn't work if you view the page via file://
+    //if lt IE 9
+    script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+    script(src='https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js')
+
 
 block content
-    .content
-        .container
-            .row(style='margin-top:20px')
-                .col-xs-12.col-sm-10.col-md-8
-                    h3.masthead-brand 회사정보 > 수정하기
-                    hr.colorgraph
-            br
-            form.form.col-md-12.center-block(name='form' action='/company/#{company._id}/edit' method='post')   
-                .row(style='margin-left:30px;margin-top:-15px')
-                    button.btn.btn-primary.btn-sm.btn-signup(onclick="location.href='/company/list'") 목록      
-                    button.btn.btn-primary.btn-sm.btn-info(onclick="location.href='/company/#{company._id}/edit'") 수정
-                    button.btn.btn-success.btn-sm(type='submit') 저장 
-                    button.btn.btn-primary.btn-sm.btn-danger(onclick="location.href='/company/#{company._id}/delete'") 삭제     
-                br
-                .row(style='margin-left:30px')
-                    .col-xs-3.col-sm-3.col-md-3
-                        .form-group
-                            input.form-control.input-sm(type='text', name='company[com_cd]', value='#{company.com_cd}', placeholder='회사코드')
-                .row(style='margin-left:30px')
-                    .col-xs-3.col-sm-3.col-md-3
-                        .form-group
-                            input.form-control.input-sm(type='text', name='company[com_nm]', value='#{company.com_nm}', placeholder='회사명')
-                .row(style='margin-left:30px')
-                    .col-xs-3.col-sm-3.col-md-3
-                        .form-group
-                            input.form-control.input-sm(type='text', name='company[type]', value='#{company.type}',placeholder='업태')
-                .row(style='margin-left:30px')
-                    .col-xs-3.col-sm-3.col-md-3
-                        .form-group
-                            input.form-control.input-sm(type='text', name='company[ceo_nm]', value='#{company.ceo_nm}', placeholder='대표이사명')
-                .row(style='margin-left:30px')
-                    .col-xs-3.col-sm-3.col-md-3
-                        .form-group
-                            input.form-control.input-sm(type='text', name='company[telno]', value='#{company.telno}', placeholder='전화번호')
-                .row(style='margin-left:30px')
-                    .col-xs-3.col-sm-3.col-md-3
-                        .form-group
-                            input.form-control.input-sm(type='text', name='company[faxno]', value='#{company.faxno}',placeholder='팩스번호')
-                .row(style='margin-left:30px')
-                    .col-xs-3.col-sm-3.col-md-3
-                        .form-group
-                            input.form-control.input-sm(type='text', id='zip_cd' name='company[zip_cd]', value='#{company.zip_cd}',placeholder='우편번호')
-                .row(style='margin-left:30px')
-                    .col-xs-6.col-sm-6.col-md-6
-                        .form-group
-                            input.form-control.input-sm(type='text', id='addr' name='company[addr]', value='#{company.addr}',placeholder='회사주소1' readonly)
-                            span.btn.btn-sm.btn-primary(style='margin-top:10px', id='postcode' onclick='setDaumPostcode()') 우편번호 찾기
-                .row(style='margin-left:30px')
-                    .col-xs-6.col-sm-6.col-md-6
-                        .form-group
-                            input.form-control.input-sm(type='text', id='addr2' name='company[addr2]', value='#{company.addr2}',placeholder='회사주소2')
-                .row(style='margin-left:30px')
-                    .col-xs-6.col-sm-6.col-md-6
-                        .form-group
-                            input.form-control.input-sm(type='text', name='company[bigo]', value='#{company.bigo}',placeholder='비고')
-                .row
-                     
+      // ==============================================================
+      // Start right Content here
+      // ==============================================================
+      .content-page
+        // Start content
+        .content
+          .container
+            // Page-Title
+            .row
+              .col-sm-12
+                .page-title-box
+                  ol.breadcrumb.pull-right
+                    li
+                      a(href='#') Home
+                    li
+                      a(href='#') SD기본정보
+                    li.active 회사정보관리
+                  h4.page-title 회사정보 수정
+            .row
+              .col-sm-12
+                button.btn.btn-primary.btn-sm.btn-signup(onclick="location.href='/company/list'") 목록      
+                button.btn.btn-primary.btn-sm.btn-info(onclick="location.href='/company/#{company._id}/edit'") 수정
+                button.btn.btn-success.btn-sm(type='submit') 저장 
+                button.btn.btn-primary.btn-sm.btn-danger(onclick="location.href='/company/#{company._id}/delete'" id="deleteBtn") 삭제
+            .row
+              .col-sm-12
+                .card-box
+                  .p-20
+                    form.form-horizontal.group-border-dashed(name='form')
+                      .form-group
+                        label.col-sm-3.control-label 회사코드
+                        .col-sm-3
+                          input.form-control(type='text', name='company[com_cd]', readonly value='#{company.com_cd}', placeholder='')
+                      .form-group
+                        label.col-sm-3.control-label 회사명
+                        .col-sm-3
+                          input.form-control(type='text', name='company[com_nm]', value='#{company.com_nm}', placeholder='')
+                      .form-group
+                        label.col-sm-3.control-label 업태
+                        .col-sm-3
+                          input.form-control(type='text', name='company[type]', value='#{company.type}',placeholder='')
+                      .form-group
+                        label.col-sm-3.control-label 대표이사명
+                        .col-sm-3
+                          input.form-control(type='text', name='company[ceo_nm]', value='#{company.ceo_nm}', placeholder='')
+                      .form-group
+                        label.col-sm-3.control-label 전화번호
+                        .col-sm-3
+                          input.form-control(type='text', name='company[telno]', value='#{company.telno}', placeholder='')
+                      .form-group
+                        label.col-sm-3.control-label 팩스번호
+                        .col-sm-3
+                          input.form-control(type='text', name='company[faxno]', value='#{company.faxno}',placeholder='')
+                      .form-group
+                        label.col-sm-3.control-label 회사주소1
+                        .col-sm-2
+                          input.form-control(type='text', name='company[zip_cd]', value='#{company.zip_cd}',placeholder='')
+                        .col-sm-5
+                          input.form-control(type='text', name='company[addr]', value='#{company.addr}',placeholder='')
+                        .col-sm-2
+                          span.btn.btn-sm.btn-primary(id='postcode') 우편번호 찾기
+                      .form-group
+                        label.col-sm-3.control-label 회사주소2
+                        .col-sm-7
+                          input.form-control(type='text', name='company[addr2]', value='#{company.addr2}',placeholder='')
+                      .form-group
+                        label.col-sm-3.control-label 비고
+                        .col-sm-7
+                          input.form-control(type='text', name='company[bigo]', value='#{company.bigo}',placeholder='')
+                      .form-group
+                        .col-sm-offset-3.col-sm-9.m-t-30
+                          button.btn.btn-lg.btn-primary.waves-effect.waves-light(type='submit')
+                            | 저장 
+                            i.fa.fa-send.m-l-10
+                          button.btn.btn-lg.btn-default.waves-effect.m-l-5(type='reset') 취소
+            // end row
+          // end container
+        // end content
+        footer.footer.text-right
+          | 2017 © ISU Group.
+      // ==============================================================
+      // End Right content here
+      // ==============================================================
+    // END wrapper
