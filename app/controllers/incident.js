@@ -38,7 +38,7 @@ module.exports = {
 
     /** 
      * incident 저장
-     */
+    */
     save: (req, res, next) => {
         var newincident = req.body.incident;
         if(req.files){
