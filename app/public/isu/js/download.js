@@ -1,3 +1,5 @@
+'use strict'; 
+
 function fnTableToExcel(dvData){
     var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
     var textRange; var j=0;
@@ -29,9 +31,6 @@ function fnTableToExcel(dvData){
 }
 
 function fnJsonToExcel(JsonData){
-    alert("call fnJsonToExcel");
-    alert("JSONTOEXCEL 함수 : "+JsonData);
-
     var arrData = typeof JsonData != 'object' ? JSON.parse(JsonData) : JsonData;
     var tab_text = '';
 
@@ -52,21 +51,18 @@ function fnJsonToExcel(JsonData){
     }
     
     if (tab_text == '') {
-        alert("Invalid data");
         return;
     }
     var ua = window.navigator.userAgent;
     var msie = ua.indexOf("MSIE "); 
 
     if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {     // If Internet Explorer
-        alert("ie");
         txtArea1.document.open("txt/html","replace");
         txtArea1.document.write(tab_text);
         txtArea1.document.close();
         txtArea1.focus(); 
         sa=txtArea1.document.execCommand("SaveAs",true,"exceldownload.xls");
     } else {                //other browser not tested on IE 11
-        alert("other");
         sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
     }  
     return (sa);
@@ -80,9 +76,8 @@ function getJsonData(){
         data: JSON.stringify({}),
         dataType: "json",
         success: function(data, status){
-            console.log(data);
+            logger.debug(data);
             fnJsonToExcel(JSON.stringify(data));
-            alert(JSON.stringify(data));
             //fnJsonToExcel(data);
         },
         error: function(data, status, err) {

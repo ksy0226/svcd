@@ -45,60 +45,70 @@ block content
                   h4.page-title 회사정보 조회
             .row
               .col-sm-12
-                button.btn.btn-primary.btn-sm.btn-signup(onclick="location.href='/company/list'") 목록      
-                button.btn.btn-primary.btn-sm.btn-info(onclick="location.href='/company/#{company._id}/edit'") 수정
-                button.btn.btn-primary.btn-sm.btn-danger(onclick="location.href='/company/#{company._id}/delete'" id="deleteBtn") 삭제
-            .row
-              .col-sm-12
                 .card-box
-                  .p-20
-                    form.form-horizontal.group-border-dashed(name='form')
+                  .btn-toolbar.form-group
+                    .pull-left
+                      button.btn.btn-default.waves-effect.waves-light.m-l-5(onclick="location.href='/company/list'")
+                        i.fa.fa-list-ul
+                        |  목록
+                      button.btn.btn-success.waves-effect.waves-light.m-l-5(onclick="location.href='/company/#{company._id}/edit'") 
+                        i.fa.fa-edit
+                        |  수정
+                      button.btn.btn-inverse.waves-effect.waves-light.m-l-5(onclick="location.href='/company/#{company._id}/delete'" id="deleteBtn") 
+                        i.fa.fa-remove
+                        |  삭제
+                    .pull-right
+                      button.btn.btn-primary.waves-effect.waves-light(type='submit')
+                        i.fa.fa-send-o
+                        |  저장
+                      button.btn.btn-default.waves-effect.m-l-5(type='reset') 
+                        i.fa.fa-undo
+                        |  취소
+                  hr
+                  form.form-horizontal.group-border-dashed
                       .form-group
-                        label.col-sm-3.control-label 회사코드
-                        .col-sm-3
+                      label.col-sm-3.control-label 회사코드
+                      .col-sm-3
                           input.form-control(type='text', name='company[com_cd]', readonly value='#{company.com_cd}', placeholder='')
                       .form-group
-                        label.col-sm-3.control-label 회사명
-                        .col-sm-3
+                      label.col-sm-3.control-label 회사명
+                      .col-sm-3
                           input.form-control(type='text', name='company[com_nm]', readonly value='#{company.com_nm}', placeholder='')
                       .form-group
-                        label.col-sm-3.control-label 업태
-                        .col-sm-3
+                      label.col-sm-3.control-label 업태
+                      .col-sm-3
                           input.form-control(type='text', name='company[type]', readonly value='#{company.type}',placeholder='')
                       .form-group
-                        label.col-sm-3.control-label 대표이사명
-                        .col-sm-3
+                      label.col-sm-3.control-label 대표이사명
+                      .col-sm-3
                           input.form-control(type='text', name='company[ceo_nm]', readonly value='#{company.ceo_nm}', placeholder='')
                       .form-group
-                        label.col-sm-3.control-label 전화번호
-                        .col-sm-3
+                      label.col-sm-3.control-label 전화번호
+                      .col-sm-3
                           input.form-control(type='text', name='company[telno]', readonly value='#{company.telno}', placeholder='')
                       .form-group
-                        label.col-sm-3.control-label 팩스번호
-                        .col-sm-3
+                      label.col-sm-3.control-label 팩스번호
+                      .col-sm-3
                           input.form-control(type='text', name='company[faxno]', readonly value='#{company.faxno}',placeholder='')
                       .form-group
-                        label.col-sm-3.control-label 회사주소1
-                        .col-sm-2
+                      label.col-sm-3.control-label 회사주소1
+                      .col-sm-2
                           input.form-control(type='text', name='company[zip_cd]', readonly value='#{company.zip_cd}',placeholder='')
-                        .col-sm-5
+                      .col-sm-5
                           input.form-control(type='text', name='company[addr]', readonly value='#{company.addr}',placeholder='')
-                        .col-sm-2
+                      .col-sm-2
                           span.btn.btn-sm.btn-primary(id='postcode') 우편번호 찾기
                       .form-group
-                        label.col-sm-3.control-label 회사주소2
-                        .col-sm-7
+                      label.col-sm-3.control-label 회사주소2
+                      .col-sm-7
                           input.form-control(type='text', name='company[addr2]', readonly value='#{company.addr2}',placeholder='')
                       .form-group
-                        label.col-sm-3.control-label 비고
-                        .col-sm-7
+                      label.col-sm-3.control-label 비고
+                      .col-sm-7
                           input.form-control(type='text', name='company[bigo]', readonly value='#{company.bigo}',placeholder='')
                       .form-group
-                        .col-sm-offset-3.col-sm-9.m-t-30
-                          button.btn.btn-lg.btn-primary.waves-effect.waves-light(type='submit')
-                            | 저장 
-                            i.fa.fa-send.m-l-10
-                          button.btn.btn-lg.btn-default.waves-effect.m-l-5(type='reset') 취소
+                      
+                     
             // end row
           // end container
         // end content

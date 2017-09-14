@@ -63,14 +63,14 @@ block content
                 .card-box
                   .btn-toolbar.form-group
                     .pull-right
-                      a.btn.btn-primary.btn-custom.waves-effect.waves-light(href='/company/new')
+                      a.btn.btn-default.waves-effect.waves-light.m-l-5(href='/company/new')
                         i.fa.fa-plus
                         |  추가
-                      button.btn.btn-primary.btn-sm.btn-info(id='btnExport' onclick="fnTableToExcel(document.getElementById('dvData'));") 
-                        i.fa.fa-plus
+                      button.btn.btn-primary.waves-effect.waves-light.m-l-5(id='btnExport' onclick="fnTableToExcel(document.getElementById('dvData'));") 
+                        i.fa.fa-download
                         |  ExcelDownload
-                      button.btn.btn-primary.btn-sm.btn-info(onclick="getJsonData();") 
-                        i.fa.fa-plus
+                      button.btn.btn-success.waves-effect.waves-light.m-l-5(onclick="getJsonData();") 
+                        i.fa.fa-arrow-circle-o-down
                         |  JsonDataDownload
                   table.table.table-hover(id='dvData' data-tablesaw-mode='swipe')
                     thead
