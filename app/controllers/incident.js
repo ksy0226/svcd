@@ -14,17 +14,19 @@ module.exports = {
      * incident 조회 화면
      */
     index: (req, res, next) => {
-        //logger.debug(incident);
-        res.render("incident/index", {
-            incident: incident,
-            user: req.user,
-            page: page,
-            maxPage: maxPage,
-            urlQuery: req._parsedUrl.query,
-            search: search,
-            counter: vistorCounter,
-            incidentMessage: req.flash("incidentMessage")[0]
-        });
+ 
+        Incident.find(req.body.incident, function(err, incident) {
+            //logger.debug('err', err, '\n');
+            logger.debug('list 호출');
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            }
+            res.render("incident/index", {
+                incident: incident
+            });
+        }).sort('-createdAt');
     },
 
     /** 
