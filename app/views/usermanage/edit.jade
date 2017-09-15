@@ -7,57 +7,102 @@ block head
         });
 
 block content
-    .content
-        .container
-            .row(style='margin-top:20px')
-                .col-xs-12.col-sm-10.col-md-8
-                    h3.masthead-brand 사원정보관리(내외) > 상세정보
-                    hr.colorgraph
-            form.form.col-md-12.center-block(id='usermanageForm' name='form' action='/usermanage/#{usermanage._id}/edit' method='post')
-                .row(style='margin-top:-15px')
-                    .col-xs-12.col-sm-10.col-md-8
-                        .form-group
-                            .btn.btn-primary.btn-signup(onclick="location.href='/usermanage'") 목록
-                            .btn.btn-primary.btn-danger(onclick="location.href='/usermanage/#{usermanage._id}/delete'") 삭제
-                            button.btn.btn-success.btn-md(type='submit') 저장
-                .row(style='margin-top:20px') 
-                    .col-xs-12.col-sm-10.col-md-8
-                        .form-group
-                            input.form-control.input-lg(name='usermanage[compannyNm]' type='text' placeholder='회사명' required value='#{usermanage.compannyNm}')
-                        .form-group
-                            input.form-control.input-lg(name='usermanage[userId]' type='text' placeholder='아이디' value='#{usermanage.userId}')
-                        .form-group
-                            input.form-control.input-lg(name='usermanage[password]' type='text' placeholder='비밀번호' value='#{usermanage.password}')
-                        .form-group
-                            input.form-control.input-lg(name='usermanage[userNm]' type='text' placeholder='사원명' value='#{usermanage.userNm}')
-                        .form-group
-                            input.form-control.input-lg(name='usermanage[deptNm]' type='text' placeholder='부서명' value='#{usermanage.deptNm}')
-                        .form-group
-                            input.form-control.input-lg(name='usermanage[jikwe]' type='text' placeholder='직위' value='#{usermanage.jikwe}')
-                        .form-group
-                            input.form-control.input-lg(name='usermanage[jikchk]' type='text' placeholder='직책' value='#{usermanage.jikchk}')
-                        .form-group
-                            input.form-control.input-lg(name='usermanage[email]' type='email' placeholder='e-mail' value='#{usermanage.email}')
-                        .form-group
-                            input.form-control.input-lg(name='usermanage[hpNo]' type='text' placeholder='핸드폰번호' value='#{usermanage.hpNo}')
-                        .form-group
-                            input.form-control.input-lg(name='usermanage[birthdayDt]' type='text' placeholder='생년월일' value='#{usermanage.birthdayDt}')
-                        .form-group
-                            input.form-control.input-lg(name='usermanage[post]' type='text' placeholder='우편번호' value='#{usermanage.post}')
-                        .form-group
-                            input.form-control.input-lg(name='usermanage[address]' type='text' placeholder='회사주소' value='#{usermanage.address}')
-                        .form-group
-                            input.form-control.input-lg(name='usermanage[callNo]' type='text' placeholder='회사전화번호' value='#{usermanage.callNo}')
-                        .form-group
-                            label 사용자권한구분
-                            select.form-control.input-lg(id='userFlag' name='usermanage[userFlag]' type='text' value='#{usermanage.userFlag}')
-                                option(value='1') 그룹관리자 
-                                option(value='2') 회사관리자
-                                option(value='3') 업무관리자
-                                option(value='4') 업무담당자
-                                option(value='9') 일반사용자
-                        .form-group
-                            label 그룹사권한구분
-                            select.form-control.input-lg(id='groupFlag' name='usermanage[groupFlag]' type='text' value='#{usermanage.groupFlag}')
-                                option(value='out') 외부사용자 
-                                option(value='in') 내부사용자
+    .content-page
+        .content
+            .container
+                // Page-Title
+                .row
+                    .col-sm-12
+                        .page-title-box
+                            ol.breadcrumb.pull-right
+                                li
+                                    a(href='#') Home
+                                li
+                                    a(href='#') SD 기본정보
+                                li.active 사원정보관리(내외)
+                            h4.page-title 사원정보관리(내외)
+                 // Form TYPE 1
+                .row
+                    .col-lg-12
+                        .card-box
+                            .p-20
+                                form.form-horizontal.group-border-dashed(id='usermanageForm' name='form' action='/usermanage/#{usermanage._id}/edit' method='post')
+                                    .form-group
+                                        .row
+                                            .col-xs-12.col-sm-12.col-md-12
+                                                .btn.btn-primary.btn-signup(onclick="location.href='/usermanage'") 목록
+                                                .btn.btn-primary.btn-danger(onclick="location.href='/usermanage/#{usermanage._id}/delete'") 삭제
+                                                button.btn.btn-success.btn-md(type='submit') 저장
+                                    hr
+                                    .form-group
+                                        .row
+                                            .col-xs-12.col-sm-12.col-md-12
+                                                // Your awesome content goes here
+                                                .m-b-30
+                                                    .form-group
+                                                        label.col-sm-2.control-label 회사명
+                                                        .col-sm-9
+                                                            input.form-control(name='usermanage[compannyNm]' type='text' required value='#{usermanage.compannyNm}')
+                                                    .form-group
+                                                        label.col-sm-2.control-label 아이디
+                                                        .col-sm-9
+                                                            input.form-control(name='usermanage[userId]' type='text' value='#{usermanage.userId}')
+                                                    .form-group
+                                                        label.col-sm-2.control-label 비밀번호
+                                                        .col-sm-9
+                                                            input.form-control(name='usermanage[password]' type='text' value='#{usermanage.password}')
+                                                    .form-group
+                                                        label.col-sm-2.control-label 사원명
+                                                        .col-sm-9
+                                                            input.form-control(name='usermanage[userNm]' type='text' value='#{usermanage.userNm}')
+                                                    .form-group
+                                                        label.col-sm-2.control-label 부서명
+                                                        .col-sm-9
+                                                            input.form-control(name='usermanage[deptNm]' type='text' value='#{usermanage.deptNm}')
+                                                    .form-group
+                                                        label.col-sm-2.control-label 직위
+                                                        .col-sm-9
+                                                            input.form-control(name='usermanage[jikwe]' type='text' value='#{usermanage.jikwe}')
+                                                    .form-group
+                                                        label.col-sm-2.control-label 직책
+                                                        .col-sm-9
+                                                            input.form-control(name='usermanage[jikchk]' type='text' value='#{usermanage.jikchk}')
+                                                    .form-group
+                                                        label.col-sm-2.control-label e-mail
+                                                        .col-sm-9
+                                                            input.form-control(name='usermanage[email]' type='email' value='#{usermanage.email}')
+                                                    .form-group
+                                                        label.col-sm-2.control-label 핸드폰번호
+                                                        .col-sm-9
+                                                            input.form-control(name='usermanage[hpNo]' type='text' value='#{usermanage.hpNo}')
+                                                    .form-group
+                                                        label.col-sm-2.control-label 생년월일
+                                                        .col-sm-9
+                                                            input.form-control(name='usermanage[birthdayDt]' type='text' value='#{usermanage.birthdayDt}')
+                                                    .form-group
+                                                        label.col-sm-2.control-label 우편번호
+                                                        .col-sm-9
+                                                            input.form-control(name='usermanage[post]' type='text' value='#{usermanage.post}')
+                                                    .form-group
+                                                        label.col-sm-2.control-label 회사주소
+                                                        .col-sm-9
+                                                            input.form-control(name='usermanage[address]' type='text' value='#{usermanage.address}')
+                                                    .form-group
+                                                        label.col-sm-2.control-label 회사전화번호
+                                                        .col-sm-9
+                                                            input.form-control(name='usermanage[callNo]' type='text' value='#{usermanage.callNo}')
+                                                    .form-group
+                                                        label.col-sm-2.control-label 사용자권한구분
+                                                        .col-sm-9
+                                                            select.form-control(id='userFlag' name='usermanage[userFlag]' type='text' value='#{usermanage.userFlag}')
+                                                                option(value='1') 그룹관리자 
+                                                                option(value='2') 회사관리자
+                                                                option(value='3') 업무관리자
+                                                                option(value='4') 업무담당자
+                                                                option(value='9') 일반사용자
+                                                    .form-group
+                                                        label.col-sm-2.control-label 그룹사권한구분
+                                                        .col-sm-9
+                                                            select.form-control(id='groupFlag' name='usermanage[groupFlag]' type='text' value='#{usermanage.groupFlag}')
+                                                                option(value='out') 외부사용자 
+                                                                option(value='in') 내부사용자
