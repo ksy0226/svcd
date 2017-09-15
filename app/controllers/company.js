@@ -70,6 +70,7 @@ module.exports = {
     },
 
     edit: (req, res, next) => {
+        //req.body.company.updatedAt = Date.now();
         CompanyModel.findById(req.params.id, function(err, company) {
             if (err) return res.json({
                 success: false,
@@ -86,10 +87,13 @@ module.exports = {
         });
     },
     update: (req, res, next) => {
-        console.log("Trace update", req.params.id);
-        console.log(req.body);
-        req.body.company.updatedAt = Date.now();
+        logger.debug("Trace update", req.params.id);
+        logger.debug(req.body);
+        //req.body.company.updatedAt = Date.now();
+        console.log(req.params.id);
+        
         CompanyModel.findOneAndUpdate({
+            
             _id: req.params.id
             //,author: req.user._id
         }, req.body.company, function(err, company) {
@@ -124,13 +128,13 @@ module.exports = {
         });
     },
     exceldownload: (req, res, next) => {
-        console.log(1);
+        logger.debug(1);
         CompanyModel.find(req.body.company, function(err, companyJsonData) {
             if (err) return res.json({
                 success: false,
                 message: err
             });
-            console.log(companyJsonData);
+            logger.debug(companyJsonData);
             //res.json(companyJsonData);
             //res.send({companyJsonData: companyJsonData});
             /*res.render("company/list", {

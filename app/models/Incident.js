@@ -80,9 +80,9 @@ var IncidentSchema = new Schema({
                             filename: {type : String},
                             path: {type : String},
                             size: {type : Number}  }], //첨부이미지
-    created_at : { type : Date, default : Date.now() },
-    update_at : { type : Date },
-    delete_at : { type : Date }
+    createdAt : { type : Date, default : Date.now() },
+    updatedAt : { type : Date },
+    deletedAt : { type : Date }
 });
 
 function isEmpty(value){

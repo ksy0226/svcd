@@ -3,6 +3,7 @@
 const mongoose = require('mongoose');
 const async = require('async');
 const CompanyModel = require('../models/Company');
+const Incident = require('../models/Incident');
 const logger = require('log4js').getLogger('app');
 const Iconv  = require('iconv-lite');
 
@@ -10,8 +11,7 @@ module.exports = {
 
 
     viewall: (req, res, next) => {
-        /*
-        CompanyModel.find(req.body.company, function(err, company) {
+        Incident.find(req.body.incident, function(err, incident) {
             //logger.debug('err', err, '\n');
             logger.debug('list 호출');
             if (err) {
@@ -19,15 +19,10 @@ module.exports = {
                     err: err
                 });
             }
-            //res.send('<script>alert("성공");location.href="/search/list";</script>');
-            
-            res.render("search/list", {
-                company: company
+            res.render("search/viewall", {
+                incident: incident
             });
-            
-        });
-        */
-        res.render("search/viewall");
+        }).sort('-createdAt');
     },
 
     viewdetail: (req, res, next) => {
