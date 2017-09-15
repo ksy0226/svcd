@@ -87,7 +87,7 @@ html
                   li
                     a(href='/incident') 처리진행현황
                   li
-                    a(href='#') 자주묻는 질문과답
+                    a(href='/search/qna') 자주묻는 질문과답
                   li
                     a(href='/search/viewall')
                       | 처리된 내용검색 
@@ -101,13 +101,13 @@ html
                   span.label.label-success.pull-right 6
                 ul.list-unstyled
                   li
-                    a(href='gw_sub2_1.html') 상담접수(전화)
+                    a(href='/incident/new/문의하기') 상담접수(전화)
                   li
-                    a(href='gw_sub2_2.html') 나의 업무처리현황
+                    a(href='/manager/myworklist') 나의 업무처리현황
                   li
-                    a(href='gw_sub2_3.html') 나의 업무지정
+                    a(href='/manager/mywork') 나의 업무지정
                   li
-                    a(href='gw_sub2_4.html') 월별 처리내역
+                    a(href='/manager/mymonthlist') 월별 처리내역
               - }
               - if(session.userFlag !=9){
               li.has_sub
@@ -117,17 +117,17 @@ html
                   span.menu-arrow
                 ul.list-unstyled
                   li
-                    a(href='gw_sub3_1.html') 전체내용검색
+                    a(href='/search/searchall') 전체내용검색
                   li
-                    a(href='gw_sub3_2.html') 회사별 상위업무통계
+                    a(href='/search/comhigherstatistic') 회사별 상위업무통계
                   li
-                    a(href='gw_sub3_3.html') 상위별 하위업무통계
+                    a(href='/search/highlowerstatistic') 상위별 하위업무통계
                   li
-                    a(href='gw_sub3_4.html') 미해결 현황
+                    a(href='/search/remainlist') 미해결 현황
                   li
-                    a(href='gw_sub3_5.html') 담당자별 월별 처리내역
+                    a(href='/search/managermonthlist') 담당자별 월별 처리내역
                   li
-                    a(href='gw_sub3_6.html') 처리구분별 처리내역
+                    a(href='/search/gubunlist') 처리구분별 처리내역
               - }
               - if(session.userFlag ==1 || session.userFlag ==4){
               li.has_sub
@@ -139,7 +139,7 @@ html
                   li
                     a(href='/higherProcess/list') 상위업무조회
                   li
-                    a(href='gw_sub4_2.html') 하위업무조회
+                    a(href='/lowerProcess/list') 하위업무조회
                   li
                     a(href='/company/list')
                       | 회사정보관리(외부) 
@@ -149,7 +149,7 @@ html
                       | 사원정보관리(내외) 
                       i.fa.fa-circle-o.text-pink.m-l-5
                   li
-                    a(href='gw_sub4_5.html') 회사별 상위업무지정
+                    a(href='/manager/companywork') 회사별 상위업무지정
                   li
                     a(href='gw_sub4_6.html') 처리구분 코드조회
                   li

@@ -10,9 +10,7 @@ const Iconv  = require('iconv-lite');
 module.exports = {
 
     list: (req, res, next) => {
-        console.log('HigherProcess test');
-        //res.send('<script>alert("성공");</script>');
-        
+
         HigherProcessModel.find(req.body.higherProcess, function(err, higherProcess) {
             //logger.debug('err', err, '\n');
             //console.log(higherProcess);
