@@ -10,13 +10,13 @@ require("date-utils");
 
 var dt = new Date();
 var storage = multer.diskStorage({
-    destination : function (req, file, callback) {        
+    destination : function (req, file, callback) {      
         async.waterfall([function () {
             var uploadDir = path.join(__dirname, "../../"+CONFIG.fileUpload.directory);
             uploadDir = path.join(uploadDir, dt.toFormat('YYYYMMDD'));
             fs.stat(uploadDir, function(err, stats){
                 if(err){ //디렉토리가 존재하지 않으면
-                    fs.mkdirSync(uploadDir);
+                    fs.mkdir(uploadDir);
                 }
                 callback(null, uploadDir);
             })

@@ -42,7 +42,7 @@ module.exports = {
         if(req.files){
             newincident.attach_file = req.files;
         }
-        //logger.debug("newincident = ",newincident);
+        logger.debug("newincident = ",newincident);
         Incident.create(newincident, function(err, incident) {
             if (err) {
                 res.render("http/500", {

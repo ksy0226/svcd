@@ -538,8 +538,10 @@
             //noinspection HtmlUnknownAttribute
             tActionDelete = '<button type="button" class="kv-file-remove {removeClass}" ' +
                 'title="{removeTitle}" {dataUrl}{dataKey}>{removeIcon}</button>\n';
-            tActionUpload = '<button type="button" class="kv-file-upload {uploadClass}" title="{uploadTitle}">' +
-                '{uploadIcon}</button>';
+            //2017.09.14 LHI
+            //tActionUpload = '<button type="button" class="kv-file-upload {uploadClass}" title="{uploadTitle}">' +
+            //    '{uploadIcon}</button>';
+            tActionUpload = '';
             tActionZoom = '<button type="button" class="kv-file-zoom {zoomClass}" ' +
                 'title="{zoomTitle}">{zoomIcon}</button>';
             tActionDrag = '<span class="file-drag-handle {dragClass}" title="{dragTitle}">{dragIcon}</span>';
@@ -616,15 +618,15 @@
                 allowedPreviewTypes: ['image', 'html', 'text', 'video', 'audio', 'flash', 'pdf', 'object'],
                 previewTemplates: {},
                 previewSettings: {
-                    image: {width: "auto", height: "160px"},
-                    html: {width: "213px", height: "160px"},
-                    text: {width: "213px", height: "160px"},
+                    image: {width: "auto", height: "55px"},
+                    html: {width: "213px", height: "55px"},
+                    text: {width: "213px", height: "55px"},
                     video: {width: "auto", height: "100%", 'max-width': "100%"},
                     audio: {width: "100%", height: "30px"},
                     flash: {width: "auto", height: "100%", 'max-width': "100%"},
                     object: {height: "100%"},
-                    pdf: {width: "160px", height: "160px"},
-                    other: {width: "160px", height: "160px"}
+                    pdf: {width: "55px", height: "55px"},
+                    other: {width: "55px", height: "55px"}
                 },
                 previewZoomSettings: {
                     image: {width: "auto", height: "auto", 'max-width': "100%", 'max-height': "100%"},
@@ -677,9 +679,9 @@
                     removeIcon: '<i class="glyphicon glyphicon-trash text-danger"></i>',
                     removeClass: 'btn btn-xs btn-default',
                     removeTitle: 'Remove file',
-                    uploadIcon: '<i class="glyphicon glyphicon-upload text-info"></i>',
+                    uploadIcon: null,
                     uploadClass: 'btn btn-xs btn-default',
-                    uploadTitle: 'Upload file',
+                    uploadTitle: '',
                     zoomIcon: '<i class="glyphicon glyphicon-zoom-in"></i>',
                     zoomClass: 'btn btn-xs btn-default',
                     zoomTitle: 'View Details',
@@ -3229,11 +3231,13 @@
                 });
             }
             if (showUpload) {
+            	/*
                 btnUpload = self._getLayoutTemplate('actionUpload').setTokens({
                     'uploadClass': config.uploadClass,
                     'uploadIcon': config.uploadIcon,
                     'uploadTitle': config.uploadTitle
                 });
+                */
             }
             if (showZoom) {
                 btnZoom = self._getLayoutTemplate('actionZoom').setTokens({
@@ -3797,10 +3801,10 @@
         removeClass: 'btn btn-default',
         cancelIcon: '<i class="glyphicon glyphicon-ban-circle"></i>',
         cancelClass: 'btn btn-default',
-        uploadIcon: '<i class="glyphicon glyphicon-upload"></i>',
-        uploadClass: 'btn btn-default',
+        uploadIcon: null,
+        uploadClass: null,
         uploadUrl: null,
-        uploadAsync: true,
+        uploadAsync: false,
         uploadExtraData: {},
         zoomModalHeight: 480,
         minImageWidth: null,
@@ -3853,7 +3857,7 @@
         removeTitle: 'Clear selected files',
         cancelLabel: 'Cancel',
         cancelTitle: 'Abort ongoing upload',
-        uploadLabel: 'Upload',
+        uploadLabel: '',
         uploadTitle: 'Upload selected files',
         msgNo: 'No',
         msgNoFilesSelected: 'No files selected',

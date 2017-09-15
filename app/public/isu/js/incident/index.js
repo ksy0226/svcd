@@ -41,46 +41,21 @@
           }
       });
 
-      $('#attach-file').fileinput({
-          language: 'ko',
-          uploadUrl: '#',
-          overwriteInitial: false,
-          maxFileSize: 1000,
-          maxFilesNum: 10
+      $('.summernote').summernote({
+          height: 250, // set editor height
+          minHeight: null, // set minimum height of editor
+          maxHeight: null, // set maximum height of editor
+          focus: false // set focus to editable area after initializing summernote
       });
 
+      $('.inline-editor').summernote({
+          airMode: true
+      });
 
-      /*
-      $('#summernote').summernote({
-          lang: 'ko-KR',
-          height: 300,
-      });
-      */
-      $('#summernote').summernote({
-          lang: 'ko-KR',
-          height: 300,
-          callbacks: {
-              onImageUpload: function (files) {
-                  sendFile(files[0]);
-              }
-          }
-      });
+      $('#datepicker-rcd').datepicker({
+        autoclose: true,
+        todayHighlight: true,
+        format: "yyyy/mm/dd"
+    });
 
   });
-
-
-  function sendFile(file, editor, welEditable) {
-          data = new FormData();
-          data.append("thumbnail", file);
-          $.ajax({
-              data: data,
-              type: "POST",
-              url: '#',
-              cache: false,
-              contentType: false,
-              processData: false,
-              success: function (url) {
-                  $('#summernote').summernote("insertImage", url);
-              }
-          });
-      }

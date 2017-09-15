@@ -16,7 +16,7 @@
     $.fn.fileinputThemes.gly = {
         fileActionSettings: {
             removeIcon: '<i class="glyphicon glyphicon-trash text-danger"></i>',
-            uploadIcon: '<i class="glyphicon glyphicon-upload text-info"></i>',
+            uploadIcon: '',
             zoomIcon: '<i class="glyphicon glyphicon-zoom-in"></i>',
             dragIcon: '<i class="glyphicon glyphicon-menu-hamburger"></i>',
             indicatorNew: '<i class="glyphicon glyphicon-hand-down text-warning"></i>',
@@ -39,7 +39,7 @@
         browseIcon: '<i class="glyphicon glyphicon-folder-open"></i>&nbsp;',
         removeIcon: '<i class="glyphicon glyphicon-trash"></i>',
         cancelIcon: '<i class="glyphicon glyphicon-ban-circle"></i>',
-        uploadIcon: '<i class="glyphicon glyphicon-upload"></i>',
+        uploadIcon: '',
         msgValidationErrorIcon: '<i class="glyphicon glyphicon-exclamation-sign"></i> '
     };
 })(window.jQuery);

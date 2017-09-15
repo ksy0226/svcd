@@ -113,7 +113,7 @@
 }
 
 .krajee-default.file-preview-frame .kv-file-content {
-    height: 170px;
+    height: 70px;
 }
 
 .krajee-default.file-preview-frame .file-thumbnail-footer {
@@ -143,7 +143,7 @@
 .krajee-default[data-template="audio"] .file-preview-audio {
     display: table-cell;
     vertical-align: middle;
-    height: 170px;
+    height: 70px;
     border: 1px solid #ddd;
     border-radius: 5px;
 }

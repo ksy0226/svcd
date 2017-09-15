@@ -4,6 +4,7 @@ block head
     link(href='/plugins/summernote/dist/summernote.css', rel='stylesheet')
     // dropzone
     link(href='/plugins/dropzone/dist/dropzone.css', rel='stylesheet', type='text/css')
+    
     link(href='/plugins/switchery/switchery.min.css', rel='stylesheet')
     link(href='/assets/css/bootstrap.min.css', rel='stylesheet', type='text/css')
     link(href='/assets/css/core.css', rel='stylesheet', type='text/css')
@@ -12,6 +13,10 @@ block head
     link(href='/assets/css/pages.css', rel='stylesheet', type='text/css')
     link(href='/assets/css/menu_light.css', rel='stylesheet', type='text/css')
     link(href='/assets/css/responsive.css', rel='stylesheet', type='text/css')
+
+    //첨부파일
+    link(href='/vendor/fileupload/css/fileinput.css', media='all', rel='stylesheet', type='text/css')
+
     script(src='/assets/js/modernizr.min.js')
     // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
     // WARNING: Respond.js doesn't work if you view the page via file://
@@ -47,7 +52,10 @@ block head
     // Dropzone js
     script(src='/plugins/dropzone/dist/dropzone.js')
 
-    script(src='/isu/js/incident/index.js')
+    //첨부파일
+    script(src='/vendor/fileupload/js/fileinput.js', type='text/javascript')
+    
+    script(src='/isu/js/incident/index.js', type='text/javascript')
 
 block content
     .content-page
@@ -76,11 +84,27 @@ block content
                                                 option eHR
                                                 option Sap ERP
                                                 option 네트워크
-                                        label.col-sm-2.control-label 하위업무
+                                        label.col-sm-2.control-label 긴급구분
                                         .col-sm-2
                                             select.form-control(name='incident[lower_cd]')
                                                 option 긴급
                                                 option 보통
+                                    div#add-gbn            
+                                       .form-group
+                                            label.col-sm-2.control-label 요청자명
+                                            .col-sm-4
+                                                input.form-control(type='text', name='incident[real_register_mm]')
+                                            label.col-sm-2.control-label 연락처
+                                            .col-sm-4
+                                                input.form-control(type='text', name='incident[real_contact]', placeholder='전화번호 / hong@xxxx.co.kr')
+                                        .form-group
+                                            label.col-sm-2.control-label 문의요청 화면
+                                            .col-sm-10
+                                                input.form-control(type='text', name='incident[app_menu]', placeholder='인사관리>발령정보>발령처리')
+                                    
+                                        
+                                    
+                                    
                                     .form-group
                                         label.col-sm-2.control-label 요청완료일
                                         .col-sm-4
@@ -104,9 +128,7 @@ block content
                                     .row
                                         .col-md-12.portlets
                                             .m-b-30
-                                                div#dropzone
-                                                    .fallback
-                                                        input(name='incident[attach-file]', type='file', multiple='')
+                                                input#attach-file.file(name='incident[attach-file]', type='file', data-upload-url="#", multiple='')
                                         .btn-toolbar.form-group.m-b-0
                                             .pull-right
                                                 button.btn.btn-default.waves-effect.waves-light.m-r-5(type='reset') 취소
