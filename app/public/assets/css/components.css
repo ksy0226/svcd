@@ -1,5 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Noto+Sans:400,700);
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700);
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,500,700);
 /* ===========
    Components List
 
@@ -1619,4 +1619,73 @@ table.dataTable td.focus {
 }
 .widget-icon .wid-icon-info {
   margin-left: 80px;
+}
+
+
+
+/** ********************
+***add css + 20170915*** 
+***********************/
+
+.btn-outline.outline-default {
+  color: #dae6ec;
+  border-color:#dae6ec;
+}
+.btn-outline.outline-primary {
+  color: #3bafda;
+  border-color:#3bafda;
+}
+.btn-outline.outline-success {
+  color: #00b19d;
+  border-color:#00b19d;
+}
+.btn-outline.outline-info {
+  color: #3ddcf7;
+  border-color:#3ddcf7;
+}
+.btn-outline.outline-warning {
+  color: #ffaa00;
+  border-color:#ffaa00;
+}
+.btn-outline.outline-danger {
+  color: #ef5350;
+  border-color:#ef5350;
+}
+.btn-outline.outline-inverse {
+  color: #4c5667;
+  border-color:#4c5667;
+}
+.btn-outline.outline-purple {
+  color: #7266ba;
+  border-color:#7266ba;
+}
+.btn-outline.outline-pink {
+  color: #f76397;
+  border-color:#f76397;
+}
+
+.btn-outline {
+  display: inline-block;
+  padding: 6px 10px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+      touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  
+  
+  color: inherit;
+  background-color: transparent;  
 }
