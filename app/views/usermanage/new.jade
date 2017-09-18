@@ -48,7 +48,7 @@ block content
                                                         .form-group
                                                             label.col-sm-2.control-label 사원명
                                                             .col-sm-9
-                                                                input.form-control(name='usermanage[userNm]' type='text' value='')
+                                                                input.form-control(name='usermanage[user_nm]' type='text' value='')
                                                         .form-group
                                                             label.col-sm-2.control-label 부서명
                                                             .col-sm-9
@@ -88,7 +88,7 @@ block content
                                                         .form-group
                                                             label.col-sm-2.control-label 사용자권한구분
                                                             .col-sm-9
-                                                                select.form-control(name='usermanage[userFlag]')
+                                                                select.form-control(name='usermanage[user_flag]')
                                                                     option(value='1') 그룹관리자 
                                                                     option(value='2') 회사관리자
                                                                     option(value='3') 업무관리자
@@ -97,6 +97,6 @@ block content
                                                         .form-group
                                                             label.col-sm-2.control-label 그룹사권한구분
                                                             .col-sm-9
-                                                                select.form-control(name='usermanage[groupFlag]')
+                                                                select.form-control(name='usermanage[group_flag]')
                                                                     option(value='out' Selected) 외부사용자 
                                                                     option(value='in') 내부사용자

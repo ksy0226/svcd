@@ -2,8 +2,8 @@ extends ../layouts/default
 block head 
     script(type='text/javascript').
         $(document).ready(function() { 
-            $('#userFlag').val('#{usermanage.userFlag}');
-            $('#groupFlag').val('#{usermanage.groupFlag}');
+            $('#user_flag').val('#{usermanage.user_flag}');
+            $('#group_flag').val('#{usermanage.group_flag}');
         });
 
 block content
@@ -54,7 +54,7 @@ block content
                                                     .form-group
                                                         label.col-sm-2.control-label 사원명
                                                         .col-sm-9
-                                                            input.form-control(name='usermanage[userNm]' type='text' value='#{usermanage.userNm}')
+                                                            input.form-control(name='usermanage[user_nm]' type='text' value='#{usermanage.user_nm}')
                                                     .form-group
                                                         label.col-sm-2.control-label 부서명
                                                         .col-sm-9
@@ -94,7 +94,7 @@ block content
                                                     .form-group
                                                         label.col-sm-2.control-label 사용자권한구분
                                                         .col-sm-9
-                                                            select.form-control(id='userFlag' name='usermanage[userFlag]' type='text' value='#{usermanage.userFlag}')
+                                                            select.form-control(id='user_flag' name='usermanage[user_flag]' type='text' value='#{usermanage.user_flag}')
                                                                 option(value='1') 그룹관리자 
                                                                 option(value='2') 회사관리자
                                                                 option(value='3') 업무관리자
@@ -103,6 +103,6 @@ block content
                                                     .form-group
                                                         label.col-sm-2.control-label 그룹사권한구분
                                                         .col-sm-9
-                                                            select.form-control(id='groupFlag' name='usermanage[groupFlag]' type='text' value='#{usermanage.groupFlag}')
+                                                            select.form-control(id='group_flag' name='usermanage[group_flag]' type='text' value='#{usermanage.group_flag}')
                                                                 option(value='out') 외부사용자 
                                                                 option(value='in') 내부사용자

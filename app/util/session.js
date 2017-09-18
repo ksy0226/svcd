@@ -4,13 +4,13 @@ module.exports = {
 
     sessionCheck: (req, res, next) => {
         var minute = 60 * 1000;
-        console.log('sessionCheck '+req.session.email);
-        console.log('req.session.userFlag : '+ req.session.userFlag);
-        console.log('req.session.groupFlag : '+ req.session.groupFlag);                
+        logger.debug('sessionCheck email'+req.session.email);
+        logger.debug('req.session.user_flag : '+ req.session.user_flag);
+        logger.debug('req.session.group_flag : '+ req.session.group_flag);             
         if (req.session.email) {
             logger.debug('sessionCheck succeed');
-            userFlag = req.session.userFlag;
-            groupFlag = req.session.groupFlag;
+            user_flag = req.session.user_flag;
+            group_flag = req.session.group_flag;
             //res.render('main/main');
             next();
         } else { //세션값이 없으면
@@ -19,15 +19,15 @@ module.exports = {
             
             var email = req.cookies.email;
             var remember_me = req.cookies.remember_me;
-            var userFlag = req.cookies.userFlag;
-            var groupFlag = req.cookies.groupFlag;
+            var user_flag = req.cookies.user_flag;
+            var group_flag = req.cookies.group_flag;
 
             if (email == null) email = "";
             res.render('index', {
                 email: email,
                 remember_me: remember_me,
-                userFlag : userFlag,
-                groupFlag : groupFlag
+                user_flag : user_flag,
+                group_flag : group_flag
             });
             
         }

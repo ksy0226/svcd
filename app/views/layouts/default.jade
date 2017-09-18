@@ -32,7 +32,7 @@ html
     #wrapper.forced
       // <div id="wrapper" class="enlarged forced">
       // // max-width 767px 또는 mobile device 일때 enlarged class 필요 //
-      - if(session.groupFlag =="in" && session.userFlag != null){
+      - if(session.group_flag =="in" && session.user_flag != null){
       // Top Bar Start
       .topbar
         // LOGO
@@ -93,7 +93,7 @@ html
                       | 처리된 내용검색 
                       i.fa.fa-circle-o.text-pink.m-l-5
               //그룹관리자, 업무관리자,업무담당자 오픈
-              - if(session.userFlag ==1 || session.userFlag ==3 || session.userFlag ==4){ 
+              - if(session.user_flag ==1 || session.user_flag ==3 || session.user_flag ==4){ 
               li.has_sub
                 a.waves-effect.waves-primary(href='javascript:void(0);')
                   i.md.md-person
@@ -109,7 +109,7 @@ html
                   li
                     a(href='/manager/mymonthlist') 월별 처리내역
               - }
-              - if(session.userFlag !=9){
+              - if(session.user_flag !=9){
               li.has_sub
                 a.waves-effect.waves-primary(href='javascript:void(0);')
                   i.md.md-search
@@ -129,7 +129,7 @@ html
                   li
                     a(href='/search/gubunlist') 처리구분별 처리내역
               - }
-              - if(session.userFlag ==1 || session.userFlag ==4){
+              - if(session.user_flag ==1 || session.user_flag ==4){
               li.has_sub
                 a.waves-effect.waves-primary(href='javascript:void(0);')
                   i.md.md-view-list
@@ -156,7 +156,7 @@ html
                     a(href='gw_sub4_7.html') 업무별 담당자현황
                   // <li><a href="gw_sub4_8.html">자주묻는 질문과답</a></li>
               - }
-              - if(session.userFlag ==1){ 
+              - if(session.user_flag ==1){ 
               li
                 a.waves-effect.waves-primary(href='gw_sub5_1.html')
                   i.md.md-poll

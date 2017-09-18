@@ -618,15 +618,15 @@
                 allowedPreviewTypes: ['image', 'html', 'text', 'video', 'audio', 'flash', 'pdf', 'object'],
                 previewTemplates: {},
                 previewSettings: {
-                    image: {width: "auto", height: "55px"},
-                    html: {width: "213px", height: "55px"},
-                    text: {width: "213px", height: "55px"},
+                    image: {width: "auto", height: "54px"},
+                    html: {width: "213px", height: "54px"},
+                    text: {width: "213px", height: "54px"},
                     video: {width: "auto", height: "100%", 'max-width': "100%"},
                     audio: {width: "100%", height: "30px"},
                     flash: {width: "auto", height: "100%", 'max-width': "100%"},
                     object: {height: "100%"},
-                    pdf: {width: "55px", height: "55px"},
-                    other: {width: "55px", height: "55px"}
+                    pdf: {width: "54px", height: "54px"},
+                    other: {width: "54px", height: "54px"}
                 },
                 previewZoomSettings: {
                     image: {width: "auto", height: "auto", 'max-width': "100%", 'max-height': "100%"},

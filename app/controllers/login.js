@@ -2,13 +2,12 @@
 var express = require('express');
 var session = require('express-session');
 var bodyParser = require('body-parser');
-//var Employee = require('../models/Employee');
 var Usermanage = require('../models/Usermanage');
 const logger = require('log4js').getLogger('app');
 
 var email = "";
 var remember_me = "";
-var userNm = "";
+var user_nm = "";
 module.exports = {
     /**
      * Validation action
@@ -16,9 +15,9 @@ module.exports = {
     index: (req, res) => {
         //logger.debug('index is called ');
         if (req.session.email) {
-            res.render('main/main, {userFlag : req.session.userFlag}');
+            res.render('main/main, {user_flag : req.session.user_flag}');
         } else {
-            res.render('index, {userFlag : req.session.userFlag}');
+            res.render('index, {user_flag : req.session.user_flag}');
         }
     },
     
@@ -29,8 +28,8 @@ module.exports = {
             //logger.debug('req.body.remember_me is on ');
             res.cookie('email', req.body.email);
             res.cookie('remember_me', req.body.remember_me === "on" ? "true" : "undefined");
-            res.cookie('userFlag', req.body.userFlag);
-            res.cookie('groupFlag', req.body.groupFlag);
+            res.cookie('user_flag', req.body.user_flag);
+            res.cookie('group_flag', req.body.group_flag);
             //res.cookie('password', req.body.password);
             email = req.body.email;
             remember_me = req.body.remember_me;
@@ -38,8 +37,8 @@ module.exports = {
             //logger.debug('req.body.remember_me is off ');
             res.clearCookie('email');
             res.clearCookie('remember_me');
-            res.clearCookie('userFlag');
-            res.clearCookie('groupFlag');
+            res.clearCookie('user_flag');
+            res.clearCookie('group_flag');
         }
         Usermanage.findOne({ //계정이 존재하면
                 email : req.body.email,
@@ -50,18 +49,19 @@ module.exports = {
                     req.session.save(function () {
                         req.session.email = usermanage.email;
                         req.session.password = usermanage.password;
-                        req.session.userFlag = usermanage.userFlag;
-                        req.session.groupFlag = usermanage.groupFlag;
-                        req.session.userNm = usermanage.userNm;
+                        req.session.user_flag = usermanage.user_flag;
+                        req.session.group_flag = usermanage.group_flag;
+                        req.session.user_nm = usermanage.user_nm;
+                        req.session.company_cd = usermanage.company_cd;
                         
-                        //logger.debug('req.session.userFlag'+req.session.userFlag);
+                        //logger.debug('req.session.user_flag'+req.session.user_flag);
                         res.render('main/main',
-                                {   userFlag : req.session.userFlag, 
-                                    groupFlag : req.session.groupFlag,
-                                    userNm : req.session.userNm
+                                {   user_flag : req.session.user_flag, 
+                                    group_flag : req.session.group_flag,
+                                    user_nm : req.session.user_nm
                                 });
-                        //logger.debug('req.session.userFlag2222'+req.session.userFlag);
-                        //logger.debug('userNm'+req.session.userNm);
+                        //logger.debug('req.session.user_flag2222'+req.session.user_flag);
+                        //logger.debug('user_nm'+req.session.user_nm);
                     });
                 }else{ //계정이 존재하지 않으면
                     if(req.body.remember_me === "on"){
@@ -99,7 +99,7 @@ module.exports = {
         //logger.debug('login.js retry is called ');
         email = req.cookies.email;
         remember_me = req.cookies.remember_me;
-        userFlag = req.cookies.userFlag;
+        user_flag = req.cookies.user_flag;
 
         if(req.session.email){
             res.render('main/main');

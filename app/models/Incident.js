@@ -36,7 +36,7 @@ var IncidentSchema = new Schema({
     complete_date           : {type : Date},                                                                           
     valuation               : {type : Number},                                                                           
     reading_cnt             : {type : Number},                                                                           
-    complete_open_flag      : {type : String},                                                                           
+    complete_open_flag      : {type : String, default : 'N'},  //완료후공개여부                                                                     
     higher_cd               : {type : String},  //상위업무 코드                                                              
     lower_cd                : {type : String},  //하위업무 코드('BC , 하드웨어 관련 오류','L044','공장/설비관리 부문','L045',
     customer_flag           : {type : String},                                                                           
@@ -69,7 +69,7 @@ function isEmpty(value){
 }
 
 IncidentSchema.virtual('getDate').get(function(){
-    var date = new Date(this.created_at);
+    var date = new Date(this.createdAt);
     return {
         year : date.getFullYear(),
         month : date.getMonth()+1,
