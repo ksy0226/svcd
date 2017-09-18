@@ -106,5 +106,11 @@ module.exports = {
             });
             res.redirect('/incident');
         });
-    }
+    },
+    /** 
+     * incident 등록 화면
+     */
+    viewDetail: (req, res, next) => {
+        res.render("incident/viewDetail");
+    },
 };

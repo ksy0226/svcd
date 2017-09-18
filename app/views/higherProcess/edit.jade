@@ -1,48 +1,114 @@
 extends ../layouts/default
 block head
-    script(type='text/javascript').
-        $(document).ready(function() { 
-            $('#user_flag').val('#{higherProcess.user_flag}');
-        });
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width,initial-scale=1')
+    meta(name='description', content='A fully featured admin theme which can be used to build CRM, CMS, etc.')
+    meta(name='author', content='Coderthemes')
+    link(rel='shortcut icon', href='assets/images/favicon_1.ico')
+    title 4-1 상위업무 수정
+    link(href='/plugins/dropzone/dist/dropzone.css', rel='stylesheet', type='text/css')
+    link(href='/plugins/summernote/dist/summernote.css', rel='stylesheet')
+    link(href='/plugins/switchery/switchery.min.css', rel='stylesheet')
+    link(href='/assets/css/bootstrap.min.css', rel='stylesheet', type='text/css')
+    link(href='/assets/css/core.css', rel='stylesheet', type='text/css')
+    link(href='/assets/css/icons.css', rel='stylesheet', type='text/css')
+    link(href='/assets/css/components.css', rel='stylesheet', type='text/css')
+    link(href='/assets/css/pages.css', rel='stylesheet', type='text/css')
+    link(href='/assets/css/menu_light.css', rel='stylesheet', type='text/css')
+    link(href='/assets/css/responsive.css', rel='stylesheet', type='text/css')
+    script(src='/assets/js/modernizr.min.js')
+    // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+    // WARNING: Respond.js doesn't work if you view the page via file://
+    //if lt IE 9
+    script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+    script(src='https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js')
+
+    // postcode
+    script(src='/isu/js/postcode.js')
+    //http용
+    script(src='http://dmaps.daum.net/map_js_init/postcode.v2.js')
+
 block content
-    .content
-        .container
-            .row(style='margin-top:20px')
-                .col-xs-12.col-sm-10.col-md-8
-                    h3.masthead-brand 상위업무 > 수정하기
-                    hr.colorgraph
-            br
-            form.form.col-md-12.center-block(name='form' action='/higherProcess/#{higherProcess._id}/edit' method='post')   
-                .row(style='margin-left:30px;margin-top:-15px')
-                    button.btn.btn-primary.btn-sm.btn-signup(onclick="location.href='/higherProcess/list'") 목록      
-                    button.btn.btn-primary.btn-sm.btn-info(onclick="location.href='/higherProcess/#{higherProcess._id}/edit'") 수정
-                    button.btn.btn-success.btn-sm(type='submit') 저장 
-                    button.btn.btn-primary.btn-sm.btn-danger(onclick="location.href='/higherProcess/#{higherProcess._id}/delete'") 삭제     
-                br
-                .row(style='margin-left:30px')
-                    .col-xs-3.col-sm-3.col-md-3
+      // ==============================================================
+      // Start right Content here
+      // ==============================================================
+      .content-page
+        // Start content
+        .content
+          .container
+            // Page-Title
+            .row
+              .col-sm-12
+                .page-title-box
+                  ol.breadcrumb.pull-right
+                    li
+                      a(href='#') Home
+                    li
+                      a(href='#') SD기본정보
+                    li.active 상위업무 수정
+                  h4.page-title 상위업무 수정
+            .row
+              .col-sm-12
+                .card-box
+                  .p-20
+                    .btn-toolbar.form-group
+                      form.form-horizontal.group-border-dashed(name='form' action='/higherProcess/#{higherProcess._id}/edit' method='post')
+                        .pull-left
+                          button.btn.btn-default.waves-effect.waves-light.m-l-5(onclick="location.href='/higherProcess/list'")
+                            i.fa.fa-list-ul
+                            |  목록
+                          button.btn.btn-success.waves-effect.waves-light.m-l-5(onclick="location.href='/higherProcess/#{higherProcess._id}/edit'") 
+                            i.fa.fa-edit
+                            |  수정
+                          button.btn.btn-inverse.waves-effect.waves-light.m-l-5(onclick="location.href='/higherProcess/#{higherProcess._id}/delete'" id="deleteBtn") 
+                            i.fa.fa-remove
+                            |  삭제
+                        .pull-right
+                          button.btn.btn-primary.waves-effect.waves-light(type='submit')
+                            i.fa.fa-send-o
+                            |  저장
+                          button.btn.btn-default.waves-effect.m-l-5(type='reset') 
+                            i.fa.fa-undo
+                            |  취소
+                        br
+                        br
+                        hr
                         .form-group
-                            input.form-control.input-sm(type='text', name='higherProcess[higher_cd]', value='#{higherProcess.higher_cd}', placeholder='상위업무코드')
-                .row(style='margin-left:30px')
-                    .col-xs-3.col-sm-3.col-md-3
+                          label.col-sm-3.control-label 상위업무코드
+                          .col-sm-3
+                            input.form-control(type='text', name='higherProcess[higher_cd]', value='#{higherProcess.higher_cd}', placeholder='')
                         .form-group
-                            input.form-control.input-sm(type='text', name='higherProcess[higher_nm]', value='#{higherProcess.higher_nm}', placeholder='상위업무명')
-                .row(style='margin-left:30px')
-                    .col-xs-3.col-sm-3.col-md-3
+                        label.col-sm-3.control-label 상위업무명
+                        .col-sm-3
+                          input.form-control(type='text', name='higherProcess[higher_nm]', value='#{higherProcess.higher_nm}', placeholder='')
                         .form-group
-                            input.form-control.input-sm(type='text', name='higherProcess[description]', value='#{higherProcess.description}',placeholder='설명')
-                .row(style='margin-left:30px')
-                    .col-xs-3.col-sm-3.col-md-3
+                        label.col-sm-3.control-label 설명
+                        .col-sm-3
+                          input.form-control(type='text', name='higherProcess[description]', value='#{higherProcess.description}',placeholder='')
                         .form-group
-                            input.form-control.input-sm(type='text', name='higherProcess[com_cd]', value='#{higherProcess.com_cd}', placeholder='회사코드')
-                .row(style='margin-left:30px')
-                    .col-xs-3.col-sm-3.col-md-3
+                        label.col-sm-3.control-label 회사코드
+                        .col-sm-3
+                          input.form-control(type='text', name='higherProcess[com_cd]', value='#{higherProcess.com_cd}', placeholder='')
                         .form-group
-                            input.form-control.input-sm(type='text', name='higherProcess[sabun]', value='#{higherProcess.sabun}', placeholder='사번')
-                .row(style='margin-left:30px')
-                    .col-xs-3.col-sm-3.col-md-3
+                        label.col-sm-3.control-label 사번
+                        .col-sm-3
+                          input.form-control(type='text', name='higherProcess[sabun]', value='#{higherProcess.sabun}', placeholder='')
                         .form-group
-                            label 사용여부
-                            select.form-control.input-sm(id='user_flag' name='higherProcess[user_flag]' type='text' value='#{higherProcess.user_flag}')
-                                option(value='사용') 사용 
-                                option(value='미사용') 미사용
+                        label.col-sm-3.control-label 사용여부
+                        .col-sm-3
+                          select.form-control.input-sm(id='user_flag' name='higherProcess[user_flag]' type='text' value='#{higherProcess.user_flag}')
+                              option(value='사용') 사용 
+                              option(value='미사용') 미사용
+                        .form-group
+                  
+           
+                    
+            // end row
+          // end container
+        // end content
+        footer.footer.text-right
+          | 2017 © ISU Group.
+      // ==============================================================
+      // End Right content here
+      // ==============================================================
+    // END wrapper
