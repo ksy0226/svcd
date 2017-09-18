@@ -3,6 +3,7 @@
 const mongoose = require('mongoose');
 const async = require('async');
 const Incident = require('../models/Incident');
+const CompanyProcess = require('../models/CompanyProcess');
 const Counter = require('../models/Counter');
 const service = require('../services/incident');
 const fs = require('fs');
@@ -33,7 +34,29 @@ module.exports = {
      * incident 등록 화면
      */
     new: (req, res, next) => {
-        res.render("incident/new", {title : req.params.title});
+
+        async.waterfall([function (callback) {
+            CompanyProcess.find({"company_cd":req.session.company_cd},function(err, companyProcess) {
+                logger.debug('CompanyProcess.find');
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                logger.debug('companyProcess1 : ', companyProcess);
+                callback(null, companyProcess)
+            });
+        }], function (err, companyProcess) {
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            }
+            logger.debug('companyProcess2 : ', companyProcess);
+            res.render("incident/new", {
+                companyProcess: companyProcess
+            });
+        });
     },
 
     /** 

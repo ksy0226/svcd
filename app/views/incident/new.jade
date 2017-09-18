@@ -1,5 +1,6 @@
 extends ../layouts/default
 block head
+
     // summernot
     link(href='/plugins/summernote/dist/summernote.css', rel='stylesheet')
     // dropzone
@@ -58,7 +59,6 @@ block head
 
     script(src='assets/js/jquery.core.js')
     script(src='assets/js/jquery.app.js')
-    script(src='/vendor/jquery/jquery.min.js')
 
 block content
     .content-page
@@ -83,10 +83,12 @@ block content
                                         label.col-sm-2.control-label 상위업무
                                         .col-sm-4
                                             select.form-control(name='incident[higher_cd]')
-                                                option 스마트오피스
-                                                option eHR
-                                                option Sap ERP
-                                                option 네트워크
+                                                option(value ='') 선택하세요
+                                                - if (companyProcess.length > 0) {
+                                                    - for( var i = 0 ; length = companyProcess.length > i ; i++ ){ //속도가 느리다고 알고 있음.
+                                                        option(value ='#{companyProcess[i].higher_cd}') #{companyProcess[i].higher_cd}
+                                                    - }
+                                                - }
                                         label.col-sm-2.control-label 긴급구분
                                         .col-sm-2
                                             select.form-control(name='incident[lower_cd]')
@@ -119,7 +121,7 @@ block content
                                         label.col-sm-2.control-label 공개여부
                                         .col-sm-2
                                             .checkbox.checkbox-primary.checkbox-single.p-t-10
-                                                input#singleCheckbox1(type='checkbox', value='option1', aria-label='Single checkbox One')
+                                                input#singleCheckbox1(type='checkbox', value='Y', aria-label='Single checkbox One', name='incident[complete_open_flag]')
                                                 label
                                     .form-group
                                         label.col-sm-2.control-label 제목
