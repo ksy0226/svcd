@@ -3,7 +3,7 @@
 function fnTableToExcel(dvData){
     var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
     var textRange; var j=0;
-    tab = dvData; // id of table
+    var tab = dvData; // id of table
     
     for(j = 0 ; j < tab.rows.length ; j++) {     
         tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
@@ -63,6 +63,7 @@ function fnJsonToExcel(JsonData){
         txtArea1.focus(); 
         sa=txtArea1.document.execCommand("SaveAs",true,"exceldownload.xls");
     } else {                //other browser not tested on IE 11
+        //sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
         sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
     }  
     return (sa);
@@ -76,9 +77,7 @@ function getJsonData(){
         data: JSON.stringify({}),
         dataType: "json",
         success: function(data, status){
-            logger.debug(data);
             fnJsonToExcel(JSON.stringify(data));
-            //fnJsonToExcel(data);
         },
         error: function(data, status, err) {
             console.log("err : "+err);
