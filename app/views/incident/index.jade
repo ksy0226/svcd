@@ -75,13 +75,12 @@ block content
                                 .form-group
                                     label.col-sm-2.control-label 진행구분
                                     .col-sm-2
-                                        select.form-control(name='incident[process_flag]')
-                                            option(value ='') 선택하세요
-                                            - if (incident.length > 0) {
-                                                - for( var i = 0 ; length = incident.length > i ; i++ ){ //속도가 느리다고 알고 있음.
-                                                    option(value ='#{incident[i].process_flag}') #{incident[i].process_flag}
-                                                - }
-                                            - }
+                                        select.form-control
+                                            option(value='접수대기') 접수대기
+                                            option(value='처리중') 처리중
+                                            option(value='미평가') 미평가
+                                            option(value='완료') 완료
+                                            option(value='보류') 보류
 
                                     label.col-sm-2.control-label 검색기간
                                     .col-sm-2

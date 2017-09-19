@@ -15,7 +15,7 @@ module.exports = {
      * incident 조회 화면
      */
     index: (req, res, next) => {
-        /*
+        
         Incident.find(req.body.incident, function(err, incident) {
             //logger.debug('err', err, '\n');
             logger.debug('list 호출');
@@ -28,33 +28,6 @@ module.exports = {
                 incident: incident
             });
         }).sort('-createdAt');
-        */
-
-        async.waterfall([function (callback) {
-            Incident.find({},function(err, incident) {
-                logger.debug('Incident.find');
-                console.log('Incident.find');
-                if (err) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                }
-                logger.debug('incident1 : ', incident);
-                console.log('incident1 : ', incident);
-                callback(null, incident)
-            });
-        }], function (err, incident) {
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            }
-            logger.debug('incident2 : ', incident);
-            console.log('incident2 : ', incident);
-            res.render("incident/", {
-                incident: incident
-            });
-        });
     },
 
     /** 
