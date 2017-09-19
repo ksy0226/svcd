@@ -14,7 +14,42 @@ module.exports = {
     /** 
      * incident 조회 화면
      */
+
     index: (req, res, next) => {
+        /*
+        async.waterfall([function (callback) {
+            CompanyProcess.find({"company_cd":req.session.company_cd},function(err, companyProcess) {
+                logger.debug('CompanyProcess.find');
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                logger.debug('companyProcess1 : ', companyProcess);
+                callback(null, companyProcess)
+            });
+        }, function (err, companyProcess) {
+            logger.debug("companyProcess :::" + companyProcess);
+            Incident.find({}, function(err, incident) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }    
+                callback(null, incident)
+            });
+
+        }], function (err, incident) {
+            logger.debug("incident :::" + incident);
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            }
+            res.render("question/index", {
+                incident: incident
+            });
+        });*/
         
         Incident.find(req.body.incident, function(err, incident) {
             //logger.debug('err', err, '\n');
@@ -27,7 +62,10 @@ module.exports = {
             res.render("incident/index", {
                 incident: incident
             });
-        }).sort('-createdAt');
+        //}).sort('-created_at');
+        //});
+        }).sort('-register_date');
+    
     },
 
     /** 
