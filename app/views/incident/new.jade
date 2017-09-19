@@ -86,7 +86,7 @@ block content
                                                 option(value ='') 선택하세요
                                                 - if (companyProcess.length > 0) {
                                                     - for( var i = 0 ; length = companyProcess.length > i ; i++ ){ //속도가 느리다고 알고 있음.
-                                                        option(value ='#{companyProcess[i].higher_cd}') #{companyProcess[i].higher_cd}
+                                                        option(value ='#{companyProcess[i].higher_cd}') #{companyProcess[i].higher_nm}
                                                     - }
                                                 - }
                                         label.col-sm-2.control-label 긴급구분
@@ -98,18 +98,14 @@ block content
                                        .form-group
                                             label.col-sm-2.control-label 요청자명
                                             .col-sm-4
-                                                input.form-control(type='text', name='incident[real_register_mm]')
+                                                input.form-control(type='text', name='incident[real_register_mm]', style = "ime-mode:active")
                                             label.col-sm-2.control-label 연락처
                                             .col-sm-4
                                                 input.form-control(type='text', name='incident[real_contact]', placeholder='전화번호 / hong@xxxx.co.kr')
                                         .form-group
                                             label.col-sm-2.control-label 문의요청 화면
                                             .col-sm-10
-                                                input.form-control(type='text', name='incident[app_menu]', placeholder='인사관리>발령정보>발령처리')
-                                    
-                                        
-                                    
-                                    
+                                                input.form-control(type='text', name='incident[app_menu]', placeholder='인사관리>발령정보>발령처리')                 
                                     .form-group
                                         label.col-sm-2.control-label 요청완료일
                                         .col-sm-4
@@ -126,7 +122,7 @@ block content
                                     .form-group
                                         label.col-sm-2.control-label 제목
                                         .col-sm-10
-                                            input.form-control(type='text', name='incident[title]')
+                                            input.form-control(type='text', name='incident[title]', style = "ime-mode:active")
                                     .form-group
                                         .col-sm-12
                                             textarea#summernote.summernote
