@@ -11,6 +11,8 @@ module.exports = {
             logger.debug('sessionCheck succeed');
             user_flag = req.session.user_flag;
             group_flag = req.session.group_flag;
+            sabun = req.session.sabun
+
             //res.render('main/main');
             next();
         } else { //세션값이 없으면
@@ -21,13 +23,16 @@ module.exports = {
             var remember_me = req.cookies.remember_me;
             var user_flag = req.cookies.user_flag;
             var group_flag = req.cookies.group_flag;
+            var sabun = req.cookies.sabun;
+
 
             if (email == null) email = "";
             res.render('index', {
                 email: email,
                 remember_me: remember_me,
                 user_flag : user_flag,
-                group_flag : group_flag
+                group_flag : group_flag,
+                sabun : sabun
             });
             
         }

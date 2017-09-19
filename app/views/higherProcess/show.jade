@@ -22,7 +22,10 @@ block head
     //if lt IE 9
     script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
     script(src='https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js')
-
+    script.
+        $(document).ready(function() { 
+            $('#user_flag').val('#{higherProcess.user_flag}');
+        });
 
 block content
       // ==============================================================
@@ -76,21 +79,21 @@ block content
                           input.form-control(type='text', name='higherProcess[higher_nm]', readonly value='#{higherProcess.higher_nm}', placeholder='')
                       .form-group
                       label.col-sm-3.control-label 설명
-                      .col-sm-3
+                      .col-sm-9
                           input.form-control(type='text', name='higherProcess[description]', readonly value='#{higherProcess.description}',placeholder='')
                       .form-group
                       label.col-sm-3.control-label 회사코드
                       .col-sm-3
                           input.form-control(type='text', name='higherProcess[com_cd]', readonly value='#{higherProcess.com_cd}', placeholder='')
                       .form-group
-                      label.col-sm-3.control-label 사번
+                      label.col-sm-3.control-label 사번 
                       .col-sm-3
                           input.form-control(type='text', name='higherProcess[sabun]', readonly value='#{higherProcess.sabun}', placeholder='')
                       .form-group
                       label.col-sm-3.control-label 사용여부
                       .col-sm-3
                           select.form-control.input-sm(id='user_flag' name='higherProcess[user_flag]' type='text' value='#{higherProcess.user_flag}')
-                              option(value='사용') 사용 
+                              option(value='사용') 사용
                               option(value='미사용') 미사용
                       .form-group
                       

@@ -27,6 +27,10 @@ block head
     script(src='/isu/js/postcode.js')
     //http용
     script(src='http://dmaps.daum.net/map_js_init/postcode.v2.js')
+    script.
+        $(document).ready(function() { 
+            $('#user_flag').val('#{higherProcess.user_flag}');
+        });
 
 block content
       // ==============================================================
@@ -83,7 +87,7 @@ block content
                           input.form-control(type='text', name='higherProcess[higher_nm]', value='#{higherProcess.higher_nm}', placeholder='')
                         .form-group
                         label.col-sm-3.control-label 설명
-                        .col-sm-3
+                        .col-sm-9
                           input.form-control(type='text', name='higherProcess[description]', value='#{higherProcess.description}',placeholder='')
                         .form-group
                         label.col-sm-3.control-label 회사코드
@@ -97,8 +101,8 @@ block content
                         label.col-sm-3.control-label 사용여부
                         .col-sm-3
                           select.form-control.input-sm(id='user_flag' name='higherProcess[user_flag]' type='text' value='#{higherProcess.user_flag}')
-                              option(value='사용') 사용 
-                              option(value='미사용') 미사용
+                            option(value='사용') 사용 
+                            option(value='미사용') 미사용
                         .form-group
                   
            

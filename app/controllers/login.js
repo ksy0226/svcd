@@ -53,12 +53,14 @@ module.exports = {
                         req.session.group_flag = usermanage.group_flag;
                         req.session.user_nm = usermanage.user_nm;
                         req.session.company_cd = usermanage.company_cd;
+                        req.session.sabun = usermanage.sabun;
                         
                         //logger.debug('req.session.user_flag'+req.session.user_flag);
                         res.render('main/main',
                                 {   user_flag : req.session.user_flag, 
                                     group_flag : req.session.group_flag,
-                                    user_nm : req.session.user_nm
+                                    user_nm : req.session.user_nm,
+                                    sabun : req.session.sabun
                                 });
                         //logger.debug('req.session.user_flag2222'+req.session.user_flag);
                         //logger.debug('user_nm'+req.session.user_nm);
