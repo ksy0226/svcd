@@ -148,32 +148,6 @@ module.exports = {
     */
 
     edit: (req, res, next) => {
-        /*
-        async.waterfall([function (callback) {
-            Usermanage.findById(req.params.id, function (err, usermanage) {
-                if (err) return res.json({
-                    success: false,
-                    message: err
-                });
-                logger.debug('usermanage : ', usermanage);
-                callback(null, usermanage)
-            });
-        }], function (err, company) {
-            CompanyModel.find(req.body.company, function (err, company) {
-                if (err) return res.json({
-                    success: false,
-                    message: err
-                });
-                logger.debug('company : ', company);
-                res.render("usermanage/edit", {
-                    usermanage: usermanage,
-                    user: req.user,
-                    company: company
-                });
-            });
-        });
-            */
-
         Usermanage.findById(req.params.id, function (err, usermanage) {
             if (err) return res.json({
                 success: false,
