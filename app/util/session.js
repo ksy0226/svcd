@@ -4,17 +4,17 @@ module.exports = {
 
     sessionCheck: (req, res, next) => {
         var minute = 60 * 1000;
-        logger.debug('sessionCheck email'+req.session.email);
-        logger.debug('req.session.user_flag : '+ req.session.user_flag);
-        logger.debug('req.session.group_flag : '+ req.session.group_flag);             
+        logger.debug('session.js sessionCheck email'+req.session.email);
+        logger.debug('session.js req.session.user_flag : '+ req.session.user_flag);
+        logger.debug('session.js req.session.group_flag : '+ req.session.group_flag);             
         if (req.session.email) {
-            logger.debug('sessionCheck succeed');
+            logger.debug('session.js sessionCheck succeed');
             user_flag = req.session.user_flag;
             group_flag = req.session.group_flag;
             //res.render('main/main');
             next();
         } else { //세션값이 없으면
-            logger.debug('sessionCheck failed');
+            logger.debug('session.js sessionCheck failed');
             //next(); //임시로 통과
             
             var email = req.cookies.email;

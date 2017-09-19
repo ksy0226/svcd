@@ -3,7 +3,8 @@ var express = require('express');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var Usermanage = require('../models/Usermanage');
-const logger = require('log4js').getLogger('app');
+var bcrypt   = require("bcrypt-nodejs");
+var logger = require('log4js').getLogger('app');
 
 var email = "";
 var remember_me = "";
@@ -40,12 +41,13 @@ module.exports = {
             res.clearCookie('user_flag');
             res.clearCookie('group_flag');
         }
+        logger.debug("password : ",bcrypt.hashSync('1'));
+
         Usermanage.findOne({ //계정이 존재하면
-                email : req.body.email,
-                password : req.body.password
+                email : req.body.email
             }).exec(function (err, usermanage) {
                 if (err) callback(err);
-                if(usermanage){
+                if(usermanage.authenticate(req.body.password)){ //비밀번호가 일치하면
                     req.session.save(function () {
                         req.session.email = usermanage.email;
                         req.session.password = usermanage.password;
@@ -54,14 +56,12 @@ module.exports = {
                         req.session.user_nm = usermanage.user_nm;
                         req.session.company_cd = usermanage.company_cd;
                         
-                        //logger.debug('req.session.user_flag'+req.session.user_flag);
                         res.render('main/main',
                                 {   user_flag : req.session.user_flag, 
                                     group_flag : req.session.group_flag,
                                     user_nm : req.session.user_nm
                                 });
-                        //logger.debug('req.session.user_flag2222'+req.session.user_flag);
-                        //logger.debug('user_nm'+req.session.user_nm);
+
                     });
                 }else{ //계정이 존재하지 않으면
                     if(req.body.remember_me === "on"){
