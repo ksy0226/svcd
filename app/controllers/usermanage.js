@@ -9,6 +9,7 @@ const service = require('../services/usermanage');
 const logger = require('log4js').getLogger('app');
 const Iconv = require('iconv-lite');
 const nodemailer = require('nodemailer');
+const CompanyModel = require('../models/Company');
 
 module.exports = {
 
@@ -68,7 +69,25 @@ module.exports = {
     },
 
     new: (req, res, next) => {
-        res.render("usermanage/new");
+        async.waterfall([function (callback) {
+            CompanyModel.find({}, function (err, company) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null, company)
+            });
+        }], function (err, company) {
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            }
+            res.render("usermanage/new", {
+                company: company
+            });
+        });
     },
 
     save: (req, res, next) => {
@@ -129,6 +148,32 @@ module.exports = {
     */
 
     edit: (req, res, next) => {
+        /*
+        async.waterfall([function (callback) {
+            Usermanage.findById(req.params.id, function (err, usermanage) {
+                if (err) return res.json({
+                    success: false,
+                    message: err
+                });
+                logger.debug('usermanage : ', usermanage);
+                callback(null, usermanage)
+            });
+        }], function (err, company) {
+            CompanyModel.find(req.body.company, function (err, company) {
+                if (err) return res.json({
+                    success: false,
+                    message: err
+                });
+                logger.debug('company : ', company);
+                res.render("usermanage/edit", {
+                    usermanage: usermanage,
+                    user: req.user,
+                    company: company
+                });
+            });
+        });
+            */
+
         Usermanage.findById(req.params.id, function (err, usermanage) {
             if (err) return res.json({
                 success: false,
@@ -176,7 +221,7 @@ module.exports = {
 
     sendmail: (req, res, next) => {
         console.log('Enter sendmail!!!');
-        Usermanage.find(req.body.usermanage, function(err, usermanageData) {
+        Usermanage.find(req.body.usermanage, function (err, usermanageData) {
             if (err) return res.json({
                 success: false,
                 message: err
