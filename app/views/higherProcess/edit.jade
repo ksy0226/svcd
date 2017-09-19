@@ -27,6 +27,10 @@ block head
     script(src='/isu/js/postcode.js')
     //http용
     script(src='http://dmaps.daum.net/map_js_init/postcode.v2.js')
+    script.
+        $(document).ready(function() { 
+            $('#user_flag').val('#{higherProcess.user_flag}');
+        });
 
 block content
       // ==============================================================

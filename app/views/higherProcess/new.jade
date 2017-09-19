@@ -27,7 +27,12 @@ block head
     script(src='/isu/js/postcode.js')
     //http용
     script(src='http://dmaps.daum.net/map_js_init/postcode.v2.js')
-                        
+    script.
+        $(document).ready(function() { 
+            alert(sabun);
+            //$('#sabun').val(req.session.sabun);
+        });
+
 block content
       // ==============================================================
       // Start right Content here
@@ -62,7 +67,7 @@ block content
                           input.form-control(type='text', name='higherProcess[higher_nm]', placeholder='')
                       .form-group
                         label.col-sm-3.control-label 설명
-                        .col-sm-3
+                        .col-sm-9
                           input.form-control(type='text', name='higherProcess[description]', placeholder='')
                       .form-group
                         label.col-sm-3.control-label 회사코드
@@ -71,7 +76,7 @@ block content
                       .form-group
                         label.col-sm-3.control-label 사번
                         .col-sm-3
-                          input.form-control(type='text', name='higherProcess[sabun]', placeholder='')
+                          input.form-control(type='text', id='sabun' name='higherProcess[sabun]', placeholder='')
                       .form-group
                         label.col-sm-3.control-label 사용여부
                         .col-sm-3
@@ -81,8 +86,8 @@ block content
                       .form-group
                         .col-sm-offset-3.col-sm-9.m-t-30
                           button.btn.btn-primary.waves-effect.waves-light(type='submit')
-                            | 저장 
-                            i.fa.fa-send.m-l-10
+                            i.fa.fa-send-o
+                            |  저장
                           button.btn.btn-default.waves-effect.m-l-5(type='reset') 취소
             // end row
           // end container
