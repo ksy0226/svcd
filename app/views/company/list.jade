@@ -66,10 +66,10 @@ block content
                       a.btn.btn-default.waves-effect.waves-light.m-l-5(href='/company/new')
                         i.fa.fa-plus
                         |  추가
-                      button.btn.btn-primary.waves-effect.waves-light.m-l-5(id='btnExport' onclick="fnTableToExcel(document.getElementById('dvData'));") 
+                      //-button.btn.btn-primary.waves-effect.waves-light.m-l-5(id='btnExport' onclick="fnTableToExcel(document.getElementById('dvData'));") 
                         i.fa.fa-download
                         |  Excel
-                      button.btn.btn-success.waves-effect.waves-light.m-l-5(onclick="getJsonData();") 
+                      //-button.btn.btn-success.waves-effect.waves-light.m-l-5(onclick="getJsonData();") 
                         i.fa.fa-arrow-circle-o-down
                         |  JsonData
                   table.table.table-hover(id='dvData' data-tablesaw-mode='swipe')
@@ -88,8 +88,8 @@ block content
                                     td  #{company[i].com_nm}  
                                     td.highlight(data-highlight='search.highlight.title') #{company[i].ceo_nm}
                                     td #{company[i].addr}
-                                    td #{company[i].telno}
-                                    td #{company[i].faxno}
+                                    td #{company[i].tel_no}
+                                    td #{company[i].fax_no}
                             - }
                         - }else{
                             tr
