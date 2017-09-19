@@ -75,7 +75,7 @@ block content
                                                         thead
                                                             tr
                                                                 th.stretch 회사명
-                                                                th 아이디
+                                                                th email
                                                                 th 사원명
                                                                 th 부서명
                                                                 th 직위
@@ -86,13 +86,13 @@ block content
                                                                 // - for( var i = 0 ; length = usermanage.length > i ; i++ ){ //속도가 빠르다고 알고 있음.
                                                                 - for( var i in usermanage ){ //속도가 느리다고 알고 있음.
                                                                     tr(onclick="onclick=location.href='/usermanage/#{usermanage[i]._id}/edit'")
-                                                                        td.highlight(data-highlight='search.highlight.title') #{usermanage[i].compannyNm}
-                                                                        td #{usermanage[i].userId}
-                                                                        td #{usermanage[i].user_nm}
-                                                                        td #{usermanage[i].deptNm}
-                                                                        td #{usermanage[i].jikwe}
-                                                                        td #{usermanage[i].jikchk}
-                                                                        td #{usermanage[i].hpNo}
+                                                                        td.highlight(data-highlight='search.highlight.title') #{usermanage[i].company_nm}
+                                                                        td #{usermanage[i].email}
+                                                                        td #{usermanage[i].employee_nm}
+                                                                        td #{usermanage[i].dept_nm}
+                                                                        td #{usermanage[i].position_nm}
+                                                                        td #{usermanage[i].jikchk_nm}
+                                                                        td #{usermanage[i].hp_telno}
                                                                 - }
                                                             - }else{
                                                                 tr

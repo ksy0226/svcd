@@ -34,13 +34,17 @@ block content
                                                 .m-b-30
                                                     form.form.center-block(name='form' action='/usermanage/new' method='post')
                                                         .form-group
+                                                            label.col-sm-2.control-label 회사코드
+                                                            .col-sm-9
+                                                                input.form-control(name='usermanage[company_cd]' type='text' required value='')
+                                                        .form-group
                                                             label.col-sm-2.control-label 회사명
                                                             .col-sm-9
-                                                                input.form-control(name='usermanage[compannyNm]' type='text' required value='')
+                                                                input.form-control(name='usermanage[company_nm]' type='text' required value='')
                                                         .form-group
-                                                            label.col-sm-2.control-label 아이디
+                                                            label.col-sm-2.control-label email
                                                             .col-sm-9
-                                                                input.form-control(name='usermanage[userId]' type='text' required value='')
+                                                                input.form-control(name='usermanage[email]' type='email' placeholder='isusystem@isu.co.kr' required value='')
                                                         .form-group
                                                             label.col-sm-2.control-label 비밀번호
                                                             .col-sm-9
@@ -48,43 +52,37 @@ block content
                                                         .form-group
                                                             label.col-sm-2.control-label 사원명
                                                             .col-sm-9
-                                                                input.form-control(name='usermanage[user_nm]' type='text' value='')
+                                                                input.form-control(name='usermanage[employee_nm]' type='text' value='')
                                                         .form-group
                                                             label.col-sm-2.control-label 부서명
                                                             .col-sm-9
-                                                                input.form-control(name='usermanage[deptNm]' type='text' value='')
+                                                                input.form-control(name='usermanage[dept_nm]' type='text' value='')
                                                         .form-group
                                                             label.col-sm-2.control-label 직위
                                                             .col-sm-9
-                                                                input.form-control(name='usermanage[jikwe]' type='text' value='')
+                                                                input.form-control(name='usermanage[position_nm]' type='text' value='')
                                                         .form-group
                                                             label.col-sm-2.control-label 직책
                                                             .col-sm-9
-                                                                input.form-control(name='usermanage[jikchk]' type='text' value='')
-                                                        .form-group
-                                                            label.col-sm-2.control-label e-mail
-                                                            .col-sm-9
-                                                                input.form-control(name='usermanage[email]' type='email' value='')
+                                                                input.form-control(name='usermanage[jikchk_nm]' type='text' value='')
                                                         .form-group
                                                             label.col-sm-2.control-label 핸드폰번호
                                                             .col-sm-9
-                                                                input.form-control(name='usermanage[hpNo]' type='text' value='')
+                                                                input.form-control(name='usermanage[hp_telno]' type='text' value='')
                                                         .form-group
-                                                            label.col-sm-2.control-label 생년월일
-                                                            .col-sm-9
-                                                                input.form-control(name='usermanage[birthdayDt]' type='text' value='')
+                                                            label.col-sm-2.control-label 회사주소1
+                                                            .col-sm-2
+                                                                input.form-control(name='company[dom_post_cd1]', type='text', value='')
+                                                            .col-sm-5
+                                                                input.form-control(name='company[dom_addr]', type='text', value='')
                                                         .form-group
-                                                            label.col-sm-2.control-label 우편번호
+                                                            label.col-sm-2.control-label 회사주소2
                                                             .col-sm-9
-                                                                input.form-control(name='usermanage[post]' type='text' value='')
-                                                        .form-group
-                                                            label.col-sm-2.control-label 회사주소
-                                                            .col-sm-9
-                                                                input.form-control(name='usermanage[address]' type='text' value='')
+                                                                input.form-control(name='company[dom_addr2]', type='text', value='')
                                                         .form-group
                                                             label.col-sm-2.control-label 회사전화번호
                                                             .col-sm-9
-                                                                input.form-control(name='usermanage[callNo]' type='text' value='')
+                                                                input.form-control(name='usermanage[office_tel_no]' type='text' value='')
                                                         .form-group
                                                             label.col-sm-2.control-label 사용자권한구분
                                                             .col-sm-9
