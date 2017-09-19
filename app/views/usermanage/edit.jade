@@ -42,11 +42,11 @@ block content
                                                     .form-group
                                                         label.col-sm-2.control-label 회사코드
                                                         .col-sm-9
-                                                            input.form-control(name='usermanage[company_cd]' type='text' required value='#{usermanage.company_cd}')
+                                                            input.form-control(name='usermanage[company_cd]' type='text' required value='#{usermanage.company_cd}' disabled)
                                                     .form-group
                                                         label.col-sm-2.control-label 회사명
                                                         .col-sm-9
-                                                            input.form-control(name='usermanage[company_nm]' type='text' required value='#{usermanage.company_nm}')
+                                                            input.form-control(name='usermanage[company_nm]' type='text' required value='#{usermanage.company_nm}' disabled)
                                                     .form-group
                                                         label.col-sm-2.control-label email
                                                         .col-sm-9
@@ -54,7 +54,7 @@ block content
                                                     .form-group
                                                         label.col-sm-2.control-label 비밀번호
                                                         .col-sm-9
-                                                            input.form-control(name='usermanage[password]' type='text' value='#{usermanage.password}')
+                                                            input.form-control(name='usermanage[password]' type='password' value='#{usermanage.password}')
                                                     .form-group
                                                         label.col-sm-2.control-label 사원명
                                                         .col-sm-9

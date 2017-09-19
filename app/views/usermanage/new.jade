@@ -1,4 +1,12 @@
 extends ../layouts/default
+block head 
+    script(type='text/javascript').
+        function companyCd(){
+            $('#company_cd').val(($('#company_nm').val()));
+
+            alert(company.length);
+
+        }
 
 block content
     .content-page
@@ -36,11 +44,17 @@ block content
                                                         .form-group
                                                             label.col-sm-2.control-label 회사코드
                                                             .col-sm-9
-                                                                input.form-control(name='usermanage[company_cd]' type='text' required value='')
+                                                                input.form-control(id='company_cd' name='usermanage[company_cd]' type='text' required value='' disabled)
                                                         .form-group
                                                             label.col-sm-2.control-label 회사명
                                                             .col-sm-9
-                                                                input.form-control(name='usermanage[company_nm]' type='text' required value='')
+                                                                select.form-control(id='company_nm' name='usermanage[company_nm]' onchange='companyCd()')
+                                                                    option(value ='') 선택하세요
+                                                                    - if (company.length > 0) {
+                                                                        - for( var i = 0 ; length = company.length > i ; i++ ){ //속도가 느리다고 알고 있음.
+                                                                            option(value ='#{company[i].com_cd}') #{company[i].com_nm}
+                                                                        - }
+                                                                    - }
                                                         .form-group
                                                             label.col-sm-2.control-label email
                                                             .col-sm-9
@@ -48,7 +62,7 @@ block content
                                                         .form-group
                                                             label.col-sm-2.control-label 비밀번호
                                                             .col-sm-9
-                                                                input.form-control(name='usermanage[password]' type='text' required value='')
+                                                                input.form-control(name='usermanage[password]' type='password' required value='')
                                                         .form-group
                                                             label.col-sm-2.control-label 사원명
                                                             .col-sm-9
