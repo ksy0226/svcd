@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var bcrypt   = require("bcrypt-nodejs");
+const logger = require('log4js').getLogger('app');
 
 var usermanageSchema = mongoose.Schema({
     company_cd       : { type : String, required: true },
@@ -36,6 +38,49 @@ var usermanageSchema = mongoose.Schema({
     created_at       : { type : Date, default: Date.now },
     updated_at       : { type : Date }
 });
+
+usermanageSchema.pre("save", hashPassword);
+usermanageSchema.pre("findOneAndUpdate", function hashPassword(next){
+    var user = this._update;
+    if(!user.newPassword){ //새 비밀번호가 없을 시 비밀번호는 변경하지 않음.
+        var user = this._update;
+        delete user.password;
+        return next();
+    } else {
+        var user = this._update;
+        user.password = bcrypt.hashSync(user.newPassword);
+        return next();
+    }
+});
+
+/**
+ * 비밀번호 비교
+ */
+usermanageSchema.methods.authenticate = function (password) {
+    var user = this;
+    return bcrypt.compareSync(password,user.password);
+};
+
+/**
+ * 비밀번호 해쉬 값
+ */
+usermanageSchema.methods.hash = function (password) {
+    return bcrypt.hashSync(password);
+};
+
+/**
+ * 비밀번호를 해쉬로 바꿈
+ * @param {*} next 
+ */
+function hashPassword(next){
+    var user = this;
+    if(!user.isModified("password")){
+        return next();
+    } else {
+        user.password = bcrypt.hashSync(user.password);
+        return next();
+    }
+}
 
 var Usermanage = mongoose.model('usermanage', usermanageSchema);
 module.exports = Usermanage;
