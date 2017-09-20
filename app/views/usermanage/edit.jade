@@ -6,6 +6,11 @@ block head
             $('#group_flag').val('#{usermanage.group_flag}');
         });
 
+    // postcode
+    script(src='/isu/js/postcode.js')
+    // http
+    script(src='http://dmaps.daum.net/map_js_init/postcode.v2.js')
+
 block content
     .content-page
         .content
@@ -78,17 +83,19 @@ block content
                                                     .form-group
                                                         label.col-sm-2.control-label 회사주소1
                                                         .col-sm-2
-                                                            input.form-control(name='company[dom_post_cd1]', type='text', value='#{usermanage.dom_post_cd1}' disabled)
+                                                            input.form-control(name='usermanage[dom_post_cd1]', type='text', value='#{usermanage.dom_post_cd1}' disabled)
                                                         .col-sm-5
-                                                            input.form-control(name='company[dom_addr]', type='text', value='#{usermanage.dom_addr}' disabled)
+                                                            input.form-control(name='usermanage[dom_addr]', type='text', value='#{usermanage.dom_addr}' disabled)
+                                                        .col-sm-2
+                                                            span.btn.btn-sm.btn-primary(id='postcode') 우편번호 찾기
                                                     .form-group
                                                         label.col-sm-2.control-label 회사주소2
                                                         .col-sm-9
-                                                            input.form-control(name='company[dom_addr2]', type='text', value='#{usermanage.dom_addr2}' disabled)
+                                                            input.form-control(name='usermanage[dom_addr2]', type='text', value='#{usermanage.dom_addr2}')
                                                     .form-group
                                                         label.col-sm-2.control-label 회사전화번호
                                                         .col-sm-9
-                                                            input.form-control(name='usermanage[office_tel_no]' type='text' value='#{usermanage.office_tel_no}' disabled)
+                                                            input.form-control(name='usermanage[office_tel_no]' type='text' value='#{usermanage.office_tel_no}')
                                                     .form-group
                                                         label.col-sm-2.control-label 사용자권한구분
                                                         .col-sm-9
