@@ -91,72 +91,32 @@ module.exports = {
     },
 
     save: (req, res, next) => {
-        async.waterfall([function (callback) {
-            console.log('Trace777');
-            Counter.findOne({
-                name: "usermanage"
-            }, function (err, counter) {
-                if (err) callback(err);
-                if (counter) {
-                    callback(null, counter);
-                } else {
-                    Counter.create({
-                        name: "usermanage",
-                        totalCount: 0
-                    }, function (err, counter) {
-                        if (err) return res.json({
-                            success: false,
-                            message: err
-                        });
-                        callback(null, counter);
-                    });
-                }
-            });
-        }], function (callback, counter) {
-            var newUsermanage = req.body.usermanage;
-            newUsermanage.numId = counter.totalCount + 1;
-            Usermanage.create(req.body.usermanage, function (err, usermanage) {
-                if (err) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                }
-                counter.totalCount++;
-                counter.save();
+        logger.debug('Save debug >> ', req.body.usermanage);
+        var usermanage = req.body.usermanage;
+        Usermanage.create(req.body.usermanage, function (err, usermanage) {
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            } else {
                 res.redirect('/usermanage');
-            });
-            //res.redirect('/usermanage');
+            }
         });
     },
-
-    /*
-    show: (req, res, next) => {
-        Usermanage.findById(req.params.id).populate("_id").exec(function (err, usermanage) {
-            if (err) return res.json({
-                success: false,
-                message: err
-            });
-            usermanage.views++;
-            res.render("usermanage/show", {
-                usermanage: usermanage,
-                urlQuery: req._parsedUrl.query,
-                user: req.user,
-                search: service.createSearch(req)
-            });
-        });
-    },
-    */
 
     edit: (req, res, next) => {
         Usermanage.findById(req.params.id, function (err, usermanage) {
-            if (err) return res.json({
-                success: false,
-                message: err
-            });
-            res.render("usermanage/edit", {
-                usermanage: usermanage,
-                user: req.user
-            });
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: err
+                });
+            } else {
+                res.render("usermanage/edit", {
+                    usermanage: usermanage,
+                    user: req.user
+                });
+            }
         });
     },
 
