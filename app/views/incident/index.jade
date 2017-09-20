@@ -50,11 +50,11 @@ block head
     
     script(type='text/javascript').
         function moreView(){
-            alert(1);
+            alert(111);
 
             //객체값을 javascript에 매핑
             var incidentObj = !{JSON.stringify(incident).replace(/<\//g, '<\\/')};
-            alert(JSON.stringify(companyObj));
+            alert(JSON.stringify(incidentObj));
         }
 
        
@@ -149,17 +149,18 @@ block content
                                                         i.md.md-star.text-warning
                                                         i.md.md-star.text-muted
                                                 p
+
+                - }
+            - }else{
+                
+            - }                               
             
                 .row
                     .col-lg-12
                         .form-group
                             .col-md-12 
-                                input.form-control(type='text', onclick='alert(1)') 
+                                input.form-control(type='text', onclick='moreView();') 
                                     
-                - }
-            - }else{
-                
-            - }
         // end content
 
         footer.footer.text-right
