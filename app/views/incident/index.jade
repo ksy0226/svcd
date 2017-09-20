@@ -100,8 +100,9 @@ block content
                                             | 조회 
                                             i.fa.fa-search.m-l-5
                 // end Search Area
-
                 // start List Area
+            - if (incident.length > 0) {
+                - for( var i = 0 ; length = 5 > i ; i++ ){
                 .row
                     .col-lg-12
                         .card-box
@@ -116,19 +117,16 @@ block content
                                             .forum-sub-title
                                                 span.text-primary
                                                     b 이수시스템
-                                                span.p-w-xs  2017-09-14 09:23
+                                                    b #{incident[i].request_company_cd}
+                                                span.p-w-xs  #{incident[i].register_date}
                                             a.forum-item-title(href='/incident/viewDetail')
                                                 i.md.md-desktop-windows
-                                                | 중국에서 발송한 메일 확인 요청
+                                                | #{incident[i].title}
+                                                
                                         .col-md-12
                                             .forum-content.truncate1.fh-60
-                                                a(href='gw_sub1_2_view01.html')
-                                                    | 이수그룹 계열사 중 토다이수 가 있습니다.토다이수 중국 동관이수에 근무하고 있는 사용자 중 다음과 같은 메일을 수신받았다고 합니다.
-                                                    | 메일 내용은,메일 용량을 15G로 업그레이드 하지 않으면, 24시간으로 사용 금지되며, 모든 연락처와 메일이 삭제된다는 내용(?) 이라고 합니다.
-                                                    | 어떤 조치를 해야할지 검토 부탁드립니다.
-                                                    | 이수그룹 계열사 중 토다이수 가 있습니다.토다이수 중국 동관이수에 근무하고 있는 사용자 중 다음과 같은 메일을 수신받았다고 합니다.
-                                                    | 메일 내용은,메일 용량을 15G로 업그레이드 하지 않으면, 24시간으로 사용 금지되며, 모든 연락처와 메일이 삭제된다는 내용(?) 이라고 합니다.
-                                                    | 어떤 조치를 해야할지 검토 부탁드립니다.
+                                                a(href='/incident/viewDetail')
+                                                    | #{incident[i].content}
                                             a.text-muted.text-more(href='/incident/viewDetail') 더보기
                                             .forum-level
                                                 p.text-muted.font-13
@@ -140,44 +138,10 @@ block content
                                                         i.md.md-star.text-warning
                                                         i.md.md-star.text-muted
                                                 p
-                .row
-                    .col-lg-12
-                        .card-box
-                            // start 처리진행현황
-                            .forum-container
-                                .forum-item
-                                    .row
-                                        .col-md-1.forum-info
-                                            span.btn-outline.outline-pink
-                                                | 접수
-                                        .col-md-11
-                                            .forum-sub-title
-                                                span.text-primary
-                                                    b 이수시스템
-                                                span.p-w-xs  2017-09-14 09:23
-                                            a.forum-item-title(href='/incident/viewDetail')
-                                                i.md.md-desktop-windows
-                                                | 중국에서 발송한 메일 확인 요청
-                                        .col-md-12
-                                            .forum-content.truncate1.fh-60
-                                                a(href='gw_sub1_2_view01.html')
-                                                    | 이수그룹 계열사 중 토다이수 가 있습니다.토다이수 중국 동관이수에 근무하고 있는 사용자 중 다음과 같은 메일을 수신받았다고 합니다.
-                                                    | 메일 내용은,메일 용량을 15G로 업그레이드 하지 않으면, 24시간으로 사용 금지되며, 모든 연락처와 메일이 삭제된다는 내용(?) 이라고 합니다.
-                                                    | 어떤 조치를 해야할지 검토 부탁드립니다.
-                                                    | 이수그룹 계열사 중 토다이수 가 있습니다.토다이수 중국 동관이수에 근무하고 있는 사용자 중 다음과 같은 메일을 수신받았다고 합니다.
-                                                    | 메일 내용은,메일 용량을 15G로 업그레이드 하지 않으면, 24시간으로 사용 금지되며, 모든 연락처와 메일이 삭제된다는 내용(?) 이라고 합니다.
-                                                    | 어떤 조치를 해야할지 검토 부탁드립니다.
-                                            a.text-muted.text-more(href='/incident/viewDetail') 더보기
-                                            .forum-level
-                                                p.text-muted.font-13
-                                                    b 서비스 만족도:
-                                                    span.m-l-15
-                                                        i.md.md-star.text-warning
-                                                        i.md.md-star.text-warning
-                                                        i.md.md-star.text-warning
-                                                        i.md.md-star.text-warning
-                                                        i.md.md-star.text-muted
-                                                p
+                - }
+            - }else{
+                
+            - }
 
 
         // end content
