@@ -47,6 +47,17 @@ block head
     script(src='/assets/js/jquery.core.js')
     script(src='/assets/js/jquery.app.js')
     script(src='/vendor/jquery/jquery.min.js')
+    
+    script(type='text/javascript').
+        function moreView(){
+            alert(1);
+
+            //객체값을 javascript에 매핑
+            var incidentObj = !{JSON.stringify(incident).replace(/<\//g, '<\\/')};
+            alert(JSON.stringify(companyObj));
+        }
+
+       
 
 block content
     // ==============================================================
@@ -102,7 +113,7 @@ block content
                 // end Search Area
                 // start List Area
             - if (incident.length > 0) {
-                - for( var i = 0 ; length = 5 > i ; i++ ){
+                - for( var i = 0 ; length = 3 > i ; i++ ){
                 .row
                     .col-lg-12
                         .card-box
@@ -138,12 +149,17 @@ block content
                                                         i.md.md-star.text-warning
                                                         i.md.md-star.text-muted
                                                 p
+            
+                .row
+                    .col-lg-12
+                        .form-group
+                            .col-md-12 
+                                input.form-control(type='text', onclick='alert(1)') 
+                                    
                 - }
             - }else{
                 
             - }
-
-
         // end content
 
         footer.footer.text-right
