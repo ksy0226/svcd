@@ -13,6 +13,7 @@ block head
             $('input[name="company[dom_post_cd1]"').val(companyObj[sIdx].zip_cd);
             $('input[name="company[dom_addr]"').val(companyObj[sIdx].addr);
             $('input[name="company[dom_addr2]"').val(companyObj[sIdx].addr2);
+            $('input[name="company[hp_telno]"').val(companyObj[sIdx].tel_no);
         }
 
 block content
@@ -98,17 +99,17 @@ block content
                                                         .form-group
                                                             label.col-sm-2.control-label 회사주소1
                                                             .col-sm-2
-                                                                input.form-control(name='company[dom_post_cd1]', type='text', value='')
+                                                                input.form-control(name='company[dom_post_cd1]', type='text', value='' disabled)
                                                             .col-sm-5
-                                                                input.form-control(name='company[dom_addr]', type='text', value='')
+                                                                input.form-control(name='company[dom_addr]', type='text', value='' disabled)
                                                         .form-group
                                                             label.col-sm-2.control-label 회사주소2
                                                             .col-sm-9
-                                                                input.form-control(name='company[dom_addr2]', type='text', value='')
+                                                                input.form-control(name='company[dom_addr2]', type='text', value='' disabled)
                                                         .form-group
                                                             label.col-sm-2.control-label 회사전화번호
                                                             .col-sm-9
-                                                                input.form-control(name='usermanage[office_tel_no]' type='text' value='')
+                                                                input.form-control(name='company[hp_telno]' type='text' value='' disabled)
                                                         .form-group
                                                             label.col-sm-2.control-label 사용자권한구분
                                                             .col-sm-9
