@@ -1,11 +1,9 @@
 extends ../layouts/default
 block head 
     script(type='text/javascript').
-        $(document).ready(function() { 
-            $('#user_flag').val('#{usermanage.user_flag}');
-            $('#group_flag').val('#{usermanage.group_flag}');
-        });
-
+        var usermanageObj = !{JSON.stringify(usermanage).replace(/<\//g, '<\\/')};
+    script(src='/isu/js/usermanage/index.js')
+    
     // postcode
     script(src='/isu/js/postcode.js')
     // http

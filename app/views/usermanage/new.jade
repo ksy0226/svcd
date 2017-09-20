@@ -3,8 +3,6 @@ block head
     script(type='text/javascript').
         //객체값을 javascript에 매핑
         var companyObj = !{JSON.stringify(company).replace(/<\//g, '<\\/')};
-        var usermanageObj = !{JSON.stringify(usermanage).replace(/<\//g, '<\\/')};
-
     script(src='/isu/js/usermanage/index.js')
 
 block content
