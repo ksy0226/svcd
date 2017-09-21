@@ -12,15 +12,12 @@ module.exports = () => {
     router.use('/', require('../app/routes/index'));
     //router.use('/register', require('../app/routes/register'));
     //router.use('/account', require('../app/routes/account'));
-    router.use('/question', require('../app/routes/question'));
     router.use('/incident', require('../app/routes/incident'));
-    router.use('/manage', require('../app/routes/manage'));
     router.use('/usermanage', require('../app/routes/usermanage'));
     router.use('/company', require('../app/routes/company'));
     router.use('/search', require('../app/routes/search'));
     router.use('/higherProcess', require('../app/routes/higherProcess'));
     router.use('/lowerProcess', require('../app/routes/lowerProcess'));
-    router.use('/manager', require('../app/routes/manager'));
 
     /// catch 404 and forward to error handler
     router.use(function(req, res, next) {

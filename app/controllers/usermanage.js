@@ -2,9 +2,8 @@
 
 const mongoose = require('mongoose');
 const async = require('async');
-const User = require('../models/User');
+
 const Usermanage = require('../models/Usermanage');
-const Counter = require('../models/Counter');
 const service = require('../services/usermanage');
 const logger = require('log4js').getLogger('app');
 const Iconv = require('iconv-lite');
