@@ -47,6 +47,42 @@ block head
     script(src='/assets/js/jquery.core.js')
     script(src='/assets/js/jquery.app.js')
     script(src='/vendor/jquery/jquery.min.js')
+    
+    script(type='text/javascript').
+        function moreView(){
+            alert(111);
+
+            //객체값을 javascript에 매핑
+            var incidentObj = !{JSON.stringify(incident).replace(/<\//g, '<\\/')};
+            //alert(JSON.stringify(incidentObj));
+            var cnt = JSON.stringify(incidentObj).length;
+            alert(cnt);
+            var sIdx =  4 ;
+            alert(sIdx);
+            alert(sIdx+3);
+            //alert(incidentObj[sIdx].title);
+            for(var j=sIdx ; j< sIdx+3 ; j++){
+                
+                $('#test').val(incidentObj[sIdx].title);
+               
+            }
+             alert(222);
+            //var sIdx = 
+
+             //alert(JSON.stringify(companyObj));dddd
+            //선택된 회사 인덱스 값
+            /*
+            var sIdx = $('#company_cd option').index($('#company_cd option:selected'));
+            sIdx = sIdx -1; //'선택하세요' 인덱스값 1을 빼줌
+            //선택값 매핑
+            $('#company_nm').val($('#company_cd option:selected').text());
+            $('input[name="usermanage[dom_post_cd1]"]').val(companyObj[sIdx].zip_cd);
+            $('input[name="usermanage[dom_addr]"]').val(companyObj[sIdx].addr);
+            $('input[name="usermanage[dom_addr2]"]').val(companyObj[sIdx].addr2);
+            $('input[name="usermanage[office_tel_no]"]').val(companyObj[sIdx].tel_no);
+        */
+        }
+       
 
 block content
     // ==============================================================
@@ -102,7 +138,7 @@ block content
                 // end Search Area
                 // start List Area
             - if (incident.length > 0) {
-                - for( var i = 0 ; length = 5 > i ; i++ ){
+                - for( var i = 0 ; length = 3 > i ; i++ ){
                 .row
                     .col-lg-12
                         .card-box
@@ -118,7 +154,7 @@ block content
                                                 span.text-primary
                                                     b 이수시스템
                                                     b #{incident[i].request_company_cd}
-                                                span.p-w-xs  #{incident[i].register_date}
+                                                span.p-w-xs
                                             a.forum-item-title(href='/incident/viewDetail')
                                                 i.md.md-desktop-windows
                                                 | #{incident[i].title}
@@ -138,12 +174,25 @@ block content
                                                         i.md.md-star.text-warning
                                                         i.md.md-star.text-muted
                                                 p
+
                 - }
             - }else{
                 
-            - }
+            - }                               
+            
+                .row
+                    .col-lg-12
+                        .form-group
+                            .col-md-12 
+                                input.form-control(type='text', onclick='moreView();') 
+                
+                .row
+                    .col-lg-12
+                        .form-group
+                            .col-md-12 
+                                input.form-control(id='test') 
 
-
+                                    
         // end content
 
         footer.footer.text-right

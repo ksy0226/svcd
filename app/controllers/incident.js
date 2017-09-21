@@ -50,8 +50,30 @@ module.exports = {
                 incident: incident
             });
         });*/
-        
-        Incident.find(req.body.incident, function(err, incident) {
+        /*
+        async.waterfall([function (callback) {
+            Incident.find({}, function (err, incident) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null, incident)
+            });
+        }], function (err, incident) {
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            }
+            res.render("incident/", {
+                incident: incident
+            });
+        });
+        */
+
+
+        Incident.find({}, function(err, incident) {
             //logger.debug('err', err, '\n');
             logger.debug('list 호출');
             if (err) {
@@ -62,10 +84,8 @@ module.exports = {
             res.render("incident/index", {
                 incident: incident
             });
-        //}).sort('-created_at');
-        //});
         }).sort('-register_date');
-    
+
     },
 
     /** 
