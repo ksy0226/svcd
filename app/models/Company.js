@@ -1,6 +1,4 @@
 var mongoose = require('mongoose');
-const CompanyModel = require('../models/Company');
-
 
 var companySchema = mongoose.Schema({
     com_cd: { type: String, required: true },      //회사코드
