@@ -3,12 +3,14 @@
 
 $(document).ready(function () {
 
+    //$('input[name="incident[app_menu]"]').val();
+
     $('#higher_cd').on('change',function(){
         if($(this).val() == 'H008'){
-            //$('input[name="incident[app_menu]"]').val();
             $('#app_menu').slideDown(350);
+            //$('#app_menu').attr('style','display:');
         }else{
-            $('#app_menu').slideUp(350);
+            $('#app_menu').slideUp(350);            
         }
     });
 

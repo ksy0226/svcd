@@ -87,19 +87,18 @@ block content
                                         .col-sm-2
                                             select.form-control(name='incident[lower_cd]')
                                                 option 긴급
-                                                option 보통
-                                    div#add-gbn            
-                                       .form-group
-                                            label.col-sm-2.control-label 요청자명
-                                            .col-sm-4
-                                                input.form-control(type='text', name='incident[real_register_mm]', style = "ime-mode:active")
-                                            label.col-sm-2.control-label 연락처
-                                            .col-sm-4
-                                                input.form-control(type='text', name='incident[real_contact]', placeholder='전화번호 / hong@xxxx.co.kr')
-                                        #app_menu.form-group
-                                            label.col-sm-2.control-label 문의요청 화면
-                                            .col-sm-10
-                                                input.form-control(type='text', name='incident[app_menu]', placeholder='인사관리>발령정보>발령처리')                 
+                                                option 보통     
+                                    .form-group
+                                        label.col-sm-2.control-label 요청자명
+                                        .col-sm-4
+                                            input.form-control(type='text', name='incident[real_register_mm]', style = "ime-mode:active")
+                                        label.col-sm-2.control-label 연락처
+                                        .col-sm-4
+                                            input.form-control(type='text', name='incident[real_contact]', placeholder='전화번호 / hong@xxxx.co.kr')
+                                    .form-group(id='app_menu', style='display:none')
+                                        label.col-sm-2.control-label 문의요청 화면
+                                        .col-sm-10
+                                            input.form-control(type='text', name='incident[app_menu]', placeholder='인사관리>발령정보>발령처리')                 
                                     .form-group
                                         label.col-sm-2.control-label 요청완료일
                                         .col-sm-4
