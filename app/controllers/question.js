@@ -2,9 +2,6 @@
 
 const mongoose = require('mongoose');
 const async = require('async');
-const User = require('../models/User');
-const Question = require('../models/Question');
-const Counter = require('../models/Counter');
 const service = require('../services/question');
 const logger = require('log4js').getLogger('app');
 

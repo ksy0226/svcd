@@ -1,14 +1,14 @@
 'use strict';
 
-const mongoose = require('mongoose');
-const async = require('async');
-const Incident = require('../models/Incident');
-const CompanyProcess = require('../models/CompanyProcess');
-const Counter = require('../models/Counter');
-const service = require('../services/incident');
-const fs = require('fs');
-const path = require('path');
-const logger = require('log4js').getLogger('app');
+var mongoose = require('mongoose');
+var async = require('async');
+var Incident = require('../models/Incident');
+var CompanyProcess = require('../models/CompanyProcess');
+var ManagerTask = require('../models/ManagerTask');
+var service = require('../services/incident');
+var fs = require('fs');
+var path = require('path');
+var logger = require('log4js').getLogger('app');
 
 module.exports = {
     /** 
@@ -126,6 +126,17 @@ module.exports = {
             newincident.attach_file = req.files;
         }
         logger.debug("newincident = ",newincident);
+        ManagerTask.create({"com_cd":"SAP","higher_cd":"접수대기","lower_cd":"접수대기"}, function(err, incident) {
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            }else{
+                res.render("incident", {
+                    incident: newincident
+                });                
+            }
+        });
         Incident.create(newincident, function(err, incident) {
             if (err) {
                 res.render("http/500", {

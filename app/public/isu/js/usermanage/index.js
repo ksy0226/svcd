@@ -1,12 +1,13 @@
 'use strict';
 
 $(document).ready(function() { 
-    $('#user_flag').val('#{usermanage.user_flag}');
-    $('#group_flag').val('#{usermanage.group_flag}');
+    //edit.jade
+    $('#user_flag').val(usermanageObj.user_flag);
+    $('#group_flag').val(usermanageObj.group_flag);
 });
 
+//new.jade
 function companyCd(){
-    //alert(JSON.stringify(companyObj));
     //선택된 회사 인덱스 값
     var sIdx = $('#company_cd option').index($('#company_cd option:selected'));
     sIdx = sIdx -1; //'선택하세요' 인덱스값 1을 빼줌
