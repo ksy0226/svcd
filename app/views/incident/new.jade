@@ -3,8 +3,6 @@ block head
 
     // summernot
     link(href='/plugins/summernote/dist/summernote.css', rel='stylesheet')
-    // dropzone
-    link(href='/plugins/dropzone/dist/dropzone.css', rel='stylesheet', type='text/css')
     
     link(href='/plugins/switchery/switchery.min.css', rel='stylesheet')
     link(href='/assets/css/bootstrap.min.css', rel='stylesheet', type='text/css')
@@ -50,15 +48,11 @@ block head
     script(src='/plugins/bootstrap-daterangepicker/daterangepicker.js')
     // form summernote
     script(src='/plugins/summernote/dist/summernote.min.js')
-    // Dropzone js
-    script(src='/plugins/dropzone/dist/dropzone.js')
 
     //첨부파일
     script(src='/vendor/fileupload/js/fileinput.js', type='text/javascript')
-    script(src='/isu/js/incident/index.js', type='text/javascript')
+    script(src='/isu/js/incident/new.js', type='text/javascript')
 
-    script(src='assets/js/jquery.core.js')
-    script(src='assets/js/jquery.app.js')
 
 block content
     .content-page
@@ -82,7 +76,7 @@ block content
                                     .form-group
                                         label.col-sm-2.control-label 상위업무
                                         .col-sm-4
-                                            select.form-control(name='incident[higher_cd]')
+                                            select#higher_cd.form-control(name='incident[higher_cd]')
                                                 option(value ='') 선택하세요
                                                 - if (companyProcess.length > 0) {
                                                     - for( var i = 0 ; length = companyProcess.length > i ; i++ ){ //속도가 느리다고 알고 있음.
@@ -102,7 +96,7 @@ block content
                                             label.col-sm-2.control-label 연락처
                                             .col-sm-4
                                                 input.form-control(type='text', name='incident[real_contact]', placeholder='전화번호 / hong@xxxx.co.kr')
-                                        .form-group
+                                        #app_menu.form-group
                                             label.col-sm-2.control-label 문의요청 화면
                                             .col-sm-10
                                                 input.form-control(type='text', name='incident[app_menu]', placeholder='인사관리>발령정보>발령처리')                 
