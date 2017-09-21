@@ -19,6 +19,6 @@ router.get('/edit/:id', ssc.sessionCheck, controller.edit)
 router.put('/edit/:id', ssc.sessionCheck, controller.update);
 router.delete('/delete/:id', ssc.sessionCheck, controller.delete);
 
-router.get('/viewDetail', ssc.sessionCheck, controller.viewDetail);
+router.get('/viewDetail/:id', ssc.sessionCheck, controller.viewDetail);
 
 module.exports = router;

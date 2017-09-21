@@ -1,54 +1,5 @@
 extends ../layouts/default
 block head
-    title  1-2 처리진행현황 상세화면
-    // Plugins css
-    link(href='/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css', rel='stylesheet')
-    link(href='/plugins/multiselect/css/multi-select.css', rel='stylesheet', type='text/css')
-    link(href='/plugins/select2/select2.css', rel='stylesheet', type='text/css')
-    link(href='/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css', rel='stylesheet')
-    link(href='/plugins/timepicker/bootstrap-timepicker.min.css', rel='stylesheet')
-    link(href='/plugins/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css', rel='stylesheet')
-    link(href='/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css', rel='stylesheet')
-    link(href='/plugins/bootstrap-daterangepicker/daterangepicker.css', rel='stylesheet')
-    // summernot
-    link(href='/plugins/summernote/dist/summernote.css', rel='stylesheet')
-    link(href='/plugins/switchery/switchery.min.css', rel='stylesheet')
-    link(href='/assets/css/bootstrap.min.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/core.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/icons.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/components.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/pages.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/menu_light.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/responsive.css', rel='stylesheet', type='text/css')
-    script(src='/assets/js/modernizr.min.js')
-    // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
-    // WARNING: Respond.js doesn't work if you view the page via file://
-    //if lt IE 9
-    script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
-    script(src='https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js')
-    
-    // jQuery
-    script(src='/assets/js/jquery.min.js')
-    script(src='/assets/js/bootstrap.min.js')
-    script(src='/assets/js/detect.js')
-    script(src='/assets/js/fastclick.js')
-    script(src='/assets/js/jquery.slimscroll.js')
-    script(src='/assets/js/jquery.blockUI.js')
-    script(src='/assets/js/waves.js')
-    script(src='/assets/js/wow.min.js')
-    script(src='/assets/js/jquery.nicescroll.js')
-    script(src='/assets/js/jquery.scrollTo.min.js')
-    script(src='/plugins/switchery/switchery.min.js')
-    script(src='/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js')
-    script(type='text/javascript', src='/plugins/multiselect/js/jquery.multi-select.js')
-    script(type='text/javascript', src='/plugins/jquery-quicksearch/jquery.quicksearch.js')
-    script(src='/plugins/select2/select2.min.js', type='text/javascript')
-    script(src='/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js', type='text/javascript')
-    script(src='/plugins/bootstrap-inputmask/bootstrap-inputmask.min.js', type='text/javascript')
-    script(src='/assets/js/jquery.core.js')
-    script(src='/assets/js/jquery.app.js')
-    script(src='/vendor/jquery/jquery.min.js')
-
 
 block content
       // ==============================================================
@@ -66,7 +17,7 @@ block content
                     li
                       a(href='#') Home
                     li
-                      a(href='#') 문의 및 담당자
+                      a(href='/incident') 문의 및 담당자
                     li.active 처리진행현황
                   h4.page-title 처리진행현황 상세보기
             // start Search Area
@@ -78,12 +29,12 @@ block content
                     span.pull-right
                       button.btn.btn-success.waves-effect.waves-light.m-b-5(type='button') 진행
                     h4.m-t-0
-                      b 중국에서 발송한 메일 확인 요청 
+                      b #{incident.title}
                     hr
                     .media
                       span.pull-right
-                        h4.text-right.m-0 박선우
-                        span.media-meta.text-muted 2017-09-14 09:23
+                        h4.text-right.m-0 #{incident.request_nm}
+                        span.media-meta.text-muted #{incident.register_date}
                       .media-body
                         h4.m-t-0.text-primary
                           i.md.md-desktop-windows.m-r-10(style='font-size:24px')
@@ -95,21 +46,7 @@ block content
                     hr.m-t-10
                     // start 접수내용
                     p
-                      | 이수그룹 계열사 중 토다이수 가 있습니다.
-                      br
-                      | 토다이수 중국 동관이수에 근무하고 있는 사용자 중 다음과 같은 메일을 수신받았다고 합니다. 
-                      br
-                      br
-                      | 메일 내용은,
-                      br
-                      | 메일 용량을 15G로 업그레이드 하지 않으면, 
-                      br
-                      | 24시간으로 사용 금지되며, 모든 연락처와 메일이 삭제된다는 내용(?) 이라고 합니다.
-                      br
-                      br
-                      | 어떤 조치를 해야할 지...검토 부탁드립니다. 
-                      br
-                      | 사용자 계정 : 임유현 < sky4922@isu.co.kr >
+                      | #{incident.content}
                   .row
                     .col-lg-12
                       .card-box.bg-muted
@@ -155,24 +92,13 @@ block content
                   .row
                     .col-sm-12
                       .card-box.m-t-10(style='border:1px solid #3bafda')
-                        span.media-meta.pull-right.text-muted 2017-09-14 09:23
+                        span.media-meta.pull-right.text-muted #{incident.complete_date}
                         h4.m-t-0.text-primary
                           i.md.md-sms.m-r-10(style='font-size:24px')
                           b 조치내용
                         hr
                         p
-                          | 안녕하세요. 이수시스템 박선우입니다. 
-                          br
-                          br
-                          | 외부에서 수신된 정상 메일이기 때문에 특별히 조치를 사항이 없습니다. 
-                          br
-                          br
-                          | 한번 더 확인해 주시고 연락 주시기로 하셨습니다.
-                          br
-                          br
-                          | 추가 문의사항 발생 시, 고객센터로 문의 바랍니다. 감사합니다.
-                          br
-                          br
+                          | #{incident.complete_content}
                         hr
                         .widget-user(style='min-height:0;')
                           div
@@ -180,7 +106,7 @@ block content
                             .wid-u-info
                               small.text-primary
                                 b 담당자
-                              h4.m-t-5.m-b-5 전략사업팀 박선우 대리
+                              h4.m-t-5.m-b-5 #{incident.manager_company_nm} #{incident.manager_nm}
                               p.text-muted.m-b-5.font-13
                                 i.md.md-mail.m-r-5
                                 |  psw@isu.co.kr

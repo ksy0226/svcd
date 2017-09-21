@@ -73,7 +73,7 @@ module.exports = {
         */
 
 
-        Incident.find({}, function(err, incident) {
+        Incident.find({}, function (err, incident) {
             //logger.debug('err', err, '\n');
             logger.debug('list 호출');
             if (err) {
@@ -92,9 +92,8 @@ module.exports = {
      * incident 등록 화면
      */
     new: (req, res, next) => {
-
         async.waterfall([function (callback) {
-            CompanyProcess.find({"company_cd":req.session.company_cd},function(err, companyProcess) {
+            CompanyProcess.find({ "company_cd": req.session.company_cd }, function (err, companyProcess) {
                 logger.debug('CompanyProcess.find');
                 if (err) {
                     res.render("http/500", {
@@ -122,30 +121,30 @@ module.exports = {
     */
     save: (req, res, next) => {
         var newincident = req.body.incident;
-        if(req.files){
+        if (req.files) {
             newincident.attach_file = req.files;
         }
-        logger.debug("newincident = ",newincident);
-        ManagerTask.create({"com_cd":"SAP","higher_cd":"접수대기","lower_cd":"접수대기"}, function(err, incident) {
+        logger.debug("newincident = ", newincident);
+        ManagerTask.create({ "com_cd": "SAP", "higher_cd": "접수대기", "lower_cd": "접수대기" }, function (err, incident) {
             if (err) {
                 res.render("http/500", {
                     err: err
                 });
-            }else{
+            } else {
                 res.render("incident", {
                     incident: newincident
-                });                
+                });
             }
         });
-        Incident.create(newincident, function(err, incident) {
+        Incident.create(newincident, function (err, incident) {
             if (err) {
                 res.render("http/500", {
                     err: err
                 });
-            }else{
+            } else {
                 res.render("incident", {
                     incident: newincident
-                });                
+                });
             }
         });
     },
@@ -199,10 +198,26 @@ module.exports = {
             res.redirect('/incident');
         });
     },
+
     /** 
-     * incident 등록 화면
+     * incident 상세 화면 조회
      */
     viewDetail: (req, res, next) => {
-        res.render("incident/viewDetail");
+        logger.debug("Trace viewDetail : ", req.params.id);
+        Incident.findById({
+            _id: req.params.id
+        }, function (err, incident) {
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: err
+                });
+            } else {
+                res.render("incident/viewDetail", {
+                    incident: incident,
+                    user: req.user
+                });
+            }
+        });
     },
 };
