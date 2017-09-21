@@ -1,11 +1,9 @@
 extends ../layouts/default
 block head 
     script(type='text/javascript').
-        $(document).ready(function() { 
-            $('#user_flag').val('#{usermanage.user_flag}');
-            $('#group_flag').val('#{usermanage.group_flag}');
-        });
-
+        var usermanageObj = !{JSON.stringify(usermanage).replace(/<\//g, '<\\/')};
+    script(src='/isu/js/usermanage/index.js')
+    
     // postcode
     script(src='/isu/js/postcode.js')
     // http
@@ -44,7 +42,7 @@ block content
                                             .col-xs-12.col-sm-12.col-md-12
                                                 // Your awesome content goes here
                                                 .m-b-30
-                                                    .form-group
+                                                    .form-group(style='display:none')
                                                         label.col-sm-2.control-label 회사코드
                                                         .col-sm-9
                                                             input.form-control(name='usermanage[company_cd]' type='text' required value='#{usermanage.company_cd}' disabled)
