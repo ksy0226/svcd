@@ -1,12 +1,5 @@
 'use strict';
 
-$(document).ready(function() { 
-    //edit.jade
-    $('#user_flag').val(usermanageObj.user_flag);
-    $('#group_flag').val(usermanageObj.group_flag);
-});
-
-//new.jade
 function companyCd(){
     //선택된 회사 인덱스 값
     var sIdx = $('#company_cd option').index($('#company_cd option:selected'));
