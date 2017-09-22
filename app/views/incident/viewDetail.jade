@@ -27,7 +27,7 @@ block content
                   .m-b-30
                     // Right Sidebar
                     span.pull-right
-                      button.btn.btn-success.waves-effect.waves-light.m-b-5(type='button') 진행
+                      button.btn.btn-success.waves-effect.waves-light.m-b-5(type='button') #{incident.status_nm}
                     h4.m-t-0
                       b #{incident.title}
                     hr
@@ -47,13 +47,15 @@ block content
                     // start 접수내용
                     p
                       | #{incident.content}
+                  // 첨부파일 1개 이상일때만 표시
+                  - if (incident.attach_file.length > 0){
                   .row
                     .col-lg-12
                       .card-box.bg-muted
                         h5
                           i.fa.fa-paperclip.m-r-10.m-b-10
-                          |  첨부파일 
-                          b.text-primary 3
+                          | 첨부파일 
+                          b.text-primary #{incident.attach_file.length}
                           | 개
                         // start : text 형식 첨부파일 영역
                         p.m-b-5.font-13
@@ -75,7 +77,7 @@ block content
                         hr
                         p.text-muted.font-13
                           | 이미지 미리보기 ( 
-                          b.text-primary 3
+                          b.text-primary #{incident.attach_file.length}
                           | 개의 이미지가 있습니다. )
                         .row
                           .col-sm-2.col-xs-4
@@ -87,12 +89,14 @@ block content
                           .col-sm-2.col-xs-4
                             a(href='#')
                               img.img-thumbnail.img-responsive(src='/assets/images/small/img3.jpg', alt='attachment')
+                              <img src="/uploads/<%=product.thumbnail%>" style="max-width: 100%"/>
                         // end 접수내용
+                  - }
                   // start 조치내용
                   .row
                     .col-sm-12
                       .card-box.m-t-10(style='border:1px solid #3bafda')
-                        span.media-meta.pull-right.text-muted #{incident.complete_date}
+                        span.media-meta.pull-right.text-muted #{incident.request_complete_date}
                         h4.m-t-0.text-primary
                           i.md.md-sms.m-r-10(style='font-size:24px')
                           b 조치내용
@@ -106,10 +110,10 @@ block content
                             .wid-u-info
                               small.text-primary
                                 b 담당자
-                              h4.m-t-5.m-b-5 #{incident.manager_company_nm} #{incident.manager_nm}
+                              h4.m-t-5.m-b-5 #{incident.manager_dept} #{incident.manager_nm} #{incident.manager_position}
                               p.text-muted.m-b-5.font-13
                                 i.md.md-mail.m-r-5
-                                |  psw@isu.co.kr
+                                |  #{incident.manager_email}
                 // end 조치내용
                 // start 평가
                 .row
