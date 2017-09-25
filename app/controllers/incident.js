@@ -16,64 +16,8 @@ module.exports = {
      */
 
     index: (req, res, next) => {
-        /*
-        async.waterfall([function (callback) {
-            CompanyProcess.find({"company_cd":req.session.company_cd},function(err, companyProcess) {
-                logger.debug('CompanyProcess.find');
-                if (err) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                }
-                logger.debug('companyProcess1 : ', companyProcess);
-                callback(null, companyProcess)
-            });
-        }, function (err, companyProcess) {
-            logger.debug("companyProcess :::" + companyProcess);
-            Incident.find({}, function(err, incident) {
-                if (err) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                }    
-                callback(null, incident)
-            });
-
-        }], function (err, incident) {
-            logger.debug("incident :::" + incident);
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            }
-            res.render("question/index", {
-                incident: incident
-            });
-        });*/
-        /*
-        async.waterfall([function (callback) {
-            Incident.find({}, function (err, incident) {
-                if (err) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                }
-                callback(null, incident)
-            });
-        }], function (err, incident) {
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            }
-            res.render("incident/", {
-                incident: incident
-            });
-        });
-        */
-
-
-        Incident.find({}, function (err, incident) {
+        console.log('req.params.searchText : ' + req.query.searchText);
+        Incident.find(req.query.searchText, function (err, incident) {
             //logger.debug('err', err, '\n');
             logger.debug('list 호출');
             if (err) {
@@ -219,5 +163,7 @@ module.exports = {
                 });
             }
         });
-    },
+    }
+
+    
 };

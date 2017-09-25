@@ -60,13 +60,15 @@ block head
         var inCnt = 3;
         var	dataObj = null;
         var addlist = "";
-        
 
         $(document).ready(function () {
             dataObj= incidentObj;
             $('#moreView').on('click',function(){
                 moreView();
             });
+
+        
+            
         });
         
         function moreView(){
@@ -78,12 +80,10 @@ block head
                     dataCnt = dataObj.length;
                 } 
             }
-            
+
             for(var i=rowIdx ; i < dataCnt ; i++){
-                alert("rowIdx "+rowIdx);
-                alert("dataCnt "+dataCnt);
                 var addList = "";
-                addList += "<div class='col-lg-12'>";
+                addList += "                <div class='col-lg-12'>";
                 addList += "					<div class='card-box'>";
                 addList += "						<div class='forum-container'>";
                 addList += "							<div class='forum-item'>";
@@ -102,7 +102,7 @@ block head
                 addList += "									</div>";
                 addList += "									<div class='col-md-12'>";
                 addList += "										<div class='forum-content truncate1 fh-60' style='word-wrap: break-word;'>";
-                addList += "											<a href='/incident/viewDetail'></a>";
+                addList += "											<a href='/incident/viewDetail'>"+dataObj[i].content+"</a>";
                 addList += "										</div>";
                 addList += "										<a href='/incident/viewDetail' class='text-muted text-more'>더보기</a>";
                 addList += "										<div class='forum-level'>";
@@ -131,14 +131,12 @@ block head
                 rowIdx++;
             }
             $("#more_view").remove();
-            $('#more_list').append("<div class='col-lg-12'><div class='card-box'></div></div>");  
-     
+            $('#more_list').append("<div class='col-lg-12'><div class='card-box'><p><a class='text-muted text-more' id='moreView' onclick='javascript:moreView();' >더보기</a></p></div></div>");  
+            
         }
-
-.col-lg-12
-                        .card-box
-                            p
-                                a.text-muted.text-more(id='moreView') 더보기
+        function doView(){
+           document.form.submit();
+        }
 
 block content
     // ==============================================================
@@ -167,7 +165,7 @@ block content
                                 .form-group
                                     label.col-sm-2.control-label 진행구분
                                     .col-sm-2
-                                        select.form-control
+                                        select.form-control(id='status_nm' namd='incident[status_nm]' onchange="doView()")
                                             option(value='접수대기') 접수대기
                                             option(value='처리중') 처리중
                                             option(value='미평가') 미평가
@@ -186,7 +184,7 @@ block content
                                 .form-group.m-b-0
                                     label.col-sm-2.control-label 제목
                                     .col-sm-8
-                                        input.form-control(type='text')
+                                        input.form-control(type='text' id='searchText' name='searchText')
                                     .col-sm-2
                                         button.btn.btn-primary(type='button')
                                             | 조회 
@@ -209,17 +207,20 @@ block content
                                             .forum-sub-title
                                                 span.text-primary
                                                     b #{incident[i].manager_nm}
-                                                    | #{incident[i].receipt_date}   //날짜 처리 필요함
+                                                    | #{incident[i].receipt_date}   
                                                 span.p-w-xs
-                                            a.forum-item-title(href='/incident/viewDetail')
+                                            //a.forum-item-title(href='/incident/viewDetail')
+                                            a.forum-item-title(onclick="onclick=location.href='/incident/viewDetail/#{incident[i]._id}'")
                                                 i.md.md-desktop-windows
                                                 | #{incident[i].title}
                                                 
                                         .col-md-12
                                             .forum-content.truncate1.fh-60
-                                                a(href='/incident/viewDetail')
+                                                //a(href='/incident/viewDetail')
+                                                a(onclick="onclick=location.href='/incident/viewDetail/#{incident[i]._id}'")
                                                     | #{incident[i].content}
-                                            a.text-muted.text-more(href='/incident/viewDetail') 더보기
+                                            //a.text-muted.text-more(href='/incident/viewDetail') 더보기
+                                            a.text-muted.text-more(onclick="onclick=location.href='/incident/viewDetail/#{incident[i]._id}'") 더보기
                                             .forum-level
                                                 p.text-muted.font-13
                                                     b 서비스 만족도:
