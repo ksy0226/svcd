@@ -16,8 +16,10 @@ module.exports = {
      */
 
     index: (req, res, next) => {
-        console.log('req.params.searchText : ' + req.query.searchText);
-        Incident.find(req.query.searchText, function (err, incident) {
+        console.log('req.query.searchText : ' + req.query.searchText);
+        var searchKey = req.query.searchText;
+
+        Incident.find( { title: {$regex: new RegExp(searchKey, "ig")}}, function (err, incident) {
             //logger.debug('err', err, '\n');
             logger.debug('list 호출');
             if (err) {
@@ -27,10 +29,12 @@ module.exports = {
             }
             res.render("incident/index", {
                 incident: incident
+                //,searchText : req.query.searchText
             });
         }).sort('-register_date');
 
     },
+
 
     /** 
      * incident 등록 화면
