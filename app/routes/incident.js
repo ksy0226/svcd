@@ -8,7 +8,7 @@ const upload = require('../util/multer');
 
 const controller = require('../controllers/incident');
 
-Wrouter.route('/').get(ssc.sessionCheck, controller.index);
+router.route('/').get(ssc.sessionCheck, controller.index);
 //                 .post(controller.index);
 //router.route('/:searchType/:searchText').get(controller.index);
 router.get('/new/:title', ssc.sessionCheck, controller.new)
