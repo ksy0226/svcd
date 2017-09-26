@@ -16,23 +16,35 @@ module.exports = {
      */
 
     index: (req, res, next) => {
-        console.log('req.query.searchText : ' + req.query.searchText);
-        var searchKey = req.query.searchText;
-
-        Incident.find( { title: {$regex: new RegExp(searchKey, "ig")}}, function (err, incident) {
-            //logger.debug('err', err, '\n');
-            logger.debug('list 호출');
+        logger.debug('req.query.searchText : ' + req.query.searchText);
+        
+        var search = service.createSearch(req);
+        console.log("search" + search);
+       
+        async.waterfall([function (callback) {
+            if (search.findIncident && !search.findIncident.$or) return callback(null, []);
+            console.log("search.findIncident" + search.findIncident);
+            Incident.find(search.findIncident, function (err, incident) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null, incident)
+            });
+        }], function (err, incident) {
             if (err) {
                 res.render("http/500", {
                     err: err
                 });
             }
             res.render("incident/index", {
-                incident: incident
-                //,searchText : req.query.searchText
+                incident: incident,
+                searchType: req.query.searchType,
+                searchText: req.query.searchText,
+                status_nm: req.query.status_nm
             });
-        }).sort('-register_date');
-
+        });
     },
 
 

@@ -6,9 +6,12 @@
     var inCnt = 3;
     var	dataObj = null;
     var addlist = "";
-
+  
     $(document).ready(function () {
         dataObj= incidentObj;
+
+        $('#searchType').val("title,content");
+        //$('#status_nm').val("접수대기");
 
         //더보기 클릭 시
         $('#moreView').on('click',function(){
@@ -25,19 +28,19 @@
          $('#status_nm').on('change',function(){
             var status_nmVal = $('#status_nm').val();
             $('#status_nm').val(status_nmVal);
-
         });
+
+
     });
     
 
-    function search(searchType) {
-      //var query={{'searchType':searchType},{'searchText':$('#searchText').val()}}
-      //var url = '/question/' + query;
-      //var url = '/question?searchType=' + searchType + '&searchText=' + $('#searchText').val();
-      var url = '/incident?searchType=' + searchType + '&searchText=' + encodeURIComponent($('#searchText').val());
-      //alert(url);
+    function search() {
+      var url = '/incident?searchType=' + $('#searchType').val() + '&status_nm=' + $('#status_nm').val() + '&searchText=' + $('#searchText').val();
+      alert(url);
       $(location).attr('href', url);
     }
+
+
 
     function moreView(){
         //alert("dataObj.length"+dataObj.length); //303

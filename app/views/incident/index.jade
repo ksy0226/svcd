@@ -51,7 +51,8 @@ block head
     script(type='text/javascript').
         //객체값을 javascript에 매핑
         var incidentObj = !{JSON.stringify(incident).replace(/<\//g, '<\\/')};
-        
+
+
     script(src='/isu/js/incident/index.js')
 
 
@@ -82,7 +83,7 @@ block content
                                 .form-group
                                     label.col-sm-2.control-label 진행구분
                                     .col-sm-2
-                                        select.form-control(id='status_nm' name='status_nm' value='#{incident.status_nm}')
+                                        select.form-control(id='status_nm' name='status_nm' )
                                             option(value='접수대기') 접수대기
                                             option(value='처리중') 처리중
                                             option(value='미평가') 미평가
@@ -106,7 +107,7 @@ block content
                                             option(value='title') 제목
                                             option(value='content') 내용
                                     .col-sm-6
-                                        input.form-control(type='text' id='searchText' name='searchText')
+                                        input.form-control(type='text' id='searchText' name='searchText' value=searchText )
                                     .col-sm-2
                                         button.btn.btn-primary(type='button' onclick='search()')
                                             | 조회 
