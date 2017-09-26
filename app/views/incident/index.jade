@@ -52,92 +52,8 @@ block head
         //객체값을 javascript에 매핑
         var incidentObj = !{JSON.stringify(incident).replace(/<\//g, '<\\/')};
         
-    //script(src='/isu/js/incident/index.js')
-    
-    script(type='text/javascript').
-        var	dataCnt = 0;
-        var	rowIdx = 3;
-        var inCnt = 3;
-        var	dataObj = null;
-        var addlist = "";
+    script(src='/isu/js/incident/index.js')
 
-        $(document).ready(function () {
-            dataObj= incidentObj;
-            $('#moreView').on('click',function(){
-                moreView();
-            });
-
-        
-            
-        });
-        
-        function moreView(){
-            //alert("dataObj.length"+dataObj.length); //303
-            if(rowIdx < dataObj.length){
-                if((rowIdx+inCnt) < dataObj.length){
-                    dataCnt = rowIdx + inCnt;
-                }else{
-                    dataCnt = dataObj.length;
-                } 
-            }
-
-
-            for(var i=rowIdx ; i < dataCnt ; i++){
-                var addList = "";
-                addList += "                <div class='col-lg-12'>";
-                addList += "					<div class='card-box'>";
-                addList += "						<div class='forum-container'>";
-                addList += "							<div class='forum-item'>";
-                addList += "								<div class='row'>";
-                addList += "									<div class='col-md-1 forum-info'>";
-                addList += "										<span class='btn-outline outline-pink'>접수</span>";
-                addList += "									</div>";
-                addList += "									<div class='col-md-11'>";
-                addList += "										<div class='forum-sub-title'>";
-                addList += "											<span class='text-primary'><b>"+dataObj[i].manager_nm+"</b></span>";
-                addList += "											<span class='p-w-xs'></span>";
-                addList += "										</div>";
-                addList += "										<a href='/incident/viewDetail' class='forum-item-title'>";
-                addList += "											<i class='md md-desktop-windows'></i>"+dataObj[i].title+"";
-                addList += "										</a>";
-                addList += "									</div>";
-                addList += "									<div class='col-md-12'>";
-                addList += "										<div class='forum-content truncate1 fh-60' style='word-wrap: break-word;'>";
-                addList += "											<a href='/incident/viewDetail'>"+dataObj[i].content+"</a>";
-                addList += "										</div>";
-                addList += "										<a href='/incident/viewDetail' class='text-muted text-more'>더보기</a>";
-                addList += "										<div class='forum-level'>";
-                addList += "											<p class='text-muted font-13'><b>서비스 만족도:</b>";
-                addList += "											    <span class='m-l-15'>";
-                addList += "												    <i class='md md-star text-warning'></i>";
-                addList += "												    <i class='md md-star text-warning'></i>";
-                addList += "												    <i class='md md-star text-warning'></i>";
-                addList += "												    <i class='md md-star text-warning'></i>";
-                addList += "												    <i class='md md-star text-muted'></i>";
-                addList += "												</span>";
-                addList += "											</p>";
-                addList += "											<p></p>";
-                addList += "										</div>";
-                addList += "									</div>";
-                addList += "								</div>";
-                addList += "							</div>";
-                addList += "						</div>";
-                addList += "					</div>";
-                addList += "				</div>";
-
-                //alert("addList : " + addList);
-                
-                $("#more_list").append(addList);
-                
-                rowIdx++;
-            }
-            $("#more_view").remove();
-            if(i!= rowIdx){
-                $('#more_list').append("<div class='col-lg-12'><div class='card-box'><p><a class='text-muted text-more' id='moreView' onclick='javascript:moreView();' >더보기</a></p></div></div>");  
-            }else{
-                $('#more_list').append("<div class='col-lg-12'><div class='card-box'><p><a class='text-muted text-more'>더이상 데이터가 없습니다.</a></p></div></div>");  
-            }
-        }
 
 block content
     // ==============================================================
@@ -166,7 +82,7 @@ block content
                                 .form-group
                                     label.col-sm-2.control-label 진행구분
                                     .col-sm-2
-                                        select.form-control(id='status_nm' namd='incident[status_nm]' onchange="doView()")
+                                        select.form-control(id='status_nm' name='status_nm' value='#{incident.status_nm}')
                                             option(value='접수대기') 접수대기
                                             option(value='처리중') 처리중
                                             option(value='미평가') 미평가
@@ -183,11 +99,16 @@ block content
                                             option 최근1년
                                             option 전체검색
                                 .form-group.m-b-0
-                                    label.col-sm-2.control-label 제목
-                                    .col-sm-8
+                                    label.col-sm-2.control-label
+                                    .col-sm-2
+                                        select.form-control(id='searchType' name='searchType')
+                                            option(value='title,content') 제목+내용
+                                            option(value='title') 제목
+                                            option(value='content') 내용
+                                    .col-sm-6
                                         input.form-control(type='text' id='searchText' name='searchText')
                                     .col-sm-2
-                                        button.btn.btn-primary(type='button')
+                                        button.btn.btn-primary(type='button' onclick='search()')
                                             | 조회 
                                             i.fa.fa-search.m-l-5
                 // end Search Area
@@ -242,7 +163,7 @@ block content
                     .col-lg-12
                         .card-box
                             p
-                                a.text-muted.text-more(id='moreView') 더보기
+                                a.text-muted.text-more(id='moreView') 더보기 >>>
                 #more_list.row
 
               

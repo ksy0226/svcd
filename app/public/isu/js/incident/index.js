@@ -9,14 +9,36 @@
 
     $(document).ready(function () {
         dataObj= incidentObj;
+
+        //더보기 클릭 시
         $('#moreView').on('click',function(){
             moreView();
         });
 
-    
-        
+        //제목+본문 검색 시
+        $('#searchType').on('change',function(){
+            var searchTypeVal = $('#searchType').val();
+            $('#searchType').val(searchTypeVal);
+        });
+
+        //처리구분 변경 시
+         $('#status_nm').on('change',function(){
+            var status_nmVal = $('#status_nm').val();
+            $('#status_nm').val(status_nmVal);
+
+        });
     });
     
+
+    function search(searchType) {
+      //var query={{'searchType':searchType},{'searchText':$('#searchText').val()}}
+      //var url = '/question/' + query;
+      //var url = '/question?searchType=' + searchType + '&searchText=' + $('#searchText').val();
+      var url = '/incident?searchType=' + searchType + '&searchText=' + encodeURIComponent($('#searchText').val());
+      //alert(url);
+      $(location).attr('href', url);
+    }
+
     function moreView(){
         //alert("dataObj.length"+dataObj.length); //303
         if(rowIdx < dataObj.length){
@@ -26,6 +48,7 @@
                 dataCnt = dataObj.length;
             } 
         }
+        
 
 
         for(var i=rowIdx ; i < dataCnt ; i++){
@@ -78,9 +101,11 @@
             rowIdx++;
         }
         $("#more_view").remove();
-        //if(i!= dataCnt){
-            $('#more_list').append("<div class='col-lg-12'><div class='card-box'><p><a class='text-muted text-more' id='moreView' onclick='javascript:moreView();' >더보기</a></p></div></div>");  
-        //}else{
-        //$('#more_list').append("<div class='col-lg-12'><div class='card-box'><p><a class='text-muted text-more'>더이상 데이터가 없습니다.</a></p></div></div>");  
-        //}
+        
+        //총 데이터보다 적을 때
+        if(rowIdx < dataObj.length){
+            $("#more_list").append("<div class='col-lg-12'><div class='card-box'><p><a class='text-muted text-more' id='moreView' onclick='javascript:moreView();' >더보기 >>> </a></p></div></div>");  
+        }else{
+            $("#more_list").append("<div class='col-lg-12'><div class='card-box'><p><a class='text-muted text-more'> 더이상 데이터가 없습니다.</a></p></div></div>");  
+        }
     }
