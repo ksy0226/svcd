@@ -31,6 +31,9 @@ var IncidentSchema = new Schema({
     manager_company_nm      : {type : String},  //담당자 회사명                                                                          
     manager_sabun           : {type : String},  //담당자 사번
     manager_nm              : {type : String},  //담당자 명                                                                       
+    manager_dept            : {type : String},  //담당자 부서
+    manager_position        : {type : String},  //담당자 직위
+    manager_email           : {type : String},  //담당자 이메일
     receipt_date            : {type : Date},    //접수일                                                                          
     business_level          : {type : String},  //난이도                                                                        
     complete_reserve_date   : {type : Date},    //완료예정일                                                                       
