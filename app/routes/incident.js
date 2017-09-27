@@ -20,6 +20,6 @@ router.put('/edit/:id', ssc.sessionCheck, controller.update);
 router.delete('/delete/:id', ssc.sessionCheck, controller.delete);
 
 router.get('/viewDetail/:id', ssc.sessionCheck, controller.viewDetail);
-router.get('/viewDetail/download/:id', ssc.sessionCheck, controller.download);
+router.get('/viewDetail/download/:id/:filename', ssc.sessionCheck, controller.download);
 
 module.exports = router;

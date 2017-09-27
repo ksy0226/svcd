@@ -58,21 +58,15 @@ block content
                           b.text-primary #{incident.attach_file.length}
                           | 개
                         // start : text 형식 첨부파일 영역
+                        - if (incident.attach_file.length > 0) {
+                        - for( var i = 0 ; incident.attach_file.length > i ; i++ ){
                         p.m-b-5.font-13
                           i.ti-save.text-primary.m-r-10
-                          | 20170830_태그.png 
-                          span.text-muted.m-l-10 (102.06KB)
-                          a.m-l-10(href='#') 저장
-                        p.m-b-5.font-13
-                          i.ti-save.text-primary.m-r-10
-                          | 20170830_태그.png 
-                          span.text-muted.m-l-10 (102.06KB)
-                          a.m-l-10(href='#') 저장
-                        p.m-b-5.font-13
-                          i.ti-email.text-success.m-r-10
-                          | RE FWD Mailbox sky4922 isu.co.kr Warning-20170913163847.eml 
-                          span.text-muted.m-l-10 (102.06KB)
-                          a.m-l-10(href='#') 저장
+                          | #{incident.attach_file[i].filename}
+                          span.text-muted.m-l-10 (???.06KB)
+                          a.m-l-10(href='/incident/viewDetail/download/#{incident._id}/#{incident.attach_file[i].filename}') 저장
+                        - }
+                        - }
                         // end : text 형식 첨부파일 영역
                         hr
                         p.text-muted.font-13
@@ -80,15 +74,13 @@ block content
                           b.text-primary #{incident.attach_file.length}
                           | 개의 이미지가 있습니다. )
                         .row
+                          - if (incident.attach_file.length > 0) {
+                          - for( var i = 0 ; incident.attach_file.length > i ; i++ ){
                           .col-sm-2.col-xs-4
-                            a(href='/incident/viewDetail/download/#{incident._id}')
-                              img.img-thumbnail.img-responsive(src='../../../upload-file/20170926/incid-1506405075737.pdf', alt='incid-1506405075737')
-                          .col-sm-2.col-xs-4
-                            a(href='#')
-                              img.img-thumbnail.img-responsive(src='/assets/images/small/img2.jpg', alt='attachment')
-                          .col-sm-2.col-xs-4
-                            a(href='#')
-                              img.img-thumbnail.img-responsive(src='/assets/images/small/img3.jpg', alt='attachment')
+                            a(href='/incident/viewDetail/download/#{incident._id}/#{incident.attach_file[i].filename}')
+                              img.img-thumbnail.img-responsive(src='/#{incident._id}/#{incident.attach_file[i].filename}', alt='#{incident.attach_file[i].filename}')
+                          - }
+                          - }
                         // end 접수내용
                   - }
                   // start 조치내용

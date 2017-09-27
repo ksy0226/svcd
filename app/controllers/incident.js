@@ -218,8 +218,9 @@ module.exports = {
         Incident.findById({
             _id: req.params.id
         }, function (err, incident) {
-            var filename = req.params.id
-            var filepath = __dirname + "/../../upload-file/20170926/incid-1506405075737.pdf";
+            var fileid = req.params.id;
+            var filename = req.params.filename;
+            var filepath = __dirname + "/../../upload-file/" + fileid + "/" + filename;
             res.download(filepath);
         });
     }
