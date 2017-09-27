@@ -10,7 +10,7 @@ const controller = require('../controllers/incident');
 
 router.route('/').get(ssc.sessionCheck, controller.index);
 //                 .post(controller.index);
-//router.route('/:searchType/:searchText').get(controller.index);
+router.route('/:searchType/:searchText').get(controller.index);
 router.get('/new/:title', ssc.sessionCheck, controller.new)
 router.post('/new', upload.array('incident[attach-file]'), ssc.sessionCheck, controller.save);
 //router.get('/show/:id', ssc.sessionCheck, controller.show);

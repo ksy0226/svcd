@@ -16,43 +16,15 @@ module.exports = {
      */
 
     index: (req, res, next) => {
-        /*
+        logger.debug('req.query.searchText : ' + req.query.searchText);
+        
+        var search = service.createSearch(req);
+        console.log("search" + search);
+       
         async.waterfall([function (callback) {
-            CompanyProcess.find({"company_cd":req.session.company_cd},function(err, companyProcess) {
-                logger.debug('CompanyProcess.find');
-                if (err) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                }
-                logger.debug('companyProcess1 : ', companyProcess);
-                callback(null, companyProcess)
-            });
-        }, function (err, companyProcess) {
-            logger.debug("companyProcess :::" + companyProcess);
-            Incident.find({}, function(err, incident) {
-                if (err) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                }    
-                callback(null, incident)
-            });
-
-        }], function (err, incident) {
-            logger.debug("incident :::" + incident);
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            }
-            res.render("question/index", {
-                incident: incident
-            });
-        });*/
-        /*
-        async.waterfall([function (callback) {
-            Incident.find({}, function (err, incident) {
+            if (search.findIncident && !search.findIncident.$or) return callback(null, []);
+            console.log("search.findIncident" + search.findIncident);
+            Incident.find(search.findIncident, function (err, incident) {
                 if (err) {
                     res.render("http/500", {
                         err: err
@@ -61,32 +33,20 @@ module.exports = {
                 callback(null, incident)
             });
         }], function (err, incident) {
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            }
-            res.render("incident/", {
-                incident: incident
-            });
-        });
-        */
-
-
-        Incident.find({}, function (err, incident) {
-            //logger.debug('err', err, '\n');
-            logger.debug('list 호출');
             if (err) {
                 res.render("http/500", {
                     err: err
                 });
             }
             res.render("incident/index", {
-                incident: incident
+                incident: incident,
+                searchType: req.query.searchType,
+                searchText: req.query.searchText,
+                status_nm: req.query.status_nm
             });
-        }).sort('-register_date');
-
+        });
     },
+
 
     /** 
      * incident 등록 화면
@@ -209,6 +169,8 @@ module.exports = {
             }
         });
     },
+
+    
 
     /** 
      * incident 첨부파일 다운로드

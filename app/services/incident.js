@@ -11,14 +11,23 @@ module.exports = {
     createSearch: (req) => {
         logger.debug('searchType : ' + req.query.searchType);
         logger.debug('searchText : ' + encodeURIComponent(req.query.searchText));
+        console.log('status_nm : ' + req.query.status_nm);
+        console.log('searchType : ' + req.query.searchType);
+        console.log('searchText : ' + encodeURIComponent(req.query.searchText));
 
         var findIncident = {},
             findUser = null,
             highlight = {};
+        var incidentQueries = [];  
+
         if (req.query.searchType && req.query.searchText) {
+            console.log("1");
             var searchTypes = req.query.searchType.toLowerCase().split(",");
+            var status_nms = req.query.status_nm;
+
+            
             logger.debug('searchTypes : ' + JSON.stringify(searchTypes));
-            var incidentQueries = [];
+            
             if (searchTypes.indexOf("title") >= 0) {
                 incidentQueries.push({
                     title: { $regex : new RegExp(req.query.searchText, "i") }
@@ -33,14 +42,49 @@ module.exports = {
                 logger.debug('incidentQueries : ' + incidentQueries);
                 highlight.content = req.query.searchText;
             }
+            
+            if(status_nms.indexOf("접수대기") >= 0 ){
+                incidentQueries.push({
+                    status_nm:{ $regex : new RegExp(req.query.status_nm, "i") }
+                });
+            }
+            if(status_nms.indexOf("처리중") >= 0 ){
+                incidentQueries.push({
+                    status_nm:{ $regex : new RegExp(req.query.status_nm, "i") }
+                });
+            }
+            if(status_nms.indexOf("미평가") >= 0 ){
+                incidentQueries.push({
+                    status_nm:{ $regex : new RegExp(req.query.status_nm, "i") }
+                });
+            }
+            if(status_nms.indexOf("완료") >= 0 ){
+                incidentQueries.push({
+                    status_nm:{ $regex : new RegExp(req.query.status_nm, "i") }
+                });
+            }
+            if(status_nms.indexOf("보류") >= 0 ){
+                incidentQueries.push({
+                    status_nm:{ $regex : new RegExp(req.query.status_nm, "i") }
+                });
+            }
+
             if (incidentQueries.length > 0) findIncident = {
                 $or: incidentQueries
             };
+        }else{
+            console.log('trace1');
+            incidentQueries.push({
+                status_nm:{ $regex : new RegExp("접수대기", "i") }
+            });
+            
         }
         logger.debug('findIncident : ' + JSON.stringify(findIncident));
+        console.log('findIncident : ' + JSON.stringify(findIncident));
         return {
             searchType: req.query.searchType,
             searchText: req.query.searchText,
+            status_nm: req.query.status_nm,
             findIncident: findIncident,
             findUser: findUser,
             highlight: highlight

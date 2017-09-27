@@ -4,21 +4,13 @@ var autoIncrement = require('mongoose-auto-increment');
 
 var IncidentSchema = new Schema({
     register_num            : {type : Number, require : true},                                                                                                                      
-    status                  : {type : String},  //진행상태(processStatus 모델)  
-    status_nm               : {type : String},  //진행상태명            
+    process_flag            : {type : String},  //진행상태 (1:접수대기,2:처리중,3:미평가,4:완료,5:결재처리중)                
     process_speed           : {type : String},  //긴급구분                                                                   
     course_flag             : {type : String},                                                                           
     title                   : {type : String, required:true, validate : [isEmpty, "제목은 꼭 입력해주세요."] }, //제목                                                             ."] }},
     content                 : {type : String},  //내용                                                                       
-    request_company_cd      : {type : String},  //요청자 회사코드
-    request_company_nm      : {type : String},  //요청자 회사명                                                              
-    request_sabun           : {type : String},  //요청자 사번 
-    request_nm              : {type : String},  //요청자 명                                                               
     request_complete_date   : {type : String},                    
-    register_company_cd     : {type : String},  //등록자 회사코드  
-    register_company_nm     : {type : String},  //등록자 회사명                                                              
-    register_sabun          : {type : String},  //등록자 사번 
-    register_nm             : {type : String},  //등록자 사번                                                                
+    register_nm             : {type : String},  //등록자 사번                                                                   
     register_date           : {type : String},  //등록일                                                                     
     register_yyyy           : {type : String},  //등록년                                                                     
     register_mm             : {type : String},  //등록월
@@ -26,24 +18,9 @@ var IncidentSchema = new Schema({
     real_contact            : {type : String},  //실제요청자 연락처   
     app_menu                : {type : String},  //문의 메뉴 경로                                                                          
     register_dd             : {type : String},  //등록일                                                                     
-    receipt_content         : {type : String},  //등록내용                                                                         
-    manager_company_cd      : {type : String},  //담당자 회사코드
-    manager_company_nm      : {type : String},  //담당자 회사명                                                                          
-    manager_sabun           : {type : String},  //담당자 사번
-    manager_nm              : {type : String},  //담당자 명                                                                       
-    manager_dept            : {type : String},  //담당자 부서
-    manager_position        : {type : String},  //담당자 직위
-    manager_email           : {type : String},  //담당자 이메일
-    receipt_date            : {type : Date},    //접수일                                                                          
-    business_level          : {type : String},  //난이도                                                                        
-    complete_reserve_date   : {type : Date},    //완료예정일                                                                       
-    solution_flag           : {type : String},  //해결여부                                                                           
-    complete_content        : {type : String},  //완료 코멘트                                                                     
     add_complete_content    : {type : String},  //추가 완료 코멘트                                                                         
     program_id              : {type : String},                                                                           
-    delay_reason            : {type : String},  //지연사유                                                                           
-    need_minute             : {type : Number},  //작업시간                                                                         
-    complete_date           : {type : Date},    //완요일                                                                       
+    complete_date           : {type : Date},    //완요일                                                                                                                                             
     valuation               : {type : Number},                                                                           
     reading_cnt             : {type : Number},                                                                           
     complete_open_flag      : {type : String, default : 'N'},  //완료후공개여부                                                                     
@@ -65,9 +42,9 @@ var IncidentSchema = new Schema({
                             filename: {type : String},
                             path: {type : String},
                             size: {type : Number}  }], //첨부이미지
-    createdAt : { type : Date, default : Date.now() },
-    updatedAt : { type : Date },
-    deletedAt : { type : Date }
+    created_at : { type : Date, default : Date.now() },
+    updated_at : { type : Date },
+    deleted_at : { type : Date }
 });
 
 function isEmpty(value){
