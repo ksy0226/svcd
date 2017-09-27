@@ -9,11 +9,8 @@ var IncidentSchema = new Schema({
     course_flag             : {type : String},                                                                           
     title                   : {type : String, required:true, validate : [isEmpty, "제목은 꼭 입력해주세요."] }, //제목                                                             ."] }},
     content                 : {type : String},  //내용                                                                       
-    request_company_cd      : {type : String},  //요청자 회사명                                                              
-    request_sabun           : {type : String},  //요청자 사번                                                                
     request_complete_date   : {type : String},                    
-    register_company_cd     : {type : String},  //등록자 회사명                                                              
-    register_sabun          : {type : String},  //등록자 사번                                                                
+    register_nm             : {type : String},  //등록자 사번                                                                   
     register_date           : {type : String},  //등록일                                                                     
     register_yyyy           : {type : String},  //등록년                                                                     
     register_mm             : {type : String},  //등록월
@@ -21,19 +18,9 @@ var IncidentSchema = new Schema({
     real_contact            : {type : String},  //실제요청자 연락처   
     app_menu                : {type : String},  //문의 메뉴 경로                                                                          
     register_dd             : {type : String},  //등록일                                                                     
-    receipt_content         : {type : String},                                                                           
-    manager_company_cd      : {type : String},                                                                           
-    manager_sabun           : {type : String},                                                                           
-    receipt_date            : {type : Date},                                                                           
-    business_level          : {type : String},                                                                           
-    complete_reserve_date   : {type : Date},                                                                           
-    solution_flag           : {type : String},                                                                           
-    complete_content        : {type : String},                                                                           
-    add_complete_content    : {type : String},                                                                           
+    add_complete_content    : {type : String},  //추가 완료 코멘트                                                                         
     program_id              : {type : String},                                                                           
-    delay_reason            : {type : String},                                                                           
-    need_minute             : {type : Number},                                                                           
-    complete_date           : {type : Date},                                                                           
+    complete_date           : {type : Date},    //완요일                                                                                                                                             
     valuation               : {type : Number},                                                                           
     reading_cnt             : {type : Number},                                                                           
     complete_open_flag      : {type : String, default : 'N'},  //완료후공개여부                                                                     

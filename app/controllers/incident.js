@@ -85,17 +85,6 @@ module.exports = {
             newincident.attach_file = req.files;
         }
         logger.debug("newincident = ", newincident);
-        ManagerTask.create({ "com_cd": "SAP", "higher_cd": "접수대기", "lower_cd": "접수대기" }, function (err, incident) {
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            } else {
-                res.render("incident", {
-                    incident: newincident
-                });
-            }
-        });
         Incident.create(newincident, function (err, incident) {
             if (err) {
                 res.render("http/500", {
@@ -179,7 +168,21 @@ module.exports = {
                 });
             }
         });
-    }
+    },
 
     
+
+    /** 
+     * incident 첨부파일 다운로드
+     */
+    download: (req, res, next) => {
+        logger.debug("Trace download : ", req.params.id);
+        Incident.findById({
+            _id: req.params.id
+        }, function (err, incident) {
+            var filename = req.params.id
+            var filepath = __dirname + "/../../upload-file/20170926/incid-1506405075737.pdf";
+            res.download(filepath);
+        });
+    }
 };
