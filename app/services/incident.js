@@ -18,13 +18,12 @@ module.exports = {
         var findIncident = {},
             findUser = null,
             highlight = {};
-        var incidentQueries = [];  
+        var incidentQueries = []; 
+
 
         if (req.query.searchType && req.query.searchText) {
-            console.log("1");
             var searchTypes = req.query.searchType.toLowerCase().split(",");
             var status_nms = req.query.status_nm;
-
             
             logger.debug('searchTypes : ' + JSON.stringify(searchTypes));
             
@@ -73,14 +72,40 @@ module.exports = {
                 $or: incidentQueries
             };
         }else{
-            console.log('trace1');
-            incidentQueries.push({
-                status_nm:{ $regex : new RegExp("접수대기", "i") }
-            });
+            var searchTypes = req.query.searchType.toLowerCase().split(",");
+            var status_nms = req.query.status_nm;
+
+            req.query.searchText = " ";
+            req.query.searchType = "title,content"
+            req.query.status_nm ="접수대기";
+
+            if (searchTypes.indexOf("title") >= 0) {
+                incidentQueries.push({
+                    title: { $regex : new RegExp(req.query.searchText, "i") }
+                });
+                logger.debug('incidentQueries : ' + JSON.stringify(incidentQueries));
+                highlight.title = req.query.searchText;
+            }
+            if (searchTypes.indexOf("content") >= 0) {
+                incidentQueries.push({
+                    content:{ $regex : new RegExp(req.query.searchText, "i") }
+                });
+                logger.debug('incidentQueries : ' + incidentQueries);
+                highlight.content = req.query.searchText;
+            }
+
+            if(status_nms.indexOf("접수대기") >= 0 ){
+                incidentQueries.push({
+                    status_nm:{ $regex : new RegExp(req.query.status_nm, "i") }
+                });
+            }
+             
+            if (incidentQueries.length > 0) findIncident = {
+                $or: incidentQueries
+            };
             
         }
         logger.debug('findIncident : ' + JSON.stringify(findIncident));
-        console.log('findIncident : ' + JSON.stringify(findIncident));
         return {
             searchType: req.query.searchType,
             searchText: req.query.searchText,

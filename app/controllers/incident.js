@@ -19,11 +19,9 @@ module.exports = {
         logger.debug('req.query.searchText : ' + req.query.searchText);
         
         var search = service.createSearch(req);
-        console.log("search" + search);
        
         async.waterfall([function (callback) {
             if (search.findIncident && !search.findIncident.$or) return callback(null, []);
-            console.log("search.findIncident" + search.findIncident);
             Incident.find(search.findIncident, function (err, incident) {
                 if (err) {
                     res.render("http/500", {
@@ -153,6 +151,7 @@ module.exports = {
      */
     viewDetail: (req, res, next) => {
         logger.debug("Trace viewDetail : ", req.params.id);
+
         Incident.findById({
             _id: req.params.id
         }, function (err, incident) {
