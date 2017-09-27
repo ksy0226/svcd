@@ -16,15 +16,18 @@ module.exports = {
      */
 
     index: (req, res, next) => {
-        logger.debug('req.query.searchText : ' + req.query.searchText);
+        console.log('req.query.searchText : ' + req.query.searchText);
         
         var search = service.createSearch(req);
-        console.log("search" + search);
        
         async.waterfall([function (callback) {
-            if (search.findIncident && !search.findIncident.$or) return callback(null, []);
-            console.log("search.findIncident" + search.findIncident);
+            console.log('search.findIncident : ' , search.findIncident);
+            
+            
+            //if (search.findIncident) return callback(null, []);
             Incident.find(search.findIncident, function (err, incident) {
+                
+                logger.debug('2 : ' , search.findIncident.$or);
                 if (err) {
                     res.render("http/500", {
                         err: err
@@ -153,6 +156,7 @@ module.exports = {
      */
     viewDetail: (req, res, next) => {
         logger.debug("Trace viewDetail : ", req.params.id);
+
         Incident.findById({
             _id: req.params.id
         }, function (err, incident) {

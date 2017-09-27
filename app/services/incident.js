@@ -11,20 +11,16 @@ module.exports = {
     createSearch: (req) => {
         logger.debug('searchType : ' + req.query.searchType);
         logger.debug('searchText : ' + encodeURIComponent(req.query.searchText));
-        console.log('status_nm : ' + req.query.status_nm);
-        console.log('searchType : ' + req.query.searchType);
-        console.log('searchText : ' + encodeURIComponent(req.query.searchText));
 
         var findIncident = {},
             findUser = null,
             highlight = {};
-        var incidentQueries = [];  
+        var incidentQueries = []; 
+
 
         if (req.query.searchType && req.query.searchText) {
-            console.log("1");
             var searchTypes = req.query.searchType.toLowerCase().split(",");
             var status_nms = req.query.status_nm;
-
             
             logger.debug('searchTypes : ' + JSON.stringify(searchTypes));
             
@@ -41,8 +37,12 @@ module.exports = {
                 });
                 logger.debug('incidentQueries : ' + incidentQueries);
                 highlight.content = req.query.searchText;
-            }
-            
+            }   
+            if (incidentQueries.length > 0) findIncident = {
+                $or: incidentQueries
+            };
+
+
             if(status_nms.indexOf("접수대기") >= 0 ){
                 incidentQueries.push({
                     status_nm:{ $regex : new RegExp(req.query.status_nm, "i") }
@@ -70,17 +70,27 @@ module.exports = {
             }
 
             if (incidentQueries.length > 0) findIncident = {
+                $and: incidentQueries
+            };
+
+        }else{
+            
+            var status_nms = "처리중";
+
+            if(status_nms.indexOf("처리중") >= 0 ){
+                incidentQueries.push({
+                    status_nm:status_nms
+                });
+            }
+
+            
+
+            if (incidentQueries.length > 0) findIncident = {
                 $or: incidentQueries
             };
-        }else{
-            console.log('trace1');
-            incidentQueries.push({
-                status_nm:{ $regex : new RegExp("접수대기", "i") }
-            });
-            
+            logger.debug("findIncident",findIncident);
         }
         logger.debug('findIncident : ' + JSON.stringify(findIncident));
-        console.log('findIncident : ' + JSON.stringify(findIncident));
         return {
             searchType: req.query.searchType,
             searchText: req.query.searchText,

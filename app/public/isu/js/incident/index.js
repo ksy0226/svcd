@@ -10,7 +10,7 @@
     $(document).ready(function () {
         dataObj= incidentObj;
 
-        $('#searchType').val("title,content");
+        //$('#searchType').val("title,content");
         //$('#status_nm').val("접수대기");
 
         //더보기 클릭 시
