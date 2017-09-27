@@ -11,9 +11,6 @@ module.exports = {
     createSearch: (req) => {
         logger.debug('searchType : ' + req.query.searchType);
         logger.debug('searchText : ' + encodeURIComponent(req.query.searchText));
-        console.log('status_nm : ' + req.query.status_nm);
-        console.log('searchType : ' + req.query.searchType);
-        console.log('searchText : ' + encodeURIComponent(req.query.searchText));
 
         var findIncident = {},
             findUser = null,
@@ -72,13 +69,18 @@ module.exports = {
                 $or: incidentQueries
             };
         }else{
-            var searchTypes = req.query.searchType.toLowerCase().split(",");
-            var status_nms = req.query.status_nm;
+            
 
             req.query.searchText = " ";
             req.query.searchType = "title,content"
             req.query.status_nm ="접수대기";
-
+            var searchTypes = req.query.searchType.toLowerCase().split(",");
+            var status_nms = req.query.status_nm;
+            if(status_nms.indexOf("접수대기") >= 0 ){
+                incidentQueries.push({
+                    status_nm:{ $regex : new RegExp(req.query.status_nm, "i") }
+                });
+            }
             if (searchTypes.indexOf("title") >= 0) {
                 incidentQueries.push({
                     title: { $regex : new RegExp(req.query.searchText, "i") }
@@ -94,16 +96,11 @@ module.exports = {
                 highlight.content = req.query.searchText;
             }
 
-            if(status_nms.indexOf("접수대기") >= 0 ){
-                incidentQueries.push({
-                    status_nm:{ $regex : new RegExp(req.query.status_nm, "i") }
-                });
-            }
-             
+            
+
             if (incidentQueries.length > 0) findIncident = {
                 $or: incidentQueries
             };
-            
         }
         logger.debug('findIncident : ' + JSON.stringify(findIncident));
         return {
