@@ -18,7 +18,7 @@ module.exports = {
         var incidentQueries = []; 
 
 
-        if (req.query.searchType && req.query.searchText) {
+        if (req.query.searchType || req.query.searchText) {
             var searchTypes = req.query.searchType.toLowerCase().split(",");
             var status_nms = req.query.status_nm;
             
