@@ -18,7 +18,7 @@ module.exports = {
         var incidentQueries = []; 
 
 
-        if (req.query.searchType || req.query.searchText) {
+        if (req.query.searchType && req.query.searchText) {
             var searchTypes = req.query.searchType.toLowerCase().split(",");
             var status_nms = req.query.status_nm;
             
@@ -37,8 +37,12 @@ module.exports = {
                 });
                 logger.debug('incidentQueries : ' + incidentQueries);
                 highlight.content = req.query.searchText;
-            }
-            
+            }   
+            if (incidentQueries.length > 0) findIncident = {
+                $or: incidentQueries
+            };
+
+
             if(status_nms.indexOf("접수대기") >= 0 ){
                 incidentQueries.push({
                     status_nm:{ $regex : new RegExp(req.query.status_nm, "i") }
@@ -66,34 +70,17 @@ module.exports = {
             }
 
             if (incidentQueries.length > 0) findIncident = {
-                $or: incidentQueries
+                $and: incidentQueries
             };
+
         }else{
             
+            var status_nms = "처리중";
 
-            req.query.searchText = " ";
-            req.query.searchType = "title,content"
-            req.query.status_nm ="접수대기";
-            var searchTypes = req.query.searchType.toLowerCase().split(",");
-            var status_nms = req.query.status_nm;
-            if(status_nms.indexOf("접수대기") >= 0 ){
+            if(status_nms.indexOf("처리중") >= 0 ){
                 incidentQueries.push({
-                    status_nm:{ $regex : new RegExp(req.query.status_nm, "i") }
+                    status_nm:status_nms
                 });
-            }
-            if (searchTypes.indexOf("title") >= 0) {
-                incidentQueries.push({
-                    title: { $regex : new RegExp(req.query.searchText, "i") }
-                });
-                logger.debug('incidentQueries : ' + JSON.stringify(incidentQueries));
-                highlight.title = req.query.searchText;
-            }
-            if (searchTypes.indexOf("content") >= 0) {
-                incidentQueries.push({
-                    content:{ $regex : new RegExp(req.query.searchText, "i") }
-                });
-                logger.debug('incidentQueries : ' + incidentQueries);
-                highlight.content = req.query.searchText;
             }
 
             
@@ -101,6 +88,7 @@ module.exports = {
             if (incidentQueries.length > 0) findIncident = {
                 $or: incidentQueries
             };
+            logger.debug("findIncident",findIncident);
         }
         logger.debug('findIncident : ' + JSON.stringify(findIncident));
         return {

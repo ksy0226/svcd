@@ -16,13 +16,18 @@ module.exports = {
      */
 
     index: (req, res, next) => {
-        logger.debug('req.query.searchText : ' + req.query.searchText);
+        console.log('req.query.searchText : ' + req.query.searchText);
         
         var search = service.createSearch(req);
        
         async.waterfall([function (callback) {
-            if (search.findIncident && !search.findIncident.$or) return callback(null, []);
+            console.log('search.findIncident : ' , search.findIncident);
+            
+            
+            //if (search.findIncident) return callback(null, []);
             Incident.find(search.findIncident, function (err, incident) {
+                
+                logger.debug('2 : ' , search.findIncident.$or);
                 if (err) {
                     res.render("http/500", {
                         err: err

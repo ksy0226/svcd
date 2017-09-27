@@ -129,17 +129,17 @@ block content
                                         .col-md-11
                                             .forum-sub-title
                                                 span.text-primary
-                                                    b #{incident[i].manager_nm}
+                                                    b '#{incident[i].manager_nm}'
                                                     | #{incident[i].receipt_date}   
                                                 span.p-w-xs
                                             a.forum-item-title(onclick="onclick=location.href='/incident/viewDetail/#{incident[i]._id}'")
                                                 i.md.md-desktop-windows
-                                                | #{incident[i].title}
+                                                | !{incident[i].title}
                                                 
                                         .col-md-12
                                             .forum-content.truncate1.fh-60
                                                 a(onclick="onclick=location.href='/incident/viewDetail/#{incident[i]._id}'")
-                                                    | #{incident[i].content}
+                                                    | !{incident[i].content}
                                             a.text-muted.text-more(onclick="onclick=location.href='/incident/viewDetail/#{incident[i]._id}'") 더보기
                                             .forum-level
                                                 p.text-muted.font-13
