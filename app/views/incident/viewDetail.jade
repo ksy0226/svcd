@@ -81,15 +81,14 @@ block content
                           | 개의 이미지가 있습니다. )
                         .row
                           .col-sm-2.col-xs-4
-                            a(href='#')
-                              img.img-thumbnail.img-responsive(src='/assets/images/small/img1.jpg', alt='attachment')
+                            a(href='/incident/viewDetail/download/#{incident._id}')
+                              img.img-thumbnail.img-responsive(src='../../../upload-file/20170926/incid-1506405075737.pdf', alt='incid-1506405075737')
                           .col-sm-2.col-xs-4
                             a(href='#')
                               img.img-thumbnail.img-responsive(src='/assets/images/small/img2.jpg', alt='attachment')
                           .col-sm-2.col-xs-4
                             a(href='#')
                               img.img-thumbnail.img-responsive(src='/assets/images/small/img3.jpg', alt='attachment')
-                              <img src="/uploads/<%=product.thumbnail%>" style="max-width: 100%"/>
                         // end 접수내용
                   - }
                   // start 조치내용
