@@ -75,11 +75,13 @@ block content
                                             | 개의 이미지가 있습니다. )
                                         .row
                                             - if (incident.attach_file.length > 0) {
-                                            - for( var i = 0 ; incident.attach_file.length > i ; i++ ){
-                                            .col-sm-2.col-xs-4
-                                                a(href='/incident/download/#{incident.attach_file[i].path}')
-                                                    img.img-thumbnail.img-responsive(src='#{incident.attach_file[i].originalname}', alt='#{incident.attach_file[i].originalname}')
-                                            - }
+                                                - for( var i = 0 ; incident.attach_file.length > i ; i++ ){
+                                                    -if(incident.attach_file[i].mimetype == 'image'){
+                                                        .col-sm-2.col-xs-4
+                                                            a(href='/incident/download/#{incident.attach_file[i].path}')
+                                                                img.img-thumbnail.img-responsive(src='/#{incident.attach_file[i].path}', alt='#{incident.attach_file[i].originalname}')
+                                                    -}
+                                                - }
                                             - }
                                         // end 접수내용
                             - }

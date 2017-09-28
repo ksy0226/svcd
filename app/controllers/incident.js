@@ -173,6 +173,10 @@ module.exports = {
                     for (var i = 0; i < incident.attach_file.length; i++) {
                         var path = incident.attach_file[i].path
                         incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
+                        logger.debug("==========> incident.attach_file[i].mimetype.indexOf('image') ",incident.attach_file[i].mimetype.indexOf('image'));
+                        if(incident.attach_file[i].mimetype.indexOf('image')>-1){
+                            incident.attach_file[i].mimetype = 'image';
+                        }
                     }
                 }
                 logger.debug("*** incident : ", incident.attach_file);
@@ -189,7 +193,7 @@ module.exports = {
      * incident 첨부파일 다운로드
      */
     download: (req, res, next) => {
-        var filepath = path.join(__dirname, CONFIG.fileUpload.directory, req.params.path1, req.params.path2);
+        var filepath = path.join(__dirname, '../../',CONFIG.fileUpload.directory, req.params.path1, req.params.path2);
         res.download(filepath);
     },
 
