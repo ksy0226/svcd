@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const async = require('async');
 const CompanyModel = require('../models/Company');
 const IncidentModel = require('../models/Incident');
+const HigherProcessModel = require('../models/HigherProcess');
 var service = require('../services/search');
 const logger = require('log4js').getLogger('app');
 const Iconv  = require('iconv-lite');
@@ -16,9 +17,9 @@ module.exports = {
         var search = service.createSearch(req);
        
         async.waterfall([function (callback) {
-            console.log('search.findSearch : ' , search.findSearch);
-            console.log('datepicker_rcdValue : ', req.query.datepicker_rcd);
-            console.log('datepicker_rcd2Value : ', req.query.datepicker_rcd2);
+            //console.log('search.findSearch : ' , search.findSearch);
+            //console.log('datepicker_rcdValue : ', req.query.datepicker_rcd);
+            //console.log('datepicker_rcd2Value : ', req.query.datepicker_rcd2);
             
             IncidentModel.find(search.findSearch, function (err, incident) {
                 logger.debug('2 : ' , search.findSearch.$or);
