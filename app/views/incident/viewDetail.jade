@@ -46,7 +46,7 @@ block content
                                 hr.m-t-10
                                 // start 접수내용
                                 p
-                                    | #!{incident.content}
+                                    | !{incident.content}
                             // 첨부파일 1개 이상일때만 표시
                             - if (incident.attach_file.length > 0){
                             .row
@@ -62,9 +62,9 @@ block content
                                         - for( var i = 0 ; incident.attach_file.length > i ; i++ ){
                                         p.m-b-5.font-13
                                             i.ti-save.text-primary.m-r-10
-                                            | #{incident.attach_file[i].filename}
-                                            span.text-muted.m-l-10 (???.06KB)
-                                            a.m-l-10(href='/incident/viewDetail/download/#{incident._id}/#{incident.attach_file[i].filename}') 저장
+                                            | #{incident.attach_file[i].originalname}
+                                            span.text-muted.m-l-10 (#{incident.attach_file[i].size} Byte)
+                                            a.m-l-10(href='/incident/download/#{incident.attach_file[i].path}') 저장
                                         - }
                                         - }
                                         // end : text 형식 첨부파일 영역
@@ -77,8 +77,8 @@ block content
                                             - if (incident.attach_file.length > 0) {
                                             - for( var i = 0 ; incident.attach_file.length > i ; i++ ){
                                             .col-sm-2.col-xs-4
-                                                a(href='/incident/viewDetail/download/#{incident._id}/#{incident.attach_file[i].filename}')
-                                                    img.img-thumbnail.img-responsive(src='/#{incident._id}/#{incident.attach_file[i].filename}', alt='#{incident.attach_file[i].filename}')
+                                                a(href='/incident/download/#{incident.attach_file[i].path}')
+                                                    img.img-thumbnail.img-responsive(src='#{incident.attach_file[i].originalname}', alt='#{incident.attach_file[i].originalname}')
                                             - }
                                             - }
                                         // end 접수내용
@@ -93,7 +93,7 @@ block content
                                             b 조치내용
                                         hr
                                         p
-                                            | #!{incident.complete_content}
+                                            | #{incident.complete_content}
                                         hr
                                         .widget-user(style='min-height:0;')
                                             div
@@ -104,7 +104,7 @@ block content
                                                     h4.m-t-5.m-b-5 #{incident.manager_dept} #{incident.manager_nm} #{incident.manager_position}
                                                     p.text-muted.m-b-5.font-13
                                                         i.md.md-mail.m-r-5
-                                                        |  #{incident.manager_email}
+                                                        | #{incident.manager_email}
                         // end 조치내용
                         // start 평가
                         .row

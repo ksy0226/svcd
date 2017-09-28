@@ -8,6 +8,7 @@ var ProcessStatus = require('../models/ProcessStatus');
 var service = require('../services/incident');
 var fs = require('fs');
 var path = require('path');
+var CONFIG = require('../../config/config.json');
 var logger = require('log4js').getLogger('app');
 
 module.exports = {
@@ -15,7 +16,6 @@ module.exports = {
      * incident 조회 화면
      */
     index: (req, res, next) => {
-       
         async.waterfall([function (callback) {
             ProcessStatus.find({},function (err, ProcessStatus) {
                 if (err) {
@@ -43,13 +43,11 @@ module.exports = {
     new: (req, res, next) => {
         async.waterfall([function (callback) {
             CompanyProcess.find({ "company_cd": req.session.company_cd }, function (err, companyProcess) {
-                logger.debug('CompanyProcess.find');
                 if (err) {
                     res.render("http/500", {
                         err: err
                     });
                 }
-                logger.debug('companyProcess1 : ', companyProcess);
                 callback(null, companyProcess)
             });
         }], function (err, companyProcess) {
@@ -58,7 +56,6 @@ module.exports = {
                     err: err
                 });
             }
-            logger.debug('companyProcess2 : ', companyProcess);
             res.render("incident/new", {
                 companyProcess: companyProcess
             });
@@ -73,7 +70,6 @@ module.exports = {
         if (req.files) {
             newincident.attach_file = req.files;
         }
-        logger.debug("newincident = ", newincident);
         Incident.create(newincident, function (err, incident) {
             if (err) {
                 res.render("http/500", {
@@ -120,7 +116,6 @@ module.exports = {
      * incident 삭제 
      */
     delete: (req, res, next) => {
-        logger.debug("Trace delete", req.params.id);
         Incident.findOneAndRemove({
             _id: req.params.id
             //,author: req.user._id
@@ -142,7 +137,6 @@ module.exports = {
      */
     viewDetail: (req, res, next) => {
         logger.debug("Trace viewDetail : ", req.params.id);
-
         Incident.findById({
             _id: req.params.id
         }, function (err, incident) {
@@ -152,6 +146,14 @@ module.exports = {
                     message: err
                 });
             } else {
+                logger.debug(">>> incident : ", incident);
+                //path 길이 잘라내기
+                if (incident.attach_file.length > 0) {
+                    for (var i = 0; i < incident.attach_file.length; i++) {
+                        var path = incident.attach_file[i].path
+                        incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
+                    }
+                }
                 res.render("incident/viewDetail", {
                     incident: incident,
                     user: req.user
@@ -159,8 +161,6 @@ module.exports = {
             }
         });
     },
-
-    
 
     /** 
      * incident 첨부파일 다운로드
@@ -200,4 +200,5 @@ module.exports = {
             res.send(incident);
         });
     },
+
 };
