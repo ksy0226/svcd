@@ -46,6 +46,20 @@ module.exports = {
     },
 
     qna: (req, res, next) => {
+        /*
+        HigherProcessModel.find(req.body.higherprocess, function(err, higherprocess) {
+            //logger.debug('err', err, '\n');
+            logger.debug('list 호출');
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            }
+            res.render("search/qna", {
+                higherprocess: higherprocess
+            });
+        }).sort('-created_at');
+        */
         
         IncidentModel.find(req.body.incident, function(err, incident) {
             //logger.debug('err', err, '\n');
@@ -59,6 +73,7 @@ module.exports = {
                 incident: incident
             });
         }).sort('-created_at');
+        
     },
 
     viewdetail: (req, res, next) => {
