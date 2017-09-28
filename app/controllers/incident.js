@@ -189,15 +189,8 @@ module.exports = {
      * incident 첨부파일 다운로드
      */
     download: (req, res, next) => {
-        logger.debug("Trace download : ", req.params.id);
-        Incident.findById({
-            _id: req.params.id
-        }, function (err, incident) {
-            var fileid = req.params.id;
-            var filename = req.params.filename;
-            var filepath = __dirname + "/../../upload-file/" + fileid + "/" + filename;
-            res.download(filepath);
-        });
+        var filepath = path.join(__dirname, CONFIG.fileUpload.directory, req.params.path1, req.params.path2);
+        res.download(filepath);
     },
 
     getIncident: (req, res, next) => {
