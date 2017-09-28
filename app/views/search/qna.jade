@@ -315,11 +315,13 @@ block content
                     .form-group
                       label.col-sm-2.control-label 상위업무
                       .col-sm-2
-                        select.form-control
-                          option 항목1
-                          option 항목2
-                          option 항목3
-                          option 항목4
+                        select.form-control(id='higher_nm' name='higher_nm')
+                          option(value ='*') 전체
+                          - if (ProcessStatus.length > 0) {
+                            - for( var i = 0 ; length = ProcessStatus.length > i ; i++ ){ //속도가 느리다고 알고 있음.
+                              option(value ='#{ProcessStatus[i].status_cd}') #{ProcessStatus[i].status_nm}
+                          - }
+                        - } 
                     .form-group.m-b-0
                       label.col-sm-2.control-label 제목
                       .col-sm-8
@@ -347,7 +349,7 @@ block content
                             tr(onclick="onclick=location.href='/incident/#{incident[i]._id}/show'")
                                 td #{incident[i].higher_cd}
                                 td #{incident[i].title}  
-                                td.highlight(data-highlight='search.highlight.title') #{incident[i].createdAt}
+                                td.highlight(data-highlight='search.highlight.title') #{incident[i].register_date}
                                 td #{incident[i].manager_sabun}
                         - }
                     - }else{
