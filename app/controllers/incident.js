@@ -167,7 +167,7 @@ module.exports = {
                     message: err
                 });
             } else {
-                logger.debug(">>> incident : ", incident);
+                logger.debug(">>> incident : ", incident.attach_file);
                 //path 길이 잘라내기
                 if (incident.attach_file.length > 0) {
                     for (var i = 0; i < incident.attach_file.length; i++) {
@@ -175,6 +175,8 @@ module.exports = {
                         incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
                     }
                 }
+                logger.debug("*** incident : ", incident.attach_file);
+
                 res.render("incident/viewDetail", {
                     incident: incident,
                     user: req.user
