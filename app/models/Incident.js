@@ -47,8 +47,10 @@ var IncidentSchema = new Schema({
     valuation               : {type : Number, default : 0},  //평가점수                                                                         
     reading_cnt             : {type : Number},                                                                           
     complete_open_flag      : {type : String, default : 'N'},  //완료후공개여부                                                                     
-    higher_cd               : {type : String},  //상위업무 코드                                                              
+    higher_cd               : {type : String},  //상위업무 코드
+    higher_nm               : {type : String},  //상위업무 이름                                             
     lower_cd                : {type : String},  //하위업무 코드('BC , 하드웨어 관련 오류','L044','공장/설비관리 부문','L045',
+    lower_nm                : {type : String},  //하위업무 이름
     customer_flag           : {type : String},                                                                           
     add_solution_content    : {type : String},                                                                           
     process_gubun           : {type : String},                                                                           
