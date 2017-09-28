@@ -20,6 +20,9 @@ block head
     link(href='/assets/css/pages.css', rel='stylesheet', type='text/css')
     link(href='/assets/css/menu_light.css', rel='stylesheet', type='text/css')
     link(href='/assets/css/responsive.css', rel='stylesheet', type='text/css')
+    style(type="text/css").
+        .highlight { background-color: yellow; color: red; }
+
     script(src='/assets/js/modernizr.min.js')
     // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
     // WARNING: Respond.js doesn't work if you view the page via file://
@@ -48,13 +51,8 @@ block head
     script(src='/plugins/bootstrap-inputmask/bootstrap-inputmask.min.js', type='text/javascript')
 
     script(src='/vendor/jquery/jquery.min.js')
-    script(type='text/javascript').
-        //객체값을 javascript에 매핑
-        var incidentObj = !{JSON.stringify(incident).replace(/<\//g, '<\\/')};
-
 
     script(src='/isu/js/incident/index.js')
-
 
 block content
     // ==============================================================
@@ -83,13 +81,13 @@ block content
                                 .form-group
                                     label.col-sm-2.control-label 진행구분
                                     .col-sm-2
-                                        select.form-control(id='status_nm' name='status_nm')
-                                            option(value='접수대기') 접수대기
-                                            option(value='처리중') 처리중
-                                            option(value='미평가') 미평가
-                                            option(value='완료') 완료
-                                            option(value='보류') 보류
-
+                                        select.form-control(id='status_cd' name='status_cd')
+                                            option(value ='*')전체
+                                            - if (ProcessStatus.length > 0) {
+                                                - for( var i = 0 ; length = ProcessStatus.length > i ; i++ ){ //속도가 느리다고 알고 있음.
+                                                    option(value ='#{ProcessStatus[i].status_cd}') #{ProcessStatus[i].status_nm}
+                                                - }
+                                            - }
                                     label.col-sm-2.control-label 검색기간
                                     .col-sm-2
                                         select.form-control
@@ -109,61 +107,13 @@ block content
                                     .col-sm-6
                                         input.form-control(type='text' id='searchText' name='searchText' value=searchText)
                                     .col-sm-2
-                                        button.btn.btn-primary(type='button' onclick='search()')
+                                        button.btn.btn-primary(type='button' id='searchBtn')
                                             | 조회 
                                             i.fa.fa-search.m-l-5
                 // end Search Area
-                // start List Area
-            - if (incident.length > 0) {
-                - for( var i = 0 ; length = 3 > i ; i++ ){
-                .row
-                    .col-lg-12
-                        .card-box
-                            // start 처리진행현황
-                            .forum-container
-                                .forum-item
-                                    .row
-                                        .col-md-1.forum-info
-                                            span.btn-outline.outline-pink
-                                                | 접수
-                                        .col-md-11
-                                            .forum-sub-title
-                                                span.text-primary
-                                                    b '#{incident[i].manager_nm}'
-                                                    | #{incident[i].receipt_date}   
-                                                span.p-w-xs
-                                            a.forum-item-title(onclick="onclick=location.href='/incident/viewDetail/#{incident[i]._id}'")
-                                                i.md.md-desktop-windows
-                                                | !{incident[i].title}
-                                                
-                                        .col-md-12
-                                            .forum-content.truncate1.fh-60
-                                                a(onclick="onclick=location.href='/incident/viewDetail/#{incident[i]._id}'")
-                                                    | !{incident[i].content}
-                                            a.text-muted.text-more(onclick="onclick=location.href='/incident/viewDetail/#{incident[i]._id}'") 더보기
-                                            .forum-level
-                                                p.text-muted.font-13
-                                                    b 서비스 만족도:
-                                                    span.m-l-15
-                                                        i.md.md-star.text-warning
-                                                        i.md.md-star.text-warning
-                                                        i.md.md-star.text-warning
-                                                        i.md.md-star.text-warning
-                                                        i.md.md-star.text-muted
-                                                p
-
-                - }
-            - }else{
-                
-            - }   
-
-                #more_view.row
-                    .col-lg-12
-                        .card-box
-                            p
-                                a.text-muted.text-more(id='moreView') 더보기 >>>
+                // start List Area 
                 #more_list.row
-
+                #more_view.row
               
                                     
         // end content
@@ -171,27 +121,15 @@ block content
         footer.footer.text-right
             | 2017 © ISU Group.
 
+    #ajax_indicator(style='display:none')
+        p(style='text-align:center; padding:16px 0 0 0; left:50%; top:40%; position:absolute;')
+            img(src='/isu/images/large-loading.gif', width='26px', height='26px', alt='처리중', border='0', align='absmiddle')
 
-
-
-        // dotdotdot
-        script(src='/plugins/dotdotdot/jquery.dotdotdot.min.js')
-
-        script.
-            $(document).ready(function (){
-                $(".truncate").dotdotdot({
-                    watch: 'window'
-                });
-                $(".truncate1").dotdotdot({
-                    watch: 'window',
-                    ellipsis: ' ... '
-                });
-                $(".truncate2").dotdotdot({
-                    watch: 'window',
-                    wrap: 'letter'
-                });
-            });
-
+    // dotdotdot
+    script(src='/plugins/dotdotdot/jquery.dotdotdot.min.js')
+    //script(src='https://code.jquery.com/jquery-3.1.0.slim.min.js')
+    //script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.js')
+    //script(src='/vendor/jquery/jQuery.highlight.js')
             
 
 

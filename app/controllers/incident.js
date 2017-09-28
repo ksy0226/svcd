@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var async = require('async');
 var Incident = require('../models/Incident');
 var CompanyProcess = require('../models/CompanyProcess');
-var ManagerTask = require('../models/ManagerTask');
+var ProcessStatus = require('../models/ProcessStatus');
 var service = require('../services/incident');
 var fs = require('fs');
 var path = require('path');
@@ -14,42 +14,28 @@ module.exports = {
     /** 
      * incident 조회 화면
      */
-
     index: (req, res, next) => {
-        console.log('req.query.searchText : ' + req.query.searchText);
-        
-        var search = service.createSearch(req);
        
         async.waterfall([function (callback) {
-            console.log('search.findIncident : ' , search.findIncident);
-            
-            
-            //if (search.findIncident) return callback(null, []);
-            Incident.find(search.findIncident, function (err, incident) {
-                
-                logger.debug('2 : ' , search.findIncident.$or);
+            ProcessStatus.find({},function (err, ProcessStatus) {
                 if (err) {
                     res.render("http/500", {
                         err: err
                     });
                 }
-                callback(null, incident)
+                callback(null, ProcessStatus)
             });
-        }], function (err, incident) {
+        }], function (err, ProcessStatus) {
             if (err) {
                 res.render("http/500", {
                     err: err
                 });
             }
             res.render("incident/index", {
-                incident: incident,
-                searchType: req.query.searchType,
-                searchText: req.query.searchText,
-                status_nm: req.query.status_nm
+                ProcessStatus: ProcessStatus
             });
         });
     },
-
 
     /** 
      * incident 등록 화면
@@ -189,5 +175,29 @@ module.exports = {
             var filepath = __dirname + "/../../upload-file/" + fileid + "/" + filename;
             res.download(filepath);
         });
-    }
+    },
+
+    getIncident: (req, res, next) => {
+
+        var search = service.createSearch(req);
+        async.waterfall([function (callback) {
+            //if (search.findIncident) return callback(null, []);
+            Incident.find(search.findIncident, function (err, incident) {
+                
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null, incident)
+            });
+        }], function (err, incident) {
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            }
+            res.send(incident);
+        });
+    },
 };
