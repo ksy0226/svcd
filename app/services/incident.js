@@ -11,90 +11,55 @@ module.exports = {
     createSearch: (req) => {
         logger.debug('searchType : ' + req.query.searchType);
         logger.debug('searchText : ' + encodeURIComponent(req.query.searchText));
+        console.log('searchText : ' + req.query.searchText);
 
         var findIncident = {},
             findUser = null,
             highlight = {};
-        var incidentQueries = []; 
-
+        var AndQueries = []; 
+        var OrQueries = []; 
 
         if (req.query.searchType && req.query.searchText) {
             var searchTypes = req.query.searchType.toLowerCase().split(",");
-            var status_nms = req.query.status_nm;
-            
-            logger.debug('searchTypes : ' + JSON.stringify(searchTypes));
-            
             if (searchTypes.indexOf("title") >= 0) {
-                incidentQueries.push({
+                OrQueries.push({
                     title: { $regex : new RegExp(req.query.searchText, "i") }
                 });
-                logger.debug('incidentQueries : ' + JSON.stringify(incidentQueries));
+                logger.debug('OrQueries : ' + JSON.stringify(OrQueries));
                 highlight.title = req.query.searchText;
             }
             if (searchTypes.indexOf("content") >= 0) {
-                incidentQueries.push({
+                OrQueries.push({
                     content:{ $regex : new RegExp(req.query.searchText, "i") }
                 });
-                logger.debug('incidentQueries : ' + incidentQueries);
+                logger.debug('OrQueries : ' + OrQueries);
                 highlight.content = req.query.searchText;
             }   
-            if (incidentQueries.length > 0) findIncident = {
-                $or: incidentQueries
-            };
-
-
-            if(status_nms.indexOf("접수대기") >= 0 ){
-                incidentQueries.push({
-                    status_nm:{ $regex : new RegExp(req.query.status_nm, "i") }
-                });
+            if (OrQueries.length > 0){
+                findIncident.$or = OrQueries
             }
-            if(status_nms.indexOf("처리중") >= 0 ){
-                incidentQueries.push({
-                    status_nm:{ $regex : new RegExp(req.query.status_nm, "i") }
-                });
-            }
-            if(status_nms.indexOf("미평가") >= 0 ){
-                incidentQueries.push({
-                    status_nm:{ $regex : new RegExp(req.query.status_nm, "i") }
-                });
-            }
-            if(status_nms.indexOf("완료") >= 0 ){
-                incidentQueries.push({
-                    status_nm:{ $regex : new RegExp(req.query.status_nm, "i") }
-                });
-            }
-            if(status_nms.indexOf("보류") >= 0 ){
-                incidentQueries.push({
-                    status_nm:{ $regex : new RegExp(req.query.status_nm, "i") }
-                });
-            }
-
-            if (incidentQueries.length > 0) findIncident = {
-                $and: incidentQueries
-            };
-
-        }else{
-            
-            var status_nms = "처리중";
-
-            if(status_nms.indexOf("처리중") >= 0 ){
-                incidentQueries.push({
-                    status_nm:status_nms
-                });
-            }
-
-            
-
-            if (incidentQueries.length > 0) findIncident = {
-                $or: incidentQueries
-            };
-            logger.debug("findIncident",findIncident);
         }
+
+        var status_cd = req.query.status_cd;
+        //진행상태가 존재하면
+        if(status_cd != '*'){
+            AndQueries.push({
+                status_cd : req.query.status_cd
+            });
+        }
+
+        if (AndQueries.length > 0){
+            findIncident.$and = AndQueries;
+        }
+
         logger.debug('findIncident : ' + JSON.stringify(findIncident));
+        console.log('req.query.status_cd : ' + req.query.status_cd);
+        console.log('req.query.searchType : ' + req.query.searchType);
+        console.log('findIncident : ' + JSON.stringify(findIncident));
         return {
             searchType: req.query.searchType,
             searchText: req.query.searchText,
-            status_nm: req.query.status_nm,
+            status_cd: req.query.status_cd,
             findIncident: findIncident,
             findUser: findUser,
             highlight: highlight
