@@ -46,6 +46,7 @@ module.exports = {
     },
 
     qna: (req, res, next) => {
+        
         IncidentModel.find(req.body.incident, function(err, incident) {
             //logger.debug('err', err, '\n');
             logger.debug('list 호출');
@@ -57,7 +58,7 @@ module.exports = {
             res.render("search/qna", {
                 incident: incident
             });
-        }).sort('-createdAt');
+        }).sort('-created_at');
     },
 
     viewdetail: (req, res, next) => {
