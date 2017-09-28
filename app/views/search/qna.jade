@@ -317,11 +317,11 @@ block content
                       .col-sm-2
                         select.form-control(id='higher_nm' name='higher_nm')
                           option(value ='*') 전체
-                          - if (ProcessStatus.length > 0) {
-                            - for( var i = 0 ; length = ProcessStatus.length > i ; i++ ){ //속도가 느리다고 알고 있음.
-                              option(value ='#{ProcessStatus[i].status_cd}') #{ProcessStatus[i].status_nm}
-                          - }
-                        - } 
+                          //- if (ProcessStatus.length > 0) {
+                            //- for( var i = 0 ; length = ProcessStatus.length > i ; i++ ){ //속도가 느리다고 알고 있음.
+                              //option(value ='#{ProcessStatus[i].status_cd}') #{ProcessStatus[i].status_nm}
+                          //- }
+                          //- } 
                     .form-group.m-b-0
                       label.col-sm-2.control-label 제목
                       .col-sm-8
