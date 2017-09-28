@@ -30,10 +30,11 @@ module.exports = {
                 res.render("http/500", {
                     err: err
                 });
+            }else{
+                res.render("incident/index", {
+                    ProcessStatus: ProcessStatus
+                });
             }
-            res.render("incident/index", {
-                ProcessStatus: ProcessStatus
-            });
         });
     },
 
@@ -66,20 +67,40 @@ module.exports = {
      * incident 저장
     */
     save: (req, res, next) => {
-        var newincident = req.body.incident;
-        if (req.files) {
-            newincident.attach_file = req.files;
-        }
-        Incident.create(newincident, function (err, incident) {
+        
+        async.waterfall([function (callback) {
+            var newincident = req.body.incident;
+            if (req.files) {
+                newincident.attach_file = req.files;
+            }
+            Incident.create(newincident, function (err, newincident) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null);
+            });
+        }], function (err) {
+            logger.debug("trace 2");
             if (err) {
                 res.render("http/500", {
                     err: err
                 });
-            } else {
-                res.render("incident", {
-                    incident: newincident
-                });
             }
+
+            ProcessStatus.find({},function (err, ProcessStatus) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }else{
+                    res.render("incident/index", {
+                        ProcessStatus: ProcessStatus
+                    });
+                }
+            });
+
         });
     },
 

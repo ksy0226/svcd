@@ -34,6 +34,7 @@ $(document).ready(function () {
     });
 
     //말줄임
+    /*
     $(".truncate1").dotdotdot({
         ellipsis: '...', //말줄임 뭘로 할지
         watch: false, //윈도우 창에따라서 업데이트 할건지, 윈도우가 리사이즈될 때 업데이트할 건지
@@ -41,6 +42,7 @@ $(document).ready(function () {
         height: 10,
         tolerance: 30 //글이 넘치면 얼만큼 height 늘릴건지    
     });
+    */
 });
 //다시 조회
 function research(){
@@ -91,11 +93,11 @@ function setMoreBtn(dataObj){
         return;
     }else{
         if(rowIdx < dataObj.length-1){ //더보기할 내용이 남아 있을 시
-            var addList = "<div class='col-lg-12'>";
-            addList += "    <div class='card-box'>";
-            addList += "        <p><a id='moreBtn' class='text-muted text-more'>더보기 >>></a></p>";
-            addList += "    </div>";
-            addList += "</div>";
+            var addList = "<div class='row'>";
+                addList = "        <div class='col-lg-12'>";
+                addList += "        <p class='pull-right'><span id='moreBtn' class='text-primary'><b>더보기 >>></b></span></p>";
+                addList += "    </div>";
+                addList += "</div>";
             $("#more_view").empty();
             $("#more_view").append(addList);
 
@@ -126,9 +128,9 @@ function setContent(dataObj) {
 
         for (var i = rowIdx; i < dataCnt; i++) {
             var addList = "";
-            addList += "                <div class='col-lg-12'>";
-            addList += "					<div class='card-box'>";
-            addList += "						<div class='forum-container'>";
+            //addList += "                <div class='col-lg-12'>";
+           //addList += "					<div class='card-box'>";
+            //addList += "						<div class='forum-container'>";
             addList += "							<div class='forum-item'>";
             addList += "								<div class='row'>";
             addList += "									<div class='col-md-1 forum-info'>";
@@ -154,7 +156,7 @@ function setContent(dataObj) {
             addList += "										</a>";
             addList += "									</div>";
             addList += "									<div class='col-md-12'>";
-            addList += "										<div class='forum-content truncate1 fh-60' style='word-wrap: break-word;'>";
+            addList += "										<div class='forum-content truncate1 fh-100' style='word-wrap: break-word;'>";
             addList += "											<a href='/incident/viewDetail/" + dataObj[i]._id + "'>" + dataObj[i].content + "</a>";
             addList += "										</div>";
             addList += "										<a href='/incident/viewDetail/" + dataObj[i]._id + "' class='text-muted text-more'>상세보기</a>";
@@ -173,9 +175,9 @@ function setContent(dataObj) {
             addList += "									</div>";
             addList += "								</div>";
             addList += "							</div>";
-            addList += "						</div>";
-            addList += "					</div>";
-            addList += "				</div>";
+            //addList += "						</div>";
+            //addList += "					</div>";
+            //addList += "				</div>";
 
             $("#more_list").append(addList);
 
@@ -185,14 +187,15 @@ function setContent(dataObj) {
             }
            
             //말줄임
+            
             $(".truncate1").dotdotdot({
                 ellipsis: '...', //말줄임 뭘로 할지
-                watch: false, //윈도우 창에따라서 업데이트 할건지, 윈도우가 리사이즈될 때 업데이트할 건지
-                wrap: 'letter', //word(단어단위), letter(글 단위), children(자식단위) 자르기
-                height: 30,
-                tolerance: 20 //글이 넘치면 얼만큼 height 늘릴건지    
+                watch: false //윈도우 창에따라서 업데이트 할건지, 윈도우가 리사이즈될 때 업데이트할 건지
+               //,wrap: 'letter', //word(단어단위), letter(글 단위), children(자식단위) 자르기
+               //height: 30,
+               //tolerance: 20 //글이 넘치면 얼만큼 height 늘릴건지    
             });
-
+        
 
             //검색어하이라이트
             //$('#aaa').highlight('진행');
