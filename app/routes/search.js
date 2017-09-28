@@ -6,7 +6,6 @@ const router = express.Router();
 const controller = require('../controllers/search');
 
 router.route('/viewall').get(controller.viewall);
-//router.route('/:id/viewdetail').get(controller.viewdetail)
 router.route('/viewdetail').get(controller.viewdetail);
 router.route('/qna').get(controller.qna);
 router.route('/searchall').get(controller.searchall);

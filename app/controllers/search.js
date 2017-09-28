@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const async = require('async');
 const CompanyModel = require('../models/Company');
 const IncidentModel = require('../models/Incident');
+var service = require('../services/search');
 const logger = require('log4js').getLogger('app');
 const Iconv  = require('iconv-lite');
 
@@ -11,18 +12,36 @@ module.exports = {
 
 
     viewall: (req, res, next) => {
-        IncidentModel.find(req.body.incident, function(err, incident) {
-            //logger.debug('err', err, '\n');
-            logger.debug('list 호출');
+
+        var search = service.createSearch(req);
+       
+        async.waterfall([function (callback) {
+            console.log('search.findSearch : ' , search.findSearch);
+            console.log('datepicker_rcdValue : ', req.query.datepicker_rcd);
+            console.log('datepicker_rcd2Value : ', req.query.datepicker_rcd2);
+            
+            IncidentModel.find(search.findSearch, function (err, incident) {
+                logger.debug('2 : ' , search.findSearch.$or);
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null, incident)
+            });
+        }], function (err, incident) {
             if (err) {
                 res.render("http/500", {
                     err: err
                 });
             }
             res.render("search/viewall", {
-                incident: incident
+                incident: incident,
+                datepicker_rcd: req.query.datepicker_rcd,
+                datepicker_rcd2: req.query.datepicker_rcd2
             });
-        }).sort('-createdAt');
+        });
+
     },
 
     qna: (req, res, next) => {
