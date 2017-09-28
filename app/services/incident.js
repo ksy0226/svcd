@@ -11,6 +11,7 @@ module.exports = {
     createSearch: (req) => {
         logger.debug('searchType : ' + req.query.searchType);
         logger.debug('searchText : ' + encodeURIComponent(req.query.searchText));
+        console.log('searchText : ' + req.query.searchText);
 
         var findIncident = {},
             findUser = null,
@@ -52,6 +53,9 @@ module.exports = {
         }
 
         logger.debug('findIncident : ' + JSON.stringify(findIncident));
+        console.log('req.query.status_cd : ' + req.query.status_cd);
+        console.log('req.query.searchType : ' + req.query.searchType);
+        console.log('findIncident : ' + JSON.stringify(findIncident));
         return {
             searchType: req.query.searchType,
             searchText: req.query.searchText,

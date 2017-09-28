@@ -11,8 +11,7 @@ $(document).ready(function () {
     $('#searchText').keypress(function(e){
         if(e.keyCode == 13) {
             $('#searchText').val($('#searchText').val());
-            getDataList();
-            return false;
+            research();
         }
     });
 
