@@ -4,52 +4,39 @@ var mongoose = require('mongoose');
 var async = require('async');
 var Incident = require('../models/Incident');
 var CompanyProcess = require('../models/CompanyProcess');
-var ManagerTask = require('../models/ManagerTask');
+var ProcessStatus = require('../models/ProcessStatus');
 var service = require('../services/incident');
 var fs = require('fs');
 var path = require('path');
+var CONFIG = require('../../config/config.json');
 var logger = require('log4js').getLogger('app');
 
 module.exports = {
     /** 
      * incident 조회 화면
      */
-
     index: (req, res, next) => {
-        console.log('req.query.searchText : ' + req.query.searchText);
-        
-        var search = service.createSearch(req);
-       
         async.waterfall([function (callback) {
-            console.log('search.findIncident : ' , search.findIncident);
-            
-            
-            //if (search.findIncident) return callback(null, []);
-            Incident.find(search.findIncident, function (err, incident) {
-                
-                logger.debug('2 : ' , search.findIncident.$or);
+            ProcessStatus.find({},function (err, ProcessStatus) {
                 if (err) {
                     res.render("http/500", {
                         err: err
                     });
                 }
-                callback(null, incident)
+                callback(null, ProcessStatus)
             });
-        }], function (err, incident) {
+        }], function (err, ProcessStatus) {
             if (err) {
                 res.render("http/500", {
                     err: err
                 });
+            }else{
+                res.render("incident/index", {
+                    ProcessStatus: ProcessStatus
+                });
             }
-            res.render("incident/index", {
-                incident: incident,
-                searchType: req.query.searchType,
-                searchText: req.query.searchText,
-                status_nm: req.query.status_nm
-            });
         });
     },
-
 
     /** 
      * incident 등록 화면
@@ -57,13 +44,11 @@ module.exports = {
     new: (req, res, next) => {
         async.waterfall([function (callback) {
             CompanyProcess.find({ "company_cd": req.session.company_cd }, function (err, companyProcess) {
-                logger.debug('CompanyProcess.find');
                 if (err) {
                     res.render("http/500", {
                         err: err
                     });
                 }
-                logger.debug('companyProcess1 : ', companyProcess);
                 callback(null, companyProcess)
             });
         }], function (err, companyProcess) {
@@ -72,7 +57,6 @@ module.exports = {
                     err: err
                 });
             }
-            logger.debug('companyProcess2 : ', companyProcess);
             res.render("incident/new", {
                 companyProcess: companyProcess
             });
@@ -83,21 +67,40 @@ module.exports = {
      * incident 저장
     */
     save: (req, res, next) => {
-        var newincident = req.body.incident;
-        if (req.files) {
-            newincident.attach_file = req.files;
-        }
-        logger.debug("newincident = ", newincident);
-        Incident.create(newincident, function (err, incident) {
+        
+        async.waterfall([function (callback) {
+            var newincident = req.body.incident;
+            if (req.files) {
+                newincident.attach_file = req.files;
+            }
+            Incident.create(newincident, function (err, newincident) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null);
+            });
+        }], function (err) {
+            logger.debug("trace 2");
             if (err) {
                 res.render("http/500", {
                     err: err
                 });
-            } else {
-                res.render("incident", {
-                    incident: newincident
-                });
             }
+
+            ProcessStatus.find({},function (err, ProcessStatus) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }else{
+                    res.render("incident/index", {
+                        ProcessStatus: ProcessStatus
+                    });
+                }
+            });
+
         });
     },
 
@@ -134,7 +137,6 @@ module.exports = {
      * incident 삭제 
      */
     delete: (req, res, next) => {
-        logger.debug("Trace delete", req.params.id);
         Incident.findOneAndRemove({
             _id: req.params.id
             //,author: req.user._id
@@ -156,7 +158,6 @@ module.exports = {
      */
     viewDetail: (req, res, next) => {
         logger.debug("Trace viewDetail : ", req.params.id);
-
         Incident.findById({
             _id: req.params.id
         }, function (err, incident) {
@@ -166,6 +167,14 @@ module.exports = {
                     message: err
                 });
             } else {
+                logger.debug(">>> incident : ", incident);
+                //path 길이 잘라내기
+                if (incident.attach_file.length > 0) {
+                    for (var i = 0; i < incident.attach_file.length; i++) {
+                        var path = incident.attach_file[i].path
+                        incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
+                    }
+                }
                 res.render("incident/viewDetail", {
                     incident: incident,
                     user: req.user
@@ -173,8 +182,6 @@ module.exports = {
             }
         });
     },
-
-    
 
     /** 
      * incident 첨부파일 다운로드
@@ -189,5 +196,30 @@ module.exports = {
             var filepath = __dirname + "/../../upload-file/" + fileid + "/" + filename;
             res.download(filepath);
         });
-    }
+    },
+
+    getIncident: (req, res, next) => {
+
+        var search = service.createSearch(req);
+        async.waterfall([function (callback) {
+            //if (search.findIncident) return callback(null, []);
+            Incident.find(search.findIncident, function (err, incident) {
+                
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null, incident)
+            });
+        }], function (err, incident) {
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            }
+            res.send(incident);
+        });
+    },
+
 };
