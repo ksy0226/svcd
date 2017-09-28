@@ -150,6 +150,7 @@ module.exports = {
                     message: err
                 });
             } else {
+                logger.debug(">>> incident : ", incident);
                 //path 길이 잘라내기
                 if (incident.attach_file.length > 0) {
                     for (var i = 0; i < incident.attach_file.length; i++) {

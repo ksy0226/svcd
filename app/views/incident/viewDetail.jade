@@ -46,7 +46,7 @@ block content
                                 hr.m-t-10
                                 // start 접수내용
                                 p
-                                    | #!{incident.content}
+                                    | !{incident.content}
                             // 첨부파일 1개 이상일때만 표시
                             - if (incident.attach_file.length > 0){
                             .row
@@ -93,7 +93,7 @@ block content
                                             b 조치내용
                                         hr
                                         p
-                                            | #!{incident.complete_content}
+                                            | #{incident.complete_content}
                                         hr
                                         .widget-user(style='min-height:0;')
                                             div
@@ -104,7 +104,7 @@ block content
                                                     h4.m-t-5.m-b-5 #{incident.manager_dept} #{incident.manager_nm} #{incident.manager_position}
                                                     p.text-muted.m-b-5.font-13
                                                         i.md.md-mail.m-r-5
-                                                        |  #{incident.manager_email}
+                                                        | #{incident.manager_email}
                         // end 조치내용
                         // start 평가
                         .row
