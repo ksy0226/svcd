@@ -14,7 +14,8 @@ module.exports = {
             findUser = null,
             highlight = {};
         var AndQueries = []; 
-        var OrQueries = []; 
+        var OrQueries = [];
+        var DateQueries = [];  
 
         if (req.query.searchType && req.query.searchText) {
             var searchTypes = req.query.searchType.toLowerCase().split(",");
@@ -46,7 +47,7 @@ module.exports = {
                 higher_nm : req.query.higher_nm
             });
         }
-        
+
         //하위업무가 존재하면
         if(lower_nm != '*'){
             AndQueries.push({
@@ -59,9 +60,53 @@ module.exports = {
         }
 
 
+        if (req.query.datepicker_rcd && req.query.datepicker_rcd2) {
+          
+            AndQueries.push({
+                register_date : {"$gt":req.query.datepicker_rcd,"$lt":req.query.datepicker_rcd2}
+            });
+            
+        }
+
+
+        if (AndQueries.length > 0){
+            findIncident.$and = AndQueries
+        }
+
+
+
+        /*
+        //검색 시작일 존재하면
+        if(datepicker_rcd != ''){
+            AndQueries.push({
+                datepicker_rcd : req.query.datepicker_rcd
+            });
+        }
+
+        if (AndQueries.length > 0){
+            findIncident.$gt = AndQueries
+        }
+        */
+
+        /*
+        //검색 마지막일 존재하면
+        if(datepicker_rcd2 != '*'){
+            AndQueries.push({
+                datepicker_rcd : req.query.datepicker_rcd2
+            });
+        }
+
+        if (AndQueries.length > 0){
+            findIncident.$lt = AndQueries
+        }
+        */
+
         logger.debug('findIncident : ' + JSON.stringify(findIncident));
         console.log('req.query.higher_nm : ' + req.query.higher_nm);
         console.log('req.query.lower_nm : ' + req.query.lower_nm);
+        console.log('req.query.datepicker_rcd : ' + req.query.datepicker_rcd);
+        console.log('req.query.datepicker_rcd2 : ' + req.query.datepicker_rcd2);
+
         console.log('findIncident : ' + JSON.stringify(findIncident));
 
         return {
