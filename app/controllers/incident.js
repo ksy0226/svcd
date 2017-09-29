@@ -17,7 +17,7 @@ module.exports = {
      */
     index: (req, res, next) => {
         async.waterfall([function (callback) {
-            ProcessStatus.find({},function (err, ProcessStatus) {
+            ProcessStatus.find({}, function (err, ProcessStatus) {
                 if (err) {
                     res.render("http/500", {
                         err: err
@@ -30,7 +30,7 @@ module.exports = {
                 res.render("http/500", {
                     err: err
                 });
-            }else{
+            } else {
                 res.render("incident/index", {
                     ProcessStatus: ProcessStatus
                 });
@@ -67,7 +67,7 @@ module.exports = {
      * incident 저장
     */
     save: (req, res, next) => {
-        
+
         async.waterfall([function (callback) {
             var newincident = req.body.incident;
             if (req.files) {
@@ -89,12 +89,12 @@ module.exports = {
                 });
             }
 
-            ProcessStatus.find({},function (err, ProcessStatus) {
+            ProcessStatus.find({}, function (err, ProcessStatus) {
                 if (err) {
                     res.render("http/500", {
                         err: err
                     });
-                }else{
+                } else {
                     res.render("incident/index", {
                         ProcessStatus: ProcessStatus
                     });
@@ -167,20 +167,16 @@ module.exports = {
                     message: err
                 });
             } else {
-                logger.debug(">>> incident : ", incident.attach_file);
                 //path 길이 잘라내기
                 if (incident.attach_file.length > 0) {
                     for (var i = 0; i < incident.attach_file.length; i++) {
                         var path = incident.attach_file[i].path
                         incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
-                        logger.debug("==========> incident.attach_file[i].mimetype.indexOf('image') ",incident.attach_file[i].mimetype.indexOf('image'));
-                        if(incident.attach_file[i].mimetype.indexOf('image')>-1){
+                        if (incident.attach_file[i].mimetype.indexOf('image') > -1) {
                             incident.attach_file[i].mimetype = 'image';
                         }
                     }
                 }
-                logger.debug("*** incident : ", incident.attach_file);
-
                 res.render("incident/viewDetail", {
                     incident: incident,
                     user: req.user
@@ -193,7 +189,7 @@ module.exports = {
      * incident 첨부파일 다운로드
      */
     download: (req, res, next) => {
-        var filepath = path.join(__dirname, '../../',CONFIG.fileUpload.directory, req.params.path1, req.params.path2);
+        var filepath = path.join(__dirname, '../../', CONFIG.fileUpload.directory, req.params.path1, req.params.path2);
         res.download(filepath);
     },
 
@@ -203,7 +199,7 @@ module.exports = {
         async.waterfall([function (callback) {
             //if (search.findIncident) return callback(null, []);
             Incident.find(search.findIncident, function (err, incident) {
-                
+
                 if (err) {
                     res.render("http/500", {
                         err: err
