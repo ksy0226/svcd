@@ -58,8 +58,8 @@ module.exports = {
         if (AndQueries.length > 0){
             findIncident.$and = AndQueries
         }
-
-
+        
+        //검색기간 조건 추가
         if (req.query.datepicker_rcd && req.query.datepicker_rcd2) {
           
             AndQueries.push({
@@ -67,8 +67,6 @@ module.exports = {
             });
             
         }
-
-
         if (AndQueries.length > 0){
             findIncident.$and = AndQueries
         }
