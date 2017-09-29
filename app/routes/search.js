@@ -14,6 +14,8 @@ router.route('/highlowerstatistic').get(controller.highlowerstatistic);
 router.route('/remainlist').get(controller.remainlist);
 router.route('/managermonthlist').get(controller.managermonthlist)
 router.route('/gubunlist').get(controller.gubunlist);
+router.route('/getlowerprocess').get(controller.getlowerprocess);
+router.route('/list').get(controller.list);
 
 
 

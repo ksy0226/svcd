@@ -9,57 +9,67 @@ module.exports = {
     },
 
     createSearch: (req) => {
-        console.log('datepicker-rcd : ' + req.query.datepicker_rcd );
-        console.log('datepicker-rcd2 : ' + req.query.datepicker_rcd2 );
 
-
-        var findSearch = {},
+        var findIncident = {},
             findUser = null,
             highlight = {};
-        var searchQueries = []; 
+        var AndQueries = []; 
+        var OrQueries = []; 
 
-
-        if (req.query.datepicker_rcd && req.query.datepicker_rcd2) {
-           
-            var datepicker1 = req.query.datepicker_rcd;
-            var datepicker2 = req.query.datepicker_rcd2;
-            
-
-            console.log('datepicker1 : ' + datepicker1);
-            console.log('datepicker2 : ' + datepicker2);
-
-
-            searchQueries.push({
-                register_date : datepicker1
-            });
-            searchQueries.push({
-                register_date : datepicker2
-            });
-
-            if (searchQueries.length > 0) findSearch = {
-                $gt : datepicker1,
-                $lt : datepicker2
-            };
-
-        }else{
-            /*
-            var status_nms = "처리중";
-            if(status_nms.indexOf("처리중") >= 0 ){
-                incidentQueries.push({
-                    status_nm:status_nms
+        if (req.query.searchType && req.query.searchText) {
+            var searchTypes = req.query.searchType.toLowerCase().split(",");
+            if (searchTypes.indexOf("title") >= 0) {
+                OrQueries.push({
+                    title: { $regex : new RegExp(req.query.searchText, "i") }
                 });
+                logger.debug('OrQueries : ' + JSON.stringify(OrQueries));
+                highlight.title = req.query.searchText;
             }
-            if (incidentQueries.length > 0) findIncident = {
-                $or: incidentQueries
-            };
-            logger.debug("findIncident",findIncident);
-            */
+            if (searchTypes.indexOf("content") >= 0) {
+                OrQueries.push({
+                    content:{ $regex : new RegExp(req.query.searchText, "i") }
+                });
+                logger.debug('OrQueries : ' + OrQueries);
+                highlight.content = req.query.searchText;
+            }   
+            if (OrQueries.length > 0){
+                findIncident.$or = OrQueries
+            }
         }
-        logger.debug('findSearch : ' + JSON.stringify(findSearch));
+
+        var higher_nm = req.query.higher_nm;
+        var lower_nm = req.query.lower_nm;
+
+        //상위업무가 존재하면
+        if(higher_nm != '*'){
+            AndQueries.push({
+                higher_nm : req.query.higher_nm
+            });
+        }
+        
+        //하위업무가 존재하면
+        if(lower_nm != '*'){
+            AndQueries.push({
+                lower_nm : req.query.lower_nm
+            });
+        }
+        
+        if (AndQueries.length > 0){
+            findIncident.$and = AndQueries
+        }
+
+
+        logger.debug('findIncident : ' + JSON.stringify(findIncident));
+        console.log('req.query.higher_nm : ' + req.query.higher_nm);
+        console.log('req.query.lower_nm : ' + req.query.lower_nm);
+        console.log('findIncident : ' + JSON.stringify(findIncident));
+
         return {
-            datepicker_rcd: req.query.datepicker_rcd,
-            datepicker_rcd2: req.query.datepicker_rcd2,
-            findSearch: findSearch,
+            searchType: req.query.searchType,
+            searchText: req.query.searchText,
+            higher_nm: req.query.higher_nm,
+            lower_nm: req.query.lower_nm,
+            findIncident: findIncident,
             highlight: highlight
         };
     }

@@ -5,6 +5,7 @@ const async = require('async');
 const CompanyModel = require('../models/Company');
 const IncidentModel = require('../models/Incident');
 const HigherProcessModel = require('../models/HigherProcess');
+const LowerProcessModel = require('../models/LowerProcess');
 var service = require('../services/search');
 const logger = require('log4js').getLogger('app');
 const Iconv  = require('iconv-lite');
@@ -13,7 +14,27 @@ module.exports = {
 
 
     viewall: (req, res, next) => {
-
+        async.waterfall([function (callback) {
+            HigherProcessModel.find({},function (err, higherprocess) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null, higherprocess)
+            });
+        }], function (err, higherprocess) {
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            }else{
+                res.render("search/viewall", {
+                    higherprocess: higherprocess
+                });
+            }
+        });
+        /*
         var search = service.createSearch(req);
        
         async.waterfall([function (callback) {
@@ -42,25 +63,12 @@ module.exports = {
                 datepicker_rcd2: req.query.datepicker_rcd2
             });
         });
+        */
 
     },
 
     qna: (req, res, next) => {
         /*
-        HigherProcessModel.find(req.body.higherprocess, function(err, higherprocess) {
-            //logger.debug('err', err, '\n');
-            logger.debug('list 호출');
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            }
-            res.render("search/qna", {
-                higherprocess: higherprocess
-            });
-        }).sort('-created_at');
-        */
-        
         IncidentModel.find(req.body.incident, function(err, incident) {
             //logger.debug('err', err, '\n');
             logger.debug('list 호출');
@@ -73,7 +81,28 @@ module.exports = {
                 incident: incident
             });
         }).sort('-created_at');
-        
+        */
+
+        async.waterfall([function (callback) {
+            HigherProcessModel.find({},function (err, higherprocess) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null, higherprocess)
+            });
+        }], function (err, higherprocess) {
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            }else{
+                res.render("search/qna", {
+                    higherprocess: higherprocess
+                });
+            }
+        });      
     },
 
     viewdetail: (req, res, next) => {
@@ -156,6 +185,7 @@ module.exports = {
     },
 
     gubunlist : (req, res, next) => {
+        
         IncidentModel.find(req.body.incident, function(err, incident) {
             //logger.debug('err', err, '\n');
             logger.debug('list 호출');
@@ -168,5 +198,44 @@ module.exports = {
                 incident: incident
             });
         });
+    },
+
+    
+    getlowerprocess :  (req, res, next) => {   
+        logger.debug(1);
+        LowerProcessModel.find(req.body.lowerprocess, function(err, lowerprocess) {
+            logger.debug('lowerprocess.lower_nm',req.body.lowerprocess);
+            if (err) return res.json({
+                success: false,
+                message: err
+            });
+            res.json(lowerprocess);
+        });
+    },
+
+
+    list: (req, res, next) => {
+        console.log("search/list...");
+        var search = service.createSearch(req);
+
+        async.waterfall([function (callback) {
+            IncidentModel.find(search.findIncident, function (err, incident) {
+                
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null, incident)
+            });
+        }], function (err, incident) {
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            }
+            res.send(incident);
+        });
     }
+
 };

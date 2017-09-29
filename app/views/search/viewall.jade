@@ -302,22 +302,22 @@ block content
             .row
               .col-lg-12
                 .card-box
-                  form.form-horizontal.group-border-dashed(name='form' action='/search/viewall' method='get')
+                  form.form-horizontal.group-border-dashed(action='#')
                     .form-group
                       label.col-sm-2.control-label 상위업무
-                      .col-sm-2
-                        select.form-control
-                          option 항목1
-                          option 항목2
-                          option 항목3
-                          option 항목4
+                      .col-sm-3
+                        select.form-control(id='higher_nm' name='higher_nm')
+                          option(value ='*') 전체
+                          - if (higherprocess.length > 0) {
+                            - for( var i = 0 ; length = higherprocess.length > i ; i++ ){ //속도가 느리다고 알고 있음.
+                              option(value ='#{higherprocess[i].higher_nm}') #{higherprocess[i].higher_nm}
+                          - }
+                        - } 
                       label.col-sm-2.control-label 하위업무
-                      .col-sm-2
-                        select.form-control
-                          option 항목1
-                          option 항목2
-                          option 항목3
-                          option 항목4
+                      .col-sm-4
+                        select.form-control(id='lower_nm' name='lower_nm')
+                          option(value ='*') 전체
+                          
                     .form-group
                       label.col-sm-2.control-label 검색기간
                       .col-sm-4
@@ -336,46 +336,29 @@ block content
                     .form-group.m-b-0
                       label.col-sm-2.control-label 검색어
                       .col-sm-2
-                        select.form-control
-                          option 제목
-                          option 제목+내용
-                          option 담당자
+                        select.form-control(id='searchType' name='searchType')
+                          option(value='title,content') 제목+내용
+                          option(value='title') 제목
+                          option(value='content') 내용
                       .col-sm-6
-                        input.form-control(type='text')
+                        input.form-control(type='text' id='searchText' name='searchText' value=searchText)
                       .col-sm-2
-                        button.btn.btn-primary(type='submit') 조회
-            
-            // end Search Area
-            // start Grid Area
+                        button.btn.btn-primary(type='button' id='searchBtn') 조회
             .row
               .col-lg-12
-                .card-box
-                  table.table.table-bordered
-                    thead
-                      tr
-                        th(width='16%') 상위업무명
-                        th(width='16%') 하위업무명
-                        th 제목
-                        th(width='15%') 등록일
-                        th(width='15%') 담당자
-                    tbody
-                    - if (incident.length > 0) {
-                        // - for( var i = 0 ; length = question.length > i ; i++ ){ //속도가 빠르다고 알고 있음.
-                        - for( var i in incident ){ //속도가 느리다고 알고 있음.
-                            tr(onclick="onclick=location.href='/incident/#{incident[i]._id}/show'")
-                                td #{incident[i].higher_cd}
-                                td #{incident[i].lower_cd}
-                                td #{incident[i].title}  
-                                //td.highlight(data-highlight='search.highlight.title') #{incident[i].register_date}
-                                //날짜 표기 방법 #{moment(job.postedAt).format("YYYY-MM-DD HH:mm")}
-                                td.highlight(data-highlight='search.highlight.title') #{incident[i].register_date}
-                                td #{incident[i].manager_sabun}
-                        - }
-                    - }else{
+                  .card-box
+                    table.table.table-bordered
+                      thead
                         tr
-                            td(colspan='5' align='center') 조회된 데이타가 없습니다.
-                    - }  
-                  // start pagination
+                          th(width='16%') 상위업무명
+                          th(width='16%') 하위업무명
+                          th 제목
+                          th(width='15%') 등록일
+                          th(width='15%') 담당자
+                      tbody(id='more_list')
+                    #more_view.row
+            
+            
                   .row
                     .col-sm-4
                       .dataTables_info Showing 1 to 10 of 57 entries

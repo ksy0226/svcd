@@ -317,11 +317,11 @@ block content
                       .col-sm-2
                         select.form-control(id='higher_nm' name='higher_nm')
                           option(value ='*') 전체
-                          //- if (higherprocess.length > 0) {
-                          //  - for( var i = 0 ; length = higherprocess.length > i ; i++ ){ //속도가 느리다고 알고 있음.
-                          //    option(value ='#{higherprocess[i].higher_nm}') #{higherprocess[i].higher_nm}
-                          //- }
-                        //- } 
+                          - if (higherprocess.length > 0) {
+                            - for( var i = 0 ; length = higherprocess.length > i ; i++ ){ //속도가 느리다고 알고 있음.
+                              option(value ='#{higherprocess[i].higher_nm}') #{higherprocess[i].higher_nm}
+                          - }
+                        - } 
                     .form-group.m-b-0
                       label.col-sm-2.control-label 제목
                       .col-sm-8
@@ -332,7 +332,8 @@ block content
                           |  조회
             // end Search Area
             // start Grid Area
-            .row
+            
+            //.row
               .col-lg-12
                 .card-box
                   table.table.table-bordered
