@@ -3,17 +3,106 @@
 const mongoose = require('mongoose');
 const async = require('async');
 //const CompanyModel = require('../models/Company');
+const LowerProcessModel = require('../models/LowerProcess');
 const HigherProcessModel = require('../models/HigherProcess');
 const logger = require('log4js').getLogger('app');
-const Iconv  = require('iconv-lite');
+const Iconv = require('iconv-lite');
 
 module.exports = {
 
-    list: (req, res, next) => {
+    index: (req, res, next) => {
+        LowerProcessModel.find(req.body.lowerProcess, function (err, lowerProcess) {
+            logger.debug('index 호출');
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            } else {
+                res.render("lowerProcess/index", {
+                    lowerProcess: lowerProcess
+                });
+            }
+        });
+    },
 
-        
-        res.render("lowerProcess/list", {
+    new: (req, res, next) => {
+        async.waterfall([function (callback) {
+            HigherProcessModel.find({}, function (err, higher) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                } else {
+                    callback(null, higher)
+                }
+            });
+        }], function (err, higher) {
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            } else {
+                res.render("lowerProcess/new", {
+                    higher: higher
+                });
+            }
+        });
+    },
 
+    save: (req, res, next) => {
+        var lowerProcess = req.body.lowerProcess;
+        LowerProcessModel.create(req.body.lowerProcess, function (err, lowerProcess) {
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            } else {
+                res.redirect('/lowerProcess');
+            }
+        });
+    },
+
+    edit: (req, res, next) => {
+        LowerProcessModel.findById(req.params.id, function (err, lowerProcess) {
+            if (err) return res.json({
+                success: false,
+                message: err
+            });
+            res.render("lowerProcess/edit", {
+                lowerProcess: lowerProcess
+            });
+        });
+    },
+
+    update: (req, res, next) => {
+        LowerProcessModel.findOneAndUpdate({
+            _id: req.params.id
+        }, req.body.lowerProcess, function (err, lowerProcess) {
+            if (err) return res.json({
+                success: false,
+                message: err
+            });
+            if (!lowerProcess) return res.json({
+                success: false,
+                message: "No data found to update"
+            });
+            res.redirect('/lowerProcess/edit/' + req.params.id);
+        });
+    },
+
+    delete: (req, res, next) => {
+        LowerProcessModel.findOneAndRemove({
+            _id: req.params.id
+        }, function (err, lowerProcess) {
+            if (err) return res.json({
+                success: false,
+                message: err
+            });
+            if (!lowerProcess) return res.json({
+                success: false,
+                message: "No data found to delete"
+            });
+            res.redirect('/lowerProcess');
         });
     }
 };
