@@ -25,6 +25,9 @@ block head
         if lt IE 9
         script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
         script(src='https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js')
+
+    script(src='/isu/js/search/viewdetail.js', type='text/javascript')
+
 block content
     .content-page
         .content
@@ -89,34 +92,36 @@ block content
                                                 <span class="label label-success">미평가</span>
                                                 <span class="label label-purple">완료</span>
                                         th.bg-muted 긴급구분
-                                        td 보통
+                                        - if( '#{incident.process_speed}' == "1"){
+                                            td 보통
+                                        - }else{
+                                            td 긴급
+                                        - }
+                                        
+
                                     tr
                                         th.bg-muted 상위업무
-                                        td
+                                        td #{incident.higher_nm}
                                         th.bg-muted 하위업무
-                                        td
+                                        td #{incident.lower_nm}
                                     tr
                                         th.bg-muted 요청자
-                                        td 주식회사 이수시스템/박선우
+                                        td #{incident.request_company_nm} / #{incident.request_nm}
                                         th.bg-muted 완료요청일
-                                        td 2017-09-23 00:00
+                                        td #{incident.request_complete_date}
                                     tr
                                         th.bg-muted 요청경로
-                                        td ServiceDesk
+                                        td #{incident.app_menu}
                                         th.bg-muted 등록자/등록일
-                                        td 홍길동 2017-09-20 00:00
+                                        td #{incident.register_nm} / #{incident.register_date}
                                     tr
                                         th.bg-muted 제목
-                                        td(colspan='3')
+                                        td(colspan='3') #{incident.title}
                                     tr
                                         th.bg-muted 요청내용
-                                        td(colspan='3')
-                                            | 요청하였습니다.
-                                            br
-                                            | 											요청하였습니다.
-                                            br
+                                        td(colspan='3') #!{incident.content}
                                     tr(style='display:')
-                                        th.bg-muted 청부파일
+                                        th.bg-muted 첨부파일
                                         td(colspan='3')
                                             i.fa.fa-paperclip.m-r-10
                                             a(href='#')
@@ -126,19 +131,17 @@ block content
                                         td(colspan='3')
                                             | 접수하였습니다.
                                             br
-                                            | 											접수하였습니다.
-                                            br
                                     tr
                                         th.bg-muted 처리담당자
-                                        td 박선우
+                                        td  #{incident.manager_nm}
                                         th.bg-muted 접수일
-                                        td 홍길동 2017-09-20 00:00<
+                                        td  #{incident.receipt_date}
                                     tr
                                         th.bg-muted 완료예정일
-                                        td 2017-09-20 00:0
+                                        td #{incident.complete_reserve_date}
                                         th.bg-muted 난이도
                                         td
-                                            span.badge.badge-danger S
+                                            span.badge.badge-danger #{incident.business_level}
                             h4.m-t-30
                                 b 처리 내용
                             hr.m-0
@@ -151,10 +154,10 @@ block content
                                 tbody
                                     tr
                                         th.bg-muted 처리구분
-                                        td(colspan='3')
+                                        td(colspan='3') 
                                     tr
                                         th.bg-muted 처리내용
-                                        td(colspan='3')
+                                        td(colspan='3') #{incident.complete_content}
                                     tr
                                         th.bg-muted 첨부파일
                                         td(colspan='3')
@@ -185,28 +188,6 @@ block content
                                     tr
                                         th.bg-muted.text-danger 내부공유사항
                                         td(colspan='3')
-                            //
-                                start pagination
-                                <div class="row">
-                                <div class="col-sm-4">
-                                <div class="dataTables_info">Showing 1 to 10 of 57 entries</div>
-                                </div>
-                                <div class="col-sm-8">
-                                <div class="dataTables_paginate paging_simple_numbers pull-right">
-                                <ul class="pagination">
-                                <li class="cpaginate_button previous"><a href="#">Previous</a></li>
-                                <li class="cpaginate_button active"><a href="#">1</a></li>
-                                <li class="cpaginate_button"><a href="#">2</a></li>
-                                <li class="cpaginate_button"><a href="#">3</a></li>
-                                <li class="cpaginate_button"><a href="#">4</a></li>
-                                <li class="cpaginate_button"><a href="#">5</a></li>
-                                <li class="cpaginate_button"><a href="#">6</a></li>
-                                <li class="cpaginate_button next"><a href="#">Next</a></li>
-                                </ul>
-                                </div>
-                                </div>
-                                </div>
-                                end pagination
                 // end Grid Area
             // end container
         // end content
