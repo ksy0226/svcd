@@ -9,7 +9,7 @@ var lowerProcessSchema = mongoose.Schema({
     higher_nm: { type: String},                      //상위업무명
     description: { type: String },                   //설명
     need_hour: { type: String },                   //hour
-    com_cd: { type: String },                        //회사코드
+    company_cd: { type: String },                        //회사코드
     sabun: { type: String },                         //사번
     created_at: { type: Date, default: Date.now },    //생성일자 
     user_flag: { type: String }                      //사용여부(1:사용, 0:미사용)

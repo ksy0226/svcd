@@ -3,7 +3,7 @@
 var mongoose = require('mongoose');
 
 var ManagerTaskSchema = mongoose.Schema({
-    com_cd: { type: String, required:true },          //회사코드
+    company_cd: { type: String, required:true },          //회사코드
     higher_cd : {type: String, required:true},        //상위코드  
     higher_nm : {type: String},        //상위코드명
     lower_cd : {type: String, required:true},        //상위코드  

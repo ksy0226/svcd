@@ -2,7 +2,6 @@
 
 const mongoose = require('mongoose');
 const async = require('async');
-//const CompanyModel = require('../models/Company');
 const HigherProcessModel = require('../models/HigherProcess');
 const logger = require('log4js').getLogger('app');
 const Iconv  = require('iconv-lite');
@@ -119,5 +118,19 @@ module.exports = {
             //res.render('index', {messages: req.flash('info')});
             res.redirect('/higherProcess/list');
         });
-    }
+    },
+
+    getHigherProcess :  (req, res, next) => {   
+        try{
+            HigherProcessModel.find({"company_cd":req.query.company_cd}, function(err, higherProcess) {
+                if (err) return res.json({
+                    success: false,
+                    message: err
+                    });     
+                res.json(higherProcess);
+            });
+        }catch(e){
+            logger.debug(e);
+        }
+    },
 };
