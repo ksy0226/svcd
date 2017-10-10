@@ -6,12 +6,7 @@ $(document).ready(function () {
     //$('input[name="incident[app_menu]"]').val();
 
     $('#higher_cd').on('change',function(){
-        if($(this).val() == 'H008'){
-            $('#app_menu').slideDown(350);
-            //$('#app_menu').attr('style','display:');
-        }else{
-            $('#app_menu').slideUp(350);            
-        }
+        selectedHighProcess(this)
     });
 
     $('.summernote').summernote({
@@ -32,4 +27,14 @@ $(document).ready(function () {
     });
     
 });
+
+function selectedHighProcess(obj){
+    if($(obj).val() == 'H008'){
+        $('#app_menu').slideDown(350);
+        //$('#app_menu').attr('style','display:');
+    }else{
+        $('#app_menu').slideUp(350);            
+    }
+}
+
 

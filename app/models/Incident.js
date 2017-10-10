@@ -12,28 +12,32 @@ var IncidentSchema = new Schema({
     content                 : {type : String},  //내용                                                                       
     request_company_cd      : {type : String},  //요청자 회사코드
     request_company_nm      : {type : String},  //요청자 회사명                                                              
+    request_dept_cd         : {type : String},  //요청자 부코드
+    request_dept_nm         : {type : String},  //요청자 부서명 
     request_sabun           : {type : String},  //요청자 사번 
     request_nm              : {type : String},  //요청자 명                                                               
-    request_complete_date   : {type : String},                    
+    request_complete_date   : {type : String},  //완료요청일
     register_company_cd     : {type : String},  //등록자 회사코드  
     register_company_nm     : {type : String},  //등록자 회사명                                                              
     register_sabun          : {type : String},  //등록자 사번 
-    register_nm             : {type : String},  //등록자 사번                                                                
+    register_nm             : {type : String},  //등록자 명                                                                
     register_date           : {type : String},  //등록일                                                                     
     register_yyyy           : {type : String},  //등록년                                                                     
     register_mm             : {type : String},  //등록월
     real_register_mm        : {type : String},  //실제요청자
     real_contact            : {type : String},  //실제요청자 연락처   
-    app_menu                : {type : String},  //문의 메뉴 경로                                                                          
+    app_menu                : {type : String},  //문의 메뉴 경로 (hr팀요청)                                                                      
     register_dd             : {type : String},  //등록일                                                                     
     receipt_content         : {type : String},  //등록내용                                                                         
     manager_company_cd      : {type : String},  //담당자 회사코드
     manager_company_nm      : {type : String},  //담당자 회사명                                                                          
     manager_sabun           : {type : String},  //담당자 사번
     manager_nm              : {type : String, default:'담당미지정'},  //담당자 명                                                                       
-    manager_dept            : {type : String},  //담당자 부서
-    manager_position        : {type : String},  //담당자 직위
+    manager_dept_cd         : {type : String},  //담당자 부코드
+    manager_dept_nm         : {type : String},  //담당자 부서명   
+    manager_position        : {type : String},  //담당자 직위명
     manager_email           : {type : String},  //담당자 이메일
+    manager_phone           : {type : String},  //담당자 전화
     receipt_date            : {type : Date},    //접수일                                                                          
     business_level          : {type : String},  //난이도                                                                        
     complete_reserve_date   : {type : Date},    //완료예정일                                                                       
