@@ -13,4 +13,6 @@ router.route('/:id/edit').get(controller.edit)
 router.route('/:id/delete').get(controller.delete);
 router.route('/sendmail').get(controller.sendmail);
 
+router.route('/userInfo').get(controller.userInfo);
+
 module.exports = router;

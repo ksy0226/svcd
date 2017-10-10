@@ -8,6 +8,8 @@ const controller = require('../controllers/higherProcess');
 router.route('/new').get(ssc.sessionCheck,controller.new)
                     .post(ssc.sessionCheck,controller.save);
 router.route('/list').get(ssc.sessionCheck,controller.list);
+router.route('/getHigherProcess').get(ssc.sessionCheck,controller.getHigherProcess);
+
 router.route('/:id/show').get(ssc.sessionCheck,controller.show);
 router.route('/:id/edit').get(ssc.sessionCheck,controller.edit)
                          .post(ssc.sessionCheck,controller.update);
