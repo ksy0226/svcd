@@ -18,5 +18,5 @@ var lowerProcessSchema = mongoose.Schema({
 
 
 
-var LowerProcess = mongoose.model('lower', lowerProcessSchema);
+var LowerProcess = mongoose.model('lowerProcess', lowerProcessSchema);
 module.exports = LowerProcess;
