@@ -60,24 +60,24 @@ block content
                                     tbody
                                         tr
                                             th.bg-muted 진행상태
-                                            - if( '#{incident.status_cd}' == "1"){
+                                            - if( incident.status_cd == '1'){
                                                 td
                                                     span.label.label-inverse #{incident.status_nm}
-                                            - }else if( '#{incident.status_cd}' == "2"){
+                                            - }else if( incident.status_cd == '2'){
                                                 td
                                                     span.label.label-primary #{incident.status_nm}       
-                                            - }else if( '#{incident.status_cd}' == "3"){
+                                            - }else if( incident.status_cd == '3'){
                                                 td
                                                     span.label.label-success #{incident.status_nm}       
-                                            - }else if( '#{incident.status_cd}' == "4"){
+                                            - }else if( incident.status_cd == '4'){
                                                 td
                                                     span.label.label-purple #{incident.status_nm}       
-                                            - }else {
+                                            - }else if( incident.status_cd == '5'){
                                                 td
-                                                    span.label.label-info #{incident.status_cd} / #{incident.status_nm}       
+                                                    span.label.label-info #{incident.status_nm}       
                                             - }
                                             th.bg-muted 긴급구분
-                                            - if( '#{incident.process_speed}' == "1"){
+                                            - if( incident.process_speed == '1'){
                                                 td 보통
                                             - }else{
                                                 td 긴급
