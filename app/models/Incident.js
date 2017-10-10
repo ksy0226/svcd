@@ -43,7 +43,7 @@ var IncidentSchema = new Schema({
     program_id              : {type : String},                                                                           
     delay_reason            : {type : String},  //지연사유                                                                           
     need_minute             : {type : Number},  //작업시간                                                                         
-    complete_date           : {type : Date},    //완요일                                                                       
+    complete_date           : {type : Date},    //완료일                                                                       
     valuation               : {type : Number, default : 0},  //평가점수                                                                         
     reading_cnt             : {type : Number},                                                                           
     complete_open_flag      : {type : String, default : 'N'},  //완료후공개여부                                                                     

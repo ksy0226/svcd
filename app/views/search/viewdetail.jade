@@ -92,8 +92,13 @@ block content
                                                 <span class="label label-success">미평가</span>
                                                 <span class="label label-purple">완료</span>
                                         th.bg-muted 긴급구분
-                                        //td 보통
-                                        td #{incident.business_level}
+                                        - if( '#{incident.process_speed}' == "1"){
+                                            td 보통
+                                        - }else{
+                                            td 긴급
+                                        - }
+                                        
+
                                     tr
                                         th.bg-muted 상위업무
                                         td #{incident.higher_nm}
@@ -116,7 +121,7 @@ block content
                                         th.bg-muted 요청내용
                                         td(colspan='3') #!{incident.content}
                                     tr(style='display:')
-                                        th.bg-muted 청부파일
+                                        th.bg-muted 첨부파일
                                         td(colspan='3')
                                             i.fa.fa-paperclip.m-r-10
                                             a(href='#')
@@ -126,8 +131,6 @@ block content
                                         td(colspan='3')
                                             | 접수하였습니다.
                                             br
-                                            | 											접수하였습니다.
-                                            br
                                     tr
                                         th.bg-muted 처리담당자
                                         td  #{incident.manager_nm}
@@ -135,10 +138,10 @@ block content
                                         td  #{incident.receipt_date}
                                     tr
                                         th.bg-muted 완료예정일
-                                        td 2017-09-20 00:0
+                                        td #{incident.complete_reserve_date}
                                         th.bg-muted 난이도
                                         td
-                                            span.badge.badge-danger S
+                                            span.badge.badge-danger #{incident.business_level}
                             h4.m-t-30
                                 b 처리 내용
                             hr.m-0
@@ -151,10 +154,10 @@ block content
                                 tbody
                                     tr
                                         th.bg-muted 처리구분
-                                        td(colspan='3')
+                                        td(colspan='3') 
                                     tr
                                         th.bg-muted 처리내용
-                                        td(colspan='3')
+                                        td(colspan='3') #{incident.complete_content}
                                     tr
                                         th.bg-muted 첨부파일
                                         td(colspan='3')
