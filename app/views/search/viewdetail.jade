@@ -84,21 +84,28 @@ block content
                                 tbody
                                     tr
                                         th.bg-muted 진행상태
-                                        td
-                                            span.label.label-primary 처리중
-                                            //
-                                                <span class="label label-info">보류</span>
-                                                <span class="label label-inverse">접수</span>
-                                                <span class="label label-success">미평가</span>
-                                                <span class="label label-purple">완료</span>
+                                        - if( '#{incident.status_cd}' == "1"){
+                                            td
+                                                span.label.label-inverse #{incident.status_nm}
+                                        - }else if( '#{incident.status_cd}' == "2"){
+                                            td
+                                                span.label.label-primary #{incident.status_nm}       
+                                        - }else if( '#{incident.status_cd}' == "3"){
+                                            td
+                                                span.label.label-success #{incident.status_nm}       
+                                        - }else if( '#{incident.status_cd}' == "4"){
+                                            td
+                                                span.label.label-purple #{incident.status_nm}       
+                                        - }else {
+                                            td
+                                                span.label.label-info #{incident.status_cd} / #{incident.status_nm}       
+                                        - }
                                         th.bg-muted 긴급구분
                                         - if( '#{incident.process_speed}' == "1"){
                                             td 보통
                                         - }else{
                                             td 긴급
                                         - }
-                                        
-
                                     tr
                                         th.bg-muted 상위업무
                                         td #{incident.higher_nm}
@@ -131,17 +138,7 @@ block content
                                         td(colspan='3')
                                             | 접수하였습니다.
                                             br
-                                    tr
-                                        th.bg-muted 처리담당자
-                                        td  #{incident.manager_nm}
-                                        th.bg-muted 접수일
-                                        td  #{incident.receipt_date}
-                                    tr
-                                        th.bg-muted 완료예정일
-                                        td #{incident.complete_reserve_date}
-                                        th.bg-muted 난이도
-                                        td
-                                            span.badge.badge-danger #{incident.business_level}
+                                    
                             h4.m-t-30
                                 b 처리 내용
                             hr.m-0
@@ -153,41 +150,42 @@ block content
                                     col(width='30%')
                                 tbody
                                     tr
+                                        th.bg-muted 처리담당자
+                                        td  #{incident.manager_nm}
+                                        th.bg-muted 접수일
+                                        td  #{incident.receipt_date}
+                                    tr
+                                        th.bg-muted 완료예정일
+                                        td #{incident.complete_reserve_date}
+                                        th.bg-muted 난이도
+                                        td
+                                            span.badge.badge-danger #{incident.business_level}
+                                    tr
                                         th.bg-muted 처리구분
                                         td(colspan='3') 
                                     tr
                                         th.bg-muted 처리내용
                                         td(colspan='3') #{incident.complete_content}
-                                    tr
-                                        th.bg-muted 첨부파일
-                                        td(colspan='3')
-                                    tr
-                                        th.bg-muted Program_ID
-                                        td(colspan='3')
+
                                     tr
                                         th.bg-muted 처리완료일
-                                        td
+                                        td #{incident.complete_date}
                                         th.bg-muted 처리소요시간
                                         td
                                             i.fa.fa-clock-o.text-muted
-                                            b.m-l-10.m-r-5 8
+                                            b.m-l-10.m-r-5 #{incident.need_minute}
                                             | 시간
                                     tr
                                         th.bg-muted 지연사유
-                                        td(colspan='3')
+                                        td(colspan='3') #{incident.delay_reason}
                                     tr
                                         th.bg-muted 평가
-                                        td
-                                        th.bg-muted 공개여부/조휘수
-                                        td 비공개/ 0
-                                    th.bg-muted.font-13
-                                        | Opti-DPP
-                                        br
-                                        | 										사용자확인정보
-                                    td(colspan='3')
+                                        td #{incident.valuation}
+                                        th.bg-muted 공개여부 / 조회수
+                                        td #{incident.complete_open_flag} / #{incident.reading_cnt}
                                     tr
                                         th.bg-muted.text-danger 내부공유사항
-                                        td(colspan='3')
+                                        td(colspan='3') #{incident.sharing_content}
                 // end Grid Area
             // end container
         // end content
