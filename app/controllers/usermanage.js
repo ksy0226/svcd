@@ -185,7 +185,7 @@ module.exports = {
         });
         res.send("Email has been sent successfully");
         */
-    }
+    },
     /*
 
     exceldownload: (req, res, next) => {
@@ -204,4 +204,25 @@ module.exports = {
             res.json(companyJsonData);
         });
     }*/
+
+    userInfo: (req, res, next) => {
+        Usermanage.find({employee_nm: { $regex : new RegExp(req.query.request_info, "i") }}, function (err, usermanageData) {
+            if (err) return res.json({
+                success: false,
+                message: err
+            });
+
+            //console.log(usermanageData);
+            //res.json(companyJsonData);
+            //res.send({usermanageData : usermanageData});
+
+            //res.render("usermanage/index", {
+            //usermanageData : usermanageData
+            //});
+            res.json(usermanageData);
+        });
+    }
+
+
+
 };

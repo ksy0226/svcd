@@ -53,10 +53,11 @@ module.exports = {
                         req.session.password = usermanage.password;
                         req.session.user_flag = usermanage.user_flag;
                         req.session.group_flag = usermanage.group_flag;
-                        req.session.user_nm = usermanage.user_nm;
+                        req.session.user_nm = usermanage.employee_nm;
                         req.session.company_cd = usermanage.company_cd;
                         req.session.sabun = usermanage.sabun;
-                        
+                        req.session.office_tel_no = usermanage.office_tel_no;
+                        req.session.hp_telno = usermanage.hp_telno;
                         res.render('main/main',
                                 {   user_flag : req.session.user_flag, 
                                     group_flag : req.session.group_flag,

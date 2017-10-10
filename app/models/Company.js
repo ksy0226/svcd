@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var companySchema = mongoose.Schema({
-    com_cd: { type: String, required: true },      //회사코드
+    company_cd: { type: String, required: true },      //회사코드
     com_nm: { type: String, required: true },      //회사명
     ceo_nm: { type: String },                      //대표자명
     zip_cd: { type: String },                      //우편번호

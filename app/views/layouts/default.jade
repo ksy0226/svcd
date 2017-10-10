@@ -24,7 +24,8 @@ html
     // Plugins
     script(src='/assets/js/jquery.min.js')
     script(src='/assets/js/bootstrap.min.js')
-      
+    script(type='text/javascript').
+        var resizefunc = [];  
 
   block head
   body.widescreen.fixed-left-void
@@ -102,7 +103,7 @@ html
                   span.label.label-success.pull-right 6
                 ul.list-unstyled
                   li
-                    a(href='/incident/new/문의하기') 상담접수(전화)
+                    a(href='/incident/new_mng') 상담접수(전화)
                   li
                     a(href='/manager/myworklist') 나의 업무처리현황
                   li

@@ -57,11 +57,29 @@ module.exports = {
                     err: err
                 });
             }
+            var real_contact = req.session.office_tel_no+'/';
+            real_contact += req.session.hp_telno+'/';
+            real_contact += req.session.email+'/';
+            if(real_contact == "//") real_contact = "";
+
             res.render("incident/new", {
-                companyProcess: companyProcess
+                companyProcess: companyProcess,
+                user_nm : req.session.user_nm,
+                sabun : req.session.sabun,
+                office_tel_no : req.session.office_tel_no,
+                hp_telno : req.session.hp_telno,
+                real_contact : real_contact
             });
         });
     },
+
+    /** 
+     * incident 등록 화면(담당자)
+     */
+    new_mng: (req, res, next) => {
+        res.render("incident/new_mng");
+    },
+
 
     /** 
      * incident 저장
