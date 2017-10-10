@@ -101,6 +101,7 @@ module.exports = {
                 }
                 logger.debug("*** incident : ", incident.attach_file);
                 */
+
                 res.render("search/viewdetail", {
                     incident: incident
                 });

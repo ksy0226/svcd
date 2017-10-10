@@ -4,7 +4,7 @@ var autoIncrement = require('mongoose-auto-increment');
 
 var IncidentSchema = new Schema({
     register_num            : {type : Number, require : true},                                                                                                                      
-    status                  : {type : String, default : '1'},  //진행상태(processStatus 모델)  
+    status_cd               : {type : String, default : '1'},  //진행상태(processStatus 모델)  
     status_nm               : {type : String, default : '접수대기'},  //진행상태명            
     process_speed           : {type : String},  //긴급구분                                                                   
     course_flag             : {type : String},                                                                           
@@ -26,7 +26,7 @@ var IncidentSchema = new Schema({
     register_mm             : {type : String},  //등록월
     real_register_mm        : {type : String},  //실제요청자
     real_contact            : {type : String},  //실제요청자 연락처   
-    app_menu                : {type : String},  //문의 메뉴 경로 (hr팀요청)                                                                      
+    app_menu                : {type : String, default : 'ServiceDesk'},  //문의 메뉴 경로                                                                          
     register_dd             : {type : String},  //등록일                                                                     
     receipt_content         : {type : String},  //등록내용                                                                         
     manager_company_cd      : {type : String},  //담당자 회사코드

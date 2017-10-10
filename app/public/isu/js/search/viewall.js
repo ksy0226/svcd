@@ -45,8 +45,15 @@ $(document).ready(function () {
     
     //하위업무 변경 시
     $('#lower_nm').on('change', function () {
-        //alert($('#lower_nm').val());
+        alert($('#lower_nm').val());
         research();
+    });
+
+    //TR 클릭 시
+    $('#dataTR').on('click', function () {
+        alert("22222");
+        window.location = $(this).attr('href');
+        return false;
     });
     
 });
@@ -125,7 +132,12 @@ function getDataList(){
 
 
 //내용 매핑
-function setDataList(dataObj) {    
+function setDataList(dataObj) {
+    alert('dataObj.length'+dataObj.length);
+    
+    //더보기 버튼 처리
+    //setMoreBtn(dataObj);
+
     //조회 내용 추가
     if (rowIdx < dataObj.length) {
 

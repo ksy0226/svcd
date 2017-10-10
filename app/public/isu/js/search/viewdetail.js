@@ -12,5 +12,5 @@ $(document).ready(function () {
 });
 
 function getDataContent(){
-    alert("로딩");
+    //alert("로딩");
 }
