@@ -24,7 +24,7 @@ var IncidentSchema = new Schema({
     register_mm             : {type : String},  //등록월
     real_register_mm        : {type : String},  //실제요청자
     real_contact            : {type : String},  //실제요청자 연락처   
-    app_menu                : {type : String},  //문의 메뉴 경로                                                                          
+    app_menu                : {type : String, default : 'ServiceDesk'},  //문의 메뉴 경로                                                                          
     register_dd             : {type : String},  //등록일                                                                     
     receipt_content         : {type : String},  //등록내용                                                                         
     manager_company_cd      : {type : String},  //담당자 회사코드

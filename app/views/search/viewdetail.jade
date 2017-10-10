@@ -93,32 +93,28 @@ block content
                                                 <span class="label label-purple">완료</span>
                                         th.bg-muted 긴급구분
                                         //td 보통
-                                        td '#{incident.business_level}'
+                                        td #{incident.business_level}
                                     tr
                                         th.bg-muted 상위업무
-                                        td 
+                                        td #{incident.higher_nm}
                                         th.bg-muted 하위업무
-                                        td
+                                        td #{incident.lower_nm}
                                     tr
                                         th.bg-muted 요청자
-                                        td 주식회사 이수시스템/박선우
+                                        td #{incident.request_company_nm} / #{incident.request_nm}
                                         th.bg-muted 완료요청일
-                                        td 2017-09-23 00:00
+                                        td #{incident.request_complete_date}
                                     tr
                                         th.bg-muted 요청경로
-                                        td ServiceDesk
+                                        td #{incident.app_menu}
                                         th.bg-muted 등록자/등록일
-                                        td 홍길동 2017-09-20 00:00
+                                        td #{incident.register_nm} / #{incident.register_date}
                                     tr
                                         th.bg-muted 제목
-                                        td(colspan='3')
+                                        td(colspan='3') #{incident.title}
                                     tr
                                         th.bg-muted 요청내용
-                                        td(colspan='3')
-                                            | 요청하였습니다.
-                                            br
-                                            | 											요청하였습니다.
-                                            br
+                                        td(colspan='3') #!{incident.content}
                                     tr(style='display:')
                                         th.bg-muted 청부파일
                                         td(colspan='3')
@@ -134,9 +130,9 @@ block content
                                             br
                                     tr
                                         th.bg-muted 처리담당자
-                                        td 박선우
+                                        td  #{incident.manager_nm}
                                         th.bg-muted 접수일
-                                        td 홍길동 2017-09-20 00:00<
+                                        td  #{incident.receipt_date}
                                     tr
                                         th.bg-muted 완료예정일
                                         td 2017-09-20 00:0
