@@ -34,37 +34,6 @@ module.exports = {
                 });
             }
         });
-        /*
-        var search = service.createSearch(req);
-       
-        async.waterfall([function (callback) {
-            //console.log('search.findSearch : ' , search.findSearch);
-            //console.log('datepicker_rcdValue : ', req.query.datepicker_rcd);
-            //console.log('datepicker_rcd2Value : ', req.query.datepicker_rcd2);
-            
-            IncidentModel.find(search.findSearch, function (err, incident) {
-                logger.debug('2 : ' , search.findSearch.$or);
-                if (err) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                }
-                callback(null, incident)
-            });
-        }], function (err, incident) {
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            }
-            res.render("search/viewall", {
-                incident: incident,
-                datepicker_rcd: req.query.datepicker_rcd,
-                datepicker_rcd2: req.query.datepicker_rcd2
-            });
-        });
-        */
-
     },
 
     qna: (req, res, next) => {
@@ -107,6 +76,36 @@ module.exports = {
 
     viewdetail: (req, res, next) => {
 
+        logger.debug("Trace viewDetail : ", req.params.id);
+        IncidentModel.findById({
+            _id: req.params.id
+        }, function (err, incident) {
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: err
+                });
+            } else {
+                /*
+                logger.debug(">>> incident : ", incident.attach_file);
+                //path 길이 잘라내기
+                if (incident.attach_file.length > 0) {
+                    for (var i = 0; i < incident.attach_file.length; i++) {
+                        var path = incident.attach_file[i].path
+                        incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
+                        logger.debug("==========> incident.attach_file[i].mimetype.indexOf('image') ",incident.attach_file[i].mimetype.indexOf('image'));
+                        if(incident.attach_file[i].mimetype.indexOf('image')>-1){
+                            incident.attach_file[i].mimetype = 'image';
+                        }
+                    }
+                }
+                logger.debug("*** incident : ", incident.attach_file);
+                */
+                res.render("search/viewdetail", {
+                    incident: incident
+                });
+            }
+        });
     },
 
     searchall: (req, res, next) => {
@@ -215,7 +214,6 @@ module.exports = {
 
 
     list: (req, res, next) => {
-        console.log("search/list...");
         var search = service.createSearch(req);
 
         async.waterfall([function (callback) {
