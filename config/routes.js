@@ -8,7 +8,6 @@ const app = require('../app');
 module.exports = () => {
 
     /*------------------- Routes -------------------*/
-
     router.use('/', require('../app/routes/index'));
     //router.use('/register', require('../app/routes/register'));
     //router.use('/account', require('../app/routes/account'));
@@ -18,6 +17,7 @@ module.exports = () => {
     router.use('/search', require('../app/routes/search'));
     router.use('/higherProcess', require('../app/routes/higherProcess'));
     router.use('/lowerProcess', require('../app/routes/lowerProcess'));
+    router.use('/oftenqa', require('../app/routes/oftenqa'));
 
     /// catch 404 and forward to error handler
     router.use(function(req, res, next) {
