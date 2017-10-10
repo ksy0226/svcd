@@ -36,15 +36,15 @@ module.exports = {
                 callback(null, higher)
             });
         }, function (higher, callback) {
-            CompanyModel.find({}, function (err, com) {
+            CompanyModel.find({}, function (err, company) {
                 if (err) {
                     res.render("http/500", {
                         err: err
                     });
                 }
-                callback(null, higher, com)
+                callback(null, higher, company)
             });
-        }], function (err, higher, com) {
+        }], function (err, higher, company) {
             if (err) {
                 res.render("http/500", {
                     err: err
@@ -52,7 +52,7 @@ module.exports = {
             } else {
                 res.render("lowerProcess/new", {
                     higher: higher,
-                    com : com
+                    company : company
                 });
             }
         });
