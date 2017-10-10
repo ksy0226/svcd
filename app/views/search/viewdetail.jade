@@ -25,6 +25,9 @@ block head
         if lt IE 9
         script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
         script(src='https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js')
+
+    script(src='/isu/js/search/viewdetail.js', type='text/javascript')
+
 block content
     .content-page
         .content
@@ -89,10 +92,11 @@ block content
                                                 <span class="label label-success">미평가</span>
                                                 <span class="label label-purple">완료</span>
                                         th.bg-muted 긴급구분
-                                        td 보통
+                                        //td 보통
+                                        td '#{incident.business_level}'
                                     tr
                                         th.bg-muted 상위업무
-                                        td
+                                        td 
                                         th.bg-muted 하위업무
                                         td
                                     tr
@@ -185,28 +189,6 @@ block content
                                     tr
                                         th.bg-muted.text-danger 내부공유사항
                                         td(colspan='3')
-                            //
-                                start pagination
-                                <div class="row">
-                                <div class="col-sm-4">
-                                <div class="dataTables_info">Showing 1 to 10 of 57 entries</div>
-                                </div>
-                                <div class="col-sm-8">
-                                <div class="dataTables_paginate paging_simple_numbers pull-right">
-                                <ul class="pagination">
-                                <li class="cpaginate_button previous"><a href="#">Previous</a></li>
-                                <li class="cpaginate_button active"><a href="#">1</a></li>
-                                <li class="cpaginate_button"><a href="#">2</a></li>
-                                <li class="cpaginate_button"><a href="#">3</a></li>
-                                <li class="cpaginate_button"><a href="#">4</a></li>
-                                <li class="cpaginate_button"><a href="#">5</a></li>
-                                <li class="cpaginate_button"><a href="#">6</a></li>
-                                <li class="cpaginate_button next"><a href="#">Next</a></li>
-                                </ul>
-                                </div>
-                                </div>
-                                </div>
-                                end pagination
                 // end Grid Area
             // end container
         // end content
