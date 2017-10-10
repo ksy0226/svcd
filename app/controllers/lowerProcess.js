@@ -36,7 +36,7 @@ module.exports = {
                 callback(null, higher)
             });
         }, function (higher, callback) {
-            CompanyModel.find({}, function (err, higher, com) {
+            CompanyModel.find({}, function (err, com) {
                 if (err) {
                     res.render("http/500", {
                         err: err
