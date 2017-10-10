@@ -5,16 +5,16 @@ html
     meta(name='viewport', content='width=device-width,initial-scale=1')
     meta(name='description', content='A fully featured admin theme which can be used to build CRM, CMS, etc.')
     meta(name='author', content='Coderthemes')
-    link(rel='shortcut icon', href='/assets/images/favicon_1.ico')
+    link(href='/assets/images/favicon_1.ico', rel='shortcut icon')
     title Service Desk - HOME
     link(href='/plugins/switchery/switchery.min.css', rel='stylesheet')
-    link(href='/plugins/jquery-circliful/css/jquery.circliful.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/bootstrap.min.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/core.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/icons.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/components.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/menu_light.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/responsive.css', rel='stylesheet', type='text/css')
+    link(type='text/css', href='/plugins/jquery-circliful/css/jquery.circliful.css', rel='stylesheet')
+    link(type='text/css', href='/assets/css/bootstrap.min.css', rel='stylesheet')
+    link(type='text/css', href='/assets/css/core.css', rel='stylesheet')
+    link(type='text/css', href='/assets/css/icons.css', rel='stylesheet')
+    link(type='text/css', href='/assets/css/components.css', rel='stylesheet')
+    link(type='text/css', href='/assets/css/menu_light.css', rel='stylesheet')
+    link(type='text/css', href='/assets/css/responsive.css', rel='stylesheet')
     script(src='/assets/js/modernizr.min.js')
     // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
     // WARNING: Respond.js doesn't work if you view the page via file://
@@ -155,7 +155,8 @@ html
                     a(href='gw_sub4_6.html') 처리구분 코드조회
                   li
                     a(href='gw_sub4_7.html') 업무별 담당자현황
-                  // <li><a href="gw_sub4_8.html">자주묻는 질문과답</a></li>
+                  li
+                    a(href='gw_sub4_7.html') 자주묻는 질문과답
               - }
               - if(session.user_flag ==1){ 
               li
