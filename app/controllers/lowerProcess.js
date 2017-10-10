@@ -2,9 +2,9 @@
 
 const mongoose = require('mongoose');
 const async = require('async');
-//const CompanyModel = require('../models/Company');
 const LowerProcessModel = require('../models/LowerProcess');
 const HigherProcessModel = require('../models/HigherProcess');
+const CompanyModel = require('../models/Company');
 const logger = require('log4js').getLogger('app');
 const Iconv = require('iconv-lite');
 
@@ -32,18 +32,27 @@ module.exports = {
                     res.render("http/500", {
                         err: err
                     });
-                } else {
-                    callback(null, higher)
                 }
+                callback(null, higher)
             });
-        }], function (err, higher) {
+        }, function (higher, callback) {
+            CompanyModel.find({}, function (err, higher, com) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null, higher, com)
+            });
+        }], function (err, higher, com) {
             if (err) {
                 res.render("http/500", {
                     err: err
                 });
             } else {
                 res.render("lowerProcess/new", {
-                    higher: higher
+                    higher: higher,
+                    com : com
                 });
             }
         });
