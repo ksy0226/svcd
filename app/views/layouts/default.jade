@@ -105,11 +105,11 @@ html
                   li
                     a(href='/incident/new_mng') 상담접수(전화)
                   li
-                    a(href='/manager/myworklist') 나의 업무처리현황
+                    a(href='/manager/work_list') 나의 업무처리현황
                   li
-                    a(href='/manager/mywork') 나의 업무지정
+                    a(href='/manager/work_assign') 나의 업무지정
                   li
-                    a(href='/manager/mymonthlist') 월별 처리내역
+                    a(href='/manager/month_list') 월별 처리내역
               - }
               - if(session.user_flag !=9){
               li.has_sub
@@ -119,17 +119,17 @@ html
                   span.menu-arrow
                 ul.list-unstyled
                   li
-                    a(href='/search/searchall') 전체내용검색
+                    a(href='/search/mng_list') 전체내용검색
                   li
-                    a(href='/search/comhigherstatistic') 회사별 상위업무통계
+                    a(href='/statistic/com_higher') 회사별 상위업무통계
                   li
-                    a(href='/search/highlowerstatistic') 상위별 하위업무통계
+                    a(href='/statistic/high_lowers') 상위별 하위업무통계
                   li
-                    a(href='/search/remainlist') 미해결 현황
+                    a(href='/search/remain_list') 미해결 현황
                   li
-                    a(href='/search/managermonthlist') 담당자별 월별 처리내역
+                    a(href='/statistic/mng_month') 담당자별 월별 처리내역
                   li
-                    a(href='/search/gubunlist') 처리구분별 처리내역
+                    a(href='/search/status_list') 처리구분별 처리내역
               - }
               - if(session.user_flag ==1 || session.user_flag ==4){
               li.has_sub
@@ -157,7 +157,7 @@ html
                   li
                     a(href='gw_sub4_7.html') 업무별 담당자현황
                   li
-                    a(href='gw_sub4_7.html') 자주묻는 질문과답
+                    a(href='/oftenqa/') 자주묻는 질문과답
               - }
               - if(session.user_flag ==1){ 
               li
