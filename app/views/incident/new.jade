@@ -73,7 +73,7 @@ block content
                     .col-sm-12
                         .btn-toolbar.m-t-10(role='toolbar')
                             .pull-right
-                                button.btn.btn-primary.waves-effect.waves-light.m-r-5(type='submit')
+                                button#saveBtn.btn.btn-primary.waves-effect.waves-light.m-r-5(type='button')
                                     span 저장
                                     i.fa.fa-send.m-l-10
                 .row
@@ -82,7 +82,7 @@ block content
                             .p-20
                                 form.form-horizontal.group-border-dashed(id='form' name='form' action='/incident/new' method='post' enctype="multipart/form-data")  
                                     .form-group
-                                        label.col-sm-2.control-label 상위업무
+                                        label.col-sm-2.control-label 요청업무
                                         .col-sm-4
                                             select#higher_cd.form-control(name='incident[higher_cd]')
                                                 option(value ='') 선택하세요
