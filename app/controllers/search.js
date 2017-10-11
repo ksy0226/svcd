@@ -6,7 +6,7 @@ const CompanyModel = require('../models/Company');
 const IncidentModel = require('../models/Incident');
 const HigherProcessModel = require('../models/HigherProcess');
 const LowerProcessModel = require('../models/LowerProcess');
-var service = require('../services/search');
+const service = require('../services/incident');
 const logger = require('log4js').getLogger('app');
 const Iconv  = require('iconv-lite');
 
