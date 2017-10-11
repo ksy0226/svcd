@@ -211,6 +211,9 @@ module.exports = {
         res.download(filepath);
     },
 
+    /**
+     * Incident 조회
+     */
     getIncident: (req, res, next) => {
 
         var search = service.createSearch(req);
@@ -233,6 +236,17 @@ module.exports = {
             }
             res.send(incident);
         });
+    },
+
+    /**
+     * summernote 이미지링크 처리
+     */
+    insertedImage: (req, res, next) => {    
+        //res.send( '/uploads/' + req.file.filename);
+        logger.debug("=====================>incident controllers insertedImage");
+        res.send(req.file.filename);
+        logger.debug("=====================>incident controllers insertedImage");
+        logger.debug("=====================>incident controllers insertedImage");
     },
 
 };
