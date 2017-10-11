@@ -38,13 +38,13 @@ $(document).ready(function () {
     
 
     //상위업무 변경 시
-    $('#higher_nm').on('change', function () {
+    $('#higher_cd').on('change', function () {
         getLowerProcessList();
         research();
     });
     
     //하위업무 변경 시
-    $('#lower_nm').on('change', function () {
+    $('#lower_cd').on('change', function () {
         research();
     });
 
@@ -69,12 +69,12 @@ function research(){
 
 
 function getLowerProcessList(){
-    var reqParam = 'higher_nm=' + $('#higher_nm').val();
+    var reqParam = 'higher_cd=' + $('#higher_cd').val();
     $.ajax({
         type: "GET",
         url: "/search/getlowerprocess",
         contentType: "application/json",
-        data: JSON.stringify({"higher_nm":reqParam}),
+        data: JSON.stringify({"higher_cd":reqParam}),
         dataType: "json",
         success: function(data, status){
             setContent(data, reqParam);
@@ -86,24 +86,24 @@ function getLowerProcessList(){
     });
 }
 
-function setContent(data, higher_nm){
-    $('#lower_nm').empty();
-    $('#lower_nm').append("<option value=''> 전체</option>");
+function setContent(data, higher_cd){
+    $('#lower_cd').empty();
+    $('#lower_cd').append("<option value=''> 전체</option>");
     
     for(var i=0; i<data.length; i++){
-        var lower_nmVal = data[i]["lower_nm"];
-        if(data[i]["higher_nm"] == $('#higher_nm').val()){
-            $('#lower_nm').append("<option value='"+lower_nmVal+"'>"+data[i]["lower_nm"]+"</option>");
+        var lower_cdVal = data[i]["lower_cd"];
+        if(data[i]["higher_cd"] == $('#higher_cd').val()){
+            $('#lower_cd').append("<option value='"+lower_cdVal+"'>"+data[i]["lower_cd"]+"</option>");
         }
     }
 }
 
 
 function getDataList(){
-    if($('#lower_nm').val() ==""){
-        $('#lower_nm').val() = "*";
+    if($('#lower_cd').val() ==""){
+        $('#lower_cd').val() = "*";
     }
-    var reqParam = 'searchType=' + $('#searchType').val() + '&higher_nm=' + $('#higher_nm').val() + '&lower_nm=' + $('#lower_nm').val() + '&datepicker_rcd=' + $('#datepicker_rcd').val()+ '&datepicker_rcd2=' + $('#datepicker_rcd2').val()+ '&searchText=' + $('#searchText').val();
+    var reqParam = 'searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&lower_cd=' + $('#lower_cd').val() + '&datepicker_rcd=' + $('#datepicker_rcd').val()+ '&datepicker_rcd2=' + $('#datepicker_rcd2').val()+ '&searchText=' + $('#searchText').val();
 
     $.ajax({
         type: "GET",
