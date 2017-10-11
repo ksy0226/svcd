@@ -3,7 +3,7 @@ block head
     link(href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css', rel='stylesheet', type='text/css')
     //link(href='/isu/css/board_style.css', rel='stylesheet')
 
-    script(src='/isu/js/search/user_detail.js', type='text/javascript')
+    //script(src='/isu/js/search/user_detail.js', type='text/javascript')
 block content
     .content-page
         // Start content
@@ -26,7 +26,7 @@ block content
                         .col-lg-12
                             .btn-toolbar.m-t-10(role='toolbar')
                                 .pull-left
-                                    button.btn.btn-primary.waves-effect.waves-light.m-l-5(type='button' id='goList')
+                                    button.btn.btn-primary.waves-effect.waves-light.m-l-5(type='button' onClick='history.back();')
                                         i.fa.fa-bars
                                         |  목록
                                     button.btn.btn-primary.waves-effect.waves-light.m-l-5(type='button')
