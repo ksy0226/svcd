@@ -82,7 +82,8 @@ module.exports = {
      * 사용자별 상세조회
      */
     user_detail: (req, res, next) => {
-
+        console.log(new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') );
+        
         logger.debug("Trace user_detail : ", req.params.id);
         IncidentModel.findById({
             _id: req.params.id
@@ -109,6 +110,14 @@ module.exports = {
                 logger.debug("*** incident : ", incident.attach_file);
                 */
 
+                //완료요청일, 등록일, 접수일, 완료예정일, 완료일
+                incident.request_complete_date = new Date(incident.request_complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                incident.register_date = new Date(incident.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                incident.receipt_date = new Date(incident.receipt_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                incident.complete_reserve_date = new Date(incident.complete_reserve_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                incident.complete_date = new Date(incident.complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                
+                
                 res.render("search/user_detail", {
                     incident: incident
                 });
