@@ -45,13 +45,11 @@ $(document).ready(function () {
     
     //하위업무 변경 시
     $('#lower_nm').on('change', function () {
-        alert($('#lower_nm').val());
         research();
     });
 
     //TR 클릭 시
     $('#dataTR').on('click', function () {
-        alert("22222");
         window.location = $(this).attr('href');
         return false;
     });
@@ -133,11 +131,6 @@ function getDataList(){
 
 //내용 매핑
 function setDataList(dataObj) {
-    alert('dataObj.length'+dataObj.length);
-    
-    //더보기 버튼 처리
-    //setMoreBtn(dataObj);
-
     //조회 내용 추가
     if (rowIdx < dataObj.length) {
 
@@ -152,7 +145,7 @@ function setDataList(dataObj) {
             register_dateVal = register_dateVal.substring(0,10);
             var idValue = dataObj[i]._id ;
             var addList = "";
-            addList += "							<tr id='dataTR' onclick=window.location='/search/viewdetail/" + dataObj[i]._id + "'>";
+            addList += "							<tr id='dataTR' onclick=window.location='/search/user_detail/" + dataObj[i]._id + "'>";
             addList += "								<td>" + dataObj[i].higher_nm + "</td>";
             addList += "								<td>" + dataObj[i].lower_nm + "</td>";
             addList += "								<td>" + dataObj[i].title + "</td>";
