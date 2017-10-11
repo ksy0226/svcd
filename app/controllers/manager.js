@@ -5,7 +5,7 @@ const async = require('async');
 const Incident = require('../models/Incident');
 const ProcessStatus = require('../models/ProcessStatus');
 const LowerProcess = require('../models/LowerProcess');
-const service = require('../services/manager');
+const service = require('../services/incident');
 const logger = require('log4js').getLogger('app');
 const Iconv  = require('iconv-lite');
 
