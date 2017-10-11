@@ -18,7 +18,7 @@ module.exports = () => {
     router.use('/search', require('../app/routes/search'));
     router.use('/higherProcess', require('../app/routes/higherProcess'));
     router.use('/lowerProcess', require('../app/routes/lowerProcess'));
-    router.use('/oftenqa', require('../app/routes/oftenqa'));
+    router.use('/oftenqa', require('../app/routes/oftenqna'));
 
     /// catch 404 and forward to error handler
     router.use(function(req, res, next) {
