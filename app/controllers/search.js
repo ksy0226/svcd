@@ -12,8 +12,10 @@ const Iconv  = require('iconv-lite');
 
 module.exports = {
 
-
-    viewall: (req, res, next) => {
+    /**
+     * 사용자별 리스트
+     */
+    user_list: (req, res, next) => {
         async.waterfall([function (callback) {
             HigherProcessModel.find({},function (err, higherprocess) {
                 if (err) {
@@ -29,13 +31,16 @@ module.exports = {
                     err: err
                 });
             }else{
-                res.render("search/viewall", {
+                res.render("search/user_list", {
                     higherprocess: higherprocess
                 });
             }
         });
     },
 
+    /**
+     * 자주묻는 질문과 답
+     */
     qna: (req, res, next) => {
         /*
         IncidentModel.find(req.body.incident, function(err, incident) {
@@ -46,7 +51,7 @@ module.exports = {
                     err: err
                 });
             }
-            res.render("search/qna", {
+            res.render("search/user_qna", {
                 incident: incident
             });
         }).sort('-created_at');
@@ -67,16 +72,19 @@ module.exports = {
                     err: err
                 });
             }else{
-                res.render("search/qna", {
+                res.render("search/user_qna", {
                     higherprocess: higherprocess
                 });
             }
         });      
     },
 
-    viewdetail: (req, res, next) => {
+    /**
+     * 사용자별 상세조회
+     */
+    user_detail: (req, res, next) => {
 
-        logger.debug("Trace viewDetail : ", req.params.id);
+        logger.debug("Trace user_detail : ", req.params.id);
         IncidentModel.findById({
             _id: req.params.id
         }, function (err, incident) {
@@ -102,14 +110,17 @@ module.exports = {
                 logger.debug("*** incident : ", incident.attach_file);
                 */
 
-                res.render("search/viewdetail", {
+                res.render("search/user_detail", {
                     incident: incident
                 });
             }
         });
     },
 
-    searchall: (req, res, next) => {
+    /**
+     * 전체 조회(관리자용)
+     */
+    mng_list: (req, res, next) => {
         IncidentModel.find(req.body.incident, function(err, incident) {
             //logger.debug('err', err, '\n');
             logger.debug('list 호출');
@@ -118,13 +129,16 @@ module.exports = {
                     err: err
                 });
             }
-            res.render("search/searchall", {
+            res.render("search/mng_list", {
                 incident: incident
             });
         }).sort('-createdAt');
     },
 
-    comhigherstatistic : (req, res, next) => {
+    /**
+     * 연도별 미처리 리스트
+     */
+    remain_list : (req, res, next) => {
         IncidentModel.find(req.body.incident, function(err, incident) {
             //logger.debug('err', err, '\n');
             logger.debug('list 호출');
@@ -133,58 +147,16 @@ module.exports = {
                     err: err
                 });
             }
-            res.render("search/comhigherstatistic", {
+            res.render("search/remain_list", {
                 incident: incident
             });
         });
     },
 
-    highlowerstatistic : (req, res, next) => {
-        IncidentModel.find(req.body.incident, function(err, incident) {
-            //logger.debug('err', err, '\n');
-            logger.debug('list 호출');
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            }
-            res.render("search/highlowerstatistic", {
-                incident: incident
-            });
-        });
-    },
-
-    remainlist : (req, res, next) => {
-        IncidentModel.find(req.body.incident, function(err, incident) {
-            //logger.debug('err', err, '\n');
-            logger.debug('list 호출');
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            }
-            res.render("search/remainlist", {
-                incident: incident
-            });
-        });
-    },
-
-    managermonthlist : (req, res, next) => {
-        IncidentModel.find(req.body.incident, function(err, incident) {
-            //logger.debug('err', err, '\n');
-            logger.debug('list 호출');
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            }
-            res.render("search/managermonthlist", {
-                incident: incident
-            });
-        });
-    },
-
-    gubunlist : (req, res, next) => {
+    /**
+     * 진행 상태별 인시던트 조회
+     */
+    status_list : (req, res, next) => {
         
         IncidentModel.find(req.body.incident, function(err, incident) {
             //logger.debug('err', err, '\n');
@@ -194,13 +166,15 @@ module.exports = {
                     err: err
                 });
             }
-            res.render("search/gubunlist", {
+            res.render("search/status_list", {
                 incident: incident
             });
         });
     },
 
-    
+    /**
+     * 하위업무 리스트 조회
+     */
     getlowerprocess :  (req, res, next) => {   
         logger.debug(1);
         LowerProcessModel.find(req.body.lowerprocess, function(err, lowerprocess) {
