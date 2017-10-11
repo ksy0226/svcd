@@ -7,12 +7,12 @@ var inCnt = 16; //한번에 화면에 조회되는 리스트 수
 
 $(document).ready(function () {
     
-    $('#datepicker_rcd').datepicker({
+    $('#reg_date_from').datepicker({
         autoclose: true,
         todayHighlight: true,
         format: "yyyy-mm-dd"
     });
-    $('#datepicker_rcd2').datepicker({
+    $('#reg_date_to').datepicker({
         autoclose: true,
         todayHighlight: true,
         format: "yyyy-mm-dd"
@@ -93,7 +93,7 @@ function setContent(data, higher_cd){
     for(var i=0; i<data.length; i++){
         var lower_cdVal = data[i]["lower_cd"];
         if(data[i]["higher_cd"] == $('#higher_cd').val()){
-            $('#lower_cd').append("<option value='"+lower_cdVal+"'>"+data[i]["lower_cd"]+"</option>");
+            $('#lower_cd').append("<option value='"+lower_cdVal+"'>"+data[i]["lower_nm"]+"</option>");
         }
     }
 }
@@ -103,7 +103,7 @@ function getDataList(){
     if($('#lower_cd').val() ==""){
         $('#lower_cd').val() = "*";
     }
-    var reqParam = 'searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&lower_cd=' + $('#lower_cd').val() + '&datepicker_rcd=' + $('#datepicker_rcd').val()+ '&datepicker_rcd2=' + $('#datepicker_rcd2').val()+ '&searchText=' + $('#searchText').val();
+    var reqParam = 'searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&lower_cd=' + $('#lower_cd').val() + '&reg_date_from=' + $('#reg_date_from').val()+ '&reg_date_to=' + $('#reg_date_to').val()+ '&searchText=' + $('#searchText').val();
 
     $.ajax({
         type: "GET",

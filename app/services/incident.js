@@ -15,7 +15,6 @@ module.exports = {
             highlight = {};
         var AndQueries = []; 
         var OrQueries = [];
-        var DateQueries = [];  
 
         if (req.query.searchType && req.query.searchText) {
             var searchTypes = req.query.searchType.toLowerCase().split(",");
@@ -40,7 +39,19 @@ module.exports = {
 
         var higher_cd = req.query.higher_cd;
         var lower_cd = req.query.lower_cd;
+        var status_cd = req.query.status_cd;
+        var reg_date_from = req.query.reg_date_from;
+        var reg_date_to = req.query.reg_date_to;
+        
+        logger.debug("-------------->status_cd ", status_cd);
 
+        //진행상태가 존재하면
+        //if(status_cd != '*' || status_cd != 'undefined'){
+        //    AndQueries.push({
+        //        status_cd : req.query.status_cd
+        //    });
+        //}
+        
         //상위업무가 존재하면
         if(higher_cd != '*'){
             AndQueries.push({
@@ -60,52 +71,26 @@ module.exports = {
         }
         
         //검색기간 조건 추가
-        if (req.query.datepicker_rcd && req.query.datepicker_rcd2) {
-          
+        if (reg_date_from && reg_date_to) {    
             AndQueries.push({
-                register_date : {"$gt":req.query.datepicker_rcd,"$lt":req.query.datepicker_rcd2}
+                register_date : {"$gt":reg_date_from,"$lt":reg_date_to}
             });
-            
         }
+
+        /**
+         * AndQuery 추가
+         */
         if (AndQueries.length > 0){
             findIncident.$and = AndQueries
         }
 
-
-
-        /*
-        //검색 시작일 존재하면
-        if(datepicker_rcd != ''){
-            AndQueries.push({
-                datepicker_rcd : req.query.datepicker_rcd
-            });
-        }
-
-        if (AndQueries.length > 0){
-            findIncident.$gt = AndQueries
-        }
-        */
-
-        /*
-        //검색 마지막일 존재하면
-        if(datepicker_rcd2 != '*'){
-            AndQueries.push({
-                datepicker_rcd : req.query.datepicker_rcd2
-            });
-        }
-
-        if (AndQueries.length > 0){
-            findIncident.$lt = AndQueries
-        }
-        */
+        logger.debug('findIncident : ' + JSON.stringify(findIncident));
+        logger.debug('req.query.higher_cd : ' + req.query.higher_cd);
+        logger.debug('req.query.lower_cd : ' + req.query.lower_cd);
+        logger.debug('req.query.reg_date_from : ' + req.query.reg_date_from);
+        logger.debug('req.query.reg_date_to : ' + req.query.reg_date_to);
 
         logger.debug('findIncident : ' + JSON.stringify(findIncident));
-        console.log('req.query.higher_cd : ' + req.query.higher_cd);
-        console.log('req.query.lower_cd : ' + req.query.lower_cd);
-        console.log('req.query.datepicker_rcd : ' + req.query.datepicker_rcd);
-        console.log('req.query.datepicker_rcd2 : ' + req.query.datepicker_rcd2);
-
-        console.log('findIncident : ' + JSON.stringify(findIncident));
 
         return {
             searchType: req.query.searchType,
@@ -134,7 +119,7 @@ module.exports = {
     createSearch: (req) => {
         logger.debug('searchType : ' + req.query.searchType);
         logger.debug('searchText : ' + encodeURIComponent(req.query.searchText));
-        console.log('searchText : ' + req.query.searchText);
+        logger.debug('searchText : ' + req.query.searchText);
 
         var findIncident = {},
             findUser = null,
@@ -176,9 +161,9 @@ module.exports = {
         }
 
         logger.debug('findIncident : ' + JSON.stringify(findIncident));
-        console.log('req.query.status_cd : ' + req.query.status_cd);
-        console.log('req.query.searchType : ' + req.query.searchType);
-        console.log('findIncident : ' + JSON.stringify(findIncident));
+        logger.debug('req.query.status_cd : ' + req.query.status_cd);
+        logger.debug('req.query.searchType : ' + req.query.searchType);
+        logger.debug('findIncident : ' + JSON.stringify(findIncident));
         return {
             searchType: req.query.searchType,
             searchText: req.query.searchText,

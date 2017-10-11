@@ -89,7 +89,7 @@ block content
                           option(value ='*') 전체
                           - if (higherprocess.length > 0) {
                             - for( var i = 0 ; length = higherprocess.length > i ; i++ ){ //속도가 느리다고 알고 있음.
-                                option(value ='#{higherprocess[i].higher_cd}') #{higherprocess[i].higher_cd}
+                                option(value ='#{higherprocess[i].higher_cd}') #{higherprocess[i].higher_nm}
                             - }
                           - } 
                       label.col-sm-2.control-label 하위업무
@@ -102,13 +102,13 @@ block content
                       .col-sm-4
                         .input-group
                           .input-group
-                            input.form-control(type='text', placeholder='yyyy-mm-dd' id='datepicker_rcd' name='datepicker_rcd' value=datepicker_rcd)
+                            input.form-control(type='text', placeholder='yyyy-mm-dd' id='reg_date_from' name='reg_date_from' value=reg_date_from)
                             span.input-group-addon.bg-primary.b-0.text-white
                               i.ion-calendar
                       .col-sm-4
                         .input-group
                           .input-group
-                            input.form-control(type='text', placeholder='yyyy-mm-dd' id='datepicker_rcd2' name='datepicker_rcd2' value=datepicker_rcd2)
+                            input.form-control(type='text', placeholder='yyyy-mm-dd' id='reg_date_to' name='reg_date_to' value=reg_date_to)
                             span.input-group-addon.bg-primary.b-0.text-white
                               i.ion-calendar 
                     .form-group.m-b-0
