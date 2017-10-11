@@ -42,7 +42,7 @@ module.exports = {
      * 자주묻는 질문과 답
      */
     qna: (req, res, next) => {
-        /*
+        
         IncidentModel.find(req.body.incident, function(err, incident) {
             //logger.debug('err', err, '\n');
             logger.debug('list 호출');
@@ -55,8 +55,7 @@ module.exports = {
                 incident: incident
             });
         }).sort('-created_at');
-        */
-
+        /*
         async.waterfall([function (callback) {
             HigherProcessModel.find({},function (err, higherprocess) {
                 if (err) {
@@ -76,7 +75,7 @@ module.exports = {
                     higherprocess: higherprocess
                 });
             }
-        });      
+        }); */     
     },
 
     /**
