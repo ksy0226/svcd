@@ -37,20 +37,18 @@ module.exports = {
             }
         }
 
-        var higher_cd = req.query.higher_cd;
-        var lower_cd = req.query.lower_cd;
-        var status_cd = req.query.status_cd;
+        var higher_cd = req.query.higher_cd == null ? "*" : req.query.higher_cd ;
+        var lower_cd = req.query.lower_cd == null ? "*" : req.query.lower_cd ;
+        var status_cd = req.query.status_cd == null ? "*" : req.query.status_cd ;
         var reg_date_from = req.query.reg_date_from;
         var reg_date_to = req.query.reg_date_to;
-        
-        logger.debug("-------------->status_cd ", status_cd);
 
         //진행상태가 존재하면
-        //if(status_cd != '*' || status_cd != 'undefined'){
-        //    AndQueries.push({
-        //        status_cd : req.query.status_cd
-        //    });
-        //}
+        if(status_cd != '*'){
+            AndQueries.push({
+                status_cd : req.query.status_cd
+            });
+        }
         
         //상위업무가 존재하면
         if(higher_cd != '*'){

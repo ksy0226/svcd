@@ -49,6 +49,36 @@ module.exports = {
     },
 
     /**
+     * 인시던트 관리자용 상세 조회 화면
+     */
+    work_detail: (req, res, next) => {
+        console.log(new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') );
+        
+        logger.debug("Trace work_detail : ", req.params.id);
+        Incident.findById({
+            _id: req.params.id
+        }, function (err, incident) {
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: err
+                });
+            } else {
+                //완료요청일, 등록일, 접수일, 완료예정일, 완료일
+                incident.request_complete_date = new Date(incident.request_complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                incident.register_date = new Date(incident.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                incident.receipt_date = new Date(incident.receipt_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                incident.complete_reserve_date = new Date(incident.complete_reserve_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                incident.complete_date = new Date(incident.complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                
+                res.render("manager/work_detail", {
+                    incident: incident
+                });
+            }
+        });
+    },
+
+    /**
      * 담당자별 업무 지정
      */
     work_assign: (req, res, next) => {
@@ -107,24 +137,27 @@ module.exports = {
      */
     getIncident: (req, res, next) => {
         var search = service.createSearch(req);
-
-        async.waterfall([function (callback) {
-            IncidentModel.find(search.findIncident, function (err, incident) {
-                
+        try{
+            async.waterfall([function (callback) {
+                Incident.find(search.findIncident, function (err, incident) {
+                    
+                    if (err) {
+                        res.render("http/500", {
+                            err: err
+                        });
+                    }
+                    callback(null, incident)
+                });
+            }], function (err, incident) {
                 if (err) {
                     res.render("http/500", {
                         err: err
                     });
                 }
-                callback(null, incident)
+                res.send(incident);
             });
-        }], function (err, incident) {
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            }
-            res.send(incident);
-        });
+        }catch(e){
+            logger.debug(e);    
+        }
     }
 };
