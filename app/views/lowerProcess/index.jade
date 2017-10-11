@@ -1,0 +1,57 @@
+extends ../layouts/default
+block head
+    script(src='/vendor/jquery/jquery.min.js')
+block content
+      // ==============================================================
+      // Start right Content here
+      // ==============================================================
+      .content-page
+        // Start content
+        .content
+          .container
+            // Page-Title
+            .row
+              .col-sm-12
+                .page-title-box
+                  ol.breadcrumb.pull-right
+                    li
+                      a(href='#') Home
+                    li
+                      a(href='#') SD 기본정보
+                    li.active 하위업무조회
+                  h4.page-title 하위업무조회
+            .row
+              .col-sm-12
+                .card-box
+                  .btn-toolbar.form-group
+                    .pull-left
+                      a.btn.btn-primary.waves-effect.waves-light.m-l-5(href='/lowerProcess/new')
+                        i.fa.fa-edit
+                        |  추가
+                  table.table.table-hover(id='dvData' data-tablesaw-mode='swipe')
+                    thead
+                      tr
+                        th(width='15%') 상위업무명
+                        th(width='15%') 하위업무명
+                        th(width='30%') 설명
+                        th(width='10%') 소요시간
+                        th(width='10%') 등록자
+                        th(width='10%') 등록일
+                        th(width='10%') 사용여부
+                    tbody
+                        - if (lowerProcess.length > 0) {
+                            // - for( var i = 0 ; length = question.length > i ; i++ ){ //속도가 빠르다고 알고 있음.
+                            - for( var i in lowerProcess ){ //속도가 느리다고 알고 있음.
+                                tr(onclick="onclick=location.href='/lowerProcess/edit/#{lowerProcess[i]._id}'")
+                                    td #{lowerProcess[i].higher_nm}
+                                    td #{lowerProcess[i].lower_nm}
+                                    td.highlight(data-highlight='search.highlight.title') #{lowerProcess[i].description}
+                                    td #{lowerProcess[i].need_hour}
+                                    td #{lowerProcess[i].user_nm}
+                                    td #{lowerProcess[i].created_at}
+                                    td #{lowerProcess[i].user_flag}
+                            - }
+                        - }else{
+                            tr
+                                td(colspan='5' align='center') 조회된 데이타가 없습니다.
+                        - }  
