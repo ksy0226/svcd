@@ -79,7 +79,7 @@ module.exports = {
                     res.render('index', {
                         email : email,
                         remember_me : remember_me,
-                        message : "등록된 계정이 없습니다. 다시 시도하세요."
+                        message : "등록된 계정이 없습니다.<br>다시 시도하세요."
                     });
                 }
             });

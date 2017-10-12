@@ -1,5 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Noto+Sans:400,700);
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700);
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,500,700);
 /* ===========
    Components List
 
@@ -868,8 +868,22 @@
   font-size: 30px;
 }
 .carousel-indicators li {
-  border: 2px solid #ffffff;
+/*border:2px solid #fff;*/
+display:inline-block;
+width: 30px;
+height: 3px;
+margin: 0 3px;
+background-color: rgba(255,255,255,.5);
+border: none;
+border-radius: none;
 }
+.carousel-indicators .active {
+width: 30px;
+height: 3px;
+margin: 0 3px;
+background-color: #fff
+}
+ 
 /* ===========
    Tables
  =============*/
@@ -1666,10 +1680,11 @@ table.dataTable td.focus {
 
 .btn-outline {
   display: inline-block;
-  padding: 6px 10px;
+  width:60px;
+  padding: 6px 0;
   margin-bottom: 0;
   font-size: 14px;
-  font-weight: normal;
+  font-weight: bold;
   line-height: 1.42857143;
   text-align: center;
   white-space: nowrap;
@@ -1684,8 +1699,7 @@ table.dataTable td.focus {
   background-image: none;
   border: 1px solid transparent;
   border-radius: 4px;
-  
-  
   color: inherit;
   background-color: transparent;  
+  
 }

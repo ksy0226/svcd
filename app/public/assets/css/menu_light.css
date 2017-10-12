@@ -1,5 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Noto+Sans:400,700);
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700);
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,500,700);
 /*
 Template Name: Minton Dashboard
 Author: CoderThemes
@@ -981,6 +981,15 @@ a.forum-item-title:hover {
 .h-300 {
   min-height: 300px;
 }
+.fw-60 {
+  width: 60px;
+}
+.fw-80 {
+  width: 80px;
+}
+.fw-100 {
+  width: 100px;
+}
 .w-150 {
   min-width: 150px;
 }
@@ -989,4 +998,32 @@ a.forum-item-title:hover {
 }
 .w-300 {
   min-width: 300px;
+}
+
+
+/* Modal-scroll */
+.modal-scroll {
+  height:423px;
+  overflow-y:auto;
+}
+.modal-scroll-2{
+  height:500px;
+  overflow-y:auto;
+}
+
+/* vertical-align */
+.valign-top {
+ vertical-align: top !important;
+}
+.valign-middle {
+ vertical-align: middle !important;
+}
+.valign-bottom {
+ vertical-align: bottom !important;
+}
+.valign-text-top {
+ vertical-align: text-top !important;
+}
+.valign-text-bottom {
+ vertical-align: text-bottom !important;
 }
