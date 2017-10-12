@@ -1,5 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Noto+Sans:400,700);
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700);
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,500,700);
 /* ===========
    Core file List
 
@@ -990,7 +990,8 @@ h3.timeline-title {
    Count Down
  =============*/
 .home-wrapper {
-  margin: 10% 0px;
+  /*margin: 10% 0px;*/
+  margin: 5% 0px;
 }
 .app-countdown {
   margin-top: 40px;
@@ -1088,13 +1089,45 @@ h3.timeline-title {
    Accounts
  =============*/
 .wrapper-page {
-  margin: 7.5% auto;
-  max-width: 360px;
+  position:absolute;
+  top:20.5%;
+  left:50%;
+  margin-left:-200px;
+  /*margin: 7.5% auto;
+  max-width: 360px;*/
+  z-index:1000;
 }
+
+.wrapper-page .login-box {
+  /*margin-left:20%;*/
+  margin:0 auto;
+  width: 440px;
+  padding: 20px 40px;
+  background-color: rgba(255, 255, 255, .85);
+  border-radius: 6px;
+  border:1px solid #eeeeee;
+  box-shadow:0 2px 8px #555;
+}
+/** add + 2017110 **/
+
+.wrapper-page .login-copy {
+  /*margin-left:20%;*/
+  margin:0 auto;
+  width: 440px;
+  padding:10px 10px 0;
+}/** add + 2017110 **/
+ 
 .wrapper-page .form-control {
   height: 40px;
   padding-left: 40px;
+  font-size: 1.2em;
 }
+
+.login-box .form-control {
+  height: 48px;
+  padding-left: 48px;
+}/** add + 2017110 **/
+
 .wrapper-page .form-control-feedback {
   left: 15px;
   top: 3px;
@@ -1105,9 +1138,11 @@ h3.timeline-title {
   padding: 9px 20px;
 }
 .logo-lg {
-  font-size: 26px !important;
+  /*font-size: 26px !important;*/
+  font-size: 30px !important;
   font-weight: 600;
-  line-height: 70px;
+  /*line-height: 70px;*/
+  line-height: 68px;
   color: #3bafda !important;
 }
 .user-thumb img {

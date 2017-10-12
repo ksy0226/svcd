@@ -1,5 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Noto+Sans:400,700);
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700);
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,500,700);
 /* ===========
    Core file List
 
@@ -129,6 +129,18 @@ a:focus {
   margin-bottom: 20px;
   background-color: #fff;
 }
+
+.search-box {
+  padding: 10px;
+  border: 1px solid rgba(54, 64, 74, 0.2);
+  background-clip: padding-box;
+  margin-top:-2px;
+  margin-bottom: 20px;
+  background-color: #fff;
+}
+.search-box .table > tbody > tr:first-child > td {
+  border-top:none;
+}
 .header-title {
   text-transform: uppercase;
   font-size: 15px;
@@ -230,6 +242,7 @@ code,
 pre {
   background-color: #f4f8fb;
 }
+
 .bg-empty {
   background: transparent !important;
 }
@@ -263,6 +276,12 @@ pre {
 .bg-white {
   background-color: #ffffff !important;
 }
+
+/* add + 20170926 */
+.bg-primary10 {
+  background-color: #ebf7fb !important;
+}
+
 .text-white {
   color: #ffffff;
 }
@@ -303,14 +322,16 @@ pre {
   -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
   background-color: #fafafa;
   border-radius: 2px;
-  border: 1px solid #eeeeee;
+  /*border: 1px solid #eeeeee;*/
+  border: 1px solid #cfcfcf;/** Minton v3.0.0 **/
   box-shadow: none;
   color: rgba(0, 0, 0, 0.6);
   font-size: 14px;
 }
 .form-control:focus {
   background: #ffffff;
-  border: 1px solid #e0e0e0;
+  /*border: 1px solid #e0e0e0;*/
+  border: 1px solid #a2a2a2;/** Minton v3.0.0 **/
   box-shadow: none;
 }
 .label {
@@ -852,6 +873,24 @@ pre {
 .p-b-10 {
   padding-bottom: 10px !important;
 }
+
+/** add + 201909029 **/
+.p-l-40 {
+  padding-left: 40px !important;
+}
+.p-l-50 {
+  padding-left: 50px !important;
+}
+.p-l-60 {
+  padding-left: 60px !important;
+}
+.p-l-70 {
+  padding-left: 70px !important;
+}
+.p-l-80 {
+  padding-left: 80px !important;
+}
+
 .m-0 {
   margin: 0px !important;
 }
@@ -872,6 +911,21 @@ pre {
 }
 .m-l-15 {
   margin-left: 15px;
+}
+.m-l-20 {
+  margin-left: 20px;
+}
+.m-l-30 {
+  margin-left: 30px;
+}
+.m-l-40 {
+  margin-left: 40px;
+}
+.m-l-50 {
+  margin-left: 50px;
+}
+.m-l-60 {
+  margin-left: 60px;
 }
 .m-t-5 {
   margin-top: 5px !important;
@@ -932,6 +986,9 @@ pre {
 }
 .l-h-34 {
   line-height: 34px !important;
+}
+.l-h-42 {
+  line-height: 42px !important;
 }
 .font-light {
   font-weight: 300;
@@ -1479,3 +1536,8 @@ pre {
     margin-top: 0px;
   }
 }
+
+.text-underline {
+  color :#4c5667;
+  text-decoration:underline !important;
+}/** add + 20171010 **/

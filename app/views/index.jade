@@ -1,112 +1,112 @@
 doctype html
 html
     head
-        title #{title}
-
-        meta(name='viewport', content='width=device-width, initial-scale=1.0')      
-        meta(name='google-site-verification', content='8dL8-JtafRwPb9mqiolYLGX-gJQ6iWrzWrHkZRnE2Uo')
-        link(rel='stylesheet', href='/vendor/bootstrap-3.3.7/css/bootstrap.min.css')
-        link(rel='stylesheet', href='/vendor/bootstrap-3.3.7/css/bootstrap-theme.min.css')
-        link(rel='stylesheet', href='/isu/css/login.css')
-        script(src='/vendor/jquery/jquery.js')
-        script(src='/vendor/bootstrap-3.3.7/js/bootstrap.min.js')
-        script(src='/isu/js/index.js')
-        script(src='https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyCxP37XXc7zDZDaiewUvyyvpTPk_oIoOwU&callback=initMap')
-
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width,initial-scale=1')
+        meta(name='description', content='A fully featured admin theme which can be used to build CRM, CMS, etc.')
+        meta(name='author', content='Coderthemes')
+        link(rel='shortcut icon', href='assets/images/favicon_1.ico')
+        title Service Desk - LOGIN
+        link(href='assets/css/bootstrap.min.css', rel='stylesheet', type='text/css')
+        link(href='assets/css/core.css', rel='stylesheet', type='text/css')
+        link(href='assets/css/icons.css', rel='stylesheet', type='text/css')
+        link(href='assets/css/components.css', rel='stylesheet', type='text/css')
+        link(href='assets/css/pages.css', rel='stylesheet', type='text/css')
+        link(href='assets/css/menu.css', rel='stylesheet', type='text/css')
+        link(href='assets/css/responsive.css', rel='stylesheet', type='text/css')
+        // full-slider
+        link(href='assets/css/full-slider.css', rel='stylesheet', type='text/css')
+        script(src='assets/js/modernizr.min.js')
+        // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+        // WARNING: Respond.js doesn't work if you view the page via file://
+        //if lt IE 9
+            script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+            script(src='https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js')
     body
-        //- #video-wrapper.video-wrapper
-        //-     video#bgvid(autoplay='', loop='')
-        //-         source(src='/isu/video/m-bg.mp4', type='video/webm')
-        //-         source(src='/isu/video/m-bg.mp4', type='video/mp4')
-
-        .content
-            .container
-                //로그인                      
-                .row(style='margin-top:20px')
-                    .col-xs-12.col-sm-8.col-md-6.col-sm-offset-2.col-md-offset-3
-                        form#loginForm(action='/index' method='post' name='login')
-                            fieldset
-                                -if(message == null){
-                                    h2 로그인하세요.
-                                -}else{
-                                    h3 #{message}
-                                -}
-                                hr.colorgraph
-                                .form-group
-                                    input#email.form-control.input-lg(type='email', name='email', value=('#{email}' == 'undefined' ? '' : '#{email}') placeholder='Email Address')
-                                .form-group
-                                    input#password.form-control.input-lg(type='password', name='password', placeholder='Password')
-                                span.button-checkbox
-                                    button.btn(type='button', data-color='info') 아이디 저장
-                                    input#remember_me.hidden(type='checkbox', name='remember_me', checked=('true'==='#{remember_me}' ? 'on' : undefined))
-                                    a.btn.btn-link.pull-right(href='') 비밀번호 찾기
-                                hr.colorgraph
-                                .row
-                                    .col-xs-6.col-sm-6.col-md-6
-                                        input.btn.btn-lg.btn-success.btn-block(type='submit', value='로그인')
-                                    .col-xs-6.col-sm-6.col-md-6
-                                        a.btn.btn-lg.btn-primary.btn-block(href='') 계정신청
-                //회사소개
-                .row(style='margin-top:20px')
-                    .col-xs-4.col-sm-4.col-md-4.col-sm-offset-2.col-md-offset-3
-                        a.btn(href='http://www.isusystem.com/kor/index.do' target='_blank') 회사소개
-                    .col-xs-4.col-sm-4.col-md-4.col-sm-offset-2.col-md-offset-3
-                        a.btn(href='http://blog.naver.com/isu_system' target='_blank') 블로그
-                    .col-xs-4.col-sm-4.col-md-4.col-sm-offset-2.col-md-offset-3
-                        a.btn(data-toggle="modal" data-target="#myModal") 찾아오시는 길        
-                //회사정보
-                .row(style='margin-top:60px')
-                    .col-xs-12.col-sm-12.col-md-12.col-sm-offset-2.col-md-offset-3
-                        hr
-                        img(src='/isu/images/isusystem_logo.jpg', alt='ISU SYSTEM')
-                        p
-                            |06575) 서울시 서초구 사평대로 84
-                        p
-                            |.copyright COPYRIGHT ISU SYSTEM Co. Ltd. ALL RIGHT RESERVED.
-
-        //찾아오는 길
-        #myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-            .modal-dialog
-                .modal-content
-                    .modal-header
-                        button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
-                        h4#myModalLabel.text-primary 
-                            |찾아오시는 길
-                    .modal-body         
-                        #container(style='margin-top: 0px;')
-                            .sub_content                                    
-                                #map.map_area
-                                hr.colorgraph
-                                .cus-con
-                                    .row
-                                        .col-md-3.text-center
-                                            img(src='/isu/images/cus03.png', alt='자가용 이용시')
-                                        .col-md-9
-                                            h4.text-point
-                                                |자가용 이용 시
-                                            p.text-default 
-                                                |팔레스 호텔 방면에서 오시면 반포전화국 앞에서 유턴가능. 건물 내 지하주하장 이용
-                                hr
-                                .cus-con
-                                    .row
-                                        .col-md-3.text-center
-                                            img(src='/isu/images/cus04.png', alt='지하철 이용시')
-                                        .col-md-9
-                                            h4.text-point 
-                                                |지하철 이용 시
-                                            p.text-default
-                                                span.text-green
-                                                    |2호선 
-                                                서초역 강남성모병원 7번 출구 → 21번 마을버스 → 반포전화국 하차
-                                            p.text-default
-                                                span.text-blue
-                                                    |4호선 
-                                                |총신대역 신세대웨딩홀 1번 출구 → 14번 마을버스 → 이수화학 빌딩
-                                            p.text-default
-                                                span.text-brown
-                                                    |9호선
-                                                |신반포역 반포종합운동장 4번 출구 → 10번/14번 마을버스 → 반포전화국 하차
-                                            p.text-default   
-                                                span.text-orange
-                                                    |3/7/9호선 
-                                                |고속버스터미널역 고속버스터미널역 8-1번 출구 → 10번/14번 마을버스 → 반포전화국 하차
+        // Full Page Image Background Carousel Header
+        #myCarousel.carousel.slide
+            // Indicators
+            ol.carousel-indicators
+                li.active(data-target='#myCarousel', data-slide-to='0')
+                li(data-target='#myCarousel', data-slide-to='1')
+                li(data-target='#myCarousel', data-slide-to='2')
+            // Wrapper for Slides
+            .carousel-inner
+                .item.active
+                    // Set the first background image using inline CSS below.
+                    .fill(style='background-image:url(assets/images/bg_login_1.jpg)')
+                .item
+                    // Set the second background image using inline CSS below.
+                    .fill(style='background-image:url(assets/images/bg_login_2.jpg)')
+                .item
+                    // Set the third background image using inline CSS below.
+                    .fill(style='background-image:url(assets/images/bg_login_3.jpg)')
+            // Controls
+            //
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                <span class="icon-prev"></span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                <span class="icon-next"></span>
+                </a>
+        .wrapper-page
+            .login-box
+                .text-center
+                    a.logo-lg(href='#')
+                        img(src='assets/images/ci_isusystem.png', alt='isusystem')
+                form.form-horizontal.m-t-20(action='/index' method='post' name='login')
+                    fieldset
+                        -if(message == null){
+                            h2 로그인하세요.
+                        -}else{
+                            h3 !{message}
+                        -}
+                        .form-group
+                            .col-xs-12
+                                input#email.form-control(type='email', name='email', value=('#{email}' == 'undefined' ? '' : '#{email}') placeholder='Email Address', required='')
+                                i.md.md-account-circle.form-control-feedback.l-h-42
+                        .form-group
+                            .col-xs-12
+                                input#password.form-control(type='password', name='password', placeholder='Password', required='')
+                                i.md.md-vpn-key.form-control-feedback.l-h-42
+                        .form-group
+                            .col-xs-12
+                                .checkbox.checkbox-primary
+                                    input#remember_me(type='checkbox', name='remember_me', checked=('true'==='#{remember_me}' ? 'on' : undefined))
+                                    label(for='remember_me')  아이디 저장 
+                        .form-group.text-right.m-t-20
+                            .col-xs-12
+                                button.btn.btn-primary.btn-custom.w-md.waves-effect.waves-light(type='submit') 로그인
+                        .form-group.m-t-30
+                            .col-sm-7
+                                a.text-muted.text-underline(href='pages-recoverpw.html')
+                                    i.fa.fa-lock.m-r-10
+                                    | 비밀번호 찾기
+                            .col-sm-5.text-right
+                                a.text-muted.text-underline(href='pages-register.html')
+                                    i.md.md-person-add.m-r-10
+                                    | 계정신청
+            p.m-t.login-copy.text-white
+                small
+                    strong.m-r-5 Copyright
+                    | ISU SYSTEM Co. Ltd. ALL RIGHT RESERVED. © 2017
+        // end login-box
+        // Main
+        script(src='assets/js/jquery.min.js')
+        script(src='assets/js/bootstrap.min.js')
+        script(src='assets/js/detect.js')
+        script(src='assets/js/fastclick.js')
+        script(src='assets/js/jquery.slimscroll.js')
+        script(src='assets/js/jquery.blockUI.js')
+        script(src='assets/js/waves.js')
+        script(src='assets/js/wow.min.js')
+        script(src='assets/js/jquery.nicescroll.js')
+        script(src='assets/js/jquery.scrollTo.min.js')
+        // Custom main Js
+        script(src='assets/js/jquery.core.js')
+        script(src='assets/js/jquery.app.js')
+        // Script to Activate the Carousel
+        script.
+            $('.carousel').carousel({
+            interval: 5000 //changes the speed
+            })
