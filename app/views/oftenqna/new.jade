@@ -33,6 +33,14 @@ block content
                             .p-20
                                 form.form-horizontal.group-border-dashed(id='form' name='form' action='/oftenqna/new' method='post' enctype="multipart/form-data")  
                                     .form-group(style='display:none')
+                                        label.col-sm-3.control-label 사번
+                                        .col-sm-3
+                                            input.form-control(name='oftenqna[sabun]', type='text', value=sabun)
+                                    .form-group(style='display:none')
+                                        label.col-sm-3.control-label 등록자
+                                        .col-sm-3
+                                            input.form-control(name='oftenqna[user_nm]', type='text', value=user_nm)
+                                    .form-group(style='display:none')
                                         label.col-sm-3.control-label 상위업무코드
                                         .col-sm-3
                                             input.form-control(id='higher_nm', name='oftenqna[higher_nm]', type='text', placeholder='')

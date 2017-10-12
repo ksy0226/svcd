@@ -45,19 +45,18 @@ function research() {
 
 function getDataList() {
     var reqParam = 'searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&searchText=' + $('#searchText').val();
-
     $.ajax({
         type: "GET",
         async: true,
-        url: "/oftenqna/",
+        url: "/oftenqna/list",
         dataType: "json", // xml, html, script, json 미지정시 자동판단
         timeout: 30000, //제한 시간
         cache: false,
         data: reqParam, // $($('form')).serialize()
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-        error: function (data, error) {
+        error: function (request, status, error) {
             $('#ajax_indicator').css("display", "none");
-            alert("data : " + JSON.stringify(data) + " >>> error : " + error);
+            alert("error : " + error);
         },
         beforeSend: function () {
             $('#ajax_indicator').css("display", "");

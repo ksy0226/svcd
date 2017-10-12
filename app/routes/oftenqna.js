@@ -13,10 +13,12 @@ router.route('/').get(ssc.sessionCheck, controller.index);
 router.route('/new').get(ssc.sessionCheck, controller.new)
                     .post(upload.array('incident[attach-file]'), ssc.sessionCheck, controller.save);
 router.route('/edit/:id').get(ssc.sessionCheck, controller.edit)
-                         .post(ssc.sessionCheck, controller.update);
-router.route('/save/:id').get(ssc.sessionCheck, controller.update);
-router.route('/insertedImage').post(upload2.array('insertedImage'), ssc.sessionCheck, controller.insertedImage);
+                         .post(upload.array('incident[attach-file]'), ssc.sessionCheck, controller.update);
+//router.route('/save/:id').get(ssc.sessionCheck, controller.update);
 router.route('/delete/:id').get(ssc.sessionCheck, controller.delete);
+
+router.route('/insertedImage').post(upload2.array('insertedImage'), ssc.sessionCheck, controller.insertedImage);
 router.route('/download/:path1/:path2').get(ssc.sessionCheck, controller.download);
+router.route('/list').get(ssc.sessionCheck, controller.list);
 
 module.exports = router;

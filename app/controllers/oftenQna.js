@@ -76,7 +76,9 @@ module.exports = {
                 });
             } else {
                 res.render("oftenqna/new", {
-                    higher: higher
+                    higher: higher,
+                    user_nm : req.session.user_nm,
+                    sabun : req.session.sabun,
                 });
             }
         });
@@ -101,34 +103,45 @@ module.exports = {
     },
 
     edit: (req, res, next) => {
-        OftenQnaModel.findById({
-            _id: req.params.id
-        }, function (err, oftenqna) {
-            if (err) {
-                return res.json({
-                    success: false,
-                    message: err
-                });
-            } else {
-                //path 길이 잘라내기
-                if (oftenqna.attach_file.length > 0) {
-                    for (var i = 0; i < oftenqna.attach_file.length; i++) {
-                        var path = oftenqna.attach_file[i].path
-                        oftenqna.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
-                        if (oftenqna.attach_file[i].mimetype.indexOf('image') > -1) {
-                            oftenqna.attach_file[i].mimetype = 'image';
+        async.waterfall([function (callback) {
+            HigherProcessModel.find({}, function (err, higher) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null, higher)
+            });
+        }], function (err, higher) {
+            OftenQnaModel.findById({ _id: req.params.id }, function (err, oftenqna) {
+                if (err) {
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
+                    //path 길이 잘라내기
+                    if (oftenqna.attach_file.length > 0) {
+                        for (var i = 0; i < oftenqna.attach_file.length; i++) {
+                            var path = oftenqna.attach_file[i].path
+                            oftenqna.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
+                            if (oftenqna.attach_file[i].mimetype.indexOf('image') > -1) {
+                                oftenqna.attach_file[i].mimetype = 'image';
+                            }
                         }
                     }
+                    res.render("oftenqna/edit", {
+                        higher: higher,
+                        oftenqna: oftenqna,
+                        user: req.user
+                    });
                 }
-                res.render("oftenqna/edit", {
-                    oftenqna: oftenqna,
-                    user: req.user
-                });
-            }
+            })
         });
     },
 
     update: (req, res, next) => {
+        logger.debug("=====================> " + JSON.stringify(req.body));
         OftenQnaModel.findOneAndUpdate({
             _id: req.params.id
         }, req.body.oftenqna, function (err, oftenqna) {
@@ -140,7 +153,7 @@ module.exports = {
                 success: false,
                 message: "No data found to update"
             });
-            res.redirect('/oftenqna/edit/' + req.params.id);
+            res.redirect('/oftenqna/');
         });
     },
 
@@ -160,19 +173,47 @@ module.exports = {
         });
     },
 
-    /**
-     * summernote 이미지링크 처리
-     */
+    //summernote 이미지링크 처리
     insertedImage: (req, res, next) => {
         logger.debug("=====================>oftenqna controllers insertedImage");
         res.send(req.file.filename);
     },
 
-    /** 
-     * oftenqna 첨부파일 다운로드
-     */
+    //oftenqna 첨부파일 다운로드
     download: (req, res, next) => {
         var filepath = path.join(__dirname, '../../', CONFIG.fileUpload.directory, req.params.path1, req.params.path2);
         res.download(filepath);
+    },
+
+    //ajax list 데이타 처리
+    list: (req, res, next) => {
+        var search = service.createSearch(req);
+
+        logger.debug("=====================> " + JSON.stringify(search));
+        try{
+            async.waterfall([function (callback) {
+                OftenQnaModel.find(search.findOftenqna, function (err, oftenqna) {
+                    if (err) {
+                        res.render("http/500", {
+                            err: err
+                        });
+                    }else{
+                        logger.debug("=====================>trace1 ");
+                        callback(null, oftenqna)
+                    }
+                });
+            }], function (err, oftenqna) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }else{
+                    logger.debug("=====================>trace2 ",JSON.stringify(oftenqna));
+                    res.send(oftenqna);
+                }
+            });
+        }catch(e){
+            logger.debug('aaaaaaaaa ',e)
+        }
     }
 };

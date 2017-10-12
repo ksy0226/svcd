@@ -24,7 +24,7 @@ block content
             .row
               .col-lg-12
                 .card-box
-                  form.form-horizontal.group-border-dashed(action='#')
+                  form.form-horizontal.group-border-dashed(action='#', onsubmit='return false;')
                     .form-group
                       label.col-sm-2.control-label 상위업무 
                       .col-sm-4
@@ -50,7 +50,7 @@ block content
                           option(value='title') 제목
                           option(value='content') 내용
                       .col-sm-6
-                        input.form-control(id='searchText' name='searchText' type='text' value=searchText)
+                        input.form-control(id='searchText' name='searchText' type='text')
                       .col-sm-2
                         button.btn.btn-primary(id='searchBtn' type='button') 조회
             .row
@@ -70,6 +70,8 @@ block content
                         th(width='20%') 등록일
                         th(width='10%') 조회수
                     tbody(id='more_list')
+
+block footer
 
       #ajax_indicator(style='display:none')
         p(style='text-align:center; padding:16px 0 0 0; left:50%; top:40%; position:absolute;')
