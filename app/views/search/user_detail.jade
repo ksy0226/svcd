@@ -3,11 +3,9 @@ block head
     link(href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css', rel='stylesheet', type='text/css')
     //link(href='/isu/css/board_style.css', rel='stylesheet')
 
-    //script(src='/isu/js/search/user_detail.js', type='text/javascript')
-    script.
-        function goList(){
-            //alert("121212");
-        }
+    script(src='/isu/js/search/user_detail.js', type='text/javascript')
+    script(src='/isu/js/search/user_list.js', type='text/javascript')
+       
 block content
     .content-page
         // Start content
@@ -90,7 +88,7 @@ block content
                                             - }
                                         tr
                                             th.bg-muted 상위업무
-                                            td #{incident.higher_nm}
+                                            td(id='higher_nm' value='#{incident.higher_nm}') #{incident.higher_nm}
                                             th.bg-muted 하위업무
                                             td #{incident.lower_nm}
                                         tr
