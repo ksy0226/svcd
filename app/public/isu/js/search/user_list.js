@@ -30,6 +30,7 @@ $(document).ready(function () {
 
     //최초 조회
     getDataList();
+    //getLowerProcessList();
     
     //조회버튼 클릭 시
     $('#searchBtn').on('click', function () {
@@ -48,11 +49,6 @@ $(document).ready(function () {
         research();
     });
 
-    //TR 클릭 시
-    $('#dataTR').on('click', function () {
-        window.location = $(this).attr('href');
-        return false;
-    });
     
 });
 
@@ -67,7 +63,9 @@ function research(){
 }
 
 
-
+/**
+ * 하위업무 가져오기
+ */
 function getLowerProcessList(){
     var reqParam = 'higher_cd=' + $('#higher_cd').val();
     $.ajax({
@@ -85,8 +83,11 @@ function getLowerProcessList(){
         }
     });
 }
-
+/**
+ * 하위업무 뿌리기
+ */
 function setContent(data, higher_cd){
+
     $('#lower_cd').empty();
     $('#lower_cd').append("<option value=''> 전체</option>");
     
@@ -98,13 +99,15 @@ function setContent(data, higher_cd){
     }
 }
 
-
+/**
+ * 선택된 리스트 가져오기 (상/하위업무 구분, 검색어, 날짜)
+ */
 function getDataList(){
-    if($('#lower_cd').val() ==""){
-        $('#lower_cd').val() = "*";
+    
+    if($('#lower_cd').val() =="" || $('#lower_cd').val() ==null){
+        $('#lower_cd').val("*");
     }
     var reqParam = 'searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&lower_cd=' + $('#lower_cd').val() + '&reg_date_from=' + $('#reg_date_from').val()+ '&reg_date_to=' + $('#reg_date_to').val()+ '&searchText=' + $('#searchText').val();
-
     $.ajax({
         type: "GET",
         async: true,
@@ -129,7 +132,9 @@ function getDataList(){
 }
 
 
-//내용 매핑
+/**
+ * 선택된 내용 매핑하기
+ */
 function setDataList(dataObj) {
     //조회 내용 추가
     if (rowIdx < dataObj.length) {
