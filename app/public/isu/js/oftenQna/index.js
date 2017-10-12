@@ -49,7 +49,7 @@ function getDataList() {
     $.ajax({
         type: "GET",
         async: true,
-        url: "/search/list",
+        url: "/oftenqna/index",
         dataType: "json", // xml, html, script, json 미지정시 자동판단
         timeout: 30000, //제한 시간
         cache: false,
@@ -64,7 +64,7 @@ function getDataList() {
         },
         success: function (dataObj) {
             $('#ajax_indicator').css("display", "none");
-            setDataList(dataObj).sort($('#order_by').val());
+            setDataList(dataObj);
         }
     });
 }

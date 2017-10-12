@@ -4,29 +4,17 @@ const mongoose = require('mongoose');
 const async = require('async');
 const HigherProcessModel = require('../models/HigherProcess');
 const OftenQnaModel = require('../models/OftenQna');
+const service = require('../services/search');
 const logger = require('log4js').getLogger('app');
 const Iconv = require('iconv-lite');
 
 module.exports = {
 
     index: (req, res, next) => {
-        /*
-        OftenQnaModel.find(req.body.oftenqna, function (err, oftenqna) {
-            logger.debug('index 호출');
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            } else {
-                res.render("oftenqna/index", {
-                    oftenqna: oftenqna
-                });
-            }
-        });
-        */
+        var search = service.createSearch(req);
 
         async.waterfall([function (callback) {
-            HigherProcessModel.find({},function (err, higherprocess) {
+            HigherProcessModel.find(search.findOftenqna, function (err, higherprocess) {
                 if (err) {
                     res.render("http/500", {
                         err: err
@@ -39,7 +27,7 @@ module.exports = {
                 res.render("http/500", {
                     err: err
                 });
-            }else{
+            } else {
                 res.render("oftenqna/index", {
                     higherprocess: higherprocess
                 });
@@ -71,8 +59,13 @@ module.exports = {
     },
 
     save: (req, res, next) => {
-        var oftenqna = req.body.oftenqna;
-        OftenQnaModel.create(req.body.oftenqna, function (err, oftenqna) {
+        logger.debug('save start >>>>>>> ' + req);
+        var newOftenqna = req.body.oftenqna;
+
+        if (req.files) {
+            newOftenqna.attach_file = req.files;
+        }
+        OftenQnaModel.create(newOftenqna, function (err, newOftenqna) {
             if (err) {
                 res.render("http/500", {
                     err: err
@@ -125,5 +118,13 @@ module.exports = {
             });
             res.redirect('/oftenqna');
         });
-    }
+    },
+
+    /**
+     * summernote 이미지링크 처리
+     */
+    insertedImage: (req, res, next) => {
+        logger.debug("=====================>incident controllers insertedImage");
+        res.send(req.file.filename);
+    },
 };
