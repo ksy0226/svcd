@@ -11,10 +11,9 @@ const controller = require('../controllers/oftenQna');
 
 router.route('/').get(ssc.sessionCheck, controller.index);
 router.route('/new').get(ssc.sessionCheck, controller.new)
-                    .post(upload.array('incident[attach-file]'), ssc.sessionCheck, controller.save);
+                    .post(upload.array('oftenqna[attach-file]'), ssc.sessionCheck, controller.save);
 router.route('/edit/:id').get(ssc.sessionCheck, controller.edit)
-                         .post(upload.array('incident[attach-file]'), ssc.sessionCheck, controller.update);
-//router.route('/save/:id').get(ssc.sessionCheck, controller.update);
+                         .post(upload.array('oftenqna[attach-file]'), ssc.sessionCheck, controller.update);
 router.route('/delete/:id').get(ssc.sessionCheck, controller.delete);
 
 router.route('/insertedImage').post(upload2.array('insertedImage'), ssc.sessionCheck, controller.insertedImage);

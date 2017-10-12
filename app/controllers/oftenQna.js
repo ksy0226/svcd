@@ -14,7 +14,7 @@ module.exports = {
 
     index: (req, res, next) => {
         async.waterfall([function (callback) {
-            HigherProcessModel.find({},function (err, higherprocess) {
+            HigherProcessModel.find({}, function (err, higherprocess) {
                 if (err) {
                     res.render("http/500", {
                         err: err
@@ -27,7 +27,7 @@ module.exports = {
                 res.render("http/500", {
                     err: err
                 });
-            }else{
+            } else {
                 res.render("oftenqna/index", {
                     higherprocess: higherprocess
                 });
@@ -77,8 +77,8 @@ module.exports = {
             } else {
                 res.render("oftenqna/new", {
                     higher: higher,
-                    user_nm : req.session.user_nm,
-                    sabun : req.session.sabun,
+                    user_nm: req.session.user_nm,
+                    sabun: req.session.sabun,
                 });
             }
         });
@@ -190,15 +190,14 @@ module.exports = {
         var search = service.createSearch(req);
 
         logger.debug("=====================> " + JSON.stringify(search));
-        try{
+        try {
             async.waterfall([function (callback) {
                 OftenQnaModel.find(search.findOftenqna, function (err, oftenqna) {
                     if (err) {
                         res.render("http/500", {
                             err: err
                         });
-                    }else{
-                        logger.debug("=====================>trace1 ");
+                    } else {
                         callback(null, oftenqna)
                     }
                 });
@@ -207,13 +206,12 @@ module.exports = {
                     res.render("http/500", {
                         err: err
                     });
-                }else{
-                    logger.debug("=====================>trace2 ",JSON.stringify(oftenqna));
+                } else {
                     res.send(oftenqna);
                 }
             });
-        }catch(e){
-            logger.debug('aaaaaaaaa ',e)
+        } catch (e) {
+            logger.debug('oftenqna controllers error ====================> ', e)
         }
     }
 };
