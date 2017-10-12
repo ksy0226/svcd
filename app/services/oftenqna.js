@@ -45,13 +45,13 @@ module.exports = {
                 findOftenqna.$and = AndQueries
             }
 
-            
+            /*
             console.log('searchType >>>>>>>>>>> ' + req.query.searchType);
             console.log('searchText >>>>>>>>>>> ' + req.query.searchText);
             console.log('higher_cd >>>>>>>>>>> ' + req.query.higher_cd);
             console.log('findOftenqna >>>>>>>>>>> ' + JSON.stringify(findOftenqna));
             console.log('highlight >>>>>>>>>>> ' + JSON.stringify(highlight)); 
-            
+            */
             
             return {
                 searchType: req.query.searchType,

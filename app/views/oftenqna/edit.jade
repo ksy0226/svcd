@@ -65,9 +65,11 @@ block content
                                     .form-group
                                         .col-sm-12
                                             textarea#summernote.summernote
-                                    .row
-                                        .col-md-12.portlets
-                                            .m-b-30
+
+                                    // 첨부파일 1개 이상일때만 표시
+                                    - if (oftenqna.attach_file.length > 0){
+                                        .row
+                                            .col-lg-12
                                                 h5
                                                     i.fa.fa-paperclip.m-r-10.m-b-10
                                                     | 첨부파일 
@@ -83,6 +85,24 @@ block content
                                                             a.m-l-10(href='/oftenqna/download/#{oftenqna.attach_file[i].path}') 저장
                                                     - }
                                                 - }
+                                                // end : text 형식 첨부파일 영역
+                                                hr
+                                                p.text-muted.font-13
+                                                    | 이미지 미리보기 ( 
+                                                    b.text-primary #{oftenqna.attach_file.length}
+                                                    | 개의 이미지가 있습니다. )
+                                                .row
+                                                    - if (oftenqna.attach_file.length > 0) {
+                                                        - for( var i = 0 ; oftenqna.attach_file.length > i ; i++ ){
+                                                            - if(oftenqna.attach_file[i].mimetype == 'image'){
+                                                                .col-sm-2.col-xs-4
+                                                                    a(href='/oftenqna/download/#{oftenqna.attach_file[i].path}')
+                                                                        img.img-thumbnail.img-responsive(src='/#{oftenqna.attach_file[i].path}', alt='#{oftenqna.attach_file[i].originalname}')
+                                                            - }
+                                                        - }
+                                                    - }
+                                                // end 접수내용
+                                    - }
 block footer
 
 

@@ -44,7 +44,7 @@ function research() {
 }
 
 function getDataList() {
-    var reqParam = 'searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&searchText=' + $('#searchText').val();
+    var reqParam = 'searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&searchText=' + encodeURIComponent($('#searchText').val());
     $.ajax({
         type: "GET",
         async: true,
