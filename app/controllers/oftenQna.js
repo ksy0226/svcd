@@ -5,14 +5,37 @@ const async = require('async');
 const HigherProcessModel = require('../models/HigherProcess');
 const OftenQnaModel = require('../models/OftenQna');
 const service = require('../services/oftenqna');
+const path = require('path');
+const CONFIG = require('../../config/config.json');
 const logger = require('log4js').getLogger('app');
 const Iconv = require('iconv-lite');
 
 module.exports = {
 
     index: (req, res, next) => {
-        var search = service.createSearch(req);
+        async.waterfall([function (callback) {
+            HigherProcessModel.find({},function (err, higherprocess) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null, higherprocess)
+            });
+        }], function (err, higherprocess) {
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            }else{
+                res.render("oftenqna/index", {
+                    higherprocess: higherprocess
+                });
+            }
+        });
 
+        /*
+        var search = service.createSearch(req);
         async.waterfall([function (callback) {
             HigherProcessModel.find(search.findOftenqna, function (err, higherprocess) {
                 if (err) {
@@ -33,6 +56,7 @@ module.exports = {
                 });
             }
         });
+        */
     },
 
     new: (req, res, next) => {
@@ -77,14 +101,30 @@ module.exports = {
     },
 
     edit: (req, res, next) => {
-        OftenQnaModel.findById(req.params.id, function (err, oftenqna) {
-            if (err) return res.json({
-                success: false,
-                message: err
-            });
-            res.render("oftenqna/edit", {
-                oftenqna: oftenqna
-            });
+        OftenQnaModel.findById({
+            _id: req.params.id
+        }, function (err, oftenqna) {
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: err
+                });
+            } else {
+                //path 길이 잘라내기
+                if (oftenqna.attach_file.length > 0) {
+                    for (var i = 0; i < oftenqna.attach_file.length; i++) {
+                        var path = oftenqna.attach_file[i].path
+                        oftenqna.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
+                        if (oftenqna.attach_file[i].mimetype.indexOf('image') > -1) {
+                            oftenqna.attach_file[i].mimetype = 'image';
+                        }
+                    }
+                }
+                res.render("oftenqna/edit", {
+                    oftenqna: oftenqna,
+                    user: req.user
+                });
+            }
         });
     },
 
@@ -124,7 +164,15 @@ module.exports = {
      * summernote 이미지링크 처리
      */
     insertedImage: (req, res, next) => {
-        logger.debug("=====================>incident controllers insertedImage");
+        logger.debug("=====================>oftenqna controllers insertedImage");
         res.send(req.file.filename);
     },
+
+    /** 
+     * oftenqna 첨부파일 다운로드
+     */
+    download: (req, res, next) => {
+        var filepath = path.join(__dirname, '../../', CONFIG.fileUpload.directory, req.params.path1, req.params.path2);
+        res.download(filepath);
+    }
 };

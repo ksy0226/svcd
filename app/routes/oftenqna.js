@@ -17,5 +17,6 @@ router.route('/edit/:id').get(ssc.sessionCheck, controller.edit)
 router.route('/save/:id').get(ssc.sessionCheck, controller.update);
 router.route('/insertedImage').post(upload2.array('insertedImage'), ssc.sessionCheck, controller.insertedImage);
 router.route('/delete/:id').get(ssc.sessionCheck, controller.delete);
+router.route('/download/:path1/:path2').get(ssc.sessionCheck, controller.download);
 
 module.exports = router;
