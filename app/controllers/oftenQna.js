@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const async = require('async');
 const HigherProcessModel = require('../models/HigherProcess');
 const OftenQnaModel = require('../models/OftenQna');
-const service = require('../services/search');
+const service = require('../services/oftenqna');
 const logger = require('log4js').getLogger('app');
 const Iconv = require('iconv-lite');
 
