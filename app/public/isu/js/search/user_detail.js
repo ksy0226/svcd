@@ -6,12 +6,8 @@ var inCnt = 16; //한번에 화면에 조회되는 리스트 수
 
 
 $(document).ready(function () {
-
-    //목록 버튼 클릭 시
-    $('#goList').on('click', function () {
-        location.href = '/search/user_list';
-
-    });
-    
 });
 
+function goList(){
+    history.back(-1);
+}
