@@ -49,11 +49,6 @@ $(document).ready(function () {
         research();
     });
 
-    //TR 클릭 시
-    $('#dataTR').on('click', function () {
-        window.location = $(this).attr('href');
-        return false;
-    });
     
 });
 
@@ -73,7 +68,6 @@ function research(){
  */
 function getLowerProcessList(){
     var reqParam = 'higher_cd=' + $('#higher_cd').val();
-
     $.ajax({
         type: "GET",
         url: "/search/getlowerprocess",
@@ -109,9 +103,7 @@ function setContent(data, higher_cd){
  * 선택된 리스트 가져오기 (상/하위업무 구분, 검색어, 날짜)
  */
 function getDataList(){
-    if($('#higher_cd').val() !=""){
-        getLowerProcessList();
-    }
+    
     if($('#lower_cd').val() =="" || $('#lower_cd').val() ==null){
         $('#lower_cd').val("*");
     }
