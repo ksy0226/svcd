@@ -1,6 +1,6 @@
 extends ../layouts/default
 block head
-    title  1-4 처리된 내용검색
+    title  요청업무 리스트
     // summernot
     link(href='/plugins/summernote/dist/summernote.css', rel='stylesheet')
     
@@ -47,120 +47,116 @@ block head
     script(src='/isu/js/manager/work_list.js', type='text/javascript')
 
 block content
-      // ==============================================================
-      // Start right Content here
-      // ==============================================================
-      .content-page
+    // ==============================================================
+    // Start right Content here
+    // ==============================================================
+    .content-page
         // Start content
         .content
-          .container
-            // Page-Title
-            .row
-              .col-sm-12
-                .page-title-box
-                  ol.breadcrumb.pull-right
-                    li
-                      a(href='#') Home
-                    li
-                      a(href='#') 문의 및 담당자
-                    li.active 처리된 내용검색
-                  h4.page-title 처리된 내용검색
-            // start Search Area
-            .row
-              .col-lg-12
-                .card-box
-                  form.form-horizontal.group-border-dashed(action='#')
-                    .form-group
-                      label.col-sm-2.control-label 진행상태 
-                      .col-sm-3
-                        select.form-control(id='status_cd' name='status_cd')
-                          option(value ='*') 전체
-                          - if (status.length > 0) {
-                            - for( var i = 0 ; length = status.length > i ; i++ ){ 
-                                option(value ='#{status[i].status_cd}') #{status[i].status_nm}
-                            - }
-                          - } 
-                      label.col-sm-2.control-label 업무
-                      .col-sm-4
-                        select.form-control(id='lower_cd' name='lower_cd')
-                          option(value ='*') 전체
-                          - if (lowerprocess.length > 0) {
-                            - for( var i = 0 ; length = lowerprocess.length > i ; i++ ){ 
-                                option(value ='#{lowerprocess[i].lower_cd}') #{lowerprocess[i].higher_nm}/#{lowerprocess[i].lower_nm}
-                            - }
-                          - } 
-                    .form-group
-                      label.col-sm-2.control-label 검색기간
-                      .col-sm-4
-                        .input-group
-                          .input-group
-                            input.form-control(type='text', placeholder='yyyy-mm-dd' id='reg_date_from' name='reg_date_from' value=reg_date_from)
-                            span.input-group-addon.bg-primary.b-0.text-white
-                              i.ion-calendar
-                      .col-sm-4
-                        .input-group
-                          .input-group
-                            input.form-control(type='text', placeholder='yyyy-mm-dd' id='reg_date_to' name='reg_date_to' value=reg_date_to)
-                            span.input-group-addon.bg-primary.b-0.text-white
-                              i.ion-calendar
-                      //.col-sm-2
-                      //  button.btn.btn-default(type='button' id='initBtn') 초기화      
-                    .form-group.m-b-0
-                      label.col-sm-2.control-label 검색어
-                      .col-sm-2
-                        select.form-control(id='searchType' name='searchType')
-                          option(value='title,content') 제목+내용
-                          option(value='title') 제목
-                          option(value='content') 내용
-                      .col-sm-6
-                        input.form-control(type='text' id='searchText' name='searchText' value=searchText)
-                      .col-sm-2
-                        button.btn.btn-primary(type='button' id='searchBtn') 조회
-            .row
-              .col-lg-12
-                  .card-box
-                    table.table.table-bordered
-                      thead
-                        tr
-                          th(width='16%') 상위업무명
-                          th(width='16%') 하위업무명
-                          th 제목
-                          th(width='15%') 등록일
-                          th(width='15%') 담당자
-                      tbody(id='more_list')
-                    #more_view.row
-            
-            
-                  .row
-                    .col-sm-4
-                      .dataTables_info Showing 1 to 10 of 57 entries
-                    .col-sm-8
-                      .dataTables_paginate.paging_simple_numbers.pull-right
-                        ul.pagination
-                          li.cpaginate_button.previous
-                            a(href='#') Previous
-                          li.cpaginate_button.active
-                            a(href='#') 1
-                          li.cpaginate_button
-                            a(href='#') 2
-                          li.cpaginate_button
-                            a(href='#') 3
-                          li.cpaginate_button
-                            a(href='#') 4
-                          li.cpaginate_button
-                            a(href='#') 5
-                          li.cpaginate_button
-                            a(href='#') 6
-                          li.cpaginate_button.next
-                            a(href='#') Next
-                  // end pagination
-            // end Grid Area
-          // end container
+            .container
+                // Page-Title
+                .row
+                    .col-sm-12
+                        .page-title-box
+                            ol.breadcrumb.pull-right
+                                li
+                                    a(href='#') Home
+                                li
+                                    a(href='#') SD 담당자
+                                li.active 요청업무 리스트
+                            h4.page-title 요청업무 리스트 - 목록
+                // start Search Area
+                .row
+                    .col-lg-12
+                        .card-box.m-t-10
+                            form.form-horizontal.group-border-dashed(action='#')
+                                .form-group
+                                    label.col-sm-2.control-label 진행상태
+                                    .col-sm-2
+
+                                        select.form-control(id='status_cd' name='status_cd')
+                                            option(value ='*') 전체
+                                            - if (status.length > 0) {
+                                                - for( var i = 0 ; length = status.length > i ; i++ ){ 
+                                                    option(value ='#{status[i].status_cd}') #{status[i].status_nm}
+                                                - }
+                                            - } 
+                                    label.col-sm-2.control-label 하위업무
+                                    .col-sm-2
+                                        select.form-control(id='lower_cd' name='lower_cd')
+                                            option(value ='*') 전체
+                                            - if (lowerprocess.length > 0) {
+                                                - for( var i = 0 ; length = lowerprocess.length > i ; i++ ){ 
+                                                    option(value ='#{lowerprocess[i].lower_cd}') #{lowerprocess[i].higher_nm}/#{lowerprocess[i].lower_nm}
+                                                - }
+                                            - } 
+                                .form-group
+                                    label.col-sm-2.control-label 검색기간
+                                    .col-sm-4
+                                        .input-group
+                                        .input-group
+                                            input.form-control(type='text', placeholder='yyyy-mm-dd' id='reg_date_from' name='reg_date_from' value=reg_date_from)
+                                            span.input-group-addon.bg-primary.b-0.text-white
+                                                i.ion-calendar
+                                    .col-sm-4
+                                        .input-group
+                                        .input-group
+                                            input.form-control(type='text', placeholder='yyyy-mm-dd' id='reg_date_to' name='reg_date_to' value=reg_date_to)
+                                            span.input-group-addon.bg-primary.b-0.text-white
+                                                i.ion-calendar
+                                .form-group.m-b-0
+                                    label.col-sm-2.control-label 검색어
+                                    .col-sm-2
+                                        select.form-control(id='searchType' name='searchType')
+                                            option(value='title,content') 제목+내용
+                                            option(value='title') 제목
+                                            option(value='content') 내용
+                                    .col-sm-6
+                                        input.form-control(type='text' id='searchText' name='searchText' value=searchText)
+                                    .col-sm-2
+                                        button.btn.btn-primary(type='button' id='searchBtn') 조회
+                // end Search Area
+                // start Grid Area
+                .row
+                    .col-lg-12
+                        .card-box
+                            table.table.table-bordered
+                                thead
+                                    tr
+                                        th.text-center(width='50px') 긴급
+                                        th.text-center(width='60px') 진행
+                                        th.text-center 제목
+                                        th.text-center(width='150px') 회사명/요청자
+                                        th.text-center(width='100px') 등록일
+                                        th.text-center(width='100px') 접수완료일
+                                        //th.text-center(width='100px') 하위업무
+                                tbody(id='more_list')
+                            //#more_view.row
+                            // start pagination
+                            .row
+                                .col-sm-4
+                                    .dataTables_info Showing 1 to 10 of 57 entries
+                                .col-sm-8
+                                    .dataTables_paginate.paging_simple_numbers.pull-right
+                                        ul.pagination
+                                            li.cpaginate_button.previous
+                                                a(href='#') Previous
+                                            li.cpaginate_button.active
+                                                a(href='#') 1
+                                            li.cpaginate_button
+                                                a(href='#') 2
+                                            li.cpaginate_button
+                                                a(href='#') 3
+                                            li.cpaginate_button
+                                                a(href='#') 4
+                                            li.cpaginate_button
+                                                a(href='#') 5
+                                            li.cpaginate_button
+                                                a(href='#') 6
+                                            li.cpaginate_button.next
+                                                a(href='#') Next
+                            // end pagination
+                // end Grid Area
+            // end container
         // end content
-        footer.footer.text-right
-          | 2017 © ISU Group.
-      // ==============================================================
-      // End Right content here
-      // ==============================================================
-    // END wrapper    
-    
+block footer    

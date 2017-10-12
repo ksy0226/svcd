@@ -45,12 +45,6 @@ $(document).ready(function () {
     $('#lower_cd').on('change', function () {
         research();
     });
-
-    //TR 클릭 시
-    $('#dataTR').on('click', function () {
-        window.location = $(this).attr('href');
-        return false;
-    });
     
 });
 
@@ -98,9 +92,6 @@ function getDataList(){
 //내용 매핑
 function setDataList(dataObj) {
     
-    //더보기 버튼 처리
-    //setMoreBtn(dataObj);
-
     //조회 내용 추가
     if (rowIdx < dataObj.length) {
 
@@ -111,16 +102,16 @@ function setDataList(dataObj) {
         }
 
         for (var i = rowIdx; i < dataCnt; i++) {
-            var register_dateVal = dataObj[i].register_date; 
-            register_dateVal = register_dateVal.substring(0,10);
-            var idValue = dataObj[i]._id ;
+            
             var addList = "";
-            addList += "							<tr id='dataTR' onclick=window.location='/manager/work_detail/" + dataObj[i]._id + "'>";
-            addList += "								<td>" + dataObj[i].higher_nm + "</td>";
-            addList += "								<td>" + dataObj[i].lower_nm + "</td>";
+            addList += "							<tr onclick=window.location='/manager/work_detail/" + dataObj[i]._id + "'>";
+            addList += "								<td class='text-center'>" + dataObj[i].process_speed + "</td>";
+            addList += "								<td class='text-center'>" + dataObj[i].status_cd + "</td>";
             addList += "								<td>" + dataObj[i].title + "</td>";
-            addList += "								<td>" + register_dateVal + "</td>";
-            addList += "								<td>" + dataObj[i].manager_nm + "</td>";
+            addList += "								<td>" + dataObj[i].request_company_nm +"/"+ dataObj[i].request_nm + "</td>";
+            addList += "								<td class='text-center'>" + dataObj[i].register_date + "</td>";
+            addList += "								<td class='text-center'>" + dataObj[i].receipt_date + "</td>";
+            //addList += "								<td>" + dataObj[i].lower_nm + "</td>";
             addList += "							</tr>";
 
             $("#more_list").append(addList);
@@ -129,5 +120,36 @@ function setDataList(dataObj) {
         }
     }
 
+    $('#more_list > tr').each(function(){
+        
+        /**
+         * 진행상태
+         */
+        if($(this).find('td:eq(0)').html() == "1"){
+            $(this).find('td:eq(0)').html('');
+        }if($(this).find('td:eq(0)').html() == "2"){
+            $(this).find('td:eq(0)').html('<span class="label label-warning">✔</span>');
+        }
+
+        /**
+         * 진행상태
+         */
+        if($(this).find('td:eq(1)').html() == "1"){
+            $(this).find('td:eq(1)').html('<span class="label label-inverse">접수중</span>');
+        }if($(this).find('td:eq(1)').html() == "2"){
+            $(this).find('td:eq(1)').html('<span class="label label-primary">처리중</span>');
+        }if($(this).find('td:eq(1)').html() == "3"){
+            $(this).find('td:eq(1)').html('<span class="label label-success">미평가</span>');
+        }if($(this).find('td:eq(1)').html() == "4"){
+            $(this).find('td:eq(1)').html('<span class="font-12 text-purple">완&nbsp;&nbsp;료</span>');
+        }if($(this).find('td:eq(1)').html() == "5"){
+            $(this).find('td:eq(1)').html('<span class="label label-info">보 류</span>');
+        }
+
+    })
+
+    /**
+     * 긴급구분
+     */
 
 }
