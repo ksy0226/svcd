@@ -44,6 +44,10 @@ $(document).ready(function () {
         research();
     });
 
+    $('#paging').on('click', function () {
+        research();
+    }); 
+
 });
 
 //다시 조회
@@ -131,13 +135,10 @@ function getPagingData(dataPerPage, selectedPage){
     var startIdx = dataPerPage*(selectedPage-1)+1; 
     var endIdx = dataPerPage*selectedPage+1; 
     
-    for(var i = startIdx; i<endIdx; i++){
-        //alert();
-    }
-
-    //for(var i = (dataPerPage*(selectedPage-1)+1 ; i < dataPerPage*selectedPage+1 ; i++){
-        //alert("1"+dataPerPage*selectedPage);
-        //alert("2"+dataPerPage*selectedPage+1);
+    
+    for(var i = startIdx ; i < endIdx ; i++){
+        alert("startIdx"+startIdx);
+        alert("endIdx"+endIdx);
         /*
         var register_dateVal = dataObj[i].register_date; 
         register_dateVal = register_dateVal.substring(0,10);
@@ -152,16 +153,10 @@ function getPagingData(dataPerPage, selectedPage){
         addList += "							</tr>";
 
         $("#more_list").append(addList);
-
-        dataCntStart = dataCntStart+1;
         */
-
-
-    //}
-
-
-
+    }
 }
+
 /**
  * 선택된 내용 매핑하기
  */
