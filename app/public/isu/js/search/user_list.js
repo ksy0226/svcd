@@ -11,7 +11,7 @@ $(document).ready(function () {
         todayHighlight: true,
         format: "yyyy-mm-dd"
     });
-    
+
     $('#reg_date_to').datepicker({
         autoclose: true,
         todayHighlight: true,
@@ -47,12 +47,6 @@ $(document).ready(function () {
     $('#lower_cd').on('change', function () {
         research();
     });
-
-    $('#paging').on('click', function (selectedPage) {
-        alert("page click");
-        //research(selectedPage);
-    }); 
-
 });
 
 //다시 조회
@@ -115,8 +109,8 @@ function paging(totalData, dataPerPage, pageCount, currentPage){
     
     var totalPage = Math.ceil(totalData/dataPerPage);    // 총 페이지 수
     var pageGroup = Math.ceil(currentPage/pageCount);    // 페이지 그룹
-    //alert("currentPage : " + currentPage);
-    //alert("pageGroup : " + pageGroup);
+    alert("currentPage : " + currentPage);
+    alert("pageGroup : " + pageGroup);
     
     var last = pageGroup * pageCount;    // 화면에 보여질 마지막 페이지 번호
     if(last > totalPage)
@@ -135,13 +129,13 @@ function paging(totalData, dataPerPage, pageCount, currentPage){
     var html = "";
     
     if(prev > 0)
-        html += "<a href=# id='prev'><<<</a> ";
+        html += "<a href=# id='prev'><<< Prev</a> ";
     for(var i=first; i <= last; i++){
         html += "<a href='#' id=" + i + ">" + i + "</a> ";
     }
     
     if(last < totalPage)
-        html += "<a href=# id='next'>>>></a>";
+        html += "<a href=# id='next'> Next >>></a>";
     
     $("#paging").html(html);    // 페이지 목록 생성
     $("#paging a").css("color", "black");
@@ -220,25 +214,30 @@ function setDataList(dataObj, selectedPage) {
     
     var startIdx = dataPerPage*(selectedPage-1)+1; 
     var endIdx = dataPerPage*selectedPage+1; 
-    
-    for(var i = startIdx ; i < endIdx ; i++){
-        alert(i+"번째"+dataObj[i].title);
-        var register_dateVal = dataObj[i].register_date; 
-        register_dateVal = register_dateVal.substring(0,10);
-        var idValue = dataObj[i]._id ;
-        var addList = "";
-        addList += "							<tr onclick=window.location='/search/user_detail/" + dataObj[i]._id + "'>";
-        addList += "								<td>" + dataObj[i].higher_nm + "</td>";
-        addList += "								<td>" + dataObj[i].lower_nm + "</td>";
-        addList += "								<td>" + dataObj[i].title + "</td>";
-        addList += "								<td>" + register_dateVal + "</td>";
-        addList += "								<td>" + dataObj[i].manager_nm + "</td>";
-        addList += "							</tr>";
+    if (startIdx < dataObj.length) {
+        for(var i = startIdx ; i < endIdx ; i++){
+            alert(i+"번째"+dataObj[i].title);
+            var register_dateVal = dataObj[i].register_date; 
+            register_dateVal = register_dateVal.substring(0,10);
+            var idValue = dataObj[i]._id ;
+            var addList = "";
+            addList += "							<tr onclick=window.location='/search/user_detail/" + dataObj[i]._id + "'>";
+            addList += "								<td>" + dataObj[i].higher_nm + "</td>";
+            addList += "								<td>" + dataObj[i].lower_nm + "</td>";
+            addList += "								<td>" + dataObj[i].title + "</td>";
+            addList += "								<td>" + register_dateVal + "</td>";
+            addList += "								<td>" + dataObj[i].manager_nm + "</td>";
+            addList += "							</tr>";
 
-        $("#more_list").append(addList);
+            $("#more_list").append(addList);
 
-        startIdx++;
-        
+            startIdx++;
+            
+        }
+    }else{
+        $("#more_list tr").remove();
+        addList += $("#more_list").append("<tr><td colspan='5'>조회된 데이터가 없습니다.</td></tr>");
+
     }
 
 
