@@ -108,6 +108,7 @@ var pageCount = 6;       // 한 화면에 나타낼 페이지 수
 function paging(totalData, dataPerPage, pageCount, currentPage){
     
     var totalPage = Math.ceil(totalData/dataPerPage);    // 총 페이지 수
+    alert("토탈페이지수: " + totalPage);
     var pageGroup = Math.ceil(currentPage/pageCount);    // 페이지 그룹
     alert("currentPage : " + currentPage);
     alert("pageGroup : " + pageGroup);
@@ -164,7 +165,6 @@ function paging(totalData, dataPerPage, pageCount, currentPage){
  * 데이터 조회-(상/하위업무 구분, 검색어, 날짜 중) 선택된 리스트 가져오기 
  */
 function getDataList(selectedPage){
-    alert("getDataList 함수 selectedPage" + selectedPage);
     if($('#lower_cd').val() =="" || $('#lower_cd').val() ==null){
         $('#lower_cd').val("*");
     }
@@ -198,8 +198,8 @@ function getDataList(selectedPage){
  * 선택된 내용 매핑하기
  */
 function setDataList(dataObj, selectedPage) {
-    alert("setDataList 함수 "+ selectedPage);
-    alert("setDataList 선택한 페이지   :   " + selectedPage);
+    //alert("setDataList 함수 "+ selectedPage);
+    //alert("setDataList 선택한 페이지   :   " + selectedPage);
 
     //선택한 페이지가 1page 이상일 때,
     if(selectedPage>1){
@@ -214,7 +214,9 @@ function setDataList(dataObj, selectedPage) {
     
     var startIdx = dataPerPage*(selectedPage-1)+1; 
     var endIdx = dataPerPage*selectedPage+1; 
-    if (startIdx < dataObj.length) {
+    alert(startIdx + "에서 ~ " + endIdx + " 전까지");
+
+    //if (startIdx < dataObj.length) {
         for(var i = startIdx ; i < endIdx ; i++){
             alert(i+"번째"+dataObj[i].title);
             var register_dateVal = dataObj[i].register_date; 
@@ -224,7 +226,7 @@ function setDataList(dataObj, selectedPage) {
             addList += "							<tr onclick=window.location='/search/user_detail/" + dataObj[i]._id + "'>";
             addList += "								<td>" + dataObj[i].higher_nm + "</td>";
             addList += "								<td>" + dataObj[i].lower_nm + "</td>";
-            addList += "								<td>" + dataObj[i].title + "</td>";
+            addList += "								<td>" + i + dataObj[i].title + "</td>";
             addList += "								<td>" + register_dateVal + "</td>";
             addList += "								<td>" + dataObj[i].manager_nm + "</td>";
             addList += "							</tr>";
@@ -234,11 +236,11 @@ function setDataList(dataObj, selectedPage) {
             startIdx++;
             
         }
-    }else{
-        $("#more_list tr").remove();
-        addList += $("#more_list").append("<tr><td colspan='5'>조회된 데이터가 없습니다.</td></tr>");
+    //}else{
+    //    $("#more_list tr").remove();
+    //    addList += $("#more_list").append("<tr><td colspan='5'>조회된 데이터가 없습니다.</td></tr>");
 
-    }
+    //}
 
 
 
