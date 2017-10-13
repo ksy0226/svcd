@@ -160,37 +160,6 @@ function getPagingData(dataPerPage, selectedPage){
     //}
 
 
-    /*
-    alert(i);
-    alert(dataCnt); //15
-    alert(dataObj);
-
-    var dataCntStart = dataCnt ; 
-    var dataCntEnd = dataCnt * i  ;
-    alert(dataCntEnd);
-    alert("paging >>>>>>>"+dataCnt);
-    if (rowIdx < dataObj.length) {
-        for (var i = dataCntStart; i < dataCntEnd+1; i++) {
-            alert("i"+i);
-            alert("for____________"+dataCntStart);
-            var register_dateVal = dataObj[i].register_date; 
-            register_dateVal = register_dateVal.substring(0,10);
-            var idValue = dataObj[i]._id ;
-            var addList = "";
-            addList += "							<tr onclick=window.location='/search/user_detail/" + dataObj[i]._id + "'>";
-            addList += "								<td>" + dataObj[i].higher_nm + "</td>";
-            addList += "								<td>" + dataObj[i].lower_nm + "</td>";
-            addList += "								<td>" + dataObj[i].title + "</td>";
-            addList += "								<td>" + register_dateVal + "</td>";
-            addList += "								<td>" + dataObj[i].manager_nm + "</td>";
-            addList += "							</tr>";
-
-            $("#more_list").append(addList);
-
-            dataCntStart = dataCntStart+1;
-        }
-        alert("dataCntStart:::::::::::"+dataCntStart);
-    }*/
 
 }
 /**
