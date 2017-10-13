@@ -190,7 +190,7 @@ module.exports = {
         var search = service.createSearch(req);
 
         logger.debug("=====================> " + JSON.stringify(search));
-        //console.log("=====================> " + search.order_by);
+        console.log("=====================> " + search.order_by);
         try {
             async.waterfall([function (callback) {
                 OftenQnaModel.find(search.findOftenqna, function (err, oftenqna) {
@@ -199,9 +199,10 @@ module.exports = {
                             err: err
                         });
                     } else {
+                        console.log("---------------------->>>>> " + search.order_by)
                         callback(null, oftenqna)
                     }
-                }).sort(search.order_by);
+                }).sort(-search.order_by);
             }], function (err, oftenqna) {
                 if (err) {
                     res.render("http/500", {

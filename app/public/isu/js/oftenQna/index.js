@@ -46,7 +46,7 @@ function research() {
 function getDataList() {
     var reqParam = 'searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() 
                     + '&searchText=' + encodeURIComponent($('#searchText').val())
-                    + '&order_by=' + encodeURIComponent($('#order_by').val());
+                    + '&order_by=' + $('#order_by').val();
 
     $.ajax({
         type: "GET",
