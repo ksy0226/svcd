@@ -2,11 +2,10 @@
 
 var rowIdx = 0; //출력 시작 인덱스
 var dataCnt = 0; // 출력 종료 인덱스
-var inCnt = 16; //한번에 화면에 조회되는 리스트 수
-
+var inCnt = 15; //한번에 화면에 조회되는 리스트 수
 
 $(document).ready(function () {
-    
+
     $('#reg_date_from').datepicker({
         autoclose: true,
         todayHighlight: true,
@@ -18,7 +17,6 @@ $(document).ready(function () {
         format: "yyyy-mm-dd"
     });
     
-    
     //엔터키 이벤트 시
     $('#searchText').keypress(function(e){
         if(e.keyCode == 13) {
@@ -27,16 +25,13 @@ $(document).ready(function () {
         }
     });
     
-
     //최초 조회
     getDataList();
-    //getLowerProcessList();
-    
+
     //조회버튼 클릭 시
     $('#searchBtn').on('click', function () {
         research();
-    });
-    
+    }); 
 
     //상위업무 변경 시
     $('#higher_cd').on('change', function () {
@@ -49,7 +44,6 @@ $(document).ready(function () {
         research();
     });
 
-    
 });
 
 //다시 조회
@@ -107,7 +101,7 @@ function getDataList(){
     if($('#lower_cd').val() =="" || $('#lower_cd').val() ==null){
         $('#lower_cd').val("*");
     }
-    var reqParam = 'searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&lower_cd=' + $('#lower_cd').val() + '&reg_date_from=' + $('#reg_date_from').val()+ '&reg_date_to=' + $('#reg_date_to').val()+ '&searchText=' + $('#searchText').val();
+    var reqParam = 'searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&lower_cd=' + $('#lower_cd').val() + '&reg_date_from=' + $('#reg_date_from').val()+ '&reg_date_to=' + $('#reg_date_to').val()+ '&searchText=' + encodeURIComponent($('#searchText').val());
     $.ajax({
         type: "GET",
         async: true,
@@ -130,39 +124,104 @@ function getDataList(){
         }
     });
 }
+function getPagingData(dataPerPage, selectedPage){
+    alert("선택한 페이지   :   " + selectedPage);
+    alert("페이지당 수    :   " + dataPerPage);
+    
+    var startIdx = dataPerPage*(selectedPage-1)+1; 
+    var endIdx = dataPerPage*selectedPage+1; 
+    
+    for(var i = startIdx; i<endIdx; i++){
+        //alert();
+    }
+
+    //for(var i = (dataPerPage*(selectedPage-1)+1 ; i < dataPerPage*selectedPage+1 ; i++){
+        //alert("1"+dataPerPage*selectedPage);
+        //alert("2"+dataPerPage*selectedPage+1);
+        /*
+        var register_dateVal = dataObj[i].register_date; 
+        register_dateVal = register_dateVal.substring(0,10);
+        var idValue = dataObj[i]._id ;
+        var addList = "";
+        addList += "							<tr onclick=window.location='/search/user_detail/" + dataObj[i]._id + "'>";
+        addList += "								<td>" + dataObj[i].higher_nm + "</td>";
+        addList += "								<td>" + dataObj[i].lower_nm + "</td>";
+        addList += "								<td>" + dataObj[i].title + "</td>";
+        addList += "								<td>" + register_dateVal + "</td>";
+        addList += "								<td>" + dataObj[i].manager_nm + "</td>";
+        addList += "							</tr>";
+
+        $("#more_list").append(addList);
+
+        dataCntStart = dataCntStart+1;
+        */
 
 
+    //}
+
+
+
+}
 /**
  * 선택된 내용 매핑하기
  */
 function setDataList(dataObj) {
-    //조회 내용 추가
+
     if (rowIdx < dataObj.length) {
 
         if ((rowIdx + inCnt) < dataObj.length) {
             dataCnt = rowIdx + inCnt;
+            alert("dataCnt 데이터 수  : " +dataCnt);
         } else {
             dataCnt = dataObj.length;
         }
+        //if(dataCnt < dataObj.length){
+            for (var i = rowIdx; i < dataCnt; i++) {
+                var register_dateVal = dataObj[i].register_date; 
+                register_dateVal = register_dateVal.substring(0,10);
+                var idValue = dataObj[i]._id ;
+                var addList = "";
+                addList += "							<tr onclick=window.location='/search/user_detail/" + dataObj[i]._id + "'>";
+                addList += "								<td>" + dataObj[i].higher_nm + "</td>";
+                addList += "								<td>" + dataObj[i].lower_nm + "</td>";
+                addList += "								<td>" + dataObj[i].title + "</td>";
+                addList += "								<td>" + register_dateVal + "</td>";
+                addList += "								<td>" + dataObj[i].manager_nm + "</td>";
+                addList += "							</tr>";
 
-        for (var i = rowIdx; i < dataCnt; i++) {
-            var register_dateVal = dataObj[i].register_date; 
-            register_dateVal = register_dateVal.substring(0,10);
-            var idValue = dataObj[i]._id ;
-            var addList = "";
-            addList += "							<tr id='dataTR' onclick=window.location='/search/user_detail/" + dataObj[i]._id + "'>";
-            addList += "								<td>" + dataObj[i].higher_nm + "</td>";
-            addList += "								<td>" + dataObj[i].lower_nm + "</td>";
-            addList += "								<td>" + dataObj[i].title + "</td>";
-            addList += "								<td>" + register_dateVal + "</td>";
-            addList += "								<td>" + dataObj[i].manager_nm + "</td>";
-            addList += "							</tr>";
+                $("#more_list").append(addList);
 
-            $("#more_list").append(addList);
+                rowIdx++;
+            }
 
-            rowIdx++;
-        }
+            //dataCnt = dataCnt * 2; //
+
+            //alert("dataCnt*2 = "+dataCnt);
+
+            /*for (var i = rowIdx; i < dataCnt; i++) {
+                alert("for"+dataCnt);
+                var register_dateVal = dataObj[i].register_date; 
+                register_dateVal = register_dateVal.substring(0,10);
+                var idValue = dataObj[i]._id ;
+                var addList = "";
+                addList += "							<tr onclick=window.location='/search/user_detail/" + dataObj[i]._id + "'>";
+                addList += "								<td>" + dataObj[i].higher_nm + "</td>";
+                addList += "								<td>" + dataObj[i].lower_nm + "</td>";
+                addList += "								<td>" + dataObj[i].title + "</td>";
+                addList += "								<td>" + register_dateVal + "</td>";
+                addList += "								<td>" + dataObj[i].manager_nm + "</td>";
+                addList += "							</tr>";
+
+                $("#more_list").append(addList);
+
+                rowIdx++;
+            }
+            */
+
+        //}else{
+        //    alert("dataCnt 수가 더 크거나 같음");
+        //}
+
     }
-
 
 }
