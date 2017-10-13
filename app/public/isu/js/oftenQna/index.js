@@ -44,15 +44,18 @@ function research() {
 }
 
 function getDataList() {
-    var reqParam = 'searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&searchText=' + encodeURIComponent($('#searchText').val());
+    var reqParam = 'searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() 
+                    + '&searchText=' + encodeURIComponent($('#searchText').val())
+                    + '&order_by=' + encodeURIComponent($('#order_by').val());
+
     $.ajax({
         type: "GET",
         async: true,
         url: "/oftenqna/list",
         dataType: "json", // xml, html, script, json 미지정시 자동판단
-        timeout: 30000, //제한 시간
+        timeout: 30000,
         cache: false,
-        data: reqParam, // $($('form')).serialize()
+        data: reqParam,
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         error: function (request, status, error) {
             $('#ajax_indicator').css("display", "none");
