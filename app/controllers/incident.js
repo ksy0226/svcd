@@ -176,31 +176,35 @@ module.exports = {
      */
     viewDetail: (req, res, next) => {
         logger.debug("Trace viewDetail : ", req.params.id);
-        Incident.findById({
-            _id: req.params.id
-        }, function (err, incident) {
-            if (err) {
-                return res.json({
-                    success: false,
-                    message: err
-                });
-            } else {
-                //path 길이 잘라내기
-                if (incident.attach_file.length > 0) {
-                    for (var i = 0; i < incident.attach_file.length; i++) {
-                        var path = incident.attach_file[i].path
-                        incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
-                        if (incident.attach_file[i].mimetype.indexOf('image') > -1) {
-                            incident.attach_file[i].mimetype = 'image';
+        try{
+            Incident.findById({
+                _id: req.params.id
+            }, function (err, incident) {
+                if (err) {
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
+                    //path 길이 잘라내기
+                    if (incident.attach_file.length > 0) {
+                        for (var i = 0; i < incident.attach_file.length; i++) {
+                            var path = incident.attach_file[i].path
+                            incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
+                            if (incident.attach_file[i].mimetype!= null && incident.attach_file[i].mimetype.indexOf('image') > -1) {
+                                incident.attach_file[i].mimetype = 'image';
+                            }
                         }
                     }
+                    res.render("incident/viewDetail", {
+                        incident: incident,
+                        user: req.user
+                    });
                 }
-                res.render("incident/viewDetail", {
-                    incident: incident,
-                    user: req.user
-                });
-            }
-        });
+            });
+        }catch(e){
+            logger.debug('****************',e);
+        }
     },
 
     /** 
@@ -237,6 +241,42 @@ module.exports = {
             res.send(incident);
         });
     },
+
+    /**
+     * Incident 상세 JSON 데이타 조회
+     */
+    getIncidentDetail: (req, res, next) => {
+        
+        logger.debug("Trace viewDetail : ", req.params.id);
+        try{
+            Incident.findById({
+                _id: req.params.id
+            }, function (err, incident) {
+                if (err) {
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
+                    //path 길이 잘라내기
+                    if (incident.attach_file.length > 0) {
+                        for (var i = 0; i < incident.attach_file.length; i++) {
+                            var path = incident.attach_file[i].path
+                            incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
+                            if (incident.attach_file[i].mimetype!= null && incident.attach_file[i].mimetype.indexOf('image') > -1) {
+                                incident.attach_file[i].mimetype = 'image';
+                            }
+                        }
+                    }
+                    res.send(incident);
+                }
+            });
+        }catch(e){
+            logger.debug('****************',e);
+        }
+    },
+        
+
 
     /**
      * summernote 이미지링크 처리

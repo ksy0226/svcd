@@ -85,6 +85,8 @@ module.exports = {
         logger.debug('findIncident : ' + JSON.stringify(findIncident));
         logger.debug('req.query.higher_cd : ' + req.query.higher_cd);
         logger.debug('req.query.lower_cd : ' + req.query.lower_cd);
+        logger.debug('req.query.searchType : ' + req.query.searchType);
+        logger.debug('req.query.searchText : ' + req.query.searchText);
         logger.debug('req.query.reg_date_from : ' + req.query.reg_date_from);
         logger.debug('req.query.reg_date_to : ' + req.query.reg_date_to);
 
