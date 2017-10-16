@@ -4,7 +4,7 @@ var rowIdx = 0; //출력 시작 인덱스
 var dataCnt = 0; // 출력 종료 인덱스
 var inCnt = 15; //한번에 화면에 조회되는 리스트 수
 
-var totalData = 322;       // 총 데이터 수 
+var totalData = 0;       // 총 데이터 수 
 
 var dataPerPage = 15;    // 한 페이지에 나타낼 데이터 수
 var pageCount = 6;       // 한 화면에 나타낼 페이지 수
@@ -128,19 +128,23 @@ function paging(totalData, dataPerPage, pageCount, currentPage){
     var html = "";
     
     if(prev > 0)
-        html += "<a href=# id='prev'>Previous</a>";
+        html += "<li class='cpaginate_button previous'><a href=# id='prev'>Previous</a></li>";
     for(var i=first; i <= last; i++){
-        html += "<a href='#' id=" + i + ">" + i + "</a> ";
+        if(i == currentPage){
+            html += "<li class='cpaginate_button active'><a href='#' id=" + i + ">" + i + "</a></li> ";
+        }else{
+            html += "<li class='cpaginate_button'><a href='#' id=" + i + ">" + i + "</a></li> ";
+        }
     }
     
     if(last < totalPage)
-        html += "<a href=# id='next'>Next</a>";
+        html += "<li class='cpaginate_button next'><a href=# id='next'>Next</a></li>";
     
-    $("#paging").html(html).addClass("cpaginate_button");    // 페이지 목록 생성
-    $("#paging a").css("color", "black");
-    $("#paging a#" + currentPage).css({"text-decoration":"none", 
-                                    "color":"red", 
-                                    "font-weight":"bold"});    // 현재 페이지 표시
+    $("#paging").html(html);    // 페이지 목록 생성
+   //$("#paging a").css("color", "black");
+   // $("#paging a#" + currentPage).css({"text-decoration":"none", 
+   //                                 "color":"red", 
+   //                                 "font-weight":"bold"});    // 현재 페이지 표시
     
     //페이지 목록 선택 시 1페이징 함수, 2데이터 조회 함수 호출
     $("#paging a").click(function(){
@@ -189,6 +193,7 @@ function getDataList(selectedPage){
             
             //리스트에 내용 매핑
             setDataList(dataObj, selectedPage);
+            totalData = dataObj.length;
             paging(totalData, dataPerPage, pageCount, selectedPage);
             
         }
