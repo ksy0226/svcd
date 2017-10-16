@@ -6,7 +6,7 @@ block head
 
     script(src='/isu/js/search/user_detail.js', type='text/javascript')
     script(src='/isu/js/search/user_list.js', type='text/javascript')
-    
+
 block content
     .content-page
         // Start content
@@ -111,9 +111,10 @@ block content
                                         tr(style='display:')
                                             th.bg-muted 첨부파일
                                             td(colspan='3')
-                                                i.fa.fa-paperclip.m-r-10
-                                                a(href='#')
-                                                    span.text-pink faqimage.gif
+                                            // - if (incident.attach_file.length > 0){
+                                            //    span.text-pink #{incident.attach_file[i].originalname} 
+                                            // - }
+                                                
                                         tr
                                             th.bg-muted 접수상담내용
                                             td(colspan='3')

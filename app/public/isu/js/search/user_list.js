@@ -240,7 +240,7 @@ function setDataList(dataObj, selectedPage) {
             addList += "							<tr onclick=window.location='/search/user_detail/" + dataObj[i]._id + "'>";
             addList += "								<td>" + dataObj[i].higher_nm + "</td>";
             addList += "								<td>" + dataObj[i].lower_nm + "</td>";
-            addList += "								<td>" + i + dataObj[i].title + "</td>";
+            addList += "								<td>" + dataObj[i].title + "</td>";
             addList += "								<td>" + register_dateVal + "</td>";
             addList += "								<td>" + dataObj[i].manager_nm + "</td>";
             addList += "							</tr>";
