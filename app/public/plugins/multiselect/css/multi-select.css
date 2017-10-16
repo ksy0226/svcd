@@ -1,6 +1,7 @@
 .ms-container{
   background: transparent url('../img/switch.png') no-repeat 50% 50%;
-  width: 370px;
+  width: 100%;
+  /*width: 370px;*/
 }
 
 .ms-container:after{
@@ -38,7 +39,8 @@
   -moz-border-radius: 3px;
   border-radius: 3px;
   position: relative;
-  height: 200px;
+  height: 560px;
+  /*height: 200px;*/
   padding: 0;
   overflow-y: auto;
 }
@@ -63,10 +65,16 @@
 }
 
 .ms-container .ms-optgroup-label{
-  margin: 0;
-  padding: 5px 0px 0px 5px;
+  /*margin: 0;*/
+  /*padding: 5px 0px 0px 5px;*/
+  margin: 4px 10px 0;
+  padding: 5px 0px 5px 5px;
   cursor: pointer;
-  color: #999;
+  /*color: #999;*/
+  color: #3bafda;
+  font-size:15px;
+  font-weight: bold;
+  border-bottom:1px solid #e3e3e3;
 }
 
 .ms-container .ms-selectable li.ms-elem-selectable,

@@ -19,6 +19,7 @@ module.exports = () => {
     router.use('/higherProcess', require('../app/routes/higherProcess'));
     router.use('/lowerProcess', require('../app/routes/lowerProcess'));
     router.use('/oftenqna', require('../app/routes/oftenqna'));
+    router.use('/myBusiness', require('../app/routes/myBusiness'));
 
     /// catch 404 and forward to error handler
     router.use(function(req, res, next) {
