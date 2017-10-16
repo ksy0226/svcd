@@ -109,7 +109,7 @@ module.exports = {
                 }
                 logger.debug("*** incident : ", incident.attach_file);
                 */
-                
+                /*
                 //path 길이 잘라내기
                 if (incident.attach_file.length > 0) {
                     for (var i = 0; i < incident.attach_file.length; i++) {
@@ -121,7 +121,7 @@ module.exports = {
                     }
                 }
                 
-
+                */
 
                 //완료요청일, 등록일, 접수일, 완료예정일, 완료일
                 incident.request_complete_date = new Date(incident.request_complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
