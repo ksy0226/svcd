@@ -130,13 +130,25 @@ module.exports = {
                             }
                         }
                     }
-                    res.render("oftenqna/edit", {
-                        higher: higher,
-                        oftenqna: oftenqna,
-                        user: req.user
+
+                    //조회수 증가하기
+                    oftenqna.reading_cnt += 1;
+                    oftenqna.save(function (err) {
+                        if (err) {
+                            return res.json({
+                                success: false,
+                                message: err
+                            });
+                        } else {
+                            res.render("oftenqna/edit", {
+                                higher: higher,
+                                oftenqna: oftenqna,
+                                user: req.user
+                            });
+                        }
                     });
                 }
-            })
+            });
         });
     },
 
@@ -190,6 +202,8 @@ module.exports = {
         var search = service.createSearch(req);
 
         logger.debug("=====================> " + JSON.stringify(search));
+        //console.log("=====================> " + search.order_by);
+
         try {
             async.waterfall([function (callback) {
                 OftenQnaModel.find(search.findOftenqna, function (err, oftenqna) {
@@ -200,7 +214,7 @@ module.exports = {
                     } else {
                         callback(null, oftenqna)
                     }
-                });
+                }).sort("-" + search.order_by);
             }], function (err, oftenqna) {
                 if (err) {
                     res.render("http/500", {

@@ -44,15 +44,18 @@ function research() {
 }
 
 function getDataList() {
-    var reqParam = 'searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&searchText=' + encodeURIComponent($('#searchText').val());
+    var reqParam = 'searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() 
+                    + '&searchText=' + encodeURIComponent($('#searchText').val())
+                    + '&order_by=' + $('#order_by').val();
+
     $.ajax({
         type: "GET",
         async: true,
         url: "/oftenqna/list",
         dataType: "json", // xml, html, script, json 미지정시 자동판단
-        timeout: 30000, //제한 시간
+        timeout: 30000,
         cache: false,
-        data: reqParam, // $($('form')).serialize()
+        data: reqParam,
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         error: function (request, status, error) {
             $('#ajax_indicator').css("display", "none");
@@ -87,9 +90,9 @@ function setDataList(dataObj) {
             addList += "							<tr id='dataTR' onclick=window.location='/oftenqna/edit/" + dataObj[i]._id + "'>";
             addList += "								<td>" + dataObj[i].higher_nm + "</td>";
             addList += "								<td>" + dataObj[i].title + "</td>";
-            addList += "								<td>" + dataObj[i].user_nm + "</td>";
-            addList += "								<td>" + creat_dateVal + "</td>";
-            addList += "								<td>" + dataObj[i].reading_cnt + "</td>";
+            addList += "								<td class='text-center'>" + dataObj[i].user_nm + "</td>";
+            addList += "								<td class='text-center'>" + creat_dateVal + "</td>";
+            addList += "								<td class='text-center'>" + dataObj[i].reading_cnt + "</td>";
             addList += "							</tr>";
 
             $("#more_list").append(addList);

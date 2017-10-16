@@ -11,7 +11,9 @@ module.exports = {
         var AndQueries = [];
         var OrQueries = [];
         var higher_cd = req.query.higher_cd == null ? "*" : req.query.higher_cd;
-        try{
+        var order_by = req.query.order_by;
+
+        try {
             if (req.query.searchType && req.query.searchText) {
                 var searchTypes = req.query.searchType.toLowerCase().split(",");
                 if (searchTypes.indexOf("title") >= 0) {
@@ -46,21 +48,23 @@ module.exports = {
             }
 
             /*
-            console.log('searchType >>>>>>>>>>> ' + req.query.searchType);
-            console.log('searchText >>>>>>>>>>> ' + req.query.searchText);
-            console.log('higher_cd >>>>>>>>>>> ' + req.query.higher_cd);
-            console.log('findOftenqna >>>>>>>>>>> ' + JSON.stringify(findOftenqna));
-            console.log('highlight >>>>>>>>>>> ' + JSON.stringify(highlight)); 
+            console.log('order_by     >>>>>>>>> ' + req.query.order_by);
+            console.log('searchType   >>>>>>>>> ' + req.query.searchType);
+            console.log('searchText   >>>>>>>>> ' + req.query.searchText);
+            console.log('higher_cd    >>>>>>>>> ' + req.query.higher_cd);
+            console.log('findOftenqna >>>>>>>>> ' + JSON.stringify(findOftenqna));
+            console.log('highlight    >>>>>>>>> ' + JSON.stringify(highlight)); 
             */
             
             return {
+                order_by: req.query.order_by,
                 searchType: req.query.searchType,
                 searchText: req.query.searchText,
                 higher_cd: req.query.higher_cd,
                 findOftenqna: findOftenqna,
                 highlight: highlight
             };
-        }catch(e){
+        } catch (e) {
             console.log("oftenqna service error : ", e);
         }
     }

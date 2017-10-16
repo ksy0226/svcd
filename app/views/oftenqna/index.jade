@@ -38,10 +38,10 @@ block content
                       label.col-sm-2.control-label 정렬방식
                       .col-sm-2
                         select.form-control(id='order_by' name='order_by')
-                          option(value ='상위업무명') 상위업무명
-                          option(value ='제목') 제목
-                          option(value ='최근등록일') 최근등록일
-                          option(value ='조회수') 조회수
+                          option(value ='higher_nm') 상위업무명
+                          option(value ='title') 제목
+                          option(value ='created_at') 최근등록일
+                          option(value ='reading_cnt') 조회수
                     .form-group.m-b-0
                       label.col-sm-2.control-label 검색어
                       .col-sm-2
@@ -64,11 +64,11 @@ block content
                   table.table.table-bordered
                     thead
                       tr
-                        th(width='20%') 상위업무명
-                        th(width='40%') 제목
-                        th(width='10%') 등록자
-                        th(width='20%') 등록일
-                        th(width='10%') 조회수
+                        th.text-center(width='20%') 상위업무명
+                        th.text-center(width='40%') 제목
+                        th.text-center(width='10%') 등록자
+                        th.text-center(width='20%') 등록일
+                        th.text-center(width='10%') 조회수
                     tbody(id='more_list')
 
 block footer
