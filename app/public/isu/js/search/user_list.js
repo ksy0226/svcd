@@ -1,13 +1,13 @@
 'use strict';
 
-var rowIdx = 0; //출력 시작 인덱스
-var dataCnt = 0; // 출력 종료 인덱스
-var inCnt = 15; //한번에 화면에 조회되는 리스트 수
+var rowIdx = 0;         //출력 시작 인덱스
+var dataCnt = 0;        // 출력 종료 인덱스
+var inCnt = 15;         //한번에 화면에 조회되는 리스트 수
 
-var totalData = 0;       // 총 데이터 수 
+var totalData = 0;      // 총 데이터 수 
 
-var dataPerPage = 15;    // 한 페이지에 나타낼 데이터 수
-var pageCount = 6;       // 한 화면에 나타낼 페이지 수
+var dataPerPage = 15;   // 한 페이지에 나타낼 데이터 수
+var pageCount = 6;      // 한 화면에 나타낼 페이지 수
 
 
 
@@ -146,7 +146,8 @@ function paging(totalData, dataPerPage, pageCount, currentPage){
    //                                 "color":"red", 
    //                                 "font-weight":"bold"});    // 현재 페이지 표시
     
-    //페이지 목록 선택 시 1페이징 함수, 2데이터 조회 함수 호출
+    
+   //페이지 목록 선택 시 페이징 함수, 데이터 조회 함수 호출
     $("#paging a").click(function(){
         
         var $item = $(this);
@@ -165,6 +166,7 @@ function paging(totalData, dataPerPage, pageCount, currentPage){
 /**
  * 데이터 조회-(상/하위업무 구분, 검색어, 날짜 중) 선택된 리스트 가져오기 
  */
+
 function getDataList(selectedPage){
 
     if($('#lower_cd').val() =="" || $('#lower_cd').val() ==null){
@@ -206,21 +208,16 @@ function getDataList(selectedPage){
  */
 function setDataList(dataObj, selectedPage) {
     
-    //페이징 다시 그리기
-    //paging(totalData, dataPerPage, pageCount, selectedPage);
-
     //선택한 페이지가 1page 이상일 때,
     if(selectedPage>1){
         //기존 데이터 삭제
         $("#more_list tr").remove();
     }
-    
-    dataPerPage = 15;   //페이지당 수
+
     
     var startIdx = dataPerPage*(selectedPage-1)+1; 
     var endIdx = dataPerPage*selectedPage+1; 
-    //alert(startIdx + "에서 ~ " + endIdx + " 전까지");
-
+    
     if (startIdx <= dataObj.length) {
 
         for(var i = startIdx ; i <endIdx ; i++){
