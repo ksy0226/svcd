@@ -4,8 +4,15 @@ var rowIdx = 0; //출력 시작 인덱스
 var dataCnt = 0; // 출력 종료 인덱스
 var inCnt = 15; //한번에 화면에 조회되는 리스트 수
 
-$(document).ready(function () {
+var totalData;       // 총 데이터 수 
 
+var dataPerPage = 15;    // 한 페이지에 나타낼 데이터 수
+var pageCount = 6;       // 한 화면에 나타낼 페이지 수
+
+
+
+
+$(document).ready(function () {
     $('#reg_date_from').datepicker({
         autoclose: true,
         todayHighlight: true,
@@ -86,7 +93,7 @@ function getLowerProcessList(){
 function setContent(data, higher_cd){
 
     $('#lower_cd').empty();
-    $('#lower_cd').append("<option value=''> 전체</option>");
+    $('#lower_cd').append("<option value='*'> 전체</option>");
     
     for(var i=0; i<data.length; i++){
         var lower_cdVal = data[i]["lower_cd"];
@@ -97,21 +104,17 @@ function setContent(data, higher_cd){
 }
 
 
-// 총 데이터 수 
-var totalData =322;
 
-var dataPerPage = 15;    // 한 페이지에 나타낼 데이터 수
-var pageCount = 6;       // 한 화면에 나타낼 페이지 수
 
 /**
  * 페이징 처리
  */
 function paging(totalData, dataPerPage, pageCount, currentPage){
-    //alert("paging 최초 total data count: "+ totalData);
+    totalData = dataObj.length;
     var totalPage = Math.ceil(totalData/dataPerPage);    // 총 페이지 수
+    alert("총 페이지 수 : "+totalPage);
     var pageGroup = Math.ceil(currentPage/pageCount);    // 페이지 그룹
-    //alert("currentPage : " + currentPage);
-    //alert("pageGroup : " + pageGroup);
+
     
     var last = pageGroup * pageCount;    // 화면에 보여질 마지막 페이지 번호
     if(last > totalPage)
@@ -119,11 +122,6 @@ function paging(totalData, dataPerPage, pageCount, currentPage){
     var first = last - (pageCount-1);    // 화면에 보여질 첫번째 페이지 번호
     var next = last+1;
     var prev = first-1;
-    
-    //alert("last : " + last);
-    //alert("first : " + first);
-    //alert("next : " + next);
-    //alert("prev : " + prev);
 
     var $pingingView = $("#paging");
     
@@ -153,22 +151,23 @@ function paging(totalData, dataPerPage, pageCount, currentPage){
         
         if($id == "next")    selectedPage = next;
         if($id == "prev")    selectedPage = prev;
-        
+
         paging(totalData, dataPerPage, pageCount, selectedPage);
         getDataList(selectedPage);
         
     });
-                                    
 }
 
 /**
  * 데이터 조회-(상/하위업무 구분, 검색어, 날짜 중) 선택된 리스트 가져오기 
  */
 function getDataList(selectedPage){
+
     if($('#lower_cd').val() =="" || $('#lower_cd').val() ==null){
         $('#lower_cd').val("*");
     }
     var reqParam = 'searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&lower_cd=' + $('#lower_cd').val() + '&reg_date_from=' + $('#reg_date_from').val()+ '&reg_date_to=' + $('#reg_date_to').val()+ '&searchText=' + encodeURIComponent($('#searchText').val());
+
     $.ajax({
         type: "GET",
         async: true,
@@ -187,8 +186,11 @@ function getDataList(selectedPage){
         },
         success: function (dataObj) {
             $('#ajax_indicator').css("display", "none");
+            
             //리스트에 내용 매핑
             setDataList(dataObj, selectedPage);
+            paging(totalData, dataPerPage, pageCount, selectedPage);
+            
         }
     });
 }
@@ -198,18 +200,9 @@ function getDataList(selectedPage){
  * 선택된 내용 매핑하기
  */
 function setDataList(dataObj, selectedPage) {
-    alert("setDataList 전체갯수 : "+dataObj.length);
-    totalData = dataObj.length;
-    alert("dataPerPage"+dataPerPage);
-    alert("pageCount"+pageCount);
-    alert("selectedPage"+selectedPage);
-
-    paging(totalData, dataPerPage, pageCount, selectedPage);
+    
     //페이징 다시 그리기
-    //paging(dataObj.length, dataPerPage, pageCount, selectedPage);
-
-    //alert("setDataList 함수 "+ selectedPage);
-    //alert("setDataList 선택한 페이지   :   " + selectedPage);
+    //paging(totalData, dataPerPage, pageCount, selectedPage);
 
     //선택한 페이지가 1page 이상일 때,
     if(selectedPage>1){
@@ -222,7 +215,7 @@ function setDataList(dataObj, selectedPage) {
     var startIdx = dataPerPage*(selectedPage-1)+1; 
     var endIdx = dataPerPage*selectedPage+1; 
     //alert(startIdx + "에서 ~ " + endIdx + " 전까지");
-    //alert("전체갯수 : "+dataObj.length);
+
     if (startIdx <= dataObj.length) {
 
         for(var i = startIdx ; i <endIdx ; i++){
@@ -250,7 +243,4 @@ function setDataList(dataObj, selectedPage) {
             startIdx++;
         }
     }
-    //totalData = dataObj.length;
-    //alert(totalData);
-    //paging(totalData, dataPerPage, pageCount, currentPage);
 }

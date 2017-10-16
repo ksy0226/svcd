@@ -6,6 +6,7 @@ var inCnt = 16; //한번에 화면에 조회되는 리스트 수
 
 
 $(document).ready(function () {
+
 });
 
 function goList(){
