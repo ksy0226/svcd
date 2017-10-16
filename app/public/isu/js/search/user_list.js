@@ -4,7 +4,7 @@ var rowIdx = 0; //출력 시작 인덱스
 var dataCnt = 0; // 출력 종료 인덱스
 var inCnt = 15; //한번에 화면에 조회되는 리스트 수
 
-var totalData;       // 총 데이터 수 
+var totalData = 322;       // 총 데이터 수 
 
 var dataPerPage = 15;    // 한 페이지에 나타낼 데이터 수
 var pageCount = 6;       // 한 화면에 나타낼 페이지 수
@@ -110,7 +110,7 @@ function setContent(data, higher_cd){
  * 페이징 처리
  */
 function paging(totalData, dataPerPage, pageCount, currentPage){
-    totalData = dataObj.length;
+    
     var totalPage = Math.ceil(totalData/dataPerPage);    // 총 페이지 수
     alert("총 페이지 수 : "+totalPage);
     var pageGroup = Math.ceil(currentPage/pageCount);    // 페이지 그룹
