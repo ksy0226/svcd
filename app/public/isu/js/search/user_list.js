@@ -110,31 +110,24 @@ function setContent(data, higher_cd){
  * 페이징 처리
  */
 function paging(totalData, dataPerPage, pageCount, currentPage){
-    alert(totalData);
-    alert(dataPerPage);
-    alert(pageCount);
-    alert(currentPage);
-
-
     var totalPage = Math.ceil(totalData/dataPerPage);    // 총 페이지 수
-    //alert("총 페이지 수 : "+totalPage);
-    
     var pageGroup = Math.ceil(currentPage/pageCount);    // 페이지 그룹
 
-    
-    var last = pageGroup * pageCount;    // 화면에 보여질 마지막 페이지 번호
-    if(last > totalPage)
-        last = totalPage;
 
+    //검색 시, 총 페이지 수가 화면에 뿌려질 페이지(6개Page)보다 작을 경우 처리
+    if(totalPage <= pageCount){
+        last = totalPage;
+        first = 1;
+    }else{
+        var last = pageGroup * pageCount;    // 화면에 보여질 마지막 페이지 번호
+        if(last > totalPage)
+            last = totalPage;
+        var first = last - (pageCount-1);    // 화면에 보여질 첫번째 페이지 번호
+    }
         
-    var first = last - (pageCount-1);    // 화면에 보여질 첫번째 페이지 번호
     var next = last+1;
     var prev = first-1;
 
-    alert(last);
-    alert(first);
-    alert(next);
-    alert(prev);
     
     var html = "";
     
