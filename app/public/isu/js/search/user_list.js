@@ -7,7 +7,7 @@ var inCnt = 15;         //한번에 화면에 조회되는 리스트 수
 var totalData = 0;      // 총 데이터 수 
 
 var dataPerPage = 15;   // 한 페이지에 나타낼 데이터 수
-var pageCount = 6;      // 한 화면에 나타낼 페이지 수
+var pageCount = 10;      // 한 화면에 나타낼 페이지 수
 
 
 
@@ -58,8 +58,8 @@ $(document).ready(function () {
 
 //다시 조회
 function research(selectedPage){
-    dataCnt = 0;
-    rowIdx = 0;
+    alert("research"+selectedPage);
+
 
     //내용삭제
     $("#more_list").empty();
@@ -106,66 +106,7 @@ function setContent(data, higher_cd){
 
 
 
-/**
- * 페이징 처리
- */
-function paging(totalData, dataPerPage, pageCount, currentPage){
-    var totalPage = Math.ceil(totalData/dataPerPage);    // 총 페이지 수
-    var pageGroup = Math.ceil(currentPage/pageCount);    // 페이지 그룹
 
-
-    //검색 시, 총 페이지 수가 화면에 뿌려질 페이지(6개Page)보다 작을 경우 처리
-    if(totalPage <= pageCount){
-        last = totalPage;
-        first = 1;
-    }else{
-        var last = pageGroup * pageCount;    // 화면에 보여질 마지막 페이지 번호
-        if(last > totalPage)
-            last = totalPage;
-        var first = last - (pageCount-1);    // 화면에 보여질 첫번째 페이지 번호
-    }
-        
-    var next = last+1;
-    var prev = first-1;
-
-    
-    var html = "";
-    
-    if(prev > 0)
-        html += "<li class='cpaginate_button previous'><a href=# id='prev'>Previous</a></li>";
-    for(var i=first; i <= last; i++){
-        if(i == currentPage){
-            html += "<li class='cpaginate_button active'><a href='#' id=" + i + ">" + i + "</a></li> ";
-        }else{
-            html += "<li class='cpaginate_button'><a href='#' id=" + i + ">" + i + "</a></li> ";
-        }
-    }
-    
-    if(last < totalPage)
-        html += "<li class='cpaginate_button next'><a href=# id='next'>Next</a></li>";
-    
-    $("#paging").html(html);    // 페이지 목록 생성
-   //$("#paging a").css("color", "black");
-   // $("#paging a#" + currentPage).css({"text-decoration":"none", 
-   //                                 "color":"red", 
-   //                                 "font-weight":"bold"});    // 현재 페이지 표시
-    
-    
-   //페이지 목록 선택 시 페이징 함수, 데이터 조회 함수 호출
-    $("#paging a").click(function(){
-        
-        var $item = $(this);
-        var $id = $item.attr("id");
-        var selectedPage = $item.text();
-        
-        if($id == "next")    selectedPage = next;
-        if($id == "prev")    selectedPage = prev;
-
-        paging(totalData, dataPerPage, pageCount, selectedPage);
-        getDataList(selectedPage);
-        
-    });
-}
 
 /**
  * 데이터 조회-(상/하위업무 구분, 검색어, 날짜 중) 선택된 리스트 가져오기 
@@ -199,8 +140,9 @@ function getDataList(selectedPage){
             
             //리스트에 내용 매핑
             setDataList(dataObj, selectedPage);
+
             totalData = dataObj.length;
-            
+            alert(totalData);
             paging(totalData, dataPerPage, pageCount, selectedPage);
             
         }
@@ -240,7 +182,7 @@ function setDataList(dataObj, selectedPage) {
             addList += "							<tr onclick=window.location='/search/user_detail/" + dataObj[i]._id + "'>";
             addList += "								<td>" + dataObj[i].higher_nm + "</td>";
             addList += "								<td>" + dataObj[i].lower_nm + "</td>";
-            addList += "								<td>" + dataObj[i].title + "</td>";
+            addList += "								<td>" + i+ dataObj[i].title + "</td>";
             addList += "								<td>" + register_dateVal + "</td>";
             addList += "								<td>" + dataObj[i].manager_nm + "</td>";
             addList += "							</tr>";
@@ -250,4 +192,70 @@ function setDataList(dataObj, selectedPage) {
             startIdx++;
         }
     }
+}
+
+
+/**
+ * 페이징 처리
+ */
+function paging(totalData, dataPerPage, pageCount, currentPage){
+    
+    var totalPage = Math.ceil(totalData/dataPerPage);    // 총 페이지 수
+    var pageGroup = Math.ceil(currentPage/pageCount);    // 페이지 그룹
+
+    //검색 시, 총 페이지 수가 화면에 뿌려질 페이지(6개Page)보다 작을 경우 처리
+    if(totalPage <= pageCount){
+        last = totalPage;
+        first = 1;
+    }else{
+        var last = pageGroup * pageCount;    // 화면에 보여질 마지막 페이지 번호
+        if(last > totalPage)
+            last = totalPage;
+        var first = last - (pageCount-1);    // 화면에 보여질 첫번째 페이지 번호
+
+
+    }
+    var next = last+1;
+    var prev = first-1;
+
+
+    
+    var html = "";
+    
+    if(prev > 0)
+        html += "<li class='cpaginate_button previous'><a href=# id='prev'>Previous</a></li>";
+    for(var i=first; i <= last; i++){
+        if(i == currentPage){
+            html += "<li class='cpaginate_button active'><a href='#' id=" + i + ">" + i + "</a></li> ";
+        }else{
+            html += "<li class='cpaginate_button'><a href='#' id=" + i + ">" + i + "</a></li> ";
+        }
+    }
+    
+    if(last < totalPage)
+        html += "<li class='cpaginate_button next'><a href=# id='next'>Next</a></li>";
+    
+    $("#paging").html(html);    // 페이지 목록 생성
+   
+    //$("#paging a").css("color", "black");
+   // $("#paging a#" + currentPage).css({"text-decoration":"none", 
+   //                                 "color":"red", 
+   //                                 "font-weight":"bold"});    // 현재 페이지 표시
+    
+    
+   //페이지 목록 선택 시 페이징 함수, 데이터 조회 함수 호출
+    $("#paging a").click(function(){
+        $("#more_list").empty();
+
+        var $item = $(this);
+        var $id = $item.attr("id");
+        var selectedPage = $item.text();
+        
+        if($id == "next")    selectedPage = next;
+        if($id == "prev")    selectedPage = prev;
+
+        paging(totalData, dataPerPage, pageCount, selectedPage);
+        getDataList(selectedPage);
+        
+    });
 }
