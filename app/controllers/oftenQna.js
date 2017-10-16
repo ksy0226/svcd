@@ -146,9 +146,9 @@ module.exports = {
                                 user: req.user
                             });
                         }
-                    })
+                    });
                 }
-            })
+            });
         });
     },
 
@@ -214,7 +214,7 @@ module.exports = {
                     } else {
                         callback(null, oftenqna)
                     }
-                }).sort(-search.order_by);
+                }).sort("-" + search.order_by);
             }], function (err, oftenqna) {
                 if (err) {
                     res.render("http/500", {

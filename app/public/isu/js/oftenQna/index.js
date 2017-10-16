@@ -90,9 +90,9 @@ function setDataList(dataObj) {
             addList += "							<tr id='dataTR' onclick=window.location='/oftenqna/edit/" + dataObj[i]._id + "'>";
             addList += "								<td>" + dataObj[i].higher_nm + "</td>";
             addList += "								<td>" + dataObj[i].title + "</td>";
-            addList += "								<td>" + dataObj[i].user_nm + "</td>";
-            addList += "								<td>" + creat_dateVal + "</td>";
-            addList += "								<td>" + dataObj[i].reading_cnt + "</td>";
+            addList += "								<td class='text-center'>" + dataObj[i].user_nm + "</td>";
+            addList += "								<td class='text-center'>" + creat_dateVal + "</td>";
+            addList += "								<td class='text-center'>" + dataObj[i].reading_cnt + "</td>";
             addList += "							</tr>";
 
             $("#more_list").append(addList);
