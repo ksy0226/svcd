@@ -40,12 +40,12 @@ $(document).ready(function () {
     //상위업무 변경 시
     $('#higher_cd').on('change', function () {
         getLowerProcessList();
-        research();
+        research(1);
     });
     
     //하위업무 변경 시
     $('#lower_cd').on('change', function () {
-        research();
+        research(1);
     });
 });
 
@@ -97,8 +97,9 @@ function setContent(data, higher_cd){
 }
 
 
+// 총 데이터 수 
+var totalData =322;
 
-var totalData = 322;    // 총 데이터 수
 var dataPerPage = 15;    // 한 페이지에 나타낼 데이터 수
 var pageCount = 6;       // 한 화면에 나타낼 페이지 수
 
@@ -106,12 +107,11 @@ var pageCount = 6;       // 한 화면에 나타낼 페이지 수
  * 페이징 처리
  */
 function paging(totalData, dataPerPage, pageCount, currentPage){
-    
+    //alert("paging 최초 total data count: "+ totalData);
     var totalPage = Math.ceil(totalData/dataPerPage);    // 총 페이지 수
-    alert("토탈페이지수: " + totalPage);
     var pageGroup = Math.ceil(currentPage/pageCount);    // 페이지 그룹
-    alert("currentPage : " + currentPage);
-    alert("pageGroup : " + pageGroup);
+    //alert("currentPage : " + currentPage);
+    //alert("pageGroup : " + pageGroup);
     
     var last = pageGroup * pageCount;    // 화면에 보여질 마지막 페이지 번호
     if(last > totalPage)
@@ -155,8 +155,8 @@ function paging(totalData, dataPerPage, pageCount, currentPage){
         if($id == "prev")    selectedPage = prev;
         
         paging(totalData, dataPerPage, pageCount, selectedPage);
-        //getPagingData(dataPerPage, selectedPage);
         getDataList(selectedPage);
+        
     });
                                     
 }
@@ -198,6 +198,16 @@ function getDataList(selectedPage){
  * 선택된 내용 매핑하기
  */
 function setDataList(dataObj, selectedPage) {
+    alert("setDataList 전체갯수 : "+dataObj.length);
+    totalData = dataObj.length;
+    alert("dataPerPage"+dataPerPage);
+    alert("pageCount"+pageCount);
+    alert("selectedPage"+selectedPage);
+
+    paging(totalData, dataPerPage, pageCount, selectedPage);
+    //페이징 다시 그리기
+    //paging(dataObj.length, dataPerPage, pageCount, selectedPage);
+
     //alert("setDataList 함수 "+ selectedPage);
     //alert("setDataList 선택한 페이지   :   " + selectedPage);
 
@@ -206,21 +216,25 @@ function setDataList(dataObj, selectedPage) {
         //기존 데이터 삭제
         $("#more_list tr").remove();
     }
-
-    //var totalData = dataObj.length();
-    //alert("totalData 토탈데이터 수" + totalData);
     
     dataPerPage = 15;   //페이지당 수
     
     var startIdx = dataPerPage*(selectedPage-1)+1; 
     var endIdx = dataPerPage*selectedPage+1; 
-    alert(startIdx + "에서 ~ " + endIdx + " 전까지");
+    //alert(startIdx + "에서 ~ " + endIdx + " 전까지");
+    //alert("전체갯수 : "+dataObj.length);
+    if (startIdx <= dataObj.length) {
 
-    //if (startIdx < dataObj.length) {
-        for(var i = startIdx ; i < endIdx ; i++){
-            alert(i+"번째"+dataObj[i].title);
+        for(var i = startIdx ; i <endIdx ; i++){
+            //alert(i+"번째"+dataObj[i].title);
             var register_dateVal = dataObj[i].register_date; 
-            register_dateVal = register_dateVal.substring(0,10);
+            
+            if(register_dateVal){
+               register_dateVal = register_dateVal.substring(0,10);
+            }else{
+                register_dateVal = " "; 
+            }
+
             var idValue = dataObj[i]._id ;
             var addList = "";
             addList += "							<tr onclick=window.location='/search/user_detail/" + dataObj[i]._id + "'>";
@@ -234,53 +248,9 @@ function setDataList(dataObj, selectedPage) {
             $("#more_list").append(addList);
 
             startIdx++;
-            
         }
-    //}else{
-    //    $("#more_list tr").remove();
-    //    addList += $("#more_list").append("<tr><td colspan='5'>조회된 데이터가 없습니다.</td></tr>");
-
-    //}
-
-
-
-
-    /*
-    if(selectedPage >1){
-        $("#more_list").remove();
     }
-    */
-    /*
-    if (rowIdx < dataObj.length) {
-
-        if ((rowIdx + inCnt) < dataObj.length) {
-            dataCnt = rowIdx + inCnt;
-            alert("dataCnt 데이터 수  : " +dataCnt);
-        } else {
-            dataCnt = dataObj.length;
-        }
-        //if(dataCnt < dataObj.length){
-            for (var i = rowIdx; i < dataCnt; i++) {
-                var register_dateVal = dataObj[i].register_date; 
-                register_dateVal = register_dateVal.substring(0,10);
-                var idValue = dataObj[i]._id ;
-                var addList = "";
-                addList += "							<tr onclick=window.location='/search/user_detail/" + dataObj[i]._id + "'>";
-                addList += "								<td>" + dataObj[i].higher_nm + "</td>";
-                addList += "								<td>" + dataObj[i].lower_nm + "</td>";
-                addList += "								<td>" + dataObj[i].title + "</td>";
-                addList += "								<td>" + register_dateVal + "</td>";
-                addList += "								<td>" + dataObj[i].manager_nm + "</td>";
-                addList += "							</tr>";
-
-                $("#more_list").append(addList);
-
-                rowIdx++;
-            }
-    
-    }
-    */
-    
-
-
+    //totalData = dataObj.length;
+    //alert(totalData);
+    //paging(totalData, dataPerPage, pageCount, currentPage);
 }
