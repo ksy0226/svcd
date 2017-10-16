@@ -175,11 +175,9 @@ function getDataList(selectedPage){
 
     if($('#lower_cd').val() =="" || $('#lower_cd').val() == null){
         $('#lower_cd').val("*");
-    }else{
-        alert("값 있음");
     }
     var reqParam = 'searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&lower_cd=' + $('#lower_cd').val() + '&reg_date_from=' + $('#reg_date_from').val()+ '&reg_date_to=' + $('#reg_date_to').val()+ '&searchText=' + encodeURIComponent($('#searchText').val());
-    alert(reqParam);
+
     $.ajax({
         type: "GET",
         async: true,
@@ -202,7 +200,6 @@ function getDataList(selectedPage){
             //리스트에 내용 매핑
             setDataList(dataObj, selectedPage);
             totalData = dataObj.length;
-            alert("totalData : "+totalData);
             
             paging(totalData, dataPerPage, pageCount, selectedPage);
             
