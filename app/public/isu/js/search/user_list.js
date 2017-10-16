@@ -41,7 +41,7 @@ $(document).ready(function () {
 
     //조회버튼 클릭 시
     $('#searchBtn').on('click', function () {
-        research();
+        research(1);
     }); 
 
     //상위업무 변경 시
@@ -112,7 +112,7 @@ function setContent(data, higher_cd){
 function paging(totalData, dataPerPage, pageCount, currentPage){
     
     var totalPage = Math.ceil(totalData/dataPerPage);    // 총 페이지 수
-    alert("총 페이지 수 : "+totalPage);
+    //alert("총 페이지 수 : "+totalPage);
     var pageGroup = Math.ceil(currentPage/pageCount);    // 페이지 그룹
 
     
@@ -128,19 +128,19 @@ function paging(totalData, dataPerPage, pageCount, currentPage){
     var html = "";
     
     if(prev > 0)
-        html += "<a href=# id='prev'><<< Prev</a> ";
+        html += "<a href=# id='prev'>Previous</a>";
     for(var i=first; i <= last; i++){
         html += "<a href='#' id=" + i + ">" + i + "</a> ";
     }
     
     if(last < totalPage)
-        html += "<a href=# id='next'> Next >>></a>";
+        html += "<a href=# id='next'>Next</a>";
     
-    $("#paging").html(html);    // 페이지 목록 생성
+    $("#paging").html(html).addClass("cpaginate_button");    // 페이지 목록 생성
     $("#paging a").css("color", "black");
     $("#paging a#" + currentPage).css({"text-decoration":"none", 
                                     "color":"red", 
-                                    "font-weight":"bold",});    // 현재 페이지 표시
+                                    "font-weight":"bold"});    // 현재 페이지 표시
     
     //페이지 목록 선택 시 1페이징 함수, 2데이터 조회 함수 호출
     $("#paging a").click(function(){
