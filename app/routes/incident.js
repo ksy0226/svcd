@@ -16,6 +16,8 @@ router.route('/new_mng').get(ssc.sessionCheck, controller.new_mng);
 router.route('/new').post(upload.array('incident[attach-file]'), ssc.sessionCheck, controller.save);
 router.route('/insertedImage').post(upload2.array('insertedImage'), ssc.sessionCheck, controller.insertedImage);
 router.route('/viewDetail/:id').get(ssc.sessionCheck, controller.viewDetail);
+router.route('/getIncident').get(ssc.sessionCheck, controller.getIncident);
+router.route('/getIncidentDetail/:id').get(ssc.sessionCheck, controller.getIncidentDetail);
 router.route('/download/:path1/:path2').get(ssc.sessionCheck, controller.download);
 
 module.exports = router;

@@ -115,6 +115,7 @@ block content
                                         input.form-control(type='text' id='searchText' name='searchText' value=searchText)
                                     .col-sm-2
                                         button.btn.btn-primary(type='button' id='searchBtn') 조회
+                                        //button.btn.btn-primary(type='button', data-toggle='modal', data-target='#wdetail_modal') 조회
                 // end Search Area
                 // start Grid Area
                 .row
@@ -159,4 +160,284 @@ block content
                 // end Grid Area
             // end container
         // end content
+    //접수모달
+    #wdetail_modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='custom-width-modalLabel', aria-hidden='true', style='display: none;')
+        .modal-dialog(style='width:80%;')
+            .modal-content
+                .modal-header
+                .modal-body
+                    // Page-Title
+                    .row
+                        .col-sm-12
+                            .page-title-box
+                                ol.breadcrumb.pull-right
+                                    li
+                                        a(href='#') Home
+                                    li
+                                        a(href='#') 문의 및 담당자
+                                    li.active 처리된 내용검색
+                                h4.page-title 처리된 내용검색
+                        .row
+                            .col-lg-12
+                                .btn-toolbar.m-t-10(role='toolbar')
+                                    .pull-left                               
+                                        button.btn.btn-primary.waves-effect.waves-light.m-l-5(type='button', onClick="javascript:$('#wdetail_modal').modal('hide')")
+                                            i.fa.fa-bars
+                                            | 목록
+                                        button.btn.btn-inverse.waves-effect.waves-light.m-l-5(type='button', data-toggle='modal', data-target='#receipt_modal')
+                                            i.fa.fa-edit
+                                            | 접수
+                                        button.btn.btn-purple.waves-effect.waves-light.m-l-5(type='button', data-toggle='modal', data-target='#complete_modal')
+                                            i.fa.fa-check
+                                            | 완료    
+                                        button.btn.btn-primary.waves-effect.waves-light.m-l-5(type='button')
+                                            i.fa.fa-print
+                                            | S인쇄
+                                    //.pull-right
+                                        button.btn.btn-info.waves-effect.waves-light.m-r-5(type='button')
+                                            i.fa.fa-file-pdf-o
+                                            |  PDF Download
+                                        button.btn.btn-success.waves-effect.waves-light.m-r-5(type='button')
+                                            i.fa.fa-file-excel-o
+                                            |  Excel Download
+                                        button.btn.btn-purple.waves-effect.waves-light.m-r-5(type='button')
+                                            i.fa.fa-edit
+                                            |  버튼
+                                        button.btn.btn-primary.waves-effect.waves-light.m-r-5(type='button')
+                                            i.fa.fa-edit
+                                            |  인쇄
+                        // End Button Area
+                        // start Grid Area
+                        .row
+                            .col-sm-12.m-t-20
+                                .card-box
+                                    h4
+                                        b 접수 내용
+                                    hr.m-0
+                                    table.table.table-bordered
+                                        colgroup
+                                            col(width='20%')
+                                            col(width='30%')
+                                            col(width='20%')
+                                            col(width='30%')
+                                        tbody
+                                        tr
+                                            th.bg-muted 진행상태
+                                                td
+                                                    span#_status_nm
+                                            th.bg-muted 긴급구분
+                                                td#_process_speed
+                                        tr
+                                            th.bg-muted 상위업무
+                                            td#_higher_nm
+                                            th.bg-muted 하위업무
+                                            td#_lower_nm
+                                        tr
+                                            th.bg-muted 요청자
+                                            td#_request_company_nm-request_nm
+                                            th.bg-muted 완료요청일
+                                            td#_request_complete_date
+                                        tr
+                                            th.bg-muted 요청경로
+                                            td#_app_menu
+                                            th.bg-muted 등록자/등록일
+                                            td#_register_nm-register_date
+                                        tr
+                                            th.bg-muted 제목
+                                            td#_title(colspan='3')
+                                        tr
+                                            th.bg-muted 요청내용
+                                            td#_content(colspan='3')
+                                        tr(style='display:')
+                                            th.bg-muted 첨부파일
+                                            td(colspan='3')
+                                                i.fa.fa-paperclip.m-r-10
+                                                a(href='#')
+                                                    span.text-pink faqimage.gif
+                                        tr
+                                            th.bg-muted 접수상담내용
+                                            td(colspan='3')
+                                                | 접수하였습니다.
+                                                br
+                                        
+                                h4.m-t-30
+                                    b 처리 내용
+                                hr.m-0
+                                table.table.table-bordered.m-t-0
+                                    colgroup
+                                        col(width='20%')
+                                        col(width='30%')
+                                        col(width='20%')
+                                        col(width='30%')
+                                    tbody
+                                        tr
+                                            th.bg-muted 처리담당자
+                                            td#_manager_nm
+                                            th.bg-muted 접수일
+                                            td#_receipt_date
+                                        tr
+                                            th.bg-muted 완료예정일
+                                            td#_complete_reserve_date
+                                            th.bg-muted 난이도
+                                            td
+                                                span#_business_level.badge.badge-danger
+                                        tr
+                                            th.bg-muted 처리구분
+                                            td(colspan='3') 
+                                        tr
+                                            th.bg-muted 처리내용
+                                            td#_complete_content(colspan='3')
+
+                                        tr
+                                            th.bg-muted 처리완료일
+                                            td#_complete_date
+                                            th.bg-muted 처리소요시간
+                                            td#_need_minute
+                                                //i.fa.fa-clock-o.text-muted
+                                                //b.m-l-10.m-r-5
+                                                //| 시간
+                                        tr
+                                            th.bg-muted 지연사유
+                                            td#_delay_reason(colspan='3')
+                                        tr
+                                            th.bg-muted 평가
+                                            td#_valuation
+                                            th.bg-muted 공개여부 / 조회수
+                                            td#_complete_open_flag-reading_cnt
+                                        tr
+                                            th.bg-muted.text-danger 내부공유사항
+                                            td#_sharing_content(colspan='3')
+
+    //접수모달
+    #receipt_modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='custom-width-modalLabel', aria-hidden='true', style='display: none;')
+        .modal-dialog(style='width:55%;')
+            .modal-content
+                .modal-header
+                    button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                    h4#custom-width-modalLabel.modal-title
+                        b 접수
+                    small.text-muted 상담하신 접수내용을 아래 사항에 차례로 입력하여 주시기 바랍니다.
+                .modal-body
+                    // Start Button Area
+                    .row
+                        .col-sm-12
+                            .btn-toolbar.m-b-10(role='toolbar')
+                                .pull-right
+                                    button#receiptSaveBtn.btn.btn-sm.btn-primary.waves-effect.waves-light(type='button')
+                                        i.fa.fa-paper-plane.m-l-5
+                                        |  저장
+                    // End Button Area
+                    // start Insert Area
+                    .row
+                        .col-sm-12
+                            .card-box.m-r-5
+                                form#receipt_form.form-horizontal.group-border-dashed(action='#')
+                                    .form-group
+                                        label.col-sm-2.control-label 상담내용
+                                        .col-sm-10
+                                            textarea.form-control(rows='6', name='incident[receipt_content]')
+                                                | 접수하였습니다.
+                                    .form-group
+                                        label.col-sm-2.control-label 완료예정일
+                                        .col-sm-5
+                                            .input-group
+                                                input.form-control(type='text', placeholder='yyyy/mm/dd', name='incident[complete_reserve_date]')
+                                                span.input-group-btn
+                                                    button.btn.waves-effect.waves-light.btn-primary(type='button')
+                                                        i.ion-calendar
+                                        .col-sm-2
+                                            select.form-control.fw-80(style='display:inline-block', name='complete_hh')
+                                            span(style='display:inline-block; padding-left:10px;') 시
+                                        .col-sm-2
+                                            select.form-control.fw-80(style='display:inline-block', name='complete_mi')
+                                            span(style='display:inline-block; padding-left:10px;') 분
+                                    .form-group
+                                        label.col-sm-2.control-label 하위업무구분
+                                        .col-sm-5
+                                            select.form-control(name='incident[lower_cd]')
+                                                - if (lowerprocess.length > 0) {
+                                                    - for( var i = 0 ; length = lowerprocess.length > i ; i++ ){ 
+                                                        option(value ='#{lowerprocess[i].lower_cd}') #{lowerprocess[i].lower_nm}
+                                                    - }
+                                                - } 
+                                    .form-group
+                                        label.col-sm-2.control-label 난이도
+                                        .col-sm-5
+                                            select.form-control(name='incident[complete_reserve_date]')
+                                    //.form-group
+                                        label.col-sm-2.control-label 결재상신여부
+                                        .col-sm-3
+                                            .radio.radio-info.radio-inline
+                                                input#inlineRadio1(type='radio', value='option1', name='radioInline', checked='')
+                                                label(for='inlineRadio1')  상신안함
+                                            .radio.radio-inline
+                                                input#inlineRadio2(type='radio', value='option2', name='radioInline')
+                                                label(for='inlineRadio2')  상신함 
+
+
+    //완료모달
+    #complete_modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='custom-width-modalLabel', aria-hidden='true', style='display: none;')
+        .modal-dialog(style='width:55%;')
+            .modal-content
+                .modal-header
+                    button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                    h4#custom-width-modalLabel.modal-title
+                        b 완료
+                    small.text-muted 완료내용을 입력하세요
+                .modal-body
+                    // Start Button Area
+                    .row
+                        .col-sm-12
+                            .btn-toolbar.m-b-10(role='toolbar')
+                                .pull-right
+                                    button.btn.btn-sm.btn-primary.waves-effect.waves-light(type='button')
+                                        i.fa.fa-check.m-l-5
+                                        |  확인
+                    // End Button Area
+                    // start Insert Area
+                    .row
+                        .col-sm-12
+                            .card-box.m-r-5
+                                form#complete_form.form-horizontal.group-border-dashed(action='#')
+                                    .form-group
+                                        label.col-sm-2.control-label 해결여부
+                                        .col-sm-2
+                                            .checkbox.checkbox-primary.checkbox-single.p-t-10
+                                                input#singleCheckbox1(type='checkbox', value='option1', aria-label='Single checkbox One')
+                                                label
+                                        label.col-sm-2.control-label 처리구분
+                                        .col-sm-3
+                                            select.form-control
+                                                option 처리구분없음
+                                                option 항목1
+                                                option 항목2
+                                                option 항목3
+                                    .form-group
+                                        label.col-sm-2.control-label 처리내용
+                                        .col-sm-10
+                                            textarea.form-control(rows='4')
+                                    .form-group
+                                        label.col-sm-2.control-label 프로그램_ID
+                                        .col-sm-10
+                                            textarea.form-control(rows='2')
+                                    hr
+                                    .form-group
+                                        label.col-sm-2.control-label 공개여부
+                                        .col-sm-2
+                                            .checkbox.checkbox-primary.checkbox-single.p-t-10
+                                                input#singleCheckbox1(type='checkbox', value='option1', aria-label='Single checkbox One')
+                                                label
+                                        label.col-sm-2.control-label 처리소요시간
+                                        .col-sm-3
+                                            input.form-control.fw-60(type='text', style='display:inline-block')
+                                            span(style='display:inline-block; padding-left:10px;') 시간
+                                    .form-group
+                                        label.col-sm-2.control-label 지연사유
+                                        .col-sm-10
+                                            textarea.form-control(rows='2')
+                                    .form-group
+                                        label.col-sm-2.control-label 내부 공유사항
+                                        .col-sm-10
+                                            textarea.form-control(rows='4')
+
 block footer    
