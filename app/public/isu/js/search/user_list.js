@@ -110,20 +110,31 @@ function setContent(data, higher_cd){
  * 페이징 처리
  */
 function paging(totalData, dataPerPage, pageCount, currentPage){
-    
+    alert(totalData);
+    alert(dataPerPage);
+    alert(pageCount);
+    alert(currentPage);
+
+
     var totalPage = Math.ceil(totalData/dataPerPage);    // 총 페이지 수
     //alert("총 페이지 수 : "+totalPage);
+    
     var pageGroup = Math.ceil(currentPage/pageCount);    // 페이지 그룹
 
     
     var last = pageGroup * pageCount;    // 화면에 보여질 마지막 페이지 번호
     if(last > totalPage)
         last = totalPage;
+
+        
     var first = last - (pageCount-1);    // 화면에 보여질 첫번째 페이지 번호
     var next = last+1;
     var prev = first-1;
 
-    var $pingingView = $("#paging");
+    alert(last);
+    alert(first);
+    alert(next);
+    alert(prev);
     
     var html = "";
     
@@ -169,11 +180,13 @@ function paging(totalData, dataPerPage, pageCount, currentPage){
 
 function getDataList(selectedPage){
 
-    if($('#lower_cd').val() =="" || $('#lower_cd').val() ==null){
+    if($('#lower_cd').val() =="" || $('#lower_cd').val() == null){
         $('#lower_cd').val("*");
+    }else{
+        alert("값 있음");
     }
     var reqParam = 'searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&lower_cd=' + $('#lower_cd').val() + '&reg_date_from=' + $('#reg_date_from').val()+ '&reg_date_to=' + $('#reg_date_to').val()+ '&searchText=' + encodeURIComponent($('#searchText').val());
-
+    alert(reqParam);
     $.ajax({
         type: "GET",
         async: true,
@@ -196,6 +209,8 @@ function getDataList(selectedPage){
             //리스트에 내용 매핑
             setDataList(dataObj, selectedPage);
             totalData = dataObj.length;
+            alert("totalData : "+totalData);
+            
             paging(totalData, dataPerPage, pageCount, selectedPage);
             
         }
