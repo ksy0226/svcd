@@ -136,9 +136,7 @@ function getDataList(selectedPage){
             //리스트에 내용 매핑
             setDataList(dataObj, selectedPage);
             totalData = dataObj.length;
-            alert("2 :  "+totalData);
             paging(totalData, dataPerPage, pageCount, selectedPage);
-            
         }
     });
 }
@@ -206,11 +204,10 @@ function paging(totalData, dataPerPage, pageCount, currentPage){
             last = totalPage;
         var first = last - (pageCount-1);    // 화면에 보여질 첫번째 페이지 번호
     }
-    
+
     var next = last+1;
     var prev = first-1;
     
-
     var html = "";
     
     if(prev > 0)
