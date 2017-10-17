@@ -6,7 +6,7 @@ const CompanyModel = require('../models/Company');
 const IncidentModel = require('../models/Incident');
 const HigherProcessModel = require('../models/HigherProcess');
 const LowerProcessModel = require('../models/LowerProcess');
-const IModel = require('../models/OftenQna');
+const OftenQnaModel = require('../models/OftenQna');
 const service = require('../services/incident');
 const service2 = require('../services/oftenqna');
 const logger = require('log4js').getLogger('app');
@@ -225,14 +225,14 @@ module.exports = {
      * user_qna 데이터 조회
      */
     getqnalist : (req, res, next) => {
-        var search = service2.createSearch(req);
+        var search2 = service2.createSearch(req);
 
-        logger.debug("=====================> " + JSON.stringify(search));
+        logger.debug("=====================> " + JSON.stringify(search2));
         //console.log("search"+ JSON.stringify(search));
 
         try {
             async.waterfall([function (callback) {
-                OftenQnaModel.find(search.findOftenqna, function (err, oftenqna) {
+                OftenQnaModel.find(search2.findOftenqna, function (err, oftenqna) {
                     if (err) {
                         res.render("http/500", {
                             err: err
@@ -240,7 +240,7 @@ module.exports = {
                     } else {
                         callback(null, oftenqna)
                     }
-                }).sort("-" + search.order_by);
+                }).sort("-" + search2.order_by);
             }], function (err, oftenqna) {
                 if (err) {
                     res.render("http/500", {
