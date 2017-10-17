@@ -14,6 +14,6 @@ router.route('/status_list').get(controller.status_list);
 router.route('/getlowerprocess').get(controller.getlowerprocess);
 router.route('/list').get(controller.list);
 router.route('/getqnalist').get(controller.getqnalist);
-
+router.route('/qna_detail/:id').get(controller.qna_detail);
 
 module.exports = router;
