@@ -248,18 +248,83 @@ module.exports = {
      * 전체 조회(관리자용)
      */
     mng_list: (req, res, next) => {
-        IncidentModel.find(req.body.incident, function(err, incident) {
-            //logger.debug('err', err, '\n');
-            logger.debug('list 호출');
+        async.waterfall([function (callback) {
+            HigherProcessModel.find({},function (err, higherprocess) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null, higherprocess)
+            });
+        }], function (err, higherprocess) {
             if (err) {
                 res.render("http/500", {
                     err: err
                 });
+            }else{
+                res.render("search/mng_list", {
+                    higherprocess: higherprocess
+                });
             }
-            res.render("search/mng_list", {
-                incident: incident
-            });
-        }).sort('-createdAt');
+        });
+    },
+    /**
+     * 사용자별 상세조회 > Incident 가져오기
+     */
+    mng_detail: (req, res, next) => {
+        logger.debug("Trace mng_detail : ", req.params.id);
+        IncidentModel.findById({
+            _id: req.params.id
+        }, function (err, incident) {
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: err
+                });
+            } else {
+                /*
+                logger.debug(">>> incident : ", incident.attach_file);
+                //path 길이 잘라내기
+                if (incident.attach_file.length > 0) {
+                    for (var i = 0; i < incident.attach_file.length; i++) {
+                        var path = incident.attach_file[i].path
+                        incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
+                        logger.debug("==========> incident.attach_file[i].mimetype.indexOf('image') ",incident.attach_file[i].mimetype.indexOf('image'));
+                        if(incident.attach_file[i].mimetype.indexOf('image')>-1){
+                            incident.attach_file[i].mimetype = 'image';
+                        }
+                    }
+                }
+                logger.debug("*** incident : ", incident.attach_file);
+                */
+                /*
+                //path 길이 잘라내기
+                if (incident.attach_file.length > 0) {
+                    for (var i = 0; i < incident.attach_file.length; i++) {
+                        var path = incident.attach_file[i].path
+                        incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
+                        if (incident.attach_file[i].mimetype.indexOf('image') > -1) {
+                            incident.attach_file[i].mimetype = 'image';
+                        }
+                    }
+                }
+                
+                */
+
+                //완료요청일, 등록일, 접수일, 완료예정일, 완료일
+                incident.request_complete_date = new Date(incident.request_complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                incident.register_date = new Date(incident.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                incident.receipt_date = new Date(incident.receipt_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                incident.complete_reserve_date = new Date(incident.complete_reserve_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                incident.complete_date = new Date(incident.complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                
+                
+                res.render("search/mng_detail", {
+                    incident: incident
+                });
+            }
+        });
     },
 
     /**
