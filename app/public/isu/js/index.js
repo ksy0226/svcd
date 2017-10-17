@@ -83,47 +83,6 @@ function companyCd() {
     $('#company_nm').val($('#company_cd option:selected').text());
 }
 
-//필수값 체크
-function checkValue() {
-    if ($('#company_cd').val() == '') {
-        alert("회사명을 선택하세요.");
-        $('#company_cd').focus();
-        return false;
-    }
-
-    if ($('#email').val() == '') {
-        alert("EMAIL을 입력하세요.");
-        $('#email').focus();
-        return false;
-    }
-
-    if ($('#employee_nm').val() == '') {
-        alert("이름을 입력하세요.");
-        $('#employee_nm').focus();
-        return false;
-    }
-
-    if ($('#dept_nm').val() == '') {
-        alert("부서명을 입력하세요.");
-        $('#dept_nm').focus();
-        return false;
-    }
-
-    if ($('#position_nm').val() == '') {
-        alert("직위를 입력하세요.");
-        $('#position_nm').focus();
-        return false;
-    }
-
-    if ($('#hp_telno').val() == '') {
-        alert("연락처를 입력하세요.");
-        $('#hp_telno').focus();
-        return false;
-    }
-
-    return true;
-}
-
 //구글맵 초기화
 function initMap() {
     if ($("#map").length) {
@@ -193,11 +152,52 @@ function receiptSave() {
     }
 }
 
-//필드값 체크
+//입력값 체크
 function checkValue() {
     if ($('input[name="usermanage[password]"]').val() != $('input[name="usermanage[passwordChk]').val()) {
-        alert("비밀번호가 일치하지 않습니다 !");
+        alert("비밀번호가 일치하지 않습니다.");
         $('input[name="usermanage[passwordChk]"]').focus();
+        return false;
+    }
+    
+    if ($('input[name="usermanage[company_nm]"]').val() == '') {
+        alert("회사명을 선택하세요.");
+        return false;
+    }
+
+    if ($('input[name="usermanage[email]"]').val() == '') {
+        alert("Email (ID)를 입력하세요.");
+        $('input[name="usermanage[email]"]').focus();
+        return false;
+    }
+
+    if ($('input[name="usermanage[password]"]').val() == '') {
+        alert("비밀번호를 입력하세요.");
+        $('input[name="usermanage[password]"]').focus();
+        return false;
+    }
+
+    if ($('input[name="usermanage[employee_nm]"]').val() == '') {
+        alert("이름을 입력하세요.");
+        $('input[name="usermanage[employee_nm]"]').focus();
+        return false;
+    }
+
+    if ($('input[name="usermanage[dept_nm]"]').val() == '') {
+        alert("부서명을 입력하세요.");
+        $('input[name="usermanage[dept_nm]"]').focus();
+        return false;
+    }
+
+    if ($('input[name="usermanage[position_nm]"]').val() == '') {
+        alert("직위를 입력하세요.");
+        $('input[name="usermanage[position_nm]"]').focus();
+        return false;
+    }
+
+    if ($('input[name="usermanage[hp_telno]"]').val() == '') {
+        alert("연락처를 입력하세요.");
+        $('input[name="usermanage[hp_telno]"]').focus();
         return false;
     }
 
