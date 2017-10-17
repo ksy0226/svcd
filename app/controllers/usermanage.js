@@ -90,7 +90,7 @@ module.exports = {
     },
 
     save: (req, res, next) => {
-        logger.debug('Save debug >> ', req.body.usermanage);
+        logger.debug('Usermanage save debug Start >>> ', req.body.usermanage);
         var usermanage = req.body.usermanage;
         Usermanage.create(req.body.usermanage, function (err, usermanage) {
             if (err) {
@@ -98,7 +98,7 @@ module.exports = {
                     err: err
                 });
             } else {
-                res.redirect('/usermanage');
+                res.redirect('/');
             }
         });
     },
