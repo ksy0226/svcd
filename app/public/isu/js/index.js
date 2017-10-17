@@ -162,31 +162,44 @@ function usermanageNew() {
 //계정신청 저장
 function receiptSave() {
 
-    if (confirm("등록하시겠습니까?")) {
-        var reqParam = $('#usermanageNew_form').serialize();
+    if (checkValue()) {
+        if (confirm("등록하시겠습니까?")) {
+            var reqParam = $('#usermanageNew_form').serialize();
 
-        try {
-            $.ajax({
-                type: "POST",
-                async: true,
-                url: "/new",
-                dataType: "json",
-                timeout: 30000,
-                cache: false,
-                data: reqParam,
-                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-                error: function (request, status, error) {
-                    alert("receiptSave ajax error : " + error);
-                },
-                beforeSend: function () {
-                },
-                success: function (dataObj) {
-                    alert("계정 신청이 완료되었습니다.");
-                    $('#usermanageNew_modal').modal('hide');
-                }
-            });
-        } catch (error) {
-            logger.debug("receiptSave catch error : ", error);
+            try {
+                $.ajax({
+                    type: "POST",
+                    async: true,
+                    url: "/new",
+                    dataType: "json",
+                    timeout: 30000,
+                    cache: false,
+                    data: reqParam,
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    error: function (request, status, error) {
+                        alert("receiptSave ajax error : " + error);
+                    },
+                    beforeSend: function () {
+                    },
+                    success: function (dataObj) {
+                        alert("계정 신청이 완료되었습니다.");
+                        $('#usermanageNew_modal').modal('hide');
+                    }
+                });
+            } catch (error) {
+                logger.debug("receiptSave catch error : ", error);
+            }
         }
     }
+}
+
+//필드값 체크
+function checkValue() {
+    if ($('input[name="usermanage[password]"]').val() != $('input[name="usermanage[passwordChk]').val()) {
+        alert("비밀번호가 일치하지 않습니다 !");
+        $('input[name="usermanage[passwordChk]"]').focus();
+        return false;
+    }
+
+    return true;
 }
