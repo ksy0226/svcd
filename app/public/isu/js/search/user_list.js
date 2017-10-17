@@ -137,6 +137,7 @@ function getDataList(selectedPage){
             setDataList(dataObj, selectedPage);
             totalData = dataObj.length;
             paging(totalData, dataPerPage, pageCount, selectedPage);
+            
         }
     });
 }
@@ -160,7 +161,7 @@ function setDataList(dataObj, selectedPage) {
         endIdx = dataObj.length;
     } 
 
-    for(var i = startIdx ; i <endIdx ; i++){ 
+    for(var i = startIdx ; i <endIdx+1 ; i++){ 
         var register_dateVal = dataObj[i-1].register_date; 
 
         if(register_dateVal){
@@ -204,10 +205,11 @@ function paging(totalData, dataPerPage, pageCount, currentPage){
             last = totalPage;
         var first = last - (pageCount-1);    // 화면에 보여질 첫번째 페이지 번호
     }
-
+    
     var next = last+1;
     var prev = first-1;
     
+
     var html = "";
     
     if(prev > 0)

@@ -6,14 +6,16 @@ const CompanyModel = require('../models/Company');
 const IncidentModel = require('../models/Incident');
 const HigherProcessModel = require('../models/HigherProcess');
 const LowerProcessModel = require('../models/LowerProcess');
+const IModel = require('../models/OftenQna');
 const service = require('../services/incident');
+const service2 = require('../services/oftenqna');
 const logger = require('log4js').getLogger('app');
 const Iconv  = require('iconv-lite');
 
 module.exports = {
 
     /**
-     * 사용자별 리스트
+     * 사용자별 리스트 > 상위업무 가져오기
      */
     user_list: (req, res, next) => {
         async.waterfall([function (callback) {
@@ -39,47 +41,7 @@ module.exports = {
     },
 
     /**
-     * 자주묻는 질문과 답
-     */
-    qna: (req, res, next) => {
-        
-        IncidentModel.find(req.body.incident, function(err, incident) {
-            //logger.debug('err', err, '\n');
-            logger.debug('list 호출');
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            }
-            res.render("search/user_qna", {
-                incident: incident
-            });
-        }).sort('-created_at');
-        /*
-        async.waterfall([function (callback) {
-            HigherProcessModel.find({},function (err, higherprocess) {
-                if (err) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                }
-                callback(null, higherprocess)
-            });
-        }], function (err, higherprocess) {
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            }else{
-                res.render("search/user_qna", {
-                    higherprocess: higherprocess
-                });
-            }
-        }); */     
-    },
-
-    /**
-     * 사용자별 상세조회
+     * 사용자별 상세조회 > Incident 가져오기
      */
     user_detail: (req, res, next) => {
         console.log(new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') );
@@ -133,6 +95,32 @@ module.exports = {
                 
                 res.render("search/user_detail", {
                     incident: incident
+                });
+            }
+        });
+    },
+
+    /**
+     * 사용자 자주묻는 질문과 답
+     */
+    user_qna: (req, res, next) => {
+        async.waterfall([function (callback) {
+            HigherProcessModel.find({},function (err, higherprocess) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null, higherprocess)
+            });
+        }], function (err, higherprocess) {
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            }else{
+                res.render("search/user_qna", {
+                    higherprocess: higherprocess
                 });
             }
         });
@@ -208,7 +196,9 @@ module.exports = {
         });
     },
 
-
+    /**
+     * user_list 데이터 조회
+     */
     list: (req, res, next) => {
         var search = service.createSearch(req);
 
@@ -230,6 +220,39 @@ module.exports = {
             }
             res.send(incident);
         });
+    },
+    /**
+     * user_qna 데이터 조회
+     */
+    getqnalist : (req, res, next) => {
+        var search = service2.createSearch(req);
+
+        logger.debug("=====================> " + JSON.stringify(search));
+        //console.log("search"+ JSON.stringify(search));
+
+        try {
+            async.waterfall([function (callback) {
+                OftenQnaModel.find(search.findOftenqna, function (err, oftenqna) {
+                    if (err) {
+                        res.render("http/500", {
+                            err: err
+                        });
+                    } else {
+                        callback(null, oftenqna)
+                    }
+                }).sort("-" + search.order_by);
+            }], function (err, oftenqna) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                } else {
+                    res.send(oftenqna);
+                }
+            });
+        } catch (e) {
+            logger.debug('oftenqna controllers error ====================> ', e)
+        }
     }
 
 };

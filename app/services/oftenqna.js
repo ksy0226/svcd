@@ -11,6 +11,9 @@ module.exports = {
         var AndQueries = [];
         var OrQueries = [];
         var higher_cd = req.query.higher_cd == null ? "*" : req.query.higher_cd;
+        //var order_by = req.query.order_by == null ? "*" : req.query.order_by;
+        //console.log("createSearch>>>>>"+higher_cd );
+        //console.log("createSearch 2   >>>>>"+req.query.higher_cd );
         var order_by = req.query.order_by;
 
         try {
@@ -55,7 +58,10 @@ module.exports = {
             console.log('findOftenqna >>>>>>>>> ' + JSON.stringify(findOftenqna));
             console.log('highlight    >>>>>>>>> ' + JSON.stringify(highlight)); 
             */
-            
+
+            console.log('higher_cd     >>>>>>>>> ' + req.query.higher_cd);
+            console.log('findOftenqna >>>>>>>>> ' + JSON.stringify(findOftenqna));
+
             return {
                 order_by: req.query.order_by,
                 searchType: req.query.searchType,
