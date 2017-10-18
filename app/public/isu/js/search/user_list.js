@@ -180,7 +180,8 @@ function setDataList(dataObj, selectedPage) {
         var addList = "";
         //addList += "							<tr onclick=window.location='/search/user_detail/" + dataObj[i-1]._id + "'>";
         addList += "							<tr onclick=detailShow('" + dataObj[i-1]._id + "')>";
-        addList += "								<td>" + dataObj[i-1].higher_nm + "</td>";
+        //상위업무 제외
+        //addList += "								<td>" + dataObj[i-1].higher_nm + "</td>";
         addList += "								<td>" + dataObj[i-1].lower_nm + "</td>";
         addList += "								<td>" + dataObj[i-1].title + "</td>";
         addList += "								<td>" + register_dateVal + "</td>";
