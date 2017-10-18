@@ -6,6 +6,19 @@ var dataCnt = 0; // 출력 종료 인덱스
 var inCnt = 3; //한번에 화면에 조회되는 리스트 수
 
 $(document).ready(function () {
+    $('#reg_date_from').datepicker({
+        //showOn: "both",  
+        autoclose: true,
+        todayHighlight: true,
+        format: "yyyy-mm-dd"
+    });
+
+    $('#reg_date_to').datepicker({
+        //showOn: "both",  
+        autoclose: true,
+        todayHighlight: true,
+        format: "yyyy-mm-dd"
+    });
 
     //엔터키 이벤트 시
     $('#searchText').keypress(function(e){
@@ -56,7 +69,7 @@ function research(){
 //데이타 가져오기
 function getDataList() {
 
-    var reqParam = 'searchType=' + $('#searchType').val() + '&status_cd=' + $('#status_cd').val() + '&searchText=' + $('#searchText').val();
+    var reqParam = 'searchType=' + $('#searchType').val() + '&status_cd=' + $('#status_cd').val() + '&reg_date_from=' + $('#reg_date_from').val()+ '&reg_date_to=' + $('#reg_date_to').val()+ '&searchText=' + encodeURIComponent($('#searchText').val());
     $.ajax({
         type: "GET",
         async: true,
@@ -125,8 +138,16 @@ function setContent(dataObj) {
         } else {
             dataCnt = dataObj.length;
         }
-        
+
         for (var i = rowIdx; i < dataCnt; i++) {
+
+            var register_dateVal = dataObj[i].register_date; 
+            
+            if(register_dateVal){
+                register_dateVal = register_dateVal.substring(0,10);
+            }else{
+                register_dateVal = ""; 
+            }
 
             var addList = "";
             //addList += "                <div class='col-lg-12'>";
