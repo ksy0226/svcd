@@ -14,17 +14,19 @@ var totalPage = 0;
 
 $(document).ready(function () {
     $('#reg_date_from').datepicker({
+        //showOn: "both",  
         autoclose: true,
         todayHighlight: true,
         format: "yyyy-mm-dd"
     });
 
     $('#reg_date_to').datepicker({
+        //showOn: "both",  
         autoclose: true,
         todayHighlight: true,
         format: "yyyy-mm-dd"
     });
-    
+
     //엔터키 이벤트 시
     $('#searchText').keypress(function(e){
         if(e.keyCode == 13) {
@@ -231,9 +233,9 @@ function paging(totalData, dataPerPage, pageCount, currentPage){
     $("#paging").html(html);    // 페이지 목록 생성
    
     //$("#paging a").css("color", "black");
-   // $("#paging a#" + currentPage).css({"text-decoration":"none", 
-   //                                 "color":"red", 
-   //                                 "font-weight":"bold"});    // 현재 페이지 표시
+    // $("#paging a#" + currentPage).css({"text-decoration":"none", 
+    //                                 "color":"red", 
+    //                                 "font-weight":"bold"});    // 현재 페이지 표시
     
     
    //페이지 목록 선택 시 페이징 함수, 데이터 조회 함수 호출
