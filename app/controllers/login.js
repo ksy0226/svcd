@@ -16,7 +16,6 @@ module.exports = {
      */
     index: (req, res) => {
         async.waterfall([function (callback) {
-            console.log("Start index !!!");
             CompanyModel.find({}, function (err, company) {
                 if (err) {
                     res.render("http/500", {
@@ -26,7 +25,6 @@ module.exports = {
                 callback(null, company)
             });
         }], function (err, company) {
-            console.log(company);
             if (err) {
                 res.render("http/500", {
                     err: err
@@ -159,7 +157,7 @@ module.exports = {
     //계정신청
     new: (req, res, next) => {
         try {
-            logger.debug('Save debug >> ', req.body.usermanage);
+            logger.debug('Login controller New debug >>> ', req.body.usermanage);
             var usermanage = req.body.usermanage;
             Usermanage.create(req.body.usermanage, function (err, usermanage) {
                 if (err) {
