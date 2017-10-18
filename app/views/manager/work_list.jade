@@ -73,7 +73,6 @@ block content
                                 .form-group
                                     label.col-sm-2.control-label 진행상태
                                     .col-sm-2
-
                                         select.form-control(id='status_cd' name='status_cd')
                                             option(value ='*') 전체
                                             - if (status.length > 0) {
@@ -136,26 +135,12 @@ block content
                             // start pagination
                             .row
                                 .col-sm-4
-                                    .dataTables_info Showing 1 to 10 of 57 entries
+                                    .dataTables_info Showing 1 to 15 of 
+                                        span(id='totalPage')
+                                        |  entries
                                 .col-sm-8
                                     .dataTables_paginate.paging_simple_numbers.pull-right
-                                        ul.pagination
-                                            li.cpaginate_button.previous
-                                                a(href='#') Previous
-                                            li.cpaginate_button.active
-                                                a(href='#') 1
-                                            li.cpaginate_button
-                                                a(href='#') 2
-                                            li.cpaginate_button
-                                                a(href='#') 3
-                                            li.cpaginate_button
-                                                a(href='#') 4
-                                            li.cpaginate_button
-                                                a(href='#') 5
-                                            li.cpaginate_button
-                                                a(href='#') 6
-                                            li.cpaginate_button.next
-                                                a(href='#') Next
+                                        ul#paging.pagination
                             // end pagination
                 // end Grid Area
             // end container
