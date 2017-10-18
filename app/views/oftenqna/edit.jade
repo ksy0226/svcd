@@ -64,8 +64,8 @@ block content
                                             input.form-control(name='oftenqna[title]', type='text', value='#{oftenqna.title}')
                                     .form-group
                                         .col-sm-12
-                                            textarea#summernote.summernote
-
+                                            textarea#summernote.summernote(name='oftenqna[content]', type='text') !{oftenqna.content}
+                                            
                                     // 첨부파일 1개 이상일때만 표시
                                     - if (oftenqna.attach_file.length > 0){
                                         .row
