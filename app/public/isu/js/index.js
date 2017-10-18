@@ -1,5 +1,7 @@
-'use strict'; 
+'use strict';
+
 $(document).ready(function () {
+
     $('.button-checkbox').each(function () {
         var $widget = $(this),
             $button = $widget.find('button'),
@@ -60,26 +62,34 @@ $(document).ready(function () {
 
     $('#myModal').click(function () {
         resize();
-    }); 
+    });
 
+    //계정신청 모달 저장버튼 클릭 시
+    $('#usermanageNewSaveBtn').on('click', function () {
+        if (checkValue()) {
+            if (confirm("등록하시겠습니까?")) {
+                receiptSave();
+            }
+        }
+    })
 });
 
 //구글맵 초기화
 function initMap() {
-    if($("#map").length) {  
+    if ($("#map").length) {
         var mapOptions = { //구글 맵 옵션 설정
-            zoom : 12, //기본 확대율                 
+            zoom: 12, //기본 확대율                 
             //center : new google.maps.LatLng(37.497983,126.9938672), // 지도 중앙 위치
-            center : new google.maps.LatLng(37.557983,126.8938672), // 지도 중앙 위치
-            scrollwheel : false, //마우스 휠로 확대 축소 사용 여부
-            mapTypeControl : false //맵 타입 컨트롤 사용 여부
+            center: new google.maps.LatLng(37.557983, 126.8938672), // 지도 중앙 위치
+            scrollwheel: false, //마우스 휠로 확대 축소 사용 여부
+            mapTypeControl: false //맵 타입 컨트롤 사용 여부
         };
 
         var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-        
+
         var marker = new google.maps.Marker({
             //position: map.getCenter(), //마커 위치
-            position : new google.maps.LatLng(37.497983,126.9938672), // 지도 중앙 위치
+            position: new google.maps.LatLng(37.497983, 126.9938672), // 지도 중앙 위치
             map: map,
             icon: '/isu/images/isu_map_icon.png',
         });
@@ -87,8 +97,113 @@ function initMap() {
 }
 
 //구글맵 리사이즈(모달 시 적용필요)
-function resize(){
+function resize() {
     $('#myModal').on('shown.bs.modal', function () {
         google.maps.event.trigger(map, "resize");
     });
+}
+
+//상위코드 맵핑
+function companyCd() {
+    //선택된 회사 인덱스 값
+    var sIdx = $('#company_cd option').index($('#company_cd option:selected'));
+    sIdx = sIdx - 1; //'선택하세요' 인덱스값 1을 빼줌
+    //선택값 매핑
+    $('#company_nm').val($('#company_cd option:selected').text());
+    $('input[name="usermanage[dom_post_cd1]"]').val(companyObj[sIdx].zip_cd);
+    $('input[name="usermanage[dom_addr]"]').val(companyObj[sIdx].addr);
+    $('input[name="usermanage[dom_addr2]"]').val(companyObj[sIdx].addr2);
+    $('input[name="usermanage[office_tel_no]"]').val(companyObj[sIdx].tel_no);
+}
+
+//계정신청 폼 초기화
+function usermanageNew() {
+    $('#usermanageNew_form').find('input').val('');
+    $('#usermanageNew_form').find('select').val('');
+}
+
+//계정신청 저장
+function receiptSave() {
+
+    if (checkValue()) {
+        if (confirm("등록하시겠습니까?")) {
+            var reqParam = $('#usermanageNew_form').serialize();
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    async: true,
+                    url: "/new",
+                    dataType: "json",
+                    timeout: 30000,
+                    cache: false,
+                    data: reqParam,
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    error: function (request, status, error) {
+                        alert("receiptSave ajax error : " + error);
+                    },
+                    beforeSend: function () {
+                    },
+                    success: function (dataObj) {
+                        alert("계정 신청이 완료되었습니다.");
+                        $('#usermanageNew_modal').modal('hide');
+                    }
+                });
+            } catch (error) {
+                logger.debug("receiptSave catch error : ", error);
+            }
+        }
+    }
+}
+
+//입력값 체크
+function checkValue() {
+    if ($('input[name="usermanage[company_nm]"]').val() == '') {
+        alert("회사명을 선택하세요.");
+        return false;
+    }
+
+    if ($('input[name="usermanage[email]"]').val() == '') {
+        alert("Email (ID)를 입력하세요.");
+        $('input[name="usermanage[email]"]').focus();
+        return false;
+    }
+
+    if ($('input[name="usermanage[password]"]').val() == '') {
+        alert("비밀번호를 입력하세요.");
+        $('input[name="usermanage[password]"]').focus();
+        return false;
+    }
+
+    if ($('input[name="usermanage[password]"]').val() != $('input[name="usermanage[passwordChk]').val()) {
+        alert("비밀번호가 일치하지 않습니다.");
+        $('input[name="usermanage[passwordChk]"]').focus();
+        return false;
+    }
+
+    if ($('input[name="usermanage[employee_nm]"]').val() == '') {
+        alert("이름을 입력하세요.");
+        $('input[name="usermanage[employee_nm]"]').focus();
+        return false;
+    }
+
+    if ($('input[name="usermanage[dept_nm]"]').val() == '') {
+        alert("부서명을 입력하세요.");
+        $('input[name="usermanage[dept_nm]"]').focus();
+        return false;
+    }
+
+    if ($('input[name="usermanage[position_nm]"]').val() == '') {
+        alert("직위를 입력하세요.");
+        $('input[name="usermanage[position_nm]"]').focus();
+        return false;
+    }
+
+    if ($('input[name="usermanage[hp_telno]"]').val() == '') {
+        alert("연락처를 입력하세요.");
+        $('input[name="usermanage[hp_telno]"]').focus();
+        return false;
+    }
+
+    return true;
 }
