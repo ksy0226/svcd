@@ -152,19 +152,21 @@ module.exports = {
     },
 
     update: (req, res, next) => {
-        logger.debug("=====================> " + JSON.stringify(req.body));
+        logger.debug("oftenQna controllers update start =====> " + JSON.stringify(req.body));
+        var newOftenqna = req.body.oftenqna;
+        if (req.files) {
+            newOftenqna.attach_file = req.files;
+        }
         OftenQnaModel.findOneAndUpdate({
             _id: req.params.id
-        }, req.body.oftenqna, function (err, oftenqna) {
-            if (err) return res.json({
-                success: false,
-                message: err
-            });
-            if (!oftenqna) return res.json({
-                success: false,
-                message: "No data found to update"
-            });
-            res.redirect('/oftenqna/');
+        }, newOftenqna, function (err, newOftenqna) {
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            } else {
+                res.redirect('/oftenqna/');
+            }
         });
     },
 
