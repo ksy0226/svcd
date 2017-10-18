@@ -231,7 +231,7 @@ module.exports = {
                     });
                 }
                 callback(null, incident)
-            });
+            }).sort('-createAt');
         }], function (err, incident) {
             if (err) {
                 res.render("http/500", {

@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const async = require('async');
 const Incident = require('../models/Incident');
 const ProcessStatus = require('../models/ProcessStatus');
+const ProcessGubun = require('../models/ProcessGubun');
 const LowerProcess = require('../models/LowerProcess');
 const service = require('../services/incident');
 const logger = require('log4js').getLogger('app');
@@ -166,14 +167,17 @@ module.exports = {
 
         try{
             async.waterfall([function (callback) {
+                
                 var upIncident = req.body.incident;
                 var dt = new Date();
                 logger.debug("=========>1 ",dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate()+" "+dt.getHours()+":"+dt.getMinutes()+":"+dt.getSeconds());
                 logger.debug("=========>2 ",new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
 
                 upIncident.receipt_date = dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate()+" "+dt.getHours()+":"+dt.getMinutes()+":"+dt.getSeconds();
+                
                 //upIncident.receipt_date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
-
+                upIncident.status_cd = '2';
+                upIncident.status_nm = '접수';
                 callback(null,upIncident);
 
             }], function (err, upIncident) {
@@ -221,4 +225,73 @@ module.exports = {
         
     },
     
+    /**
+     * 완료내용 등록
+     */
+    saveComplete : (req, res, next) => {
+        logger.debug("saveComplete =====================> " + JSON.stringify(req.body));
+        logger.debug("req.body.incident : ",req.body.incident);
+
+        try{
+            async.waterfall([function (callback) {
+                
+                var upIncident = req.body.incident;
+                var dt = new Date();
+                logger.debug("=========>1 ",dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate()+" "+dt.getHours()+":"+dt.getMinutes()+":"+dt.getSeconds());
+                logger.debug("=========>2 ",new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
+
+                upIncident.complete_date = dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate()+" "+dt.getHours()+":"+dt.getMinutes()+":"+dt.getSeconds();
+                
+                //upIncident.receipt_date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                upIncident.status_cd = '3';
+                upIncident.status_nm = '완료';
+                callback(null,upIncident);
+
+            }], function (err, upIncident) {
+                logger.debug("=========> upIncident ",upIncident);
+
+                if (err) {
+                    res.json({
+                        success: false,
+                        message: "No data found to update"
+                    });
+                }else{
+                    Incident.findOneAndUpdate({
+                        _id: req.params.id
+                    }, upIncident, function (err, Incident) {
+                        if (err) return res.json({
+                            success: false,
+                            message: err
+                        });
+                        if (!Incident){ 
+                            return res.json({
+                                    success: false,
+                                    message: "No data found to update"
+                            });
+                        }else{
+                            //완료 업데이트 성공 시
+                            logger.debug("=====================================================================================");
+                            logger.debug("=========== 메일발송 대상인지 체크 후 처리로직 추가구현(TODO mailLogic )  ==============");
+                            logger.debug("=====================================================================================");
+                            
+                            
+                            return res.json({
+                                success: true,
+                                message: "update successed"
+                            });
+                        }
+                    });
+                }
+            });
+
+        }catch(e){
+            logger.error("manager control saveComplete : ",e);
+            return res.json({
+                success: false,
+                message: err
+            });
+        }
+        
+    },
+
 };

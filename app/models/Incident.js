@@ -38,16 +38,16 @@ var IncidentSchema = new Schema({
     manager_position        : {type : String},  //담당자 직위명
     manager_email           : {type : String},  //담당자 이메일
     manager_phone           : {type : String},  //담당자 전화
-    receipt_date            : {type : String},    //접수일                                                                          
+    receipt_date            : {type : String},  //접수일                                                                          
     business_level          : {type : String},  //난이도                                                                        
-    complete_reserve_date   : {type : String},    //완료예정일                                                                       
+    complete_reserve_date   : {type : String},  //완료예정일                                                                       
     solution_flag           : {type : String},  //해결여부                                                                           
     complete_content        : {type : String},  //완료 코멘트                                                                     
     add_complete_content    : {type : String},  //추가 완료 코멘트                                                                         
     program_id              : {type : String},                                                                           
     delay_reason            : {type : String},  //지연사유                                                                           
-    need_minute             : {type : Number},  //작업시간                                                                         
-    complete_date           : {type : String},    //완료일                                                                       
+    work_time             : {type : Number},  //작업시간                                                                         
+    complete_date           : {type : String},  //완료일                                                                       
     valuation               : {type : Number, default : 0},  //평가점수                                                                         
     reading_cnt             : {type : Number},                                                                           
     complete_open_flag      : {type : String, default : 'N'},  //완료후공개여부                                                                     
@@ -57,7 +57,8 @@ var IncidentSchema = new Schema({
     lower_nm                : {type : String},  //하위업무 이름
     customer_flag           : {type : String},                                                                           
     add_solution_content    : {type : String},                                                                           
-    process_gubun           : {type : String},                                                                           
+    process_cd           : {type : String},  //처리구분 (processGubun Model)
+    process_nm           : {type : String},  //처리구분내용                                                                        
     valuation_content       : {type : String}, //평가내용                                                                           
     approval_gbn            : {type : String},                                                                           
     modify_yn               : {type : String, default : 'N'},                                                                           
