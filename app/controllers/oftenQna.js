@@ -121,6 +121,7 @@ module.exports = {
                     });
                 } else {
                     //path 길이 잘라내기
+                    console.log('>>>>>>>>>>>>>>>>>>> ' + oftenqna);
                     if (oftenqna.attach_file.length > 0) {
                         for (var i = 0; i < oftenqna.attach_file.length; i++) {
                             var path = oftenqna.attach_file[i].path
@@ -135,9 +136,8 @@ module.exports = {
                     oftenqna.reading_cnt += 1;
                     oftenqna.save(function (err) {
                         if (err) {
-                            return res.json({
-                                success: false,
-                                message: err
+                            res.render("http/500", {
+                                err: err
                             });
                         } else {
                             res.render("oftenqna/edit", {
