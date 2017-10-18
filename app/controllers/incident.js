@@ -88,6 +88,8 @@ module.exports = {
 
         async.waterfall([function (callback) {
             var newincident = req.body.incident;
+            //TODO
+            //요청자, 등록자 정보 지정(회사,사번에 이메일, 부서등등)
             if (req.files) {
                 newincident.attach_file = req.files;
             }
