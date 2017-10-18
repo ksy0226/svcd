@@ -139,7 +139,7 @@ module.exports = {
     qna_detail: (req, res, next) => {
         
         logger.debug("Trace user_detail : ", req.params.id);
-        console.log("Trace user_detail : ", req.params.id);
+        //console.log("Trace user_detail : ", req.params.id);
         
         OftenQnaModel.findById({
             _id: req.params.id
