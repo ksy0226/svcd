@@ -19,21 +19,21 @@ block content
                                         li
                                             a(href='#') Home
                                         li
-                                            a(href='#') SD 담당자
-                                        li.active 나의 업무지정
-                                    h4.page-title 나의 업무지정
+                                            a(href='#') SD 기본정보
+                                        li.active 회사별 상위업무지정
+                                    h4.page-title 회사별 상위업무지정
                         .row
                             .col-lg-12
                                 .card-box
                                     form.form-horizontal.group-border-dashed(action='#', onsubmit='return false;')
                                         .form-group
-                                            label.col-sm-2.control-label 상위업무 
+                                            label.col-sm-2.control-label 회사명 
                                             .col-sm-4
-                                                select.form-control(id='higher_cd' name='higher_cd')
-                                                    option(value ='*') 전체
-                                                    - if (higherprocess.length > 0) {
-                                                        - for( var i = 0 ; length = higherprocess.length > i ; i++ ){ //속도가 느리다고 알고 있음.
-                                                            option(value ='#{higherprocess[i].higher_cd}') #{higherprocess[i].higher_nm}
+                                                select.form-control(id='company_cd' name='company_cd')
+                                                    option(value ='*') 선택되지 않음
+                                                    - if (company.length > 0) {
+                                                        - for( var i = 0 ; length = company.length > i ; i++ ){ //속도가 느리다고 알고 있음.
+                                                            option(value ='#{company[i].company_cd}') #{company[i].company_nm}
                                                         - }
                                                     - } 
                                             .col-sm-2
@@ -67,7 +67,7 @@ block content
                                                         td(width='10%')
                                                         td(width='20%')
                                                             h4.pull-left
-                                                                b 나의 업무
+                                                                b 회사별 상위업무
                                                         td(width='25%')
                                                             span.pull-right
                                                                 button.btn.btn-xs.btn-inverse.m-r-5(type='button')
@@ -77,21 +77,10 @@ block content
                                                                     i.fa.fa-square-o.m-r-5
                                                                     |  선택취소
                                             select#my_multi_select2.multi-select(name='my_multi_select2[]', data-plugin='multiselect', data-selectable-optgroup='true', multiple='multiple')
-                                                optgroup(label='그룹웨어')
-                                                    option.p-l-80 게시판
-                                                    option.p-l-80 공통기능
-                                                    option.p-l-80 기타
-                                                    option.p-l-80 메신저
-                                                    option.p-l-80 명함관리
-                                                    option.p-l-80 문서관리
-                                                    option.p-l-80 업무지원
-                                                    option.p-l-80 이메일
-                                                    option.p-l-80 일정관리
-                                                    option.p-l-80 자산관리
-                                                    option.p-l-80 전자결제
-                                                    option.p-l-80 카페
-                                                optgroup(label='전자펜수리유지보수')
-                                                    option.p-l-80 기타 1
-                                                    option.p-l-80 기타 2
+                                                - if (higherprocess.length > 0) {
+                                                    - for( var i = 0 ; length = higherprocess.length > i ; i++ ){ //속도가 느리다고 알고 있음.
+                                                        option(value ='#{higherprocess[i].higher_cd}') #{higherprocess[i].higher_nm}
+                                                    - }
+                                                - } 
 
 
