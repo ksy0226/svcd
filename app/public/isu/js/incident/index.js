@@ -125,8 +125,9 @@ function setContent(dataObj) {
         } else {
             dataCnt = dataObj.length;
         }
-
+        
         for (var i = rowIdx; i < dataCnt; i++) {
+
             var addList = "";
             //addList += "                <div class='col-lg-12'>";
            //addList += "					<div class='card-box'>";

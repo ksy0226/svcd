@@ -233,7 +233,7 @@ module.exports = {
                     });
                 }
                 callback(null, incident)
-            }).sort('-createAt');
+            }).sort('-created_at');
         }], function (err, incident) {
             if (err) {
                 res.render("http/500", {
