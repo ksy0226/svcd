@@ -8,22 +8,25 @@ var totalData = 0;      // 총 데이터 수
 
 var dataPerPage = 15;   // 한 페이지에 나타낼 데이터 수
 var pageCount = 10;      // 한 화면에 나타낼 페이지 수
+var totalPage = 0;
 
 
 
 $(document).ready(function () {
     $('#reg_date_from').datepicker({
+        //showOn: "both",  
         autoclose: true,
         todayHighlight: true,
         format: "yyyy-mm-dd"
     });
 
     $('#reg_date_to').datepicker({
+        //showOn: "both",  
         autoclose: true,
         todayHighlight: true,
         format: "yyyy-mm-dd"
     });
-    
+
     //엔터키 이벤트 시
     $('#searchText').keypress(function(e){
         if(e.keyCode == 13) {
@@ -136,8 +139,10 @@ function getDataList(selectedPage){
             //리스트에 내용 매핑
             setDataList(dataObj, selectedPage);
             totalData = dataObj.length;
-            paging(totalData, dataPerPage, pageCount, selectedPage);
-            
+            totalPage = Math.ceil(totalData/dataPerPage);
+            $('#totalPage').text(totalPage);
+
+            paging(totalData, dataPerPage, pageCount, selectedPage);   
         }
     });
 }
@@ -228,9 +233,9 @@ function paging(totalData, dataPerPage, pageCount, currentPage){
     $("#paging").html(html);    // 페이지 목록 생성
    
     //$("#paging a").css("color", "black");
-   // $("#paging a#" + currentPage).css({"text-decoration":"none", 
-   //                                 "color":"red", 
-   //                                 "font-weight":"bold"});    // 현재 페이지 표시
+    // $("#paging a#" + currentPage).css({"text-decoration":"none", 
+    //                                 "color":"red", 
+    //                                 "font-weight":"bold"});    // 현재 페이지 표시
     
     
    //페이지 목록 선택 시 페이징 함수, 데이터 조회 함수 호출
