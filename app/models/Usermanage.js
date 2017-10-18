@@ -33,8 +33,8 @@ var usermanageSchema = mongoose.Schema({
     email_send_yn    : { type : String },
     sabun            : { type : String },
     
-    user_flag        : { type : String },
-    group_flag       : { type : String },
+    user_flag        : { type : String, default : 9 },
+    group_flag       : { type : String, default : 'out' },
     created_at       : { type : Date, default: Date.now },
     updated_at       : { type : Date }
 });
