@@ -18,11 +18,11 @@ module.exports = {
                 res.render("http/500", {
                     err: err
                 });
+            } else {
+                res.render("higherProcess/list", {
+                    higherProcess: higherProcess
+                });
             }
-            res.render("higherProcess/list", {
-                
-                higherProcess: higherProcess
-            });
         });
     },
 

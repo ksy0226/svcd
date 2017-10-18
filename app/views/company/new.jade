@@ -25,87 +25,96 @@ block head
 
     // postcode
     script(src='/isu/js/postcode.js')
+    
     //http용
     script(src='http://dmaps.daum.net/map_js_init/postcode.v2.js')
-                        
+
+    //datepicker 추가
+    script(src='/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')
+    script(src='/isu/js/search/datepicker.js', type='text/javascript')
+
 block content
-      // ==============================================================
-      // Start right Content here
-      // ==============================================================
-      .content-page
-        // Start content
+    .content-page
         .content
-          .container
-            // Page-Title
-            .row
-              .col-sm-12
-                .page-title-box
-                  ol.breadcrumb.pull-right
-                    li
-                      a(href='#') Home
-                    li
-                      a(href='#') SD기본정보
-                    li.active 회사정보관리
-                  h4.page-title 회사정보 입력
-            .row
-              .col-sm-12
-                .card-box
-                  .p-20
-                    form.form-horizontal.group-border-dashed(name='form' action='/company/new' method='post')
-                      .form-group
-                        label.col-sm-3.control-label 회사코드
-                        .col-sm-3
-                          input.form-control(type='text', name='company[company_cd]', placeholder='')
-                      .form-group
-                        label.col-sm-3.control-label 회사명
-                        .col-sm-3
-                          input.form-control(type='text', name='company[company_nm]', placeholder='')
-                      .form-group
-                        label.col-sm-3.control-label 업태
-                        .col-sm-3
-                          input.form-control(type='text', name='company[type]', placeholder='')
-                      .form-group
-                        label.col-sm-3.control-label 대표이사명
-                        .col-sm-3
-                          input.form-control(type='text', name='company[ceo_nm]', placeholder='')
-                      .form-group
-                        label.col-sm-3.control-label 전화번호
-                        .col-sm-3
-                          input.form-control(type='text', name='company[tel_no]', placeholder='')
-                      .form-group
-                        label.col-sm-3.control-label 팩스번호
-                        .col-sm-3
-                          input.form-control(type='text', name='company[fax_no]', placeholder='')
-                      .form-group
-                        label.col-sm-3.control-label 회사주소1
-                        .col-sm-2
-                          input.form-control(type='text', id='zip_cd' name='company[zip_cd]', placeholder='')
-                        .col-sm-5
-                          input.form-control(type='text', id='addr' name='company[addr]', placeholder='' readonly)
-                        .col-sm-2
-                          span.btn.btn-sm.btn-primary(id='postcode') 우편번호 찾기
-                      .form-group
-                        label.col-sm-3.control-label 회사주소2
-                        .col-sm-7
-                          input.form-control(type='text', id='addr2' name='company[addr2]', placeholder='')
-                      .form-group
-                        label.col-sm-3.control-label 비고
-                        .col-sm-7
-                          input.form-control(type='text', name='company[bigo]', placeholder='')
-                      .form-group
-                        .col-sm-offset-3.col-sm-9.m-t-30
-                          button.btn.btn-primary.waves-effect.waves-light(type='submit')
-                            i.fa.fa-send-o
-                            |  저장
-                          button.btn.btn-default.waves-effect.m-l-5(type='reset') 취소
-            // end row
-          // end container
-        // end content
+            .container
+                .row
+                    .col-sm-12
+                        .page-title-box
+                            ol.breadcrumb.pull-right
+                                li
+                                    a(href='#') Home
+                                li
+                                    a(href='#') SD기본정보
+                                li.active 회사정보관리
+                            h4.page-title 회사정보 입력
+                .row
+                    .col-sm-12
+                        .card-box
+                            .p-20
+                                form.form-horizontal.group-border-dashed(name='form' action='/company/new' method='post')
+                                    .form-group
+                                        label.col-sm-3.control-label 회사코드
+                                        .col-sm-3
+                                            input.form-control(type='text', name='company[company_cd]', placeholder='')
+                                    .form-group
+                                        label.col-sm-3.control-label 회사명
+                                        .col-sm-3
+                                            input.form-control(type='text', name='company[company_nm]', placeholder='')
+                                    .form-group
+                                        label.col-sm-3.control-label 업태
+                                        .col-sm-3
+                                            input.form-control(type='text', name='company[type]', placeholder='')
+                                    .form-group
+                                        label.col-sm-3.control-label 대표이사명
+                                        .col-sm-3
+                                            input.form-control(type='text', name='company[ceo_nm]', placeholder='')
+                                    .form-group
+                                        label.col-sm-3.control-label 전화번호
+                                        .col-sm-3
+                                            input.form-control(type='text', name='company[tel_no]', placeholder='')
+                                    .form-group
+                                        label.col-sm-3.control-label 팩스번호
+                                        .col-sm-3
+                                            input.form-control(type='text', name='company[fax_no]', placeholder='')
+                                    .form-group
+                                        label.col-sm-3.control-label 회사주소1
+                                        .col-sm-2
+                                            input.form-control(type='text', id='zip_cd' name='company[zip_cd]', placeholder='')
+                                        .col-sm-5
+                                            input.form-control(type='text', id='addr' name='company[addr]', placeholder='' readonly)
+                                        .col-sm-2
+                                            span.btn.btn-sm.btn-primary(id='postcode') 우편번호 찾기
+                                    .form-group
+                                        label.col-sm-3.control-label 회사주소2
+                                        .col-sm-7
+                                            input.form-control(type='text', id='addr2' name='company[addr2]', placeholder='')
+                                    .form-group
+                                        label.col-sm-3.control-label 비고
+                                        .col-sm-7
+                                            input.form-control(type='text', name='company[bigo]', placeholder='')
+                                    .form-group
+                                        label.col-sm-3.control-label 유지보수 기간
+                                        .col-sm-3
+                                            .input-group
+                                                input.form-control(id='date_from', name='company[date_from]', type='text', placeholder='yyyy-mm-dd', value='')
+                                                span.input-group-addon.bg-primary.b-0.text-white
+                                                    i.ion-calendar
+                                        .col-sm-3
+                                            .input-group
+                                                input.form-control(id='date_to', name='company[date_to]', type='text', placeholder='yyyy-mm-dd', value='')
+                                                span.input-group-addon.bg-primary.b-0.text-white
+                                                    i.ion-calendar 
+                                    .form-group
+                                        .col-sm-offset-3.col-sm-9.m-t-30
+                                            button.btn.btn-primary.waves-effect.waves-light(type='submit')
+                                                i.fa.fa-send-o
+                                                |  저장
+                                            button.btn.btn-default.waves-effect.m-l-5(type='reset') 취소
         footer.footer.text-right
-          | 2017 © ISU Group.
-      // ==============================================================
-      // End Right content here
-      // ==============================================================
+            | 2017 © ISU Group.
+    // ==============================================================
+    // End Right content here
+    // ==============================================================
     // END wrapper
-    
+
 
