@@ -1,11 +1,6 @@
 extends ../layouts/default
 block head
-    meta(charset='utf-8')
-    meta(name='viewport', content='width=device-width,initial-scale=1')
-    meta(name='description', content='A fully featured admin theme which can be used to build CRM, CMS, etc.')
-    meta(name='author', content='Coderthemes')
-    link(rel='shortcut icon', href='assets/images/favicon_1.ico')
-    title  3-3 상위별 하위업무통계
+    title 3-3 상위별 하위업무통계
     // Plugins css
     link(href='../plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css', rel='stylesheet')
     link(href='../plugins/multiselect/css/multi-select.css', rel='stylesheet', type='text/css')
@@ -15,8 +10,6 @@ block head
     link(href='../plugins/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css', rel='stylesheet')
     link(href='../plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css', rel='stylesheet')
     link(href='../plugins/bootstrap-daterangepicker/daterangepicker.css', rel='stylesheet')
-    // summernot
-    link(href='../plugins/summernote/dist/summernote.css', rel='stylesheet')
     link(href='../plugins/switchery/switchery.min.css', rel='stylesheet')
     link(href='assets/css/bootstrap.min.css', rel='stylesheet', type='text/css')
     link(href='assets/css/core.css', rel='stylesheet', type='text/css')
@@ -29,288 +22,645 @@ block head
     // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
     // WARNING: Respond.js doesn't work if you view the page via file://
     //if lt IE 9
-    script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
-    script(src='https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js')
-    
-
-    script(src='/isu/js/incident/index.js', type='text/javascript')
-    script(src='/isu/js/search/datepicker.js' type='text/javascript')
-    script(src='https://code.jquery.com/ui/1.12.1/jquery-ui.js')
-    link(rel='stylesheet', href='//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css')
-
-    // jQuery
-    script(src='assets/js/jquery.min.js')
-    script(src='assets/js/bootstrap.min.js')
-    script(src='assets/js/detect.js')
-    script(src='assets/js/fastclick.js')
-    script(src='assets/js/jquery.slimscroll.js')
-    script(src='assets/js/jquery.blockUI.js')
-    script(src='assets/js/waves.js')
-    script(src='assets/js/wow.min.js')
-    script(src='assets/js/jquery.nicescroll.js')
-    script(src='assets/js/jquery.scrollTo.min.js')
-    script(src='../plugins/switchery/switchery.min.js')
-    script(src='../plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js')
-    script(type='text/javascript', src='../plugins/multiselect/js/jquery.multi-select.js')
-    script(type='text/javascript', src='../plugins/jquery-quicksearch/jquery.quicksearch.js')
-    script(src='../plugins/select2/select2.min.js', type='text/javascript')
-    script(src='../plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js', type='text/javascript')
-    script(src='../plugins/bootstrap-inputmask/bootstrap-inputmask.min.js', type='text/javascript')
-    script(src='../plugins/moment/moment.js')
-    script(src='../plugins/timepicker/bootstrap-timepicker.min.js')
-    script(src='../plugins/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js')
-    script(src='../plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')
-    script(src='../plugins/bootstrap-daterangepicker/daterangepicker.js')
-    // form summernote
-    script(src='../plugins/summernote/dist/summernote.min.js')
+      script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+      script(src='https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js')
     script(src='assets/js/jquery.core.js')
     script(src='assets/js/jquery.app.js')
 
     script(src='/vendor/jquery/jquery.min.js')
 
-    script.
-      jQuery(document).ready(function() {
-        alert(tVal);  
-        //advance multiselect start
-        $('#my_multi_select3').multiSelect({
-            selectableHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='search...'>",
-            selectionHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='search...'>",
-            afterInit: function (ms) {
-                var that = this,
-                    $selectableSearch = that.$selectableUl.prev(),
-                    $selectionSearch = that.$selectionUl.prev(),
-                    selectableSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selectable:not(.ms-selected)',
-                    selectionSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selection.ms-selected';
-                that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
-                    .on('keydown', function (e) {
-                        if (e.which === 40) {
-                            that.$selectableUl.focus();
-                            return false;
-                        }
-                    });
-                that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
-                    .on('keydown', function (e) {
-                        if (e.which == 40) {
-                            that.$selectionUl.focus();
-                            return false;
-                        }
-                    });
-            },
-            afterSelect: function () {
-                this.qs1.cache();
-                this.qs2.cache();
-            },
-            afterDeselect: function () {
-                this.qs1.cache();
-                this.qs2.cache();
-            }
-        });
-        // Select2
-        $(".select2").select2();
-        $(".select2-limiting").select2({
-            maximumSelectionLength: 2
-        });
-      });
-
-      //Bootstrap-TouchSpin
-      $(".vertical-spin").TouchSpin({
-        verticalbuttons: true,
-        buttondown_class: "btn btn-primary",
-        buttonup_class: "btn btn-primary",
-        verticalupclass: 'ion-plus-round',
-        verticaldownclass: 'ion-minus-round'
-      });
-      var vspinTrue = $(".vertical-spin").TouchSpin({
-        verticalbuttons: true
-      });
-      if (vspinTrue) {
-        $('.vertical-spin').prev('.bootstrap-touchspin-prefix').remove();
-      }
-      $("input[name='demo1']").TouchSpin({
-        min: 0,
-        max: 100,
-        step: 0.1,
-        decimals: 2,
-        boostat: 5,
-        maxboostedstep: 10,
-        buttondown_class: "btn btn-primary",
-        buttonup_class: "btn btn-primary",
-        postfix: '%'
-      });
-      $("input[name='demo2']").TouchSpin({
-        min: -1000000000,
-        max: 1000000000,
-        stepinterval: 50,
-        buttondown_class: "btn btn-primary",
-        buttonup_class: "btn btn-primary",
-        maxboostedstep: 10000000,
-        prefix: '$'
-      });
-      $("input[name='demo3']").TouchSpin({
-        buttondown_class: "btn btn-primary",
-        buttonup_class: "btn btn-primary"
-      });
-      $("input[name='demo3_21']").TouchSpin({
-        initval: 40,
-        buttondown_class: "btn btn-primary",
-        buttonup_class: "btn btn-primary"
-      });
-      $("input[name='demo3_22']").TouchSpin({
-        initval: 40,
-        buttondown_class: "btn btn-primary",
-        buttonup_class: "btn btn-primary"
-      });
-      $("input[name='demo5']").TouchSpin({
-        prefix: "pre",
-        postfix: "post",
-        buttondown_class: "btn btn-primary",
-        buttonup_class: "btn btn-primary"
-      });
-      $("input[name='demo0']").TouchSpin({
-        buttondown_class: "btn btn-primary",
-        buttonup_class: "btn btn-primary"
-      });
-      // Time Picker
-      jQuery('#timepicker').timepicker({
-        defaultTIme : false
-      });
-      jQuery('#timepicker2').timepicker({
-        showMeridian : false
-      });
-      jQuery('#timepicker3').timepicker({
-        minuteStep : 15
-      });
-
-
-        //colorpicker start
-        $('.colorpicker-default').colorpicker({
-            format: 'hex'
-        });
-        $('.colorpicker-rgba').colorpicker();
-
-        // Date Picker
-        jQuery('#datepicker').datepicker();
-        jQuery('#datepicker-autoclose').datepicker({
-            autoclose: true,
-            todayHighlight: true
-        });
-        jQuery('#datepicker-inline').datepicker();
-        jQuery('#datepicker-multiple-date').datepicker({
-            format: "mm/dd/yyyy",
-            clearBtn: true,
-            multidate: true,
-            multidateSeparator: ","
-        });
-        jQuery('#date-range').datepicker({
-            toggleActive: true
-        });
-        //Date range picker
-        $('.input-daterange-datepicker').daterangepicker({
-            buttonClasses: ['btn', 'btn-sm'],
-            applyClass: 'btn-default',
-            cancelClass: 'btn-primary'
-        });
-        $('.input-daterange-timepicker').daterangepicker({
-            timePicker: true,
-            format: 'MM/DD/YYYY h:mm A',
-            timePickerIncrement: 30,
-            timePicker12Hour: true,
-            timePickerSeconds: false,
-            buttonClasses: ['btn', 'btn-sm'],
-            applyClass: 'btn-default',
-            cancelClass: 'btn-primary'
-        });
-        $('.input-limit-datepicker').daterangepicker({
-            format: 'MM/DD/YYYY',
-            minDate: '06/01/2016',
-            maxDate: '06/30/2016',
-            buttonClasses: ['btn', 'btn-sm'],
-            applyClass: 'btn-default',
-            cancelClass: 'btn-primary',
-            dateLimit: {
-            days: 6
-            }
-        });
-        $('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
-        $('#reportrange').daterangepicker({
-            format: 'MM/DD/YYYY',
-            startDate: moment().subtract(29, 'days'),
-            endDate: moment(),
-            minDate: '01/01/2016',
-            maxDate: '12/31/2016',
-            dateLimit: {
-            days: 60
-        },
-            showDropdowns: true,
-            showWeekNumbers: true,
-            timePicker: false,
-            timePickerIncrement: 1,
-            timePicker12Hour: true,
-            ranges: {
-            'Today': [moment(), moment()],
-            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-            'This Month': [moment().startOf('month'), moment().endOf('month')],
-            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-            },
-            opens: 'left',
-            drops: 'down',
-            buttonClasses: ['btn', 'btn-sm'],
-            applyClass: 'btn-success',
-            cancelClass: 'btn-default',
-            separator: ' to ',
-            locale: {
-            applyLabel: 'Submit',
-            cancelLabel: 'Cancel',
-            fromLabel: 'From',
-            toLabel: 'To',
-            customRangeLabel: 'Custom',
-            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-            monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-            firstDay: 1
-            }
-        }, function (start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
-            $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-        });
-script.
-    jQuery(document).ready(function(){
-        $('.summernote').summernote({
-            height: 250,                 // set editor height
-            minHeight: null,             // set minimum height of editor
-            maxHeight: null,             // set maximum height of editor
-            focus: false                 // set focus to editable area after initializing summernote
-        });
-        $('.inline-editor').summernote({
-            airMode: true
-        });
-    });
-
-
 block content
-      // ==============================================================
-      // Start right Content here
-      // ==============================================================
-      .content-page
-        // Start content
+    .content-page
         .content
-          .container
-            // Page-Title
-            .row
-              .col-sm-12
-                .page-title-box
-                  ol.breadcrumb.pull-right
-                    li
-                      a(href='#') Home
-                    li
-                      a(href='#') SD 검색/통계
-                    li.active 상위별 하위업무통계
-                  h4.page-title 상위별 하위업무통계
-            // start Search Area
-            .row
-              .col-lg-12
-                .card-box
-                  form.form-horizontal.group-border-dashed(action='#')
-                    .form-group
-                       작업중입니다.......
+            .container
+                .row
+                    .col-sm-12
+                        .page-title-box
+                            ol.breadcrumb.pull-right
+                                li
+                                    a(href='#') Home
+                                li
+                                    a(href='#') SD 통계
+                                li.active 상위별 하위업무통계
+                            h4.page-title 상위별 하위업무통계
+                .row
+                    .col-lg-12
+                        .card-box.m-t-10
+                            form.form-horizontal.group-border-dashed(action='#')
+                                .form-group
+                                    label.col-sm-2.control-label 검색년도
+                                    .col-sm-2
+                                        select.form-control
+                                            option 2012
+                                            option 2013
+                                            option 2014
+                                            option 2015
+                                            option 2016
+                                            option(selected='') 2017
+                                            option 2018
+                                            option 2019
+                                            option 2020
+                                            option 2021
+                                    .col-sm-2
+                                        select.form-control
+                                            option 전체
+                                            option 1월
+                                            option 2월
+                                            option 3월
+                                            option 4월
+                                            option 5월
+                                            option 6월
+                                            option 7월
+                                            option 8월
+                                            option 9월
+                                            option 10월
+                                            option 11월
+                                            option 12월
+                                    label.col-sm-2.control-label 상위업무
+                                    .col-sm-2
+                                        select.form-control
+                                            option 전체
+                                            option 항목1
+                                            option 항목2
+                                            option 항목3
+                                            option 항목4
+                                            option 항목5
+                                    .col-sm-2
+                                        button.btn.btn-primary(type='button')
+                                            i.fa.fa-search.m-r-5
+                                            | 조회
+                .row
+                    .col-lg-12
+                        .card-box
+                            table.table.table-bordered
+                                thead
+                                    tr
+                                        th.font-12(width='') 회사명
+                                        th.font-12(width='17%') 상위업무명
+                                        th.font-12(width='10%') 총요청건수
+                                        th.font-12(width='10%') 처리중건수
+                                        th.font-12(width='10%') 해결건수
+                                        th.font-12(width='10%') 미해결건수
+                                        th.font-12(width='10%') 해결률(%)
+                                        th.font-12(width='10%') 평점
+                                tbody
+                                    tr
+                                        th.valign-middle(scope='row', rowspan='2') (주)서영엔지니어링
+                                        td OPTI-HR
+                                        td 83
+                                        td 4
+                                        td 79
+                                        td 0
+                                        td 95.2
+                                        td 4.7
+                                    tr.bg-muted
+                                        td 소개
+                                        td 83(1.3)
+                                        td 4
+                                        td 79
+                                        td 0
+                                        td 95.2
+                                        td 4.7
+                                    tr
+                                        th.valign-middle(scope='row', rowspan='2') (주)서흥
+                                        td SAP ERP
+                                        td 97
+                                        td 1
+                                        td 96
+                                        td 0
+                                        td 99
+                                        td 5.0
+                                    tr.bg-muted
+                                        td 소개
+                                        td 97(1.6)
+                                        td 1
+                                        td 96
+                                        td 0
+                                        td 99
+                                        td 5.0
+                                    tr
+                                        th.valign-middle(scope='row', rowspan='7') (주)이수
+                                        td OPTI-HR
+                                        td 37
+                                        td 2
+                                        td 35
+                                        td 0
+                                        td 94.6
+                                        td 5.0
+                                    tr
+                                        td 그룹웨어
+                                        td 28
+                                        td 2
+                                        td 28
+                                        td 0
+                                        td 100
+                                        td 5.0
+                                    tr
+                                        td PC 및 주변기기 장애
+                                        td 14
+                                        td 0
+                                        td 14
+                                        td 0
+                                        td 100
+                                        td 0.0
+                                    tr
+                                        td 홈페이지
+                                        td 10
+                                        td 0
+                                        td 10
+                                        td 0
+                                        td 100
+                                        td 0.0
+                                    tr
+                                        td 계정관리
+                                        td 8
+                                        td 0
+                                        td 8
+                                        td 0
+                                        td 100
+                                        td 5.0
+                                    tr
+                                        td 네트워크
+                                        td 1
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 5.0
+                                    tr.bg-muted
+                                        td 소개
+                                        td 98(1.6)
+                                        td 2
+                                        td 96
+                                        td 0
+                                        td 98
+                                        td 5.0
+                                    tr
+                                        th.valign-middle(scope='row', rowspan='7') (주)이수엑사보드
+                                        td OPTI-HR
+                                        td 37
+                                        td 2
+                                        td 35
+                                        td 0
+                                        td 94.6
+                                        td 5.0
+                                    tr
+                                        td 그룹웨어
+                                        td 28
+                                        td 2
+                                        td 28
+                                        td 0
+                                        td 100
+                                        td 5.0
+                                    tr
+                                        td PC 및 주변기기 장애
+                                        td 14
+                                        td 0
+                                        td 14
+                                        td 0
+                                        td 100
+                                        td 0.0
+                                    tr
+                                        td 홈페이지
+                                        td 10
+                                        td 0
+                                        td 10
+                                        td 0
+                                        td 100
+                                        td 0.0
+                                    tr
+                                        td 계정관리
+                                        td 8
+                                        td 0
+                                        td 8
+                                        td 0
+                                        td 100
+                                        td 5.0
+                                    tr
+                                        td 네트워크
+                                        td 1
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 5.0
+                                    tr.bg-muted
+                                        td 소개
+                                        td 98(1.6)
+                                        td 2
+                                        td 96
+                                        td 0
+                                        td 98
+                                        td 5.0
+                                    tr
+                                        th.valign-middle(scope='row', rowspan='7') (주)이수페타시스
+                                        td OPTI-HR
+                                        td 37
+                                        td 2
+                                        td 35
+                                        td 0
+                                        td 94.6
+                                        td 5.0
+                                    tr
+                                        td 그룹웨어
+                                        td 28
+                                        td 2
+                                        td 28
+                                        td 0
+                                        td 100
+                                        td 5.0
+                                    tr
+                                        td PC 및 주변기기 장애
+                                        td 14
+                                        td 0
+                                        td 14
+                                        td 0
+                                        td 100
+                                        td 0.0
+                                    tr
+                                        td 홈페이지
+                                        td 10
+                                        td 0
+                                        td 10
+                                        td 0
+                                        td 100
+                                        td 0.0
+                                    tr
+                                        td 계정관리
+                                        td 8
+                                        td 0
+                                        td 8
+                                        td 0
+                                        td 100
+                                        td 5.0
+                                    tr
+                                        td 네트워크
+                                        td 1
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 5.0
+                                    tr.bg-muted
+                                        td 소개
+                                        td 98(1.6)
+                                        td 2
+                                        td 96
+                                        td 0
+                                        td 98
+                                        td 5.0
+                                    tr
+                                        th.valign-middle(scope='row', rowspan='2') GS 홈쇼핑
+                                        td OPTI-HR
+                                        td 1
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 0.0
+                                    tr.bg-muted
+                                        td 소개
+                                        td 1(0.0)
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 0.0
+                                    tr
+                                        th.valign-middle(scope='row', rowspan='2') IBK연금보험
+                                        td OPTI-HR
+                                        td 1
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 0.0
+                                    tr.bg-muted
+                                        td 소개
+                                        td 1(0.0)
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 0.0
+                                    tr
+                                        th.valign-middle(scope='row', rowspan='2') IBK투자증권
+                                        td OPTI-HR
+                                        td 1
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 0.0
+                                    tr.bg-muted
+                                        td 소개
+                                        td 1(0.0)
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 0.0
+                                    tr
+                                        th.valign-middle(scope='row', rowspan='2') IDS TRUST
+                                        td OPTI-HR
+                                        td 1
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 0.0
+                                    tr.bg-muted
+                                        td 소개
+                                        td 1(0.0)
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 0.0
+                                    tr
+                                        th.valign-middle(scope='row', rowspan='2') SK인천석유화학
+                                        td AFP솔루션
+                                        td 2
+                                        td 0
+                                        td 2
+                                        td 0
+                                        td 100
+                                        td 0.0
+                                    tr.bg-muted
+                                        td 소개
+                                        td 2(0.0)
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 0.0
+                                    tr
+                                        th.valign-middle(scope='row', rowspan='2') STLC
+                                        td OPTI-HR
+                                        td 59
+                                        td 0
+                                        td 59
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr.bg-muted
+                                        td 소개
+                                        td 59(0.9)
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr
+                                        th.valign-middle(scope='row', rowspan='2') 경창산업
+                                        td OPTI-HR
+                                        td 59
+                                        td 0
+                                        td 59
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr.bg-muted
+                                        td 소개
+                                        td 59(0.9)
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr
+                                        th.valign-middle(scope='row', rowspan='2') 고영테크놀러지
+                                        td OPTI-HR
+                                        td 59
+                                        td 0
+                                        td 59
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr.bg-muted
+                                        td 소개
+                                        td 59(0.9)
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr
+                                        th.valign-middle(scope='row', rowspan='2') 교보문고
+                                        td OPTI-HR
+                                        td 59
+                                        td 0
+                                        td 59
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr.bg-muted
+                                        td 소개
+                                        td 59(0.9)
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr
+                                        th.valign-middle(scope='row', rowspan='2') 교촌에프엔비
+                                        td OPTI-HR
+                                        td 59
+                                        td 0
+                                        td 59
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr.bg-muted
+                                        td 소개
+                                        td 59(0.9)
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr
+                                        th.valign-middle(scope='row', rowspan='2') 도루코본사
+                                        td OPTI-HR
+                                        td 59
+                                        td 0
+                                        td 59
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr.bg-muted
+                                        td 소개
+                                        td 59(0.9)
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr
+                                        th.valign-middle(scope='row', rowspan='2') 동성그룹
+                                        td OPTI-HR
+                                        td 59
+                                        td 0
+                                        td 59
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr.bg-muted
+                                        td 소개
+                                        td 59(0.9)
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr
+                                        th.valign-middle(scope='row', rowspan='2') 바르질라현대엔진유한회사
+                                        td OPTI-HR
+                                        td 59
+                                        td 0
+                                        td 59
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr.bg-muted
+                                        td 소개
+                                        td 59(0.9)
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr
+                                        th.valign-middle(scope='row', rowspan='2') 바텍그룹
+                                        td OPTI-HR
+                                        td 59
+                                        td 0
+                                        td 59
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr.bg-muted
+                                        td 소개
+                                        td 59(0.9)
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr
+                                        th.valign-middle(scope='row', rowspan='2') 서흥/젤택
+                                        td OPTI-HR
+                                        td 59
+                                        td 0
+                                        td 59
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr.bg-muted
+                                        td 소개
+                                        td 59(0.9)
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr
+                                        th.valign-middle(scope='row', rowspan='2') 성창기업
+                                        td OPTI-HR
+                                        td 59
+                                        td 0
+                                        td 59
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr.bg-muted
+                                        td 소개
+                                        td 59(0.9)
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr
+                                        th.valign-middle(scope='row', rowspan='2') 아주그룹
+                                        td OPTI-HR
+                                        td 59
+                                        td 0
+                                        td 59
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr.bg-muted
+                                        td 소개
+                                        td 59(0.9)
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 4.0
+                                    tr
+                                        th.valign-middle(scope='row', rowspan='6') 에쓰-오일 토탈 윤활유 주식회사
+                                        td 그룹웨어
+                                        td 28
+                                        td 2
+                                        td 28
+                                        td 0
+                                        td 100
+                                        td 5.0
+                                    tr
+                                        td PC 및 주변기기 장애
+                                        td 14
+                                        td 0
+                                        td 14
+                                        td 0
+                                        td 100
+                                        td 0.0
+                                    tr
+                                        td 홈페이지
+                                        td 10
+                                        td 0
+                                        td 10
+                                        td 0
+                                        td 100
+                                        td 0.0
+                                    tr
+                                        td 계정관리
+                                        td 8
+                                        td 0
+                                        td 8
+                                        td 0
+                                        td 100
+                                        td 5.0
+                                    tr
+                                        td 네트워크
+                                        td 1
+                                        td 0
+                                        td 1
+                                        td 0
+                                        td 100
+                                        td 5.0
+                                    tr.bg-muted
+                                        td 소개
+                                        td 98(1.6)
+                                        td 2
+                                        td 96
+                                        td 0
+                                        td 98
+                                        td 5.0
+                                    tr.bg-primary10.border-top
+                                        td.text-center.text-primary(colspan='2')
+                                            b 합 계
+                                        td.text-primary
+                                            b 6528
+                                        td.text-primary
+                                            b 133
+                                        td.text-primary
+                                            b 6121
+                                        td.text-primary
+                                            b 3
+                                        td.text-primary
+                                            b 97.8
+                                        td.text-primary
+                                            b 4.4
+
+block footer

@@ -125,20 +125,30 @@ block content
             .row
               .col-lg-12
                 .form-group
-                  button.btn.btn-warning.waves-effect.waves-light.m-l-5(id='btnExport' onclick="fnTableToExcel(document.getElementById('dvData'));") 
+                  //button.btn.btn-warning.waves-effect.waves-light.m-l-5(id='btnExport' onclick="fnTableToExcel(document.getElementById('dvData'));") 
                     i.fa.fa-download
-                    |  엑셀다운로드            
+                    |  엑셀다운로드  
+
+                  button.btn.btn-primary.waves-effect.waves-light.m-l-5(id='btnExport' onclick="fnTableToExcel(document.getElementById('dvData'));") 
+                    i.fa.fa-download
+                    |  현재페이지 다운로드
+                  button.btn.btn-success.waves-effect.waves-light.m-l-5(onclick="getJsonData();") 
+                    i.fa.fa-arrow-circle-o-down
+                    |  전체 다운로드        
             .row
               .col-lg-12
                   .card-box
-                    table.table.table-bordered(id='dvData')
+                    //table.table.table-bordered(id='dvData')
+                    table.table.table-hover(id='dvData')
                       thead
                         tr
-                          th(class='text-center' width='16%') 상위업무명
-                          th(class='text-center' width='16%') 하위업무명
+                          th(class='text-center' width='23%') 업무구분
                           th(class='text-center') 제목
-                          th(class='text-center' width='15%') 등록일
-                          th(class='text-center' width='15%') 담당자
+                          th(class='text-center' width='8%') 요청자
+                          th(class='text-center' width='13%') 등록일
+                          th(class='text-center' width='10%') 진행상태
+                          //th(class='text-center' width='8%') 담당자
+                          //th(class='text-center' width='14%') 접수(완료일)
                       tbody(id='more_list')
                       iframe#txtArea1(style='display:none')
                   .row

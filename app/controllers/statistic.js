@@ -18,7 +18,7 @@ module.exports = {
                     err: err
                 });
             }
-            res.render("search/comhigherstatistic", {
+            res.render("statistic/com_higher", {
                 incident: incident
             });
         });
@@ -36,7 +36,7 @@ module.exports = {
                     err: err
                 });
             }
-            res.render("search/highlowerstatistic", {
+            res.render("statistic/high_lower", {
                 incident: incident
             });
         });
@@ -54,7 +54,7 @@ module.exports = {
                     err: err
                 });
             }
-            res.render("search/managermonthlist", {
+            res.render("statistic/mng_month", {
                 incident: incident
             });
         });

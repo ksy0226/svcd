@@ -172,21 +172,54 @@ function setDataList(dataObj, selectedPage) {
         }else{
             register_dateVal = ""; 
         }
+        
 
         var idValue = dataObj[i-1]._id ;
         var addList = "";
         addList += "							<tr onclick=window.location='/search/mng_detail/" + dataObj[i-1]._id + "'>";
-        addList += "								<td>" + dataObj[i-1].higher_nm + "</td>";
-        addList += "								<td>" + dataObj[i-1].lower_nm + "</td>";
+        addList += "								<td>" + dataObj[i-1].higher_nm + " / " + dataObj[i-1].lower_nm + "</td>";
         addList += "								<td>" + dataObj[i-1].title + "</td>";
-        addList += "								<td>" + register_dateVal + "</td>";
-        addList += "								<td>" + dataObj[i-1].manager_nm + "</td>";
+        addList += "								<td class='text-center'>" + dataObj[i-1].request_nm + "</td>";
+        addList += "								<td class='text-center'>" + register_dateVal + "</td>";
+        addList += "								<td class='text-center'>" + dataObj[i-1].status_nm + "</td>";
+        //addList += "								<td>" + dataObj[i-1].manager_nm + "</td>";
+        //addList += "								<td>" + dataObj[i-1].receipt_date + "</td>";
         addList += "							</tr>";
 
         $("#more_list").append(addList);
 
         startIdx++;
     }
+
+    $('#more_list > tr').each(function(){
+        
+        /**
+         * 긴급구분
+         */
+        /*
+        if($(this).find('td:eq(0)').html() == "1"){
+            $(this).find('td:eq(0)').html('');
+        }if($(this).find('td:eq(0)').html() == "2"){
+            $(this).find('td:eq(0)').html('<span class="label label-warning">✔</span>');
+        }
+        */
+
+        /**
+         * 진행상태
+         */
+        if($(this).find('td:eq(4)').html() == "접수"){
+            $(this).find('td:eq(4)').html('<span class="label label-inverse">접수중</span>');
+        }if($(this).find('td:eq(4)').html() == "처리중"){
+            $(this).find('td:eq(4)').html('<span class="label label-primary">처리중</span>');
+        }if($(this).find('td:eq(4)').html() == "미평가"){
+            $(this).find('td:eq(4)').html('<span class="label label-success">미평가</span>');
+        }if($(this).find('td:eq(4)').html() == "완료"){
+            $(this).find('td:eq(4)').html('<span class="font-12 text-purple">완료</span>');
+        }if($(this).find('td:eq(4)').html() == "보류"){
+            $(this).find('td:eq(4)').html('<span class="label label-info">보류</span>');
+        }
+
+    })
 }
 
 
