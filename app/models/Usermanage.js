@@ -12,7 +12,6 @@ var usermanageSchema = mongoose.Schema({
     dept_nm          : { type : String },
     jikchk_nm        : { type : String },
     position_nm      : { type : String },
-    user_flag        : { type : String },
     del_flag         : { type : String },
     del_reson        : { type : String },
     birth_dt         : { type : String },

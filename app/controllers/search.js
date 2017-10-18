@@ -282,17 +282,25 @@ module.exports = {
      * 연도별 미처리 리스트
      */
     remain_list : (req, res, next) => {
-        IncidentModel.find(req.body.incident, function(err, incident) {
-            //logger.debug('err', err, '\n');
-            logger.debug('list 호출');
+        async.waterfall([function (callback) {
+            HigherProcessModel.find({},function (err, higherprocess) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null, higherprocess)
+            });
+        }], function (err, higherprocess) {
             if (err) {
                 res.render("http/500", {
                     err: err
                 });
+            }else{
+                res.render("search/remain_list", {
+                    higherprocess: higherprocess
+                });
             }
-            res.render("search/remain_list", {
-                incident: incident
-            });
         });
     },
 
