@@ -13,8 +13,8 @@ var pageCount = 10;      // 한 화면에 나타낼 페이지 수
 var totalPage = 0;
 
 
-
 $(document).ready(function () {
+
     $('#reg_date_from').datepicker({
         //showOn: "both",  
         autoclose: true,

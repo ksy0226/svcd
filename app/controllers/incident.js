@@ -223,24 +223,27 @@ module.exports = {
     getIncident: (req, res, next) => {
 
         var search = service.createSearch(req);
+        console.log("search"+search);
+        
         async.waterfall([function (callback) {
             //if (search.findIncident) return callback(null, []);
             Incident.find(search.findIncident, function (err, incident) {
-
                 if (err) {
-                    res.render("http/500", {
-                        err: err
+                    return res.json({
+                        success: false,
+                        message: err
                     });
                 }
                 callback(null, incident)
-            }).sort('-createAt');
+            }).sort('-created_at');
         }], function (err, incident) {
             if (err) {
-                res.render("http/500", {
-                    err: err
+                return res.json({
+                    success: false,
+                    message: err
                 });
             }
-            res.send(incident);
+            res.json(incident);
         });
     },
 
