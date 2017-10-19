@@ -1,6 +1,6 @@
 extends ../layouts/default
 block head
-    //script(type='text/javascript').
+    script(type='text/javascript').
         var higherObj = !{JSON.stringify(higher).replace(/<\//g, '<\\/')};
     script(src='/isu/js/processGubun/new.js')
 
@@ -17,8 +17,8 @@ block content
                                     a(href='#') Home
                                 li
                                     a(href='#') SD 기본정보
-                                li.active 하위업무입력
-                            h4.page-title 하위업무입력
+                                li.active 처리구분 처리조회
+                            h4.page-title 처리구분 처리조회
                 .row
                     .col-sm-12
                         .card-box
@@ -36,7 +36,7 @@ block content
                                             button.btn.btn-info(type='submit')
                                                 i.fa.fa-send-o
                                                 |  저장
-                                    .form-group(style='display:none')
+                                    .form-group
                                         label.col-sm-3.control-label 상위업무코드
                                         .col-sm-3
                                             input.form-control(id='higher_nm', name='processGubun[higher_nm]', type='text', placeholder='')
@@ -51,40 +51,28 @@ block content
                                                     - }
                                                 - }
                                     .form-group
-                                        label.col-sm-3.control-label 하위업무코드
+                                        label.col-sm-3.control-label 처리구분코드
                                         .col-sm-3
-                                            input.form-control(name='processGubun[lower_cd]', type='text', placeholder='')
+                                            input.form-control(name='processGubun[process_cd]', type='text', placeholder='')
                                     .form-group
-                                        label.col-sm-3.control-label 하위업무명
+                                        label.col-sm-3.control-label 처리구분명
                                         .col-sm-3
-                                            input.form-control(name='processGubun[lower_nm]', type='text', placeholder='')
+                                            input.form-control(name='processGubun[process_nm]', type='text', placeholder='')
                                     .form-group
                                         label.col-sm-3.control-label 설명
                                         .col-sm-9
                                             input.form-control(name='processGubun[description]', type='text', placeholder='')
                                     .form-group
-                                        label.col-sm-3.control-label 소요시간
-                                        .col-sm-9
-                                            input.form-control(name='processGubun[need_hour]', type='text', placeholder='')
-                                    .form-group(style='display:none')
-                                        label.col-sm-3.control-label 회사코드
-                                        .col-sm-3
-                                            input.form-control(id='company_cd', name='processGubun[company_cd]', type='text', placeholder='')
-                                    .form-group(style='display:none')
-                                        label.col-sm-3.control-label 회사코명
-                                        .col-sm-3
-                                            input.form-control(id='company_nm', name='processGubun[company_nm]', type='text', placeholder='')
-                                    .form-group(style='display:none')
                                         label.col-sm-3.control-label 사번
                                         .col-sm-3
                                             input.form-control(name='processGubun[sabun]', type='text', placeholder='')
-                                    .form-group(style='display:none')
+                                    .form-group
                                         label.col-sm-3.control-label 등록자
                                         .col-sm-3
                                             input.form-control(name='processGubun[user_nm]', type='text', placeholder='')
                                     .form-group
                                         label.col-sm-3.control-label 사용여부
                                         .col-sm-3
-                                            select.form-control.input-sm(name='processGubun[user_flag]')
+                                            select.form-control.input-sm(name='processGubun[use_yn]')
                                                 option(value='사용' Selected) 사용 
                                                 option(value='미사용') 미사용
