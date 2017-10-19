@@ -23,8 +23,6 @@ html
             script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
             script(src='https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js')
         
-        script(type='text/javascript').
-            var companyObj = !{JSON.stringify(company).replace(/<\//g, '<\\/')};
         script(src='/isu/js/index.js')
         
     body
@@ -136,20 +134,10 @@ html
                         .col-sm-12
                             .card-box.m-r-5
                                 form#usermanageNew_form.form-horizontal.group-border-dashed(role='form', method='post')
-                                    .form-group(style='display:none')
-                                        label.col-sm-3.control-label 회사코드
-                                        .col-sm-8
-                                            input.form-control(id='company_nm' name='usermanage[company_nm]' type='text' required value='' readonly)
                                     .form-group
                                         label.col-sm-3.control-label 회사명
                                         .col-sm-8
-                                            select.form-control(id='company_cd' name='usermanage[company_cd]' type='text' onchange='companyCd()')
-                                                option(value ='') 선택하세요
-                                                - if (company.length > 0) {
-                                                    - for( var i = 0 ; length = company.length > i ; i++ ){ //속도가 느리다고 알고 있음.
-                                                        option(value ='#{company[i].company_cd}') #{company[i].company_nm}
-                                                    - }
-                                                - }
+                                            input.form-control(id='userCompany_nm' name='usermanage[userCompany_nm]' type='text' required value='')
                                     .form-group
                                         label.col-sm-3.control-label Email (ID)
                                         .col-sm-8
@@ -178,20 +166,6 @@ html
                                         label.col-sm-3.control-label 연락처
                                         .col-sm-8
                                             input.form-control(id='hp_telno' name='usermanage[hp_telno]' type='text' placeholder='010-0000-0000' value='')
-                                    .form-group(style='display:none')
-                                        label.col-sm-3.control-label 회사주소1
-                                        .col-sm-3
-                                            input.form-control(id='dom_post_cd1' name='usermanage[dom_post_cd1]', type='text', value='')
-                                        .col-sm-5
-                                            input.form-control(id='dom_addr' name='usermanage[dom_addr]', type='text', value='')
-                                    .form-group(style='display:none')
-                                        label.col-sm-3.control-label 회사주소2
-                                        .col-sm-8
-                                            input.form-control(id='dom_addr2' name='usermanage[dom_addr2]', type='text', value='')
-                                    .form-group(style='display:none')
-                                        label.col-sm-3.control-label 회사전화번호
-                                        .col-sm-8
-                                            input.form-control(id='office_tel_no' name='usermanage[office_tel_no]' type='text' value='')
         // end login-box
         // Main
         script(src='assets/js/jquery.min.js')

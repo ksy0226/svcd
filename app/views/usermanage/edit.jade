@@ -42,18 +42,28 @@ block content
                                             .col-xs-12.col-sm-12.col-md-12
                                                 // Your awesome content goes here
                                                 .m-b-30
+                                                    .form-group
+                                                        label.col-sm-2.control-label 입력한 회사명
+                                                        .col-sm-9
+                                                            input.form-control(name='usermanage[userCompany_nm]' type='text' value='#{usermanage.userCompany_nm}' required)
                                                     .form-group(style='display:none')
                                                         label.col-sm-2.control-label 회사코드
                                                         .col-sm-9
-                                                            input.form-control(name='usermanage[company_cd]' type='text' required value='#{usermanage.company_cd}' disabled)
+                                                            input.form-control(id='company_nm' name='usermanage[company_nm]' type='text' value='#{usermanage.company_nm}' required)
                                                     .form-group
-                                                        label.col-sm-2.control-label 회사명
-                                                        .col-sm-9
-                                                            input.form-control(name='usermanage[company_nm]' type='text' required value='#{usermanage.company_nm}' disabled)
+                                                            label.col-sm-2.control-label 회사명
+                                                            .col-sm-9
+                                                                select.form-control(id='company_cd' name='usermanage[company_cd]' onchange='companyCd()' value='#{usermanage.company_cd}' required) 
+                                                                    option(value ='#{usermanage.company_cd}' selected) #{usermanage.company_nm}
+                                                                    - if (company.length > 0) {
+                                                                        - for( var i = 0 ; length = company.length > i ; i++ ){ //속도가 느리다고 알고 있음.
+                                                                            option(value ='#{company[i].company_cd}') #{company[i].company_nm}
+                                                                        - }
+                                                                    - }
                                                     .form-group
                                                         label.col-sm-2.control-label email
                                                         .col-sm-9
-                                                            input.form-control(name='usermanage[email]' type='text' value='#{usermanage.email}' disabled)
+                                                            input.form-control(name='usermanage[email]' type='text' value='#{usermanage.email}')
                                                     .form-group
                                                         label.col-sm-2.control-label 비밀번호
                                                         .col-sm-9
@@ -109,3 +119,9 @@ block content
                                                             select.form-control(id='group_flag' name='usermanage[group_flag]' type='text' value='#{usermanage.group_flag}')
                                                                 option(value='out') 외부사용자 
                                                                 option(value='in') 내부사용자
+                                                    .form-group
+                                                        label.col-sm-2.control-label 승인여부
+                                                        .col-sm-9
+                                                            select.form-control(id='access_yn' name='usermanage[access_yn]' type='text' value='#{usermanage.access_yn}')
+                                                                option(value='Y') 승인 
+                                                                option(value='N') 미승인

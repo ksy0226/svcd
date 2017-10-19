@@ -104,18 +104,29 @@ module.exports = {
     },
 
     edit: (req, res, next) => {
-        Usermanage.findById(req.params.id, function (err, usermanage) {
-            if (err) {
-                return res.json({
-                    success: false,
-                    message: err
-                });
-            } else {
-                res.render("usermanage/edit", {
-                    usermanage: usermanage,
-                    user: req.user
-                });
-            }
+        async.waterfall([function (callback) {
+            CompanyModel.find({}, function (err, company) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null, company)
+            });
+        }], function (err, company) {
+            Usermanage.findById(req.params.id, function (err, usermanage) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                } else {
+                    res.render("usermanage/edit", {
+                        usermanage: usermanage,
+                        user: req.user,
+                        company: company
+                    });
+                }
+            });
         });
     },
 
@@ -132,7 +143,7 @@ module.exports = {
                 success: false,
                 message: "No data found to update"
             });
-            res.redirect('/usermanage/' + req.params.id + '/edit');
+            res.redirect('/usermanage/');
         });
     },
 
@@ -187,7 +198,7 @@ module.exports = {
         */
     },
     /*
-
+ 
     exceldownload: (req, res, next) => {
         console.log(1);
         CompanyModel.find(req.body.company, function(err, companyJsonData) {
@@ -206,7 +217,7 @@ module.exports = {
     }*/
 
     userInfo: (req, res, next) => {
-        Usermanage.find({employee_nm: { $regex : new RegExp(req.query.request_info, "i") }}, function (err, usermanageData) {
+        Usermanage.find({ employee_nm: { $regex: new RegExp(req.query.request_info, "i") } }, function (err, usermanageData) {
             if (err) return res.json({
                 success: false,
                 message: err
