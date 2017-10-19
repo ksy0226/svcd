@@ -15,33 +15,7 @@ module.exports = {
      * Validation action
      */
     index: (req, res) => {
-        async.waterfall([function (callback) {
-            CompanyModel.find({}, function (err, company) {
-                if (err) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                }
-                callback(null, company)
-            });
-        }], function (err, company) {
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            } else {
-                if (req.session.email) {
-                    res.render("main/main", {
-                        user_flag: req.session.user_flag,
-                        group_flag: req.session.group_flag,
-                    });
-                } else {
-                    res.render("index", {
-                        company: company
-                    });
-                }
-            }
-        });
+        res.render("main/main");
     },
 
     logincheck: (req, res) => {

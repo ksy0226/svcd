@@ -7,7 +7,7 @@ var ssc = require('../util/session');
 const controller = require('../controllers/login');
 
 /* GET home page. */
-router.get('/', ssc.sessionCheck);
+router.get('/', ssc.sessionCheck, controller.index);
 
 router.route('/index').post(controller.logincheck)
                       .get(ssc.sessionCheck, controller.retry);
