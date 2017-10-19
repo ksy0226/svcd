@@ -2,7 +2,7 @@ extends ../layouts/default
 
 block head
     script(src='/vendor/jquery/jquery.min.js')
-    
+
 block content
     .content-page
         .content
@@ -15,8 +15,8 @@ block content
                                     a(href='#') Home
                                 li
                                     a(href='#') SD 기본정보
-                                li.active 하위업무조회
-                            h4.page-title 하위업무조회
+                                li.active 처리구분 처리조회
+                            h4.page-title 처리구분 처리조회
                 .row
                     .col-sm-12
                         .card-box
@@ -28,10 +28,9 @@ block content
                             table.table.table-hover(id='dvData' data-tablesaw-mode='swipe')
                                 thead
                                     tr
-                                        th(width='15%') 상위업무명
-                                        th(width='15%') 하위업무명
-                                        th(width='30%') 설명
-                                        th(width='10%') 소요시간
+                                        th(width='20%') 상위업무명
+                                        th(width='30%') 처리구분명
+                                        th(width='20%') 설명
                                         th(width='10%') 등록자
                                         th(width='10%') 등록일
                                         th(width='10%') 사용여부
@@ -40,13 +39,12 @@ block content
                                         // - for( var i = 0 ; length = question.length > i ; i++ ){ //속도가 빠르다고 알고 있음.
                                         - for( var i in processGubun ){ //속도가 느리다고 알고 있음.
                                             tr(onclick="onclick=location.href='/processGubun/edit/#{processGubun[i]._id}'")
-                                                td #{processGubun[i].higher_nm}
-                                                td #{processGubun[i].lower_nm}
-                                                td.highlight(data-highlight='search.highlight.title') #{processGubun[i].description}
-                                                td #{processGubun[i].need_hour}
+                                                td #{processGubun[i].higher_cd}
+                                                td #{processGubun[i].process_nm}
+                                                td #{processGubun[i].description}
                                                 td #{processGubun[i].user_nm}
                                                 td #{processGubun[i].created_at}
-                                                td #{processGubun[i].user_flag}
+                                                td #{processGubun[i].use_yn}
                                         - }
                                     - }else{
                                         tr

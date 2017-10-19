@@ -1,5 +1,5 @@
 'use strict';
 
 $(document).ready(function() { 
-    $('#user_flag').val(processGubunObj.user_flag);
+    $('#use_yn').val(processGubunObj.use_yn);
 });
