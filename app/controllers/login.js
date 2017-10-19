@@ -53,12 +53,16 @@ module.exports = {
                 if (usermanage.authenticate(req.body.password) && usermanage.access_yn == 'Y') {
                     req.session.save(function () {
                         req.session.email = usermanage.email;
+                        req.session.user_id = usermanage.user_id;
                         req.session.password = usermanage.password;
                         req.session.user_flag = usermanage.user_flag;
                         req.session.group_flag = usermanage.group_flag;
                         req.session.user_nm = usermanage.employee_nm;
                         req.session.company_cd = usermanage.company_cd;
-                        req.session.sabun = usermanage.sabun;
+                        req.session.company_nm = usermanage.company_nm;
+                        req.session.dept_nm = usermanage.dept_nm;
+                        req.session.position_nm = usermanage.position_nm;
+                        req.session.jikchk_nm = usermanage.jikchk_nm;
                         req.session.office_tel_no = usermanage.office_tel_no;
                         req.session.hp_telno = usermanage.hp_telno;
                         
