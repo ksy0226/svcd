@@ -64,11 +64,12 @@ module.exports = {
         }
         logger.debug("password : ", bcrypt.hashSync('1'));
 
-        Usermanage.findOne({ //계정이 존재하면
-            email: req.body.email
-        }).exec(function (err, usermanage) {
+        Usermanage.findOne(
+            { email: req.body.email }
+        ).exec(function (err, usermanage) {
             if (err) callback(err);
-            if (usermanage.authenticate(req.body.password)) { //비밀번호가 일치하면
+            //if (usermanage.authenticate(req.body.password)) { //비밀번호가 일치하면
+            if (usermanage.authenticate(req.body.password) && usermanage.access_yn == 'Y') {
                 req.session.save(function () {
                     req.session.email = usermanage.email;
                     req.session.password = usermanage.password;
@@ -86,7 +87,6 @@ module.exports = {
                             user_nm: req.session.user_nm,
                             sabun: req.session.sabun
                         });
-
                 });
             } else { //계정이 존재하지 않으면
                 if (req.body.remember_me === "on") {
@@ -98,11 +98,22 @@ module.exports = {
                 }
 
                 if (email == null) email = "";
-                res.render('index', {
-                    email: email,
-                    remember_me: remember_me,
-                    message: "등록된 계정이 없습니다.<br>다시 시도하세요."
-                });
+
+                //승인여부에 따른 메세지 변경
+                if (usermanage.access_yn == 'N') {
+                    res.render('index', {
+                        email: email,
+                        remember_me: remember_me,
+                        message: "미승인 계정입니다.<br>관리팀에 권한을 요청하세요."
+                    });
+                } else {
+                    res.render('index', {
+                        email: email,
+                        remember_me: remember_me,
+                        message: "등록된 계정이 없습니다.<br>다시 시도해주세요."
+                    });
+                }
+                    
             }
         });
     },

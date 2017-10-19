@@ -3,8 +3,9 @@ var bcrypt   = require("bcrypt-nodejs");
 const logger = require('log4js').getLogger('app');
 
 var usermanageSchema = mongoose.Schema({
-    company_cd       : { type : String, required: true },
-    company_nm       : { type : String, required: true },    
+    company_cd       : { type : String },
+    company_nm       : { type : String },
+    userCompany_nm   : { type : String },
     email            : { type : String, required: true },
     user_id          : { type : String },
     password         : { type : String, required: true },
@@ -35,7 +36,8 @@ var usermanageSchema = mongoose.Schema({
     user_flag        : { type : String, default : 9 },
     group_flag       : { type : String, default : 'out' },
     created_at       : { type : Date, default: Date.now },
-    updated_at       : { type : Date }
+    updated_at       : { type : Date },
+    access_yn        : { type : String, default: 'N' } //승인여부
 });
 
 usermanageSchema.pre("save", hashPassword);
