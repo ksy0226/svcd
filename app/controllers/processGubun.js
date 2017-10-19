@@ -133,29 +133,10 @@ module.exports = {
      * 삭제 처리
      */
     delete: (req, res, next) => {
-        logger.debug("Trace delete", req.params.id);
-        var processGubun = {};
-        processGubun.user_flag = 'N';
         try {
-            ProcessGubunModel.findOneAndUpdate({
-                _id: req.params.id
-                //,author: req.user._id
-            }, processGubun, function (err, processGubun) {
-                if (err) return res.json({
-                    success: false,
-                    message: err
-                });
-                if (!processGubun) return res.json({
-                    success: false,
-                    message: "No data found to delete"
-                });
-                res.redirect('/processGubun/index');
-            });
-            /*
             ProcessGubunModel.findOneAndRemove({
                 _id: req.params.id
-                //,author: req.user._id
-            }, function(err, processGubun) {
+            }, function (err, processGubun) {
                 if (err) return res.json({
                     success: false,
                     message: err
@@ -164,10 +145,8 @@ module.exports = {
                     success: false,
                     message: "No data found to delete"
                 });
-                //res.render('index', {messages: req.flash('info')});
-                res.redirect('/processGubun/list');
+                res.redirect('/processGubun');
             });
-            */
         } catch (e) {
             logger.error(e);
             res.render("http/500", {
