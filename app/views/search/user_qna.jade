@@ -3,7 +3,7 @@ block head
     title  1-3 자주묻는질문과답
     // summernot
     link(href='/plugins/summernote/dist/summernote.css', rel='stylesheet')
-    
+
     link(href='/plugins/switchery/switchery.min.css', rel='stylesheet')
     link(href='/assets/css/bootstrap.min.css', rel='stylesheet', type='text/css')
     link(href='/assets/css/core.css', rel='stylesheet', type='text/css')
@@ -56,81 +56,121 @@ block head
 
 
 block content
-      // ==============================================================
-      // Start right Content here
-      // ==============================================================
-      .content-page
-        // Start content
+    .content-page
         .content
-          .container
-            // Page-Title
-            .row
-              .col-sm-12
-                .page-title-box
-                  ol.breadcrumb.pull-right
-                    li
-                      a(href='#') Home
-                    li
-                      a(href='#') 문의 및 담당자
-                    li.active 자주묻는질문과답
-                  h4.page-title 자주묻는질문과답
-            // start Search Area
-            .row
-              .col-lg-12
-                .card-box
-                  form.form-horizontal.group-border-dashed(action='#', onsubmit='return false;')
-                    .form-group
-                      label.col-sm-2.control-label 상위업무
-                      .col-sm-4
-                        select.form-control(id='higher_cd' name='higher_cd')
-                          option(value ='*') 전체
-                          - if (higherprocess.length > 0) {
-                            - for( var i = 0 ; length = higherprocess.length > i ; i++ ){ //속도가 느리다고 알고 있음.
-                              option(value ='#{higherprocess[i].higher_cd}') #{higherprocess[i].higher_nm}
-                            - }
-                          - }
-                    .form-group.m-b-0
-                      label.col-sm-2.control-label 검색어
-                      .col-sm-2
-                        select.form-control(id='searchType' name='searchType')
-                          option(value='title,content') 제목+내용
-                          option(value='title') 제목
-                          option(value='content') 내용
-                      .col-sm-6
-                        input.form-control(id='searchText' name='searchText' type='text' value=searchText)
-                      .col-sm-2
-                        button.btn.btn-primary(id='searchBtn' type='button') 조회
-                   
-            // end Search Area
-            // start Grid Area
-            .row
-              .col-lg-12
-                .card-box
-                  table.table.table-bordered
-                    thead
-                      tr
-                        th(class='text-center' width='20%') 상위업무명
-                        th(class='text-center') 제목
-                        th(class='text-center' width='15%') 등록일
-                        th(class='text-center' width='10%') 담당자
-                    tbody(id='more_list')
+            .container
                 .row
-                  .col-sm-4
-                    .dataTables_info Showing 1 to 15 of 57 entries
-                  .col-sm-8
-                    .dataTables_paginate.paging_simple_numbers.pull-right
-                      ul#paging.pagination
-                  
-                  
-                  
-                  // end pagination
-            // end Grid Area
-          // end container
-        // end content
-        footer.footer.text-right
-          | 2017 © ISU Group.
-      // ==============================================================
-      // End Right content here
-      // ==============================================================
-    // END wrapper    
-    
+                    .col-sm-12
+                        .page-title-box
+                            ol.breadcrumb.pull-right
+                                li
+                                    a(href='#') Home
+                                li
+                                    a(href='#') 문의 및 담당자
+                                li.active 자주묻는질문과답
+                            h4.page-title 자주묻는질문과답
+                .row
+                    .col-lg-12
+                        .card-box
+                            form.form-horizontal.group-border-dashed(action='#', onsubmit='return false;')
+                                .form-group
+                                    label.col-sm-2.control-label 상위업무
+                                    .col-sm-4
+                                        select.form-control(id='higher_cd' name='higher_cd')
+                                            option(value ='*') 전체
+                                            - if (higherprocess.length > 0) {
+                                                - for( var i = 0 ; length = higherprocess.length > i ; i++ ){ //속도가 느리다고 알고 있음.
+                                                    option(value ='#{higherprocess[i].higher_cd}') #{higherprocess[i].higher_nm}
+                                                - }
+                                            - }
+                                .form-group.m-b-0
+                                    label.col-sm-2.control-label 검색어
+                                    .col-sm-2
+                                        select.form-control(id='searchType' name='searchType')
+                                            option(value='title,content') 제목+내용
+                                            option(value='title') 제목
+                                            option(value='content') 내용
+                                    .col-sm-6
+                                        input.form-control(id='searchText' name='searchText' type='text' value=searchText)
+                                    .col-sm-2
+                                        button.btn.btn-primary(id='searchBtn' type='button') 조회
+                .row
+                    .col-lg-12
+                        .card-box
+                            table.table.table-bordered
+                                thead
+                                    tr
+                                        th(class='text-center' width='20%') 상위업무명
+                                        th(class='text-center') 제목
+                                        th(class='text-center' width='15%') 등록일
+                                        th(class='text-center' width='10%') 담당자
+                                tbody(id='more_list')
+                        .row
+                            .col-sm-4
+                                .dataTables_info Showing 1 to 15 of 
+                                    span(id='totalPage')
+                                    |  entries
+                            .col-sm-8
+                                .dataTables_paginate.paging_simple_numbers.pull-right
+                                    ul#paging.pagination
+
+
+
+    //상세모달
+    #wdetail_modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='custom-width-modalLabel', aria-hidden='true', style='display: none;')
+        .modal-dialog(style='width:60%;')
+            .modal-content
+                .modal-header
+                    button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                .modal-body
+                    .row
+                        .col-sm-12
+                            .page-title-box
+                                ol.breadcrumb.pull-right
+                                    li
+                                        a(href='/search/user_qna') HOME
+                                    li
+                                        a(href='/search/user_qna') SD 기본정보
+                                    li.active 자주묻는 질문과답
+                                h4.page-title 자주묻는 질문과답
+                        .row
+                            .col-lg-12
+                                .btn-toolbar.m-t-10(role='toolbar')
+                                    .pull-left                               
+                                        button.btn.btn-primary.waves-effect.waves-light.m-l-5(type='button', onClick="javascript:$('#wdetail_modal').modal('hide')")
+                                            i.fa.fa-bars
+                                            | 목록
+
+                        .row
+                            .col-sm-12.m-t-20
+                                .card-box
+                                    h4
+                                        b 
+                                    hr.m-0
+                                    table.table.table-bordered
+                                        colgroup
+                                            col(width='15%')
+                                            col(width='85%')
+                                        tbody
+                                        tr
+                                            th.bg-muted 상위업무
+                                            td#_higher_nm
+                                        tr
+                                            th.bg-muted 제목
+                                            td#_title
+                                        tr
+                                            th.bg-muted 첨부파일
+                                            td
+                                                i.fa.fa-paperclip.m-r-10
+                                                a(href='#')
+                                                    span.text-pink faqimage.gif
+
+                                        tr
+                                            th.bg-muted 내용
+                                            td#_content
+
+
+
+
+
+block footer

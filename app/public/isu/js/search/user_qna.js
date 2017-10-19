@@ -1,4 +1,5 @@
 'use strict';
+var incident_id = '';   //선택 인시던트 id
 var rowIdx = 0;         //출력 시작 인덱스
 var dataCnt = 0;        // 출력 종료 인덱스
 var inCnt = 15;         //한번에 화면에 조회되는 리스트 수
@@ -102,7 +103,8 @@ function setDataList(dataObj, selectedPage) {
 
         var idValue = dataObj[i-1]._id ;
         var addList = "";
-        addList += "							<tr onclick=window.location='/search/qna_detail/" + dataObj[i-1]._id + "'>";
+        //addList += "							<tr onclick=window.location='/search/qna_detail/" + dataObj[i-1]._id + "'>";
+        addList += "							<tr onclick=detailShow('" + dataObj[i-1]._id + "')>";
         addList += "								<td>" + dataObj[i-1].higher_nm + "</td>";
         addList += "								<td>" + dataObj[i-1].title + "</td>";
         addList += "								<td>" + dataObj[i-1].created_at + "</td>";
@@ -177,4 +179,49 @@ function paging(totalData, dataPerPage, pageCount, currentPage){
         getDataList(selectedPage);
         
     });
+}
+
+
+/**
+ * 상세모달호출
+ * @param {*} incident_id  
+ */
+function detailShow(id){
+    //incident id값 세팅
+    incident_id = id;
+
+    var reqParam = '';
+    $.ajax({
+        type: "GET",
+        async: true,
+        url: "/search/qna_detail/"+id,
+        dataType: "json", // xml, html, script, json 미지정시 자동판단
+        timeout: 30000, //제한 시간
+        cache: false,
+        data: reqParam, // $($('form')).serialize()
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        error: function (request, status, error) {
+            alert("error : " + error);
+        },
+        beforeSend: function () {
+        },
+        success: function (dataObj) {
+            setDetail(dataObj);
+            $('#wdetail_modal').modal('show');
+        }
+    });
+}
+
+/**
+ * 상세조회 매핑
+ */
+function setDetail(dataObj){
+    /**
+     * 조회내용 세팅
+     */
+    $('#_higher_nm').html(dataObj.higher_nm);
+    $('#_title').html(dataObj.title);
+    $('#_content').html(dataObj.content);
+
+
 }

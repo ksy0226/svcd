@@ -137,7 +137,8 @@ module.exports = {
      * 자주묻는 질문과 답 상세조회 > OfteQna 가져오기
      */
     qna_detail: (req, res, next) => {
-        
+        console.log("1111111111");
+        /*
         logger.debug("Trace user_detail : ", req.params.id);
         //console.log("Trace user_detail : ", req.params.id);
         
@@ -150,7 +151,7 @@ module.exports = {
                     message: err
                 });
             } else {
-                /*
+
                 logger.debug(">>> incident : ", incident.attach_file);
                 //path 길이 잘라내기
                 if (incident.attach_file.length > 0) {
@@ -164,8 +165,7 @@ module.exports = {
                     }
                 }
                 logger.debug("*** incident : ", incident.attach_file);
-                */
-                /*
+
                 //path 길이 잘라내기
                 if (incident.attach_file.length > 0) {
                     for (var i = 0; i < incident.attach_file.length; i++) {
@@ -177,22 +177,53 @@ module.exports = {
                     }
                 }
                 
-                */
+
 
                 //완료요청일, 등록일, 접수일, 완료예정일, 완료일
-                /*
+
                 incident.request_complete_date = new Date(incident.request_complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
                 incident.register_date = new Date(incident.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
                 incident.receipt_date = new Date(incident.receipt_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
                 incident.complete_reserve_date = new Date(incident.complete_reserve_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
                 incident.complete_date = new Date(incident.complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-                */
                 
                 res.render("search/qna_detail", {
                     oftenqna: oftenqna
                 });
             }
-        });
+        });*/
+        console.log("Trace qna_detail : ", req.params.id);
+        
+        try{
+            OftenQnaModel.findById({
+                _id: req.params.id
+            }, function (err, oftenqna) {
+                if (err) {
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
+                    
+                    /*
+                    //path 길이 잘라내기
+                    if (incident.attach_file.length > 0) {
+                        for (var i = 0; i < incident.attach_file.length; i++) {
+                            var path = incident.attach_file[i].path
+                            incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
+                            if (incident.attach_file[i].mimetype!= null && incident.attach_file[i].mimetype.indexOf('image') > -1) {
+                                incident.attach_file[i].mimetype = 'image';
+                            }
+                        }
+                    }*/
+
+                    res.json(oftenqna);
+                }
+            });
+        }catch(e){
+            logger.debug('****************',e);
+        }
+
     },
 
     /**
