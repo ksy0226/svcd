@@ -137,7 +137,7 @@ module.exports = {
             res.render("manager/month_list", {
                 incident: incident
             });
-        }).sort('-createdAt');
+        }).sort('-created_at');
     },
 
     /**
