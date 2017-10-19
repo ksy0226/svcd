@@ -45,77 +45,83 @@ module.exports = {
     },
 
     logincheck: (req, res) => {
-        //logger.debug('logincheck is called '+req.body.remember_me);
-        if (req.body.remember_me === "on") {
-            //logger.debug('req.body.remember_me is on ');
-            res.cookie('email', req.body.email);
-            res.cookie('remember_me', req.body.remember_me === "on" ? "true" : "undefined");
-            res.cookie('user_flag', req.body.user_flag);
-            res.cookie('group_flag', req.body.group_flag);
-            //res.cookie('password', req.body.password);
-            email = req.body.email;
-            remember_me = req.body.remember_me;
-        } else {
-            //logger.debug('req.body.remember_me is off ');
-            res.clearCookie('email');
-            res.clearCookie('remember_me');
-            res.clearCookie('user_flag');
-            res.clearCookie('group_flag');
-        }
-        logger.debug("password : ", bcrypt.hashSync('1'));
-
-        Usermanage.findOne(
-            { email: req.body.email }
-        ).exec(function (err, usermanage) {
-            if (err) callback(err);
-            //if (usermanage.authenticate(req.body.password)) { //비밀번호가 일치하면
-            if (usermanage.authenticate(req.body.password) && usermanage.access_yn == 'Y') {
-                req.session.save(function () {
-                    req.session.email = usermanage.email;
-                    req.session.password = usermanage.password;
-                    req.session.user_flag = usermanage.user_flag;
-                    req.session.group_flag = usermanage.group_flag;
-                    req.session.user_nm = usermanage.employee_nm;
-                    req.session.company_cd = usermanage.company_cd;
-                    req.session.sabun = usermanage.sabun;
-                    req.session.office_tel_no = usermanage.office_tel_no;
-                    req.session.hp_telno = usermanage.hp_telno;
-                    res.render('main/main',
-                        {
-                            user_flag: req.session.user_flag,
-                            group_flag: req.session.group_flag,
-                            user_nm: req.session.user_nm,
-                            sabun: req.session.sabun
-                        });
-                });
-            } else { //계정이 존재하지 않으면
-                if (req.body.remember_me === "on") {
-                    //logger.debug('req.body.remember_me === '+req.body.remember_me)
-                    remember_me = "true";
-                } else {
-                    //logger.debug('req.body.remember_me !== '+req.body.remember_me)
-                    remember_me = "false";
-                }
-
-                if (email == null) email = "";
-
-                //승인여부에 따른 메세지 변경
-                if (usermanage.access_yn == 'N') {
-                    res.render('index', {
-                        email: email,
-                        remember_me: remember_me,
-                        message: "미승인 계정입니다.<br>관리팀에 권한을 요청하세요."
-                    });
-                } else {
-                    res.render('index', {
-                        email: email,
-                        remember_me: remember_me,
-                        message: "등록된 계정이 없습니다.<br>다시 시도해주세요."
-                    });
-                }
-                    
+        try{
+            //logger.debug('logincheck is called '+req.body.remember_me);
+            if (req.body.remember_me === "on") {
+                //logger.debug('req.body.remember_me is on ');
+                res.cookie('email', req.body.email);
+                res.cookie('remember_me', req.body.remember_me === "on" ? "true" : "undefined");
+                res.cookie('user_flag', req.body.user_flag);
+                res.cookie('group_flag', req.body.group_flag);
+                //res.cookie('password', req.body.password);
+                email = req.body.email;
+                remember_me = req.body.remember_me;
+            } else {
+                //logger.debug('req.body.remember_me is off ');
+                res.clearCookie('email');
+                res.clearCookie('remember_me');
+                res.clearCookie('user_flag');
+                res.clearCookie('group_flag');
             }
-        });
+            
+            
+
+            Usermanage.findOne(
+                { email: req.body.email }
+            ).exec(function (err, usermanage) {
+                logger.debug("password : ",usermanage.authenticate(req.body.password));
+                if (err) callback(err);
+                //if (usermanage.authenticate(req.body.password)) { //비밀번호가 일치하면
+                if (usermanage.authenticate(req.body.password) && usermanage.access_yn == 'Y') {
+                    req.session.save(function () {
+                        req.session.email = usermanage.email;
+                        req.session.password = usermanage.password;
+                        req.session.user_flag = usermanage.user_flag;
+                        req.session.group_flag = usermanage.group_flag;
+                        req.session.user_nm = usermanage.employee_nm;
+                        req.session.company_cd = usermanage.company_cd;
+                        req.session.sabun = usermanage.sabun;
+                        req.session.office_tel_no = usermanage.office_tel_no;
+                        req.session.hp_telno = usermanage.hp_telno;
+                        res.render('main/main',
+                            {
+                                user_flag: req.session.user_flag,
+                                group_flag: req.session.group_flag,
+                                user_nm: req.session.user_nm,
+                                sabun: req.session.sabun
+                            });
+                    });
+                } else { //계정이 존재하지 않으면
+                    if (req.body.remember_me === "on") {
+                        //logger.debug('req.body.remember_me === '+req.body.remember_me)
+                        remember_me = "true";
+                    } else {
+                        //logger.debug('req.body.remember_me !== '+req.body.remember_me)
+                        remember_me = "false";
+                    }
+
+                    if (email == null) email = "";
+
+                    //승인여부에 따른 메세지 변경
+                    if (usermanage.access_yn == 'N') {
+                        res.render('index', {
+                            email: email,
+                            remember_me: remember_me,
+                            message: "미승인 계정입니다.<br>관리팀에 권한을 요청하세요."
+                        });
+                    } else {
+                        res.render('index', {
+                            email: email,
+                            remember_me: remember_me,
+                            message: "등록된 계정이 없습니다.<br>다시 시도해주세요."
+                        });
+                    }
+                        
+                }
+            });
+        }catch(e){
+            logger.debug(e);
+        }
     },
 
     logout: (req, res) => {

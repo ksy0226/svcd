@@ -3,9 +3,8 @@ var bcrypt   = require("bcrypt-nodejs");
 const logger = require('log4js').getLogger('app');
 
 var usermanageSchema = mongoose.Schema({
-    company_cd       : { type : String },
-    company_nm       : { type : String },
-    userCompany_nm   : { type : String },
+    company_cd       : { type : String, required: true },
+    company_nm       : { type : String, required: true },    
     email            : { type : String, required: true },
     user_id          : { type : String },
     password         : { type : String, required: true },
@@ -13,12 +12,7 @@ var usermanageSchema = mongoose.Schema({
     dept_nm          : { type : String },
     jikchk_nm        : { type : String },
     position_nm      : { type : String },
-    del_flag         : { type : String },
-    del_reson        : { type : String },
-    birth_dt         : { type : String },
-    birth_ck         : { type : String },
     dom_post_cd1     : { type : String },
-    dom_post_cd2     : { type : String },
     dom_addr         : { type : String },
     dom_addr2        : { type : String },
     office_tel_no    : { type : String },
@@ -32,12 +26,12 @@ var usermanageSchema = mongoose.Schema({
     email_ref        : { type : String },
     email_send_yn    : { type : String },
     sabun            : { type : String },
+    access_yn        : { type : String , default : 'N'},
     
     user_flag        : { type : String, default : 9 },
     group_flag       : { type : String, default : 'out' },
     created_at       : { type : Date, default: Date.now },
-    updated_at       : { type : Date },
-    access_yn        : { type : String, default: 'N' } //승인여부
+    updated_at       : { type : Date }
 });
 
 usermanageSchema.pre("save", hashPassword);
@@ -59,7 +53,12 @@ usermanageSchema.pre("findOneAndUpdate", function hashPassword(next){
  */
 usermanageSchema.methods.authenticate = function (password) {
     var user = this;
-    return bcrypt.compareSync(password,user.password);
+    try{
+        return bcrypt.compareSync(password,user.password);
+    }catch(e){
+        logger.debug(e);
+        return false;
+    }
 };
 
 /**

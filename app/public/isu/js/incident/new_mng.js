@@ -82,24 +82,24 @@ function checkValue(){
 
 //요청자
 $(function() {      
-    $( 'input[name=request_info]' ).autocomplete({   
+    $('#request_info').autocomplete({   
         source: function( request, response ) {           
             $.ajax({          
                 type: "GET",
                 async: true,
                 url: "/usermanage/userinfo/",
                 contentType: "application/json",
-                data: 'searchText='+$('input[name=request_info]').val(),
+                data: 'searchText='+$('#request_info').val(),
                 dataType: "json", 
                 error: function (request, status, error) {
                     alert("autocomplete error : " + error+ " "+request.responseText);
                 },         
                 success: function( data ) { 
                     response( $.map( data, function( item ) { 
-                        if (item.employee_nm.toLowerCase().indexOf($('input[name=request_info]').val().toLowerCase()) >= 0)
+                        if (item.employee_nm.toLowerCase().indexOf($('#request_info').val().toLowerCase()) >= 0)
                         {                             
                             return {
-                                label: item.employee_nm.toLowerCase().replace($( 'input[name=request_info]' ).val().toLowerCase(),"<span style='font-weight:bold;color:Blue;'>" + $( 'input[name=request_info]' ).val().toLowerCase() + "</span>"),                                 
+                                label: item.employee_nm.toLowerCase().replace($( '#request_info' ).val().toLowerCase(),"<span style='font-weight:bold;color:Blue;'>" + $( '#request_info' ).val().toLowerCase() + "</span>"),                                 
                                 value: item.employee_nm,
                                 company_cd: item.company_cd,
                                 company_nm: item.company_nm,
@@ -115,30 +115,30 @@ $(function() {
                 }             
             });         
         },         
-        minLength: 0,         
+        minLength: 1,         
         select: function( event, ui ) {                
             setUserInfo(ui.item);   
         },         
         open: function() {          
-            $( this ).autocomplete("widget").width("500px");             
+            $( this ).autocomplete("widget").width("550px");             
             $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );         
         },         
         close: function() {             
             $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );         
-        }
+        },         
+        error: function(xhr, ajaxOptions, thrownError){ alert(thrownError);  alert(xhr.responseText); } 
     })     
     .data('uiAutocomplete')._renderItem = function( ul, item ) {    
         //return $( "<div style='backgroud-color:#fff;padding:10px'><li style='cursor:hand; cursor:pointer; font-size:1em'></li></div>" )  
-        return $( "<li style='cursor:hand; font-size:12pt'></li>" )          
-        .data( "item.autocomplete", item ).append("<a onclick=\"#\">" +unescape(item.label)+"&nbsp;"+ unescape(item.company_nm)+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +unescape(item.dept_nm)+"&nbsp;&nbsp;&nbsp;" +unescape(item.position_nm)+"&nbsp;&nbsp;&nbsp;" +unescape(item.office_tel_no)+"&nbsp;&nbsp;&nbsp;" +unescape(item.email)+ "</a>")      
+        return $( "<li style='cursor:hand; font-size:11pt'></li>" )          
+        .data( "item.autocomplete", item ).append("<a onclick=\"#\">" +unescape(item.label)+"&nbsp;"+ unescape(item.company_nm)+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +unescape(item.dept_nm)+"&nbsp;&nbsp;&nbsp;" +unescape(item.position_nm)+"&nbsp;&nbsp;&nbsp;" +unescape(item.office_tel_no)+ "</a>")      
         .appendTo( ul );  
     }; 
 });
 
 //요청자(업체포함) 조회결과값 세팅 
 function setUserInfo(item){
-
-    $('input[name=request_info]').val(item.employee_nm);   
+    //$('input[name=request_info]').val(item.employee_nm);   
     $('input[name="incident[request_company_cd]"]').val(item.company_cd);
     $('input[name="incident[request_company_nm]"]').val(item.company_nm);
     $('input[name="incident[request_dept_cd]"]').val(item.dept_cd);
