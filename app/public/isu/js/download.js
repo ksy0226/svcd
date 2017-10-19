@@ -10,14 +10,14 @@ function fnTableToExcel(dvData){
         //tab_text=tab_text+"</tr>";
     }
 
-    alert(tab_text);
+    //alert(tab_text);
 
     tab_text=tab_text+"</table>";
     tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
     tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
     tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
 
-    alert(tab_text);
+    //alert(tab_text);
 
     var ua = window.navigator.userAgent;
     var msie = ua.indexOf("MSIE "); 
