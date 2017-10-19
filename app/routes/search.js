@@ -17,4 +17,5 @@ router.route('/list').get(controller.list);
 router.route('/getqnalist').get(controller.getqnalist);
 router.route('/qna_detail/:id').get(controller.qna_detail);
 
+
 module.exports = router;
