@@ -39,6 +39,7 @@ function higherCd() {
     sIdx = sIdx - 1; //'선택하세요' 인덱스값 1을 빼줌
     //선택값 매핑
     $('#higher_nm').val($('#higher_cd option:selected').text());
+    alert($('#higher_nm').val());
 }
 
 //필수값 체크

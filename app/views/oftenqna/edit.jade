@@ -45,13 +45,13 @@ block content
                             .p-20
                                 form.form-horizontal.group-border-dashed(id='form' name='form' action='/oftenqna/edit/#{oftenqna._id}' method='post' enctype="multipart/form-data")  
                                     .form-group(style='display:none')
-                                        label.col-sm-2.control-label 상위업무코드
+                                        label.col-sm-2.control-label 상위업무명
                                         .col-sm-4
-                                            input.form-control(id='higher_nm', name='oftenqna[higher_nm]', type='text', placeholder='', value='#{oftenqna.higher_cd}')
+                                            input.form-control(id='higher_nm', name='oftenqna[higher_nm]', type='text', placeholder='', value='#{oftenqna.higher_nm}')
                                     .form-group
                                         label.col-sm-2.control-label 상위업무
                                         .col-sm-4
-                                            select#higher_cd.form-control.input-sm(name='oftenqna[higher_cd]', onchange='higherCd()')
+                                            select#higher_cd.form-control.input-sm(name='oftenqna[higher_cd]', onChange='higherCd()')
                                                 option(value ='') 선택하세요
                                                 - if (higher.length > 0) {
                                                     - for( var i = 0 ; length = higher.length > i ; i++ ){ //속도가 느리다고 알고 있음.
