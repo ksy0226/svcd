@@ -60,4 +60,22 @@ module.exports = {
         });
     },
 
+    /**
+     * 처리구분별 월별처리 내역
+     */
+    status_list : (req, res, next) => {
+        IncidentModel.find(req.body.incident, function(err, incident) {
+            //logger.debug('err', err, '\n');
+            logger.debug('list 호출');
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            }
+            res.render("statistic/status_list", {
+                incident: incident
+            });
+        });
+    }
+
 };

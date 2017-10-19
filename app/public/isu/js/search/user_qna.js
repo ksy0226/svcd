@@ -206,6 +206,7 @@ function detailShow(id){
         beforeSend: function () {
         },
         success: function (dataObj) {
+            init(dataObj);
             setDetail(dataObj);
             $('#wdetail_modal').modal('show');
         }
@@ -222,6 +223,20 @@ function setDetail(dataObj){
     $('#_higher_nm').html(dataObj.higher_nm);
     $('#_title').html(dataObj.title);
     $('#_content').html(dataObj.content);
+
+
+}
+
+/**
+ * 상세조회 매핑
+ */
+function init(dataObj){
+    /**
+     * 조회내용 세팅
+     */
+    $('#_higher_nm').html("");
+    $('#_title').html("");
+    $('#_content').html("");
 
 
 }
