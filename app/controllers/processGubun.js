@@ -11,6 +11,21 @@ module.exports = {
      * 초기 페이지 출력
      */
     index: (req, res, next) => {
+        ProcessGubunModel.find(req.body.processGubun, function (err, processGubun) {
+            logger.debug('index 호출');
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            } else {
+                //if(processGubun.created_at != '') processGubun.created_at = processGubun.created_at.substring(0,10);
+                //if(processGubun.register_date != '') processGubun.register_date = processGubun.register_date.substring(0,10);
+                
+                res.render("processGubun/index", {
+                    processGubun: processGubun
+                });
+            }
+        });
     },
 
     /**
