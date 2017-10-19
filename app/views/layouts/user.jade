@@ -94,8 +94,6 @@ html
                     a(href='/search/user_list')
                       | 처리된 내용검색 
                       i.fa.fa-circle-o.text-pink.m-l-5
-              //그룹관리자, 업무관리자,업무담당자 오픈
-              - if(session.user_flag ==1 || session.user_flag ==3 || session.user_flag ==4){ 
               li.has_sub
                 a.waves-effect.waves-primary(href='javascript:void(0);')
                   i.md.md-person
@@ -110,61 +108,6 @@ html
                     a(href='/myBusiness/') 나의 업무지정
                   li
                     a(href='/manager/month_list') 월별 처리내역
-              - }
-              - if(session.user_flag !=9){
-              li.has_sub
-                a.waves-effect.waves-primary(href='javascript:void(0);')
-                  i.md.md-search
-                  span  SD 검색/통계 
-                  span.menu-arrow
-                ul.list-unstyled
-                  li
-                    a(href='/search/mng_list') 전체내용검색
-                  li
-                    a(href='/statistic/com_higher') 회사별 상위업무통계
-                  li
-                    a(href='/statistic/high_lower') 상위별 하위업무통계
-                  li
-                    a(href='/search/remain_list') 미해결 현황
-                  li
-                    a(href='/statistic/mng_month') 담당자별 월별 처리내역
-                  li
-                    a(href='/statistic/status_list') 처리구분별 처리내역
-              - }
-              - if(session.user_flag ==1 || session.user_flag ==4){
-              li.has_sub
-                a.waves-effect.waves-primary(href='javascript:void(0);')
-                  i.md.md-view-list
-                  span  SD 기본정보 
-                  span.menu-arrow
-                ul.list-unstyled
-                  li
-                    a(href='/higherProcess/list') 상위업무조회
-                  li
-                    a(href='/lowerProcess/') 하위업무조회
-                  li
-                    a(href='/company/list')
-                      | 회사정보관리(외부) 
-                      i.fa.fa-circle-o.text-pink.m-l-5
-                  li
-                    a(href='/usermanage/')
-                      | 사원정보관리(내외) 
-                      i.fa.fa-circle-o.text-pink.m-l-5
-                  li
-                    a(href='/companyBusiness/') 회사별 상위업무지정
-                  li
-                    a(href='/processGubun/') 처리구분 코드조회
-                  li
-                    a(href='gw_sub4_7.html') 업무별 담당자현황
-                  li
-                    a(href='/oftenqna/') 자주묻는 질문과답
-              - }
-              - if(session.user_flag ==1){ 
-              li
-                a.waves-effect.waves-primary(href='javascript:alert("2018")')
-                  i.md.md-poll
-                  span  SD  Dashboard 
-              - }
             .clearfix
           .clearfix
       // Left Sidebar End

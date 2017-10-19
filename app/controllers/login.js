@@ -15,7 +15,11 @@ module.exports = {
      * Validation action
      */
     index: (req, res) => {
-        res.render("main/main");
+        if(req.session.user_flag == '1'){
+            res.render("main/admin");
+        }else{
+            res.render("main/user");
+        }
     },
 
     logincheck: (req, res) => {
@@ -57,13 +61,21 @@ module.exports = {
                         req.session.sabun = usermanage.sabun;
                         req.session.office_tel_no = usermanage.office_tel_no;
                         req.session.hp_telno = usermanage.hp_telno;
+                        
+                        if(req.session.user_flag == '1'){
+                            res.render("main/admin");
+                        }else{
+                            res.render("main/user");
+                        }
+                        /*
                         res.render('main/main',
-                            {
-                                user_flag: req.session.user_flag,
-                                group_flag: req.session.group_flag,
-                                user_nm: req.session.user_nm,
-                                sabun: req.session.sabun
-                            });
+                                {
+                                    user_flag: req.session.user_flag,
+                                    group_flag: req.session.group_flag,
+                                    user_nm: req.session.user_nm,
+                                    sabun: req.session.sabun
+                                });
+                        */
                     });
                 } else { //계정이 존재하지 않으면
                     if (req.body.remember_me === "on") {
