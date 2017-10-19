@@ -5,13 +5,12 @@ var higher_cd = '000'//선택 상위코드
 var rowIdx = 0; //출력 시작 인덱스
 var dataCnt = 0; // 출력 종료 인덱스
 var inCnt = 15; //한번에 화면에 조회되는 리스트 수
-
-
 var totalData = 0;      // 총 데이터 수 
 
 var dataPerPage = 15;   // 한 페이지에 나타낼 데이터 수
 var pageCount = 10;      // 한 화면에 나타낼 페이지 수
 var totalPage = 0;
+var selectedPage = 1;
 
 
 $(document).ready(function () {
@@ -160,10 +159,10 @@ function getDataList(selectedPage){
  */
 function setDataList(dataObj, selectedPage) {
     //선택한 페이지가 1page 이상일 때,
-    if(selectedPage>1){
+    //if(selectedPage>1){
         //기존 데이터 삭제
         $("#more_list tr").remove();
-    }
+    //}
 
     var startIdx = dataPerPage*(selectedPage-1)+1;
     var endIdx = dataPerPage*selectedPage+1;
@@ -173,44 +172,40 @@ function setDataList(dataObj, selectedPage) {
         endIdx = dataObj.length;
     } 
 
+    if(dataObj.length > 0){
+        for(var i = startIdx ; i <endIdx+1 ; i++){ 
+            var register_dateVal = dataObj[i-1].register_date; 
+            
+            if(register_dateVal){
+                register_dateVal = register_dateVal.substring(0,10);
+            }else{
+                register_dateVal = ""; 
+            }
 
-    //조회 내용 추가
-    /*
-    if (rowIdx < dataObj.length) {
+            var addList = "";
+            //addList += "							<tr onclick=window.location='/manager/work_detail/" + dataObj[i]._id + "'>";
+            //addList += "							<tr style='cursor:hand' onMouserOver='changeColor(this,red)' onMouseOut='changeColer(this,#yellow)' onclick=detailShow('" + dataObj[i]._id + "')>";
+            addList += "							<tr onclick=detailShow('" + dataObj[i-1]._id + "')>";
+            addList += "								<td class='text-center'>" + dataObj[i-1].process_speed + "</td>";
+            addList += "								<td class='text-center'>" + dataObj[i-1].status_cd + "</td>";
+            addList += "								<td>" + dataObj[i-1].title + "</td>";
+            addList += "								<td>" + dataObj[i-1].request_company_nm +"/"+ dataObj[i-1].request_nm + "</td>";
+            addList += "								<td class='text-center'>" + register_dateVal + "</td>";
+            addList += "								<td class='text-center'>" + dataObj[i-1].receipt_date + "</td>";
+            //addList += "								<td>" + dataObj[i].lower_nm + "</td>";
+            addList += "							</tr>";
 
-        if ((rowIdx + inCnt) < dataObj.length) {
-            dataCnt = rowIdx + inCnt;
-        } else {
-            dataCnt = dataObj.length;
+            $("#more_list").append(addList);
+
+            //rowIdx++;
+            startIdx++;
         }
-    */
-    //for (var i = rowIdx; i < dataCnt; i++) {
-    for(var i = startIdx ; i <endIdx+1 ; i++){ 
-        var register_dateVal = dataObj[i-1].register_date; 
-        
-        if(register_dateVal){
-            register_dateVal = register_dateVal.substring(0,10);
-        }else{
-            register_dateVal = ""; 
-        }
-
+    }else{
         var addList = "";
-        //addList += "							<tr onclick=window.location='/manager/work_detail/" + dataObj[i]._id + "'>";
-        //addList += "							<tr style='cursor:hand' onMouserOver='changeColor(this,red)' onMouseOut='changeColer(this,#yellow)' onclick=detailShow('" + dataObj[i]._id + "')>";
         addList += "							<tr onclick=detailShow('" + dataObj[i-1]._id + "')>";
-        addList += "								<td class='text-center'>" + dataObj[i-1].process_speed + "</td>";
-        addList += "								<td class='text-center'>" + dataObj[i-1].status_cd + "</td>";
-        addList += "								<td>" + dataObj[i-1].title + "</td>";
-        addList += "								<td>" + dataObj[i-1].request_company_nm +"/"+ dataObj[i-1].request_nm + "</td>";
-        addList += "								<td class='text-center'>" + register_dateVal + "</td>";
-        addList += "								<td class='text-center'>" + dataObj[i-1].receipt_date + "</td>";
-        //addList += "								<td>" + dataObj[i].lower_nm + "</td>";
+        addList += "								<td colspan='6' class='text-center'>조회된 데이타가 없습니다.</td>";
         addList += "							</tr>";
-
         $("#more_list").append(addList);
-
-        //rowIdx++;
-        startIdx++;
     }
 
     $('#more_list > tr').each(function(){
@@ -296,7 +291,7 @@ function paging(totalData, dataPerPage, pageCount, currentPage){
 
         var $item = $(this);
         var $id = $item.attr("id");
-        var selectedPage = $item.text();
+        selectedPage = $item.text();
         
         if($id == "next")    selectedPage = next;
         if($id == "prev")    selectedPage = prev;
@@ -332,11 +327,61 @@ function detailShow(id){
         beforeSend: function () {
         },
         success: function (dataObj) {
+            initDetail();
             setDetail(dataObj);
             $('#wdetail_modal').modal('show');
         }
     });
 }
+
+/**
+ * 상세조회 초기화
+ */
+function initDetail(){
+    
+
+    $('#receiptBtn').attr('style','display:none');
+    $('#completeBtn').attr('style','display:none');
+
+
+    /**
+     * 등록내용 세팅
+     */
+    $('#_status_nm').html('');
+
+    /**
+    * 긴급구분
+    */
+    $('#_process_speed').html('');
+    
+    $('#_higher_nm').html('');
+    $('#_lower_nm').html('');
+    $('#_request_company_nm-request_nm').html('');
+    $('#_request_complete_date').html('');
+    $('#_app_menu').html('');
+    $('#_register_nm-register_date').html('');
+    $('#_title').html('');
+    $('#_content').html('');
+
+    $('#_status_nm').removeClass();
+
+    /**
+     * 처리내용 세팅
+     */
+    $('#_manager_nm').html('');
+    $('#_receipt_date').html('');
+    $('#_complete_reserve_date').html('');
+    $('#_business_level').html('');
+    $('#_complete_content').html('');
+    $('#_complete_date').html('');
+    $('#_need_minute').html('');
+    $('#_delay_reason').html('');
+    $('#_valuation').html('');
+    $('#_complete_open_flag-reading_cnt').html('');
+    $('#_sharing_content').html('');
+    
+}
+
 
 /**
  * 상세조회 매핑
@@ -483,7 +528,7 @@ function receiptSave(){
             if(dataObj.success){
                 $('.modal').modal('hide');
                 initReceiptModal();
-                research();
+                research(selectedPage);
             }else{
                 alert('e : '+JSON.stringify(dataObj));
             }
@@ -510,9 +555,7 @@ function initReceiptModal(){
  */
 function completeSave(){
     var reqParam = $('#complete_form').serialize();
-    alert(reqParam);
     reqParam += "&incident[process_nm]="+$('select[name="incident[process_cd]"] option:selected').text();
-    alert(reqParam);
     $.ajax({
         type: "POST",
         async: true,
@@ -531,7 +574,7 @@ function completeSave(){
             if(dataObj.success){
                 $('.modal').modal('hide');
                 initCompleteModal();
-                research();
+                research(selectedPage);
             }else{
                 alert('e : '+JSON.stringify(dataObj));
             }
