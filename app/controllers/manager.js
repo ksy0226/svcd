@@ -177,7 +177,7 @@ module.exports = {
                 
                 //upIncident.receipt_date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
                 upIncident.status_cd = '2';
-                upIncident.status_nm = '접수';
+                upIncident.status_nm = '처리중';
                 callback(null,upIncident);
 
             }], function (err, upIncident) {
@@ -244,7 +244,7 @@ module.exports = {
                 
                 //upIncident.receipt_date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
                 upIncident.status_cd = '3';
-                upIncident.status_nm = '완료';
+                upIncident.status_nm = '미평가';
                 callback(null,upIncident);
 
             }], function (err, upIncident) {

@@ -31,7 +31,7 @@ $(document).ready(function () {
     $('#datepicker-rcd').datepicker({
         autoclose: true,
         todayHighlight: true,
-        format: "yyyy/mm/dd"
+        format: "yyyy-mm-dd"
     });
 
     $('#saveBtn').on('click',function(){

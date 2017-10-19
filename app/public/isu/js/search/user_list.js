@@ -155,10 +155,10 @@ function getDataList(selectedPage){
  */
 function setDataList(dataObj, selectedPage) {
     //선택한 페이지가 1page 이상일 때,
-    if(selectedPage>1){
+    //if(selectedPage>1){
         //기존 데이터 삭제
         $("#more_list tr").remove();
-    }
+    //}
     
     var startIdx = dataPerPage*(selectedPage-1)+1;
     var endIdx = dataPerPage*selectedPage+1;
