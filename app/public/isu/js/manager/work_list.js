@@ -234,9 +234,9 @@ function setDataList(dataObj, selectedPage) {
         }if($(this).find('td:eq(1)').html() == "3"){
             $(this).find('td:eq(1)').html('<span class="label label-success">미평가</span>');
         }if($(this).find('td:eq(1)').html() == "4"){
-            $(this).find('td:eq(1)').html('<span class="font-12 text-purple">완&nbsp;&nbsp;료</span>');
+            $(this).find('td:eq(1)').html('<span class="label label-purple">완료</span>');
         }if($(this).find('td:eq(1)').html() == "5"){
-            $(this).find('td:eq(1)').html('<span class="label label-info">보 류</span>');
+            $(this).find('td:eq(1)').html('<span class="label label-info">보류</span>');
         }
 
     })

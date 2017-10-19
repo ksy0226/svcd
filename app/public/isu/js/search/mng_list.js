@@ -214,7 +214,7 @@ function setDataList(dataObj, selectedPage) {
         }if($(this).find('td:eq(4)').html() == "미평가"){
             $(this).find('td:eq(4)').html('<span class="label label-success">미평가</span>');
         }if($(this).find('td:eq(4)').html() == "완료"){
-            $(this).find('td:eq(4)').html('<span class="font-12 text-purple">완료</span>');
+            $(this).find('td:eq(4)').html('<span class="label label-purple">완료</span>');
         }if($(this).find('td:eq(4)').html() == "보류"){
             $(this).find('td:eq(4)').html('<span class="label label-info">보류</span>');
         }
