@@ -47,11 +47,11 @@ block content
                                                         .col-sm-9
                                                             input.form-control(name='usermanage[userCompany_nm]', type='text', value=usermanage.userCompany_nm, required)
                                                     .form-group(style='display:none')
-                                                        label.col-sm-2.control-label 회사코드
+                                                        label.col-sm-2.control-label 회사코드명
                                                         .col-sm-9
                                                             input.form-control(id='company_nm' name='usermanage[company_nm]' type='text' value='#{usermanage.company_nm}' required)
                                                     .form-group
-                                                            label.col-sm-2.control-label 회사명
+                                                            label.col-sm-2.control-label 회사코드
                                                             .col-sm-9
                                                                 select.form-control(id='company_cd' name='usermanage[company_cd]' onchange='companyCd()' required) 
                                                                     - if (company.length > 0) {
