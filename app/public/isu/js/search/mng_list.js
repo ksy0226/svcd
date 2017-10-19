@@ -172,13 +172,16 @@ function setDataList(dataObj, selectedPage) {
         }else{
             register_dateVal = ""; 
         }
-        
 
         var idValue = dataObj[i-1]._id ;
         var addList = "";
         addList += "							<tr onclick=window.location='/search/mng_detail/" + dataObj[i-1]._id + "'>";
         addList += "								<td>" + dataObj[i-1].higher_nm + " / " + dataObj[i-1].lower_nm + "</td>";
-        addList += "								<td>" + dataObj[i-1].title + "</td>";
+        if(dataObj[i-1].complete_open_flag == "Y"){
+            addList += "								<td>" + dataObj[i-1].title + "</td>";
+        }else{
+            addList += "								<td class='fa fa-lock m-r-5'>&nbsp;&nbsp;" + dataObj[i-1].title + "</td>";
+        }
         addList += "								<td class='text-center'>" + dataObj[i-1].request_nm + "</td>";
         addList += "								<td class='text-center'>" + register_dateVal + "</td>";
         addList += "								<td class='text-center'>" + dataObj[i-1].status_nm + "</td>";
