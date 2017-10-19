@@ -137,15 +137,13 @@ module.exports = {
             ProcessGubunModel.findOneAndRemove({
                 _id: req.params.id
             }, function (err, processGubun) {
-                if (err) return res.json({
-                    success: false,
-                    message: err
-                });
-                if (!processGubun) return res.json({
-                    success: false,
-                    message: "No data found to delete"
-                });
-                res.redirect('/processGubun');
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                } else {
+                    res.redirect('/processGubun');
+                }
             });
         } catch (e) {
             logger.error(e);
