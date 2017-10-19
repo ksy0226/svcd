@@ -18,7 +18,7 @@ module.exports = {
 
         var vistorCounter = null;
         var page = Math.max(1, req.params.page) > 1 ? parseInt(req.query.page) : 1;
-        var limit = Math.max(1, req.params.limit) > 1 ? parseInt(req.query.limit) : 10;
+        var limit = Math.max(1, req.params.limit) > 1 ? parseInt(req.query.limit) : 50;
         var search = service.createSearch(req);
 
         async.waterfall([function (callback) {
