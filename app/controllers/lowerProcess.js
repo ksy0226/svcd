@@ -18,8 +18,8 @@ module.exports = {
                     err: err
                 });
             } else {
-                if(lowerProcess.created_at != '') lowerProcess.created_at = lowerProcess.created_at.substring(0,10);
-                if(lowerProcess.register_date != '') lowerProcess.register_date = lowerProcess.register_date.substring(0,10);
+                //if(lowerProcess.created_at != '') lowerProcess.created_at = lowerProcess.created_at.substring(0,10);
+                //if(lowerProcess.register_date != '') lowerProcess.register_date = lowerProcess.register_date.substring(0,10);
                 
                 res.render("lowerProcess/index", {
                     lowerProcess: lowerProcess
