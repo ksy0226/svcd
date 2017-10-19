@@ -4,7 +4,7 @@ $(document).ready(function () {
     $('#user_flag').val(usermanageObj.user_flag);
     $('#group_flag').val(usermanageObj.group_flag);
     $('#access_yn').val(usermanageObj.access_yn);
-    $('#company_cd').val(usermanageObj.company_nm);
+    //$('#company_cd').val(usermanageObj.company_nm);
     $('#company_nm').val(usermanageObj.company_cd);
 });
 

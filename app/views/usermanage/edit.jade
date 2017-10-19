@@ -45,7 +45,7 @@ block content
                                                     .form-group
                                                         label.col-sm-2.control-label 입력한 회사명
                                                         .col-sm-9
-                                                            input.form-control(name='usermanage[userCompany_nm]' type='text' value='#{usermanage.userCompany_nm}' required)
+                                                            input.form-control(name='usermanage[userCompany_nm]', type='text', value=usermanage.userCompany_nm, required)
                                                     .form-group(style='display:none')
                                                         label.col-sm-2.control-label 회사코드
                                                         .col-sm-9
@@ -53,11 +53,14 @@ block content
                                                     .form-group
                                                             label.col-sm-2.control-label 회사명
                                                             .col-sm-9
-                                                                select.form-control(id='company_cd' name='usermanage[company_cd]' onchange='companyCd()' value='#{usermanage.company_cd}' required) 
-                                                                    option(value ='#{usermanage.company_cd}' selected) #{usermanage.company_nm}
+                                                                select.form-control(id='company_cd' name='usermanage[company_cd]' onchange='companyCd()' required) 
                                                                     - if (company.length > 0) {
-                                                                        - for( var i = 0 ; length = company.length > i ; i++ ){ //속도가 느리다고 알고 있음.
-                                                                            option(value ='#{company[i].company_cd}') #{company[i].company_nm}
+                                                                        - for( var i = 0 ; length = company.length > i ; i++ ){ 
+                                                                            -if(usermanage.company_cd == company[i].company_cd){
+                                                                                option(value='#{company[i].company_cd}' seleceted) #{company[i].company_nm}
+                                                                            -}else{
+                                                                                option(value='#{company[i].company_cd}') #{company[i].company_nm}
+                                                                            -}
                                                                         - }
                                                                     - }
                                                     .form-group
