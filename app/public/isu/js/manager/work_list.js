@@ -218,9 +218,9 @@ function setDataList(dataObj, selectedPage) {
         /**
          * 긴급구분
          */
-        if($(this).find('td:eq(0)').html() == "1"){
+        if($(this).find('td:eq(0)').html() == "N"){
             $(this).find('td:eq(0)').html('');
-        }if($(this).find('td:eq(0)').html() == "2"){
+        }if($(this).find('td:eq(0)').html() == "Y"){
             $(this).find('td:eq(0)').html('<span class="label label-warning">✔</span>');
         }
 
@@ -368,7 +368,7 @@ function setDetail(dataObj){
     /**
     * 긴급구분
     */
-    if(dataObj.process_speed == "2"){
+    if(dataObj.process_speed == "Y"){
         $('#_process_speed').html('<span class="label label-warning">✔</span>');
     }
 
