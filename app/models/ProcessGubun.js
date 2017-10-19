@@ -8,7 +8,7 @@ var processGubunSchema = mongoose.Schema({
     higher_cd: { type: String },                      //상위코드
     higher_nm: { type: String },                      //상위코드명
     description: { type: String },                    //설명
-    sabun: { type: String },                          //사번
+    user_id: { type: String },
     user_nm: { type: String },
     question_type: { type: String },                  //문의유형
     created_at: { type: Date, default: Date.now },    //생성일자 

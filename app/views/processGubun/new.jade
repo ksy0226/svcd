@@ -36,7 +36,7 @@ block content
                                             button.btn.btn-info(type='submit')
                                                 i.fa.fa-send-o
                                                 |  저장
-                                    .form-group
+                                    .form-group(style='display:none')
                                         label.col-sm-3.control-label 상위업무코드
                                         .col-sm-3
                                             input.form-control(id='higher_nm', name='processGubun[higher_nm]', type='text', placeholder='')
@@ -62,14 +62,14 @@ block content
                                         label.col-sm-3.control-label 설명
                                         .col-sm-9
                                             input.form-control(name='processGubun[description]', type='text', placeholder='')
-                                    .form-group
-                                        label.col-sm-3.control-label 사번
+                                    .form-group(style='display:none')
+                                        label.col-sm-3.control-label 아이디
                                         .col-sm-3
-                                            input.form-control(name='processGubun[sabun]', type='text', placeholder='')
-                                    .form-group
+                                            input.form-control(name='processGubun[user_id]', type='text', placeholder='', value = user_id )
+                                    .form-group(style='display:none')
                                         label.col-sm-3.control-label 등록자
                                         .col-sm-3
-                                            input.form-control(name='processGubun[user_nm]', type='text', placeholder='')
+                                            input.form-control(name='processGubun[user_nm]', type='text', placeholder='', value = user_nm )
                                     .form-group
                                         label.col-sm-3.control-label 사용여부
                                         .col-sm-3

@@ -61,11 +61,11 @@ block content
                                             label.col-sm-3.control-label 설명
                                             .col-sm-9
                                                 input.form-control(name='processGubun[description]', type='text', value='#{processGubun.description}')
-                                        .form-group
-                                            label.col-sm-3.control-label 사번
+                                        .form-group(style='display:none')
+                                            label.col-sm-3.control-label 아이디
                                             .col-sm-3
-                                                input.form-control(name='processGubun[sabun]', type='text', value='#{processGubun.sabun}')
-                                        .form-group
+                                                input.form-control(name='processGubun[user_id]', type='text', value='#{processGubun.user_id}')
+                                        .form-group(style='display:none')
                                             label.col-sm-3.control-label 등록자
                                             .col-sm-3
                                                 input.form-control(name='processGubun[user_nm]', type='text', value='#{processGubun.user_nm}')

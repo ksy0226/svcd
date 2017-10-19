@@ -49,7 +49,9 @@ module.exports = {
                 });
             } else {
                 res.render("processGubun/new", {
-                    higher: higher
+                    higher: higher,
+                    user_id: req.session.user_id,
+                    user_nm: req.session.user_nm
                 });
             }
         });
