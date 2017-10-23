@@ -255,6 +255,7 @@ module.exports = {
      * 사용자별 상세조회 > Incident 가져오기
      */
     mng_detail: (req, res, next) => {
+
         logger.debug("Trace mng_detail : ", req.params.id);
         IncidentModel.findById({
             _id: req.params.id
@@ -265,22 +266,7 @@ module.exports = {
                     message: err
                 });
             } else {
-                /*
-                logger.debug(">>> incident : ", incident.attach_file);
-                //path 길이 잘라내기
-                if (incident.attach_file.length > 0) {
-                    for (var i = 0; i < incident.attach_file.length; i++) {
-                        var path = incident.attach_file[i].path
-                        incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
-                        logger.debug("==========> incident.attach_file[i].mimetype.indexOf('image') ",incident.attach_file[i].mimetype.indexOf('image'));
-                        if(incident.attach_file[i].mimetype.indexOf('image')>-1){
-                            incident.attach_file[i].mimetype = 'image';
-                        }
-                    }
-                }
-                logger.debug("*** incident : ", incident.attach_file);
-                */
-                /*
+                
                 //path 길이 잘라내기
                 if (incident.attach_file.length > 0) {
                     for (var i = 0; i < incident.attach_file.length; i++) {
@@ -292,14 +278,14 @@ module.exports = {
                     }
                 }
                 
-                */
+
 
                 //완료요청일, 등록일, 접수일, 완료예정일, 완료일
-                if(incident.request_complete_date != '') incident.request_complete_date = incident.request_complete_date.substring(0,10);
-                if(incident.register_date != '') incident.register_date = incident.register_date.substring(0,10);
-                if(incident.receipt_date != '') incident.receipt_date = incident.receipt_date.substring(0,10);
-                if(incident.complete_reserve_date != '') incident.complete_reserve_date = incident.complete_reserve_date.substring(0,10);
-                if(incident.complete_date != '') incident.complete_date = incident.complete_date.substring(0,10);
+                //if(incident.request_complete_date != '') incident.request_complete_date = incident.request_complete_date.substring(0,10);
+                //if(incident.register_date != '') incident.register_date = incident.register_date.substring(0,10);
+                //if(incident.receipt_date != '') incident.receipt_date = incident.receipt_date.substring(0,10);
+                //if(incident.complete_reserve_date != '') incident.complete_reserve_date = incident.complete_reserve_date.substring(0,10);
+                //if(incident.complete_date != '') incident.complete_date = incident.complete_date.substring(0,10);
                 //incident.complete_date = new Date(incident.complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
 
 
