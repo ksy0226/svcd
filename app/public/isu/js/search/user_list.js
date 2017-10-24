@@ -184,8 +184,8 @@ function setDataList(dataObj, selectedPage) {
         //addList += "								<td>" + dataObj[i-1].higher_nm + "</td>";
         addList += "								<td>" + dataObj[i-1].lower_nm + "</td>";
         addList += "								<td>" + dataObj[i-1].title + "</td>";
-        addList += "								<td>" + register_dateVal + "</td>";
-        addList += "								<td>" + dataObj[i-1].manager_nm + "</td>";
+        addList += "								<td class='text-center'>" + register_dateVal + "</td>";
+        addList += "								<td class='text-center'>" + dataObj[i-1].manager_nm + "</td>";
         addList += "							</tr>";
 
         $("#more_list").append(addList);
@@ -296,7 +296,6 @@ function detailShow(id){
  * 상세조회 매핑
  */
 function setDetail(dataObj){
-    alert("dataObj.register_date>>> "+dataObj.register_date);
 
     //상위코드
     //higher_cd = dataObj.higher_cd;
@@ -319,7 +318,11 @@ function setDetail(dataObj){
     $('#_request_company_nm-request_nm').html(dataObj.request_company_nm+"/"+dataObj.request_nm);
     $('#_request_complete_date').html(dataObj.request_complete_date);
     $('#_app_menu').html(dataObj.app_menu);
-    $('#_register_nm-register_date').html(dataObj.register_nm+"/"+dataObj.register_date);
+    //$('#_register_nm-register_date').html(dataObj.register_nm+"/"+dataObj.register_date);
+    var register_dateVal = new Date(dataObj.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    $('#_register_nm-register_date').html(dataObj.register_nm+"/"+register_dateVal);
+
+
     $('#_title').html(dataObj.title);
     $('#_content').html(dataObj.content);
 
@@ -357,4 +360,23 @@ function setDetail(dataObj){
     $('#_complete_open_flag-reading_cnt').html(dataObj.complete_open_flag);
     $('#_sharing_content').html(dataObj.sharing_content);
 
+    /**
+     * 첨부파일
+     */
+    if(dataObj.attach_file.length > 0){
+        $('#_attach').html('');
+
+        for(var cnt=0; cnt <dataObj.attach_file.length; cnt++){
+            var fileList = "";
+            fileList += "<a href='/search/download/" + dataObj.attach_file[cnt].path + "'>";
+            fileList += "<span class='text-pink'> " + dataObj.attach_file[cnt].originalname +  "</span>";
+            fileList += "<span class='text-muted.m-l-10'> " + "(" + dataObj.attach_file[cnt].size + " Byte)" +  "</span>";
+            //$('#_attach').addClass('i fa fa-paperclip m-r-10 m-b-10');
+            $('#_attach').append("<td class='i fa fa-paperclip m-r-10 m-b-10'>" + fileList +"</td>");
+        } 
+        
+    }else{
+        $('#_attach').html('');
+        $('#_attach').removeClass();
+    }
 }

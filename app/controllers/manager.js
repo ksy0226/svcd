@@ -9,6 +9,8 @@ const LowerProcess = require('../models/LowerProcess');
 const service = require('../services/incident');
 const logger = require('log4js').getLogger('app');
 const Iconv  = require('iconv-lite');
+var path = require('path');
+var CONFIG = require('../../config/config.json');
 
 module.exports = {
 
@@ -109,6 +111,40 @@ module.exports = {
 
         }catch(e){
             logger.error("manager control work_detail : ",e);
+        }
+    },
+
+    /**
+     * Incident 상세 JSON 데이타 조회
+     */
+    getIncidentDetail: (req, res, next) => {
+
+        logger.debug("Trace viewDetail : ", req.params.id);
+        try {
+            Incident.findById({
+                _id: req.params.id
+            }, function (err, incident) {
+                if (err) {
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
+                    //path 길이 잘라내기
+                    if (incident.attach_file.length > 0) {
+                        for (var i = 0; i < incident.attach_file.length; i++) {
+                            var path = incident.attach_file[i].path
+                            incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
+                            if (incident.attach_file[i].mimetype != null && incident.attach_file[i].mimetype.indexOf('image') > -1) {
+                                incident.attach_file[i].mimetype = 'image';
+                            }
+                        }
+                    }
+                    res.send(incident);
+                }
+            });
+        } catch (e) {
+            logger.debug('****************', e);
         }
     },
 
@@ -300,6 +336,14 @@ module.exports = {
             });
         }
         
+    },
+    
+    /** 
+     * incident 첨부파일 다운로드
+     */
+    download: (req, res, next) => {
+        var filepath = path.join(__dirname, '../../', CONFIG.fileUpload.directory, req.params.path1, req.params.path2);
+        res.download(filepath);
     },
 
 };
