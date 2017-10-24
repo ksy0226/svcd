@@ -116,7 +116,7 @@ function setDataList(dataObj, selectedPage) {
         addList += "							<tr onclick=detailShow('" + dataObj[i-1]._id + "')>";
         addList += "								<td>" + dataObj[i-1].higher_nm + "</td>";
         if(dataObj[i-1].attach_file.length > 0){
-            addList += "								<td class='i fa fa-paperclip m-r-10 m-b-10'></td>";
+            addList += "								<td><span class='i fa fa-paperclip m-r-10 m-b-10'></span></td>";
         }else{
             addList += "								<td></td>";
         }
