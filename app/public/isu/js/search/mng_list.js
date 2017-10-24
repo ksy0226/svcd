@@ -396,12 +396,11 @@ function setDetail(dataObj){
 
         for(var cnt=0; cnt <dataObj.attach_file.length; cnt++){
             var fileList = "";
-            //fileList += "<td class='i fa fa-paperclip m-r-10 m-b-10'>";
-            fileList += "<a href='/download/dataObj.attach_file[cnt].path'>";
+            fileList += "<a href='#'>";
             fileList += "<span class='text-pink'> " + dataObj.attach_file[cnt].originalname + "</span></a>";
             
             //$('#_attach').addClass('i fa fa-paperclip m-r-10 m-b-10');
-            $('#_attach').append("<td class='i fa fa-paperclip m-r-10 m-b-10'>" + fileList);
+            $('#_attach').append("<td class='i fa fa-paperclip m-r-10 m-b-10'>" + fileList +"</td>");
         } 
     }else{
         $('#_attach').html('');

@@ -296,15 +296,15 @@ module.exports = {
             }
         });
     },
-
+    
     /** 
      * incident 첨부파일 다운로드
      */
-    download: (req, res, next) => {
-        var filepath = path.join(__dirname, '../../', CONFIG.fileUpload.directory, req.params.path1, req.params.path2);
-        console.log(filepath);
-        res.download(filepath);
-    },
+    //download: (req, res, next) => {
+    //    var filepath = path.join(__dirname, '../../', CONFIG.fileUpload.directory, req.params.path1, req.params.path2);
+    //    console.log(filepath);
+    //    res.download(filepath);
+    //},
 
     /**
      * 연도별 미처리 리스트
