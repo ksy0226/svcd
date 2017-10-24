@@ -360,4 +360,23 @@ function setDetail(dataObj){
     $('#_complete_open_flag-reading_cnt').html(dataObj.complete_open_flag);
     $('#_sharing_content').html(dataObj.sharing_content);
 
+    /**
+     * 첨부파일
+     */
+    if(dataObj.attach_file.length > 0){
+        $('#_attach').html('');
+
+        for(var cnt=0; cnt <dataObj.attach_file.length; cnt++){
+            var fileList = "";
+            fileList += "<a href='/search/download/" + dataObj.attach_file[cnt].path + "'>";
+            fileList += "<span class='text-pink'> " + dataObj.attach_file[cnt].originalname +  "</span>";
+            fileList += "<span class='text-muted.m-l-10'> " + "(" + dataObj.attach_file[cnt].size + " Byte)" +  "</span>";
+            //$('#_attach').addClass('i fa fa-paperclip m-r-10 m-b-10');
+            $('#_attach').append("<td class='i fa fa-paperclip m-r-10 m-b-10'>" + fileList +"</td>");
+        } 
+        
+    }else{
+        $('#_attach').html('');
+        $('#_attach').removeClass();
+    }
 }

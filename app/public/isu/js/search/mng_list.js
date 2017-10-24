@@ -393,7 +393,9 @@ function setDetail(dataObj){
     $('#_sharing_content').html(dataObj.sharing_content);
 
 
-
+    /**
+     * 첨부파일
+     */
     if(dataObj.attach_file.length > 0){
         $('#_attach').html('');
 

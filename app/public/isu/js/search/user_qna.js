@@ -239,7 +239,9 @@ function setDetail(dataObj){
     $('#_content').html(dataObj.content);
 
     
-
+    /**
+     * 첨부파일
+     */
     if(dataObj.attach_file.length > 0){
         $('#_attach').html('');
 

@@ -220,17 +220,22 @@ block content
                                             td#_content(colspan='3')
                                         tr(style='display:')
                                             th.bg-muted 첨부파일
-                                            td(colspan='3')
+                                            //td(colspan='3')
                                                 i.fa.fa-paperclip.m-r-10
                                                 a(href='#')
                                                     span.text-pink faqimage.gif
+                                            td(colspan='3')
+                                                span#_attach
                                         tr
                                             th.bg-muted 접수상담내용
                                             td(colspan='3')
                                                 | 접수하였습니다.
                                                 br
 
-                                h4.m-t-30
+                        .col-sm-12.m-t-20
+                            .card-box
+                                h4
+                                    //h4.m-t-30
                                     b 처리 내용
                                 hr.m-0
                                 table.table.table-bordered.m-t-0
