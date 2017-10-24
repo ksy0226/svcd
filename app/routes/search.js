@@ -16,6 +16,7 @@ router.route('/getlowerprocess').get(controller.getlowerprocess);
 router.route('/list').get(controller.list);
 router.route('/getqnalist').get(controller.getqnalist);
 router.route('/qna_detail/:id').get(controller.qna_detail);
+//router.route('/download/:path1/:path2').get(controller.download);
 
 
 module.exports = router;
