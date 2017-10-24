@@ -46,9 +46,16 @@ $(document).ready(function () {
         research();
     });
 
-    //완료저장버튼 클릭 시
+    //서비스 평가 저장 버튼 클릭 시
     $('#valuationSaveBtn').on('click', function () {
         valuationSave();
+    });
+
+    /**
+     * 완료처리 화면
+     */
+    $('#valuation_modal').on('hidden.bs.modal', function () {
+        initValuationModal();
     });
 
     //말줄임
@@ -62,6 +69,7 @@ $(document).ready(function () {
     });
     */
 });
+
 //다시 조회
 function research() {
     dataCnt = 0;
@@ -234,8 +242,6 @@ function setContent(dataObj) {
     }
 }
 
-
-
 /**
  * 상세모달호출
  * @param {*} incident_id  
@@ -347,7 +353,7 @@ function setDetail(dataObj) {
         addList += "            <p class='text-inverse m-b-10 m-t-20'>조치내역에 대해 만족하십니까?</p>";
         addList += "            <form id='valuation_form' action='#' class='form-horizontal group-border-dashed'>";
         addList += "                <div class='radio radio-primary radio-inline'>";
-        addList += "                    <input type='radio' value='5' name='incident[valuation]'>";
+        addList += "                    <input type='radio' value='5' name='incident[valuation]' checked=''>";
         addList += "                    <label for='inlineRadio1' class='font-12'> 매우 만족 </label>";
         addList += "                </div>";
         addList += "                <div class='radio radio-primary radio-inline'>";
@@ -377,6 +383,43 @@ function setDetail(dataObj) {
         $('#_valuation_box').html('');
     }
 
+    //첨부파일
+    if (dataObj.attach_file.length > 0) {
+        $('#_attach_box').html('');
+        var addList = "";
+        addList += "<h5>* 첨부파일 <b class='text-primary'> " + dataObj.attach_file.length + " </b>개</h5>";
+        $('#_attach_box').append(addList);
+        for (var cnt = 0; cnt < dataObj.attach_file.length; cnt++) {
+            var addList = "";
+            addList += "<a href='/incident/download/" + dataObj.attach_file[cnt].path + "'>";
+            addList += "<span class='text-pink'> " + dataObj.attach_file[cnt].originalname + "</span>";
+            addList += "<span class='text-muted.m-l-10'> " + "(" + dataObj.attach_file[cnt].size + " Byte)" + "</span>";
+            $('#_attach_box').append("<td class='i fa fa-paperclip m-r-10 m-b-10'>" + addList + "</td>");
+            $('#_attach_box').append("<tr>" + addList + "</tr>");
+        }
+    } else {
+        $('#_attach_box').html('');
+        $('#_attach_box').removeClass();
+    }
+
+    //이미지 첨부파일
+    if (dataObj.attach_file.length > 0) {
+        $('#_attach_img_box').html('');
+        var addList = "";
+        addList += "<h5>* 이미지 첨부파일 <b class='text-primary'> " + dataObj.attach_file.length + " </b>개</h5>";
+        $('#_attach_img_box').append(addList);
+        for (var cnt = 0; cnt < dataObj.attach_file.length; cnt++) {
+            var addList = "";
+            addList += "<a href='/incident/download/" + dataObj.attach_file[cnt].path + "'>";
+            addList += "<img src='" + dataObj.attach_file[cnt].path + "' alt=" + dataObj.attach_file[cnt].originalname + " class='img-thumbnail img-responsive'>";
+            $('#_attach_img_box').append("<td class='m-r-10 m-b-10'>" + addList + "</td>");
+        }
+    } else {
+        $('#_attach_img_box').html('');
+        $('#_attach_img_box').removeClass();
+    }
+
+    
     /**
      * 처리내용 세팅
      */
@@ -436,7 +479,7 @@ function valuationSave() {
             if (dataObj.success) {
                 $('.modal').modal('hide');
                 initValuationModal();
-                research(selectedPage);
+                research();
             } else {
                 alert('e : ' + JSON.stringify(dataObj));
             }
@@ -444,16 +487,17 @@ function valuationSave() {
     });
 }
 
-/**
- * 서비스만족도 모달 초기화
- */
+//서비스만족도 모달 초기화
 function initValuationModal() {
+    alert('모달 닫기');
+    $('#wdetail_modal').empty();
     $('textarea[name="incident[valuation_content]"]').val('');
+    $('input[name = "incident[valuation]"]').nal('');
 }
 
+//라디오 체크 값 리턴
 function RadioCheck() {
     var size = $('input[name = "incident[valuation]"]').length;
-
     for (var i = 0; i < size; i++) {
         if ($('input[name = "incident[valuation]"]')[i].checked) {
             return $('input[name = "incident[valuation]"]')[i].value;

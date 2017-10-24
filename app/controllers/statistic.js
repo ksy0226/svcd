@@ -12,18 +12,20 @@ module.exports = {
     com_higher: (req, res, next) => {
 
         var aggregatorOpts = [
+            /*
             { 
                 $match : { //조건
                             request_company_cd : "ISU_CH",
                             higher_cd : "H010"
                          }
             },    
+            */
             { 
                 $group : { //그룹칼럼
                             _id: {
-                                request_company_cd: "$request_company_cd",
-                                higher_cd: "$higher_cd",
-                                lower_cd: "$lower_cd"
+                                request_company_cd: "$request_company_cd"
+                                //higher_cd: "$higher_cd",
+                                //lower_cd: "$lower_cd"
                             },
                             count: {
                                 $sum: 1
@@ -43,7 +45,7 @@ module.exports = {
                     //res.json(result);
                     incident: incident
                 }
-            }).sort("_id.higher_cd");
+            });
 
     },
 
