@@ -112,7 +112,7 @@ module.exports = {
     qna_detail: (req, res, next) => {
         
         logger.debug("Trace qna_detail : ", req.params.id);
-        
+
         try {
             OftenQnaModel.findById({
                 _id: req.params.id
@@ -217,7 +217,6 @@ module.exports = {
      */
     download: (req, res, next) => {
         var filepath = path.join(__dirname, '../../', CONFIG.fileUpload.directory, req.params.path1, req.params.path2);
-        console.log(filepath);
         res.download(filepath);
     },
 
