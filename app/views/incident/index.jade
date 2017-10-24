@@ -169,8 +169,13 @@ block content
                                     // start 접수내용
                                     p#_content
                                 // 첨부파일 1개 이상일때만 표시
-                                #_attach_box
-                                // start 조치내용
+                                b
+                                .row
+                                    .col-lg-6
+                                        #_attach_box
+                                    .col-lg-6
+                                        #_attach_img_box
+                                    // start 조치내용
                                 #_complete_box
     
     //서비스 평가 모달
