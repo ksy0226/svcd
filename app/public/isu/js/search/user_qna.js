@@ -9,6 +9,7 @@ var totalData = 0;      // 총 데이터 수
 
 var dataPerPage = 15;   // 한 페이지에 나타낼 데이터 수
 var pageCount = 10;      // 한 화면에 나타낼 페이지 수
+var totalPage = 0;
 
 $(document).ready(function () {
    
@@ -72,6 +73,8 @@ function getDataList(selectedPage){
             //리스트에 내용 매핑
             setDataList(dataObj, selectedPage);
             totalData = dataObj.length;
+            totalPage = Math.ceil(totalData/dataPerPage);
+            $('#totalPage').text(totalPage);
             paging(totalData, dataPerPage, pageCount, selectedPage);
         }
     });
