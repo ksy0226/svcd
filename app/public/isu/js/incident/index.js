@@ -46,6 +46,11 @@ $(document).ready(function () {
         research();
     });
 
+    //완료저장버튼 클릭 시
+    $('#valuationSaveBtn').on('click', function () {
+        valuationSave();
+    });
+
     //말줄임
     /*
     $(".truncate1").dotdotdot({
@@ -289,20 +294,20 @@ function setDetail(dataObj) {
 
     if (dataObj.status_cd == '1') {
         $('#_status_nm').addClass('label label-inverse');
-        $('#valuationBtn').attr('style','display:none');
+        $('#valuationBtn').attr('style', 'display:none');
     } else if (dataObj.status_cd == '2') {
         $('#_status_nm').addClass('label label-primary');
-        $('#valuationBtn').attr('style','display:none');
+        $('#valuationBtn').attr('style', 'display:none');
     } else if (dataObj.status_cd == '3') {
         $('#_status_nm').removeClass();
         $('#_status_nm').addClass('label label-success');
-        $('#valuationBtn').attr('style','display:');
+        $('#valuationBtn').attr('style', 'display:');
     } else if (dataObj.status_cd == '4') {
         $('#_status_nm').addClass('.label label-purple');
-        $('#valuationBtn').attr('style','display:none');
+        $('#valuationBtn').attr('style', 'display:none');
     } else if (dataObj.status_cd == '5') {
         $('#_status_nm').addClass('.label label-info');
-        $('#valuationBtn').attr('style','display:none');
+        $('#valuationBtn').attr('style', 'display:none');
     }
 
     //진행상태 미평가, 완료시 담당자 코멘트 활성화
@@ -330,47 +335,46 @@ function setDetail(dataObj) {
     } else {
         $('#_complete_box').html('');
     }
-        
+
     //진행상태 미평가시 서비스 만족도 활성화
     if (dataObj.status_cd == '3') {
-        $('#_service_box').html('');
+        $('#_valuation_box').html('');
         var addList = "";
         addList += "<div class='row'>";
         addList += "    <div class='col-lg-12'>";
-        addList += "        <div class='card-box'><span class='m-t-0 text-primary'><b>서비스 만족도</b></span>";
+        addList += "        <form class='card-box'><span class='m-t-0 text-primary'><b>서비스 만족도</b></span>";
         addList += "            <hr>";
         addList += "            <p class='text-inverse m-b-10 m-t-20'>조치내역에 대해 만족하십니까?</p>";
-        addList += "            <div class='radio radio-primary radio-inline'>";
-        addList += "                <input id='valuation' type='radio' value='5' name='incident[valuation]' checked=''>";
-        addList += "                <label for='inlineRadio1' class='font-12'> 매우 만족 </label>";
-        addList += "            </div>";
-        addList += "            <div class='radio radio-primary radio-inline'>";
-        addList += "                <input id='valuation' type='radio' value='4' name='incident[valuation]'>";
-        addList += "                <label for='inlineRadio2' class='font-12'> 만족 </label>";
-        addList += "            </div>";
-        addList += "            <div class='radio radio-primary radio-inline'>";
-        addList += "                <input id='valuation' type='radio' value='3' name='incident[valuation]'>";
-        addList += "                <label for='inlineRadio3' class='font-13'> 보통 </label>";
-        addList += "            </div>";
-        addList += "            <div class='radio radio-primary radio-inline'>";
-        addList += "                <input id='valuation' type='radio' value='2' name='incident[valuation]'>";
-        addList += "                <label for='inlineRadio4' class='font-12'> 불만족 </label>";
-        addList += "            </div>";
-        addList += "            <div class='radio radio-primary radio-inline'>";
-        addList += "                <input id='valuation' type='radio' value='1' name='incident[valuation]'>";
-        addList += "                <label for='inlineRadio5' class='font-12'> 매우 불만족 </label>";
-        addList += "            </div>";
-        addList += "            <p class='text-inverse m-t-20'>불편사항이나 개선사항이 있으시다면 입력해주세요. </p>";
-        addList += "            <textarea rows='3' name='incident[valuation_content]' class='form-control'></textarea>";
-        addList += "            <div class='text-right m-t-15'>";
-        addList += "                <button type='button' class='btn btn-default btn-sm waves-effect waves-light'>확인</button>";
-        addList += "            </div>";
+        addList += "            <form id='valuation_form' action='#' class='form-horizontal group-border-dashed'>";
+        addList += "                <div class='radio radio-primary radio-inline'>";
+        addList += "                    <input type='radio' value='5' name='incident[valuation]'>";
+        addList += "                    <label for='inlineRadio1' class='font-12'> 매우 만족 </label>";
+        addList += "                </div>";
+        addList += "                <div class='radio radio-primary radio-inline'>";
+        addList += "                    <input type='radio' value='4' name='incident[valuation]'>";
+        addList += "                    <label for='inlineRadio2' class='font-12'> 만족 </label>";
+        addList += "                </div>";
+        addList += "                <div class='radio radio-primary radio-inline'>";
+        addList += "                    <input type='radio' value='3' name='incident[valuation]'>";
+        addList += "                    <label for='inlineRadio3' class='font-13'> 보통 </label>";
+        addList += "                </div>";
+        addList += "                <div class='radio radio-primary radio-inline'>";
+        addList += "                    <input type='radio' value='2' name='incident[valuation]'>";
+        addList += "                    <label for='inlineRadio4' class='font-12'> 불만족 </label>";
+        addList += "                </div>";
+        addList += "                <div class='radio radio-primary radio-inline'>";
+        addList += "                   <input type='radio' value='1' name='incident[valuation]'>";
+        addList += "                   <label for='inlineRadio5' class='font-12'> 매우 불만족 </label>";
+        addList += "                </div>";
+        addList += "                <p class='text-inverse m-t-20'>불편사항이나 개선사항이 있으시다면 입력해주세요. </p>";
+        addList += "                <textarea rows='3' id='valuation_content' name='incident[valuation_content]' class='form-control'></textarea>";
+        addList += "            </form>";
         addList += "        </div>";
         addList += "    </div>";
         addList += "</div>";
-        $('#_service_box').append(addList);
+        $('#_valuation_box').append(addList);
     } else {
-        $('#_service_box').html('');
+        $('#_valuation_box').html('');
     }
 
     /**
@@ -397,35 +401,64 @@ function setDetail(dataObj) {
     $('#_manager_email').html(dataObj.manager_email);
 
 
-    if(dataObj.status_cd >= '4'){
+    if (dataObj.status_cd >= '4') {
         $('#_').addClass('label label-purple');
     }
 
 
-    /*
-    if(dataObj.attach_file.length > 0){
-        var addList = "";
-        addList += "							<tr onclick=detailShow('" + dataObj[i-1]._id + "')>";
-        addList += "								<td>" + dataObj[i-1].higher_nm + " / " + dataObj[i-1].lower_nm + "</td>";
-        addList += "								<td class='text-center'>" + dataObj[i-1].request_nm + "</td>";
-        addList += "								<td class='text-center'>" + register_dateVal + "</td>";
-        addList += "								<td class='text-center'>" + dataObj[i-1].status_nm + "</td>";
-        addList += "							</tr>";
-    
-        $("#_aftercomplete").append(addList);
-
-        $('#_aftercomplete').addClass('i fa fa-paperclip m-r-10 m-b-10');
-        for(var cnt=0; cnt <dataObj.attach_file.length; cnt++){
-            $('#_aftercomplete').html(dataObj.attach_file[cnt].originalname);
-        }
-       
-    }else{
-
-        $('#_aftercomplete').html('');
-        $('#_aftercomplete').removeClass();
-    }
-    */
-
-    
-
 }
+
+//>>================== 서비스만족도 스크립트 ==============
+/**
+ * 서비스만족도 내용 저장
+ */
+function valuationSave() {
+    var reqParam = $('#valuation_form').serialize();
+
+    reqParam += "&incident[valuation_content]=" + $('textarea[name = "incident[valuation_content]"]').val() +
+        "&incident[valuation]=" + RadioCheck();
+
+    $.ajax({
+        type: "POST",
+        async: true,
+        url: "/incident/valuationSave/" + incident_id,
+        dataType: "json", // xml, html, script, json 미지정시 자동판단
+        timeout: 30000,
+        cache: false,
+        data: reqParam,
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        error: function (request, status, error) {
+            alert("valuationSave error : " + error);
+        },
+        beforeSend: function () {
+        },
+        success: function (dataObj) {
+            if (dataObj.success) {
+                $('.modal').modal('hide');
+                initValuationModal();
+                research(selectedPage);
+            } else {
+                alert('e : ' + JSON.stringify(dataObj));
+            }
+        }
+    });
+}
+
+/**
+ * 서비스만족도 모달 초기화
+ */
+function initValuationModal() {
+    $('textarea[name="incident[valuation_content]"]').val('');
+}
+
+function RadioCheck() {
+    var size = $('input[name = "incident[valuation]"]').length;
+
+    for (var i = 0; i < size; i++) {
+        if ($('input[name = "incident[valuation]"]')[i].checked) {
+            return $('input[name = "incident[valuation]"]')[i].value;
+        }
+    }
+}
+
+

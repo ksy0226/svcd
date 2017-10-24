@@ -311,4 +311,58 @@ module.exports = {
         logger.debug("=====================>incident controllers insertedImage");
     },
 
+    /**
+     * 서비스 평가 내용 등록
+     */
+    valuationSave: (req, res, next) => {
+        logger.debug("valuationSave =====================> " + JSON.stringify(req.body));
+        logger.debug("req.body.incident : ", req.body.incident);
+        try {
+            async.waterfall([function (callback) {
+                var upIncident = req.body.incident;
+                upIncident.status_cd = '4';
+                upIncident.status_nm = '완료';
+                callback(null, upIncident);
+            }], function (err, upIncident) {
+                logger.debug("=========> upIncident ", upIncident);
+
+                if (err) {
+                    res.json({
+                        success: false,
+                        message: "No data found to update"
+                    });
+                } else {
+                    Incident.findOneAndUpdate({
+                        _id: req.params.id
+                    }, upIncident, function (err, Incident) {
+                        if (err) return res.json({
+                            success: false,
+                            message: err
+                        });
+                        if (!Incident) {
+                            return res.json({
+                                success: false,
+                                message: "No data found to update"
+                            });
+                        } else {
+                            //완료 업데이트 성공 시
+                            logger.debug("=====================================================================================");
+                            logger.debug("=========== 메일발송 대상인지 체크 후 처리로직 추가구현(TODO mailLogic )  ==============");
+                            logger.debug("=====================================================================================");
+                            return res.json({
+                                success: true,
+                                message: "update successed"
+                            });
+                        }
+                    });
+                }
+            });
+        } catch (e) {
+            logger.error("incident control valuationSave : ", e);
+            return res.json({
+                success: false,
+                message: err
+            });
+        }
+    },
 };
