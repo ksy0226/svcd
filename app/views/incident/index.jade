@@ -127,52 +127,62 @@ block content
 
     //상세모달
     #wdetail_modal.modal.fade(role='dialog', aria-hidden='true', aria-labelledby='custom-width-modalLabel', tabindex='-1', style='display: none;')
-        .modal-dialog(style='width:60%;')
+        .modal-dialog(style='width:50%;')
             .modal-content
                 .modal-header
                     button.close(data-dismiss='modal', type='button', aria-hidden='true') ×
+                    h4#custom-width-modalLabel.modal-title
+                        b 처리진행현황 상세보기
                 .modal-body
                     .row
-                    .col-sm-12
-                        .page-title-box
-                            ol.breadcrumb.pull-right
-                                li
-                                    a(href='#') Home
-                                li
-                                    a(href='/incident') 문의 및 담당자
-                                li.active 처리진행현황
-                            h4.page-title 처리진행현황 상세보기
-                // start Search Area
-                .row
-                    .col-lg-12
-                        .card-box
-                            .m-b-30
-                                // Right Sidebar
-                                span.pull-right
-                                    b#_status_nm
-                                h4.m-t-0
-                                    b#_title
-                                hr
-                                .media
+                        .col-lg-12
+                            .btn-toolbar.m-t-10(role='toolbar')
+                                .pull-left
+                                    button.btn.btn-primary.waves-effect.waves-light.m-l-5(type='button', onClick="javascript:$('#wdetail_modal').modal('hide')")
+                                        i.fa.fa-bars
+                                        | 목록
+                                    button#valuationBtn.btn.btn-success.waves-effect.waves-light.m-l-5(data-target='#valuation_modal', data-toggle='modal', type='button', style='display: none;')
+                                        i.fa.fa-edit
+                                        | 서비스 평가
+                    // start Search Area
+                    .row
+                        .col-lg-12
+                            .card-box
+                                .m-b-30
+                                    // Right Sidebar
                                     span.pull-right
-                                        h4#_request_company_nm-request_nm
-                                        span.pull-right#_request_complete_date
-                                    .media-body
-                                        h4.m-t-0.text-primary
-                                            i.md.md-desktop-windows.m-r-10(style='font-size:24px')
-                                            b 접수내용
-                                        //
-                                            <h4 class="text-unverse m-0"><b>박선우</b></h4>
-                                            <small class="text-muted">이수시스템</small>
-                                // media
-                                hr.m-t-10
-                                // start 접수내용
-                                p#_content
-                            // 첨부파일 1개 이상일때만 표시
-
-                            // start 조치내용
-                            #_complete_box
-                        // start 평가
-                        #_service_box
+                                        b#_status_nm
+                                    h4.m-t-0
+                                        b#_title
+                                    .media
+                                        span.pull-right
+                                            h4#_request_company_nm-request_nm
+                                            span.pull-right#_request_complete_date
+                                        .media-body
+                                            h4.m-t-0.text-primary
+                                                i.md.md-desktop-windows.m-r-10(style='font-size:24px')
+                                                b 접수내용
+                                            //
+                                                <h4 class="text-unverse m-0"><b>박선우</b></h4>
+                                                <small class="text-muted">이수시스템</small>
+                                    // media
+                                    hr.m-t-10
+                                    // start 접수내용
+                                    p#_content
+                                // 첨부파일 1개 이상일때만 표시
+                                #_attach_box
+                                // start 조치내용
+                                #_complete_box
+    
+    //서비스 평가 모달
+    #valuation_modal.modal.fade(role='dialog', aria-hidden='true', aria-labelledby='custom-width-modalLabel', tabindex='-1', style='display: none;')
+        .modal-dialog(style='width:40%;')
+            .modal-content
+                .modal-header
+                    button.close(data-dismiss='modal', type='button', aria-hidden='true') ×
+                    h4#custom-width-modalLabel.modal-title
+                        b 서비스 평가
+                .modal-body
+                    #_service_box
 
 block footer

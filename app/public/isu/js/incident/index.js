@@ -289,15 +289,20 @@ function setDetail(dataObj) {
 
     if (dataObj.status_cd == '1') {
         $('#_status_nm').addClass('label label-inverse');
+        $('#valuationBtn').attr('style','display:none');
     } else if (dataObj.status_cd == '2') {
         $('#_status_nm').addClass('label label-primary');
+        $('#valuationBtn').attr('style','display:none');
     } else if (dataObj.status_cd == '3') {
         $('#_status_nm').removeClass();
         $('#_status_nm').addClass('label label-success');
+        $('#valuationBtn').attr('style','display:');
     } else if (dataObj.status_cd == '4') {
         $('#_status_nm').addClass('.label label-purple');
+        $('#valuationBtn').attr('style','display:none');
     } else if (dataObj.status_cd == '5') {
         $('#_status_nm').addClass('.label label-info');
+        $('#valuationBtn').attr('style','display:none');
     }
 
     //진행상태 미평가, 완료시 담당자 코멘트 활성화
