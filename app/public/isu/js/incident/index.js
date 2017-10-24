@@ -412,7 +412,7 @@ function setDetail(dataObj) {
             var addList = "";
             addList += "<a href='/incident/download/" + dataObj.attach_file[cnt].path + "'>";
             addList += "<img src='" + dataObj.attach_file[cnt].path + "' alt=" + dataObj.attach_file[cnt].originalname + " class='img-thumbnail img-responsive'>";
-            $('#_attach_img_box').append("<td class='col-sm-2 col-xs-4'>" + addList + "</td>");
+            $('#_attach_img_box').append("<td class='col-sm-3 col-xs-3'>" + addList + "</td>");
         }
     } else {
         $('#_attach_img_box').html('');
