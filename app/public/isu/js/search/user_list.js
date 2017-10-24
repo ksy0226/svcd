@@ -184,8 +184,8 @@ function setDataList(dataObj, selectedPage) {
         //addList += "								<td>" + dataObj[i-1].higher_nm + "</td>";
         addList += "								<td>" + dataObj[i-1].lower_nm + "</td>";
         addList += "								<td>" + dataObj[i-1].title + "</td>";
-        addList += "								<td>" + register_dateVal + "</td>";
-        addList += "								<td>" + dataObj[i-1].manager_nm + "</td>";
+        addList += "								<td class='text-center'>" + register_dateVal + "</td>";
+        addList += "								<td class='text-center'>" + dataObj[i-1].manager_nm + "</td>";
         addList += "							</tr>";
 
         $("#more_list").append(addList);
@@ -296,7 +296,6 @@ function detailShow(id){
  * 상세조회 매핑
  */
 function setDetail(dataObj){
-    alert("dataObj.register_date>>> "+dataObj.register_date);
 
     //상위코드
     //higher_cd = dataObj.higher_cd;
@@ -319,7 +318,11 @@ function setDetail(dataObj){
     $('#_request_company_nm-request_nm').html(dataObj.request_company_nm+"/"+dataObj.request_nm);
     $('#_request_complete_date').html(dataObj.request_complete_date);
     $('#_app_menu').html(dataObj.app_menu);
-    $('#_register_nm-register_date').html(dataObj.register_nm+"/"+dataObj.register_date);
+    //$('#_register_nm-register_date').html(dataObj.register_nm+"/"+dataObj.register_date);
+    var register_dateVal = new Date(dataObj.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    $('#_register_nm-register_date').html(dataObj.register_nm+"/"+register_dateVal);
+
+
     $('#_title').html(dataObj.title);
     $('#_content').html(dataObj.content);
 
