@@ -57,18 +57,18 @@ module.exports = {
                     err: err
                 });
             }
-            var real_contact = req.session.office_tel_no+'/';
-            real_contact += req.session.hp_telno+'/';
-            real_contact += req.session.email+'/';
-            if(real_contact == "//") real_contact = "";
+            var real_contact = req.session.office_tel_no + '/';
+            real_contact += req.session.hp_telno + '/';
+            real_contact += req.session.email + '/';
+            if (real_contact == "//") real_contact = "";
 
             res.render("incident/new", {
                 companyProcess: companyProcess,
-                user_nm : req.session.user_nm,
-                sabun : req.session.sabun,
-                office_tel_no : req.session.office_tel_no,
-                hp_telno : req.session.hp_telno,
-                real_contact : real_contact
+                user_nm: req.session.user_nm,
+                sabun: req.session.sabun,
+                office_tel_no: req.session.office_tel_no,
+                hp_telno: req.session.hp_telno,
+                real_contact: real_contact
             });
         });
     },
@@ -191,7 +191,7 @@ module.exports = {
      */
     viewDetail: (req, res, next) => {
         logger.debug("Trace viewDetail : ", req.params.id);
-        try{
+        try {
             Incident.findById({
                 _id: req.params.id
             }, function (err, incident) {
@@ -206,7 +206,7 @@ module.exports = {
                         for (var i = 0; i < incident.attach_file.length; i++) {
                             var path = incident.attach_file[i].path
                             incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
-                            if (incident.attach_file[i].mimetype!= null && incident.attach_file[i].mimetype.indexOf('image') > -1) {
+                            if (incident.attach_file[i].mimetype != null && incident.attach_file[i].mimetype.indexOf('image') > -1) {
                                 incident.attach_file[i].mimetype = 'image';
                             }
                         }
@@ -215,10 +215,14 @@ module.exports = {
                         incident: incident,
                         user: req.user
                     });
+
+                    /*모달형식
+                    res.send(incident);
+                    */
                 }
             });
-        }catch(e){
-            logger.debug('****************',e);
+        } catch (e) {
+            logger.debug('incident viewDetail error : ', e);
         }
     },
 
@@ -236,8 +240,8 @@ module.exports = {
     getIncident: (req, res, next) => {
 
         var search = service.createSearch(req);
-        console.log("search"+search);
-        
+        console.log("search" + search);
+
         async.waterfall([function (callback) {
             //if (search.findIncident) return callback(null, []);
             Incident.find(search.findIncident, function (err, incident) {
@@ -264,9 +268,9 @@ module.exports = {
      * Incident 상세 JSON 데이타 조회
      */
     getIncidentDetail: (req, res, next) => {
-        
+
         logger.debug("Trace viewDetail : ", req.params.id);
-        try{
+        try {
             Incident.findById({
                 _id: req.params.id
             }, function (err, incident) {
@@ -281,7 +285,7 @@ module.exports = {
                         for (var i = 0; i < incident.attach_file.length; i++) {
                             var path = incident.attach_file[i].path
                             incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
-                            if (incident.attach_file[i].mimetype!= null && incident.attach_file[i].mimetype.indexOf('image') > -1) {
+                            if (incident.attach_file[i].mimetype != null && incident.attach_file[i].mimetype.indexOf('image') > -1) {
                                 incident.attach_file[i].mimetype = 'image';
                             }
                         }
@@ -289,17 +293,17 @@ module.exports = {
                     res.send(incident);
                 }
             });
-        }catch(e){
-            logger.debug('****************',e);
+        } catch (e) {
+            logger.debug('****************', e);
         }
     },
-        
+
 
 
     /**
      * summernote 이미지링크 처리
      */
-    insertedImage: (req, res, next) => {    
+    insertedImage: (req, res, next) => {
         //res.send( '/uploads/' + req.file.filename);
         logger.debug("=====================>incident controllers insertedImage");
         res.send(req.file.filename);

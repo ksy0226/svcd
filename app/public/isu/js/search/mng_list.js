@@ -1,5 +1,6 @@
 'use strict';
 
+var incident_id = ''; //선택 인시던트 id
 var rowIdx = 0;         //출력 시작 인덱스
 var dataCnt = 0;        // 출력 종료 인덱스
 var inCnt = 15;         //한번에 화면에 조회되는 리스트 수
@@ -175,7 +176,8 @@ function setDataList(dataObj, selectedPage) {
 
         var idValue = dataObj[i-1]._id ;
         var addList = "";
-        addList += "							<tr onclick=window.location='/search/mng_detail/" + dataObj[i-1]._id + "'>";
+        //addList += "							<tr onclick=window.location='/search/mng_detail/" + dataObj[i-1]._id + "'>";
+        addList += "							<tr onclick=detailShow('" + dataObj[i-1]._id + "')>";
         addList += "								<td>" + dataObj[i-1].higher_nm + " / " + dataObj[i-1].lower_nm + "</td>";
         if(dataObj[i-1].complete_open_flag == "Y"){
             addList += "								<td>" + dataObj[i-1].title + "</td>";
@@ -210,7 +212,7 @@ function setDataList(dataObj, selectedPage) {
         /**
          * 진행상태
          */
-        if($(this).find('td:eq(4)').html() == "접수"){
+        if($(this).find('td:eq(4)').html() == "접수" || $(this).find('td:eq(4)').html() == "접수대기"){
             $(this).find('td:eq(4)').html('<span class="label label-inverse">접수중</span>');
         }if($(this).find('td:eq(4)').html() == "처리중"){
             $(this).find('td:eq(4)').html('<span class="label label-primary">처리중</span>');
@@ -287,4 +289,126 @@ function paging(totalData, dataPerPage, pageCount, currentPage){
         getDataList(selectedPage);
         
     });
+}
+
+
+
+/**
+ * 상세모달호출
+ * @param {*} incident_id  
+ */
+function detailShow(id){
+    //incident id값 세팅
+    incident_id = id;
+
+    var reqParam = '';
+    $.ajax({
+        type: "GET",
+        async: true,
+        url: "/incident/getIncidentDetail/"+id,
+        dataType: "json", // xml, html, script, json 미지정시 자동판단
+        timeout: 30000, //제한 시간
+        cache: false,
+        data: reqParam, // $($('form')).serialize()
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        error: function (request, status, error) {
+            alert("error : " + error);
+        },
+        beforeSend: function () {
+        },
+        success: function (dataObj) {
+            setDetail(dataObj);
+            $('#wdetail_modal').modal('show');
+        }
+    });
+}
+
+/**
+ * 상세조회 매핑
+ */
+function setDetail(dataObj){
+
+
+    //상위코드
+    //higher_cd = dataObj.higher_cd;
+
+    /**
+     * 등록내용 세팅
+     */
+    $('#_status_nm').html(dataObj.status_nm);
+    //$('#_process_speed').html(dataObj.process_speed);
+
+    /**
+    * 긴급구분
+    */
+    if(dataObj.process_speed == "2"){
+        $('#_process_speed').html('<span class="label label-warning">✔</span>');
+    }
+
+    $('#_higher_nm').html(dataObj.higher_nm);
+    $('#_lower_nm').html(dataObj.lower_nm);
+    $('#_request_company_nm-request_nm').html(dataObj.request_company_nm+"/"+dataObj.request_nm);
+    $('#_request_complete_date').html(dataObj.request_complete_date);
+    $('#_app_menu').html(dataObj.app_menu);
+    //$('#_register_nm-register_date').html(dataObj.register_nm+"/"+dataObj.register_date);
+    var register_dateVal = new Date(dataObj.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    $('#_register_nm-register_date').html(dataObj.register_nm+"/"+register_dateVal);
+
+    $('#_title').html(dataObj.title);
+    $('#_content').html(dataObj.content);
+
+    if(dataObj.status_cd == '1'){
+        $('#_status_nm').addClass('label label-inverse');
+    }else if(dataObj.status_cd == '2'){
+        $('#_status_nm').addClass('label label-primary');
+    }else if(dataObj.status_cd == '3'){
+        $('#_status_nm').removeClass();
+        $('#_status_nm').addClass('label label-success');
+    }else if(dataObj.status_cd == '4'){
+        $('#_status_nm').addClass('label label-purple');
+
+    }else if(dataObj.status_cd == '5'){
+        $('#_status_nm').addClass('label label-info');
+    }
+
+    /**
+     * 처리내용 세팅
+     */
+    $('#_manager_nm').html(dataObj.manager_nm);
+    $('#_receipt_date').html(dataObj.receipt_date);
+    $('#_complete_reserve_date').html(dataObj.complete_reserve_date);
+    $('#_business_level').html(dataObj.business_level);
+    $('#_complete_content').html(dataObj.complete_content);
+    $('#_complete_date').html(dataObj.complete_date);
+    $('#_need_minute').html(dataObj.need_minute);
+    $('#_delay_reason').html(dataObj.delay_reason);
+    $('#_valuation').html(dataObj.valuation);
+    if(dataObj.complete_open_flag == 'Y'){
+        dataObj.complete_open_flag = '공개';
+    }else{
+        dataObj.complete_open_flag = '비공개';
+    }
+    //$('#_complete_open_flag-reading_cnt').html(dataObj.complete_open_flag+"/"+dataObj.reading_cnt);
+    $('#_complete_open_flag-reading_cnt').html(dataObj.complete_open_flag);
+    $('#_sharing_content').html(dataObj.sharing_content);
+
+
+
+    if(dataObj.attach_file.length > 0){
+        $('#_attach').html('');
+
+        for(var cnt=0; cnt <dataObj.attach_file.length; cnt++){
+            var fileList = "";
+            fileList += "<a href='/search/download/" + dataObj.attach_file[cnt].path + "'>";
+            fileList += "<span class='text-pink'> " + dataObj.attach_file[cnt].originalname +  "</span>";
+            fileList += "<span class='text-muted.m-l-10'> " + "(" + dataObj.attach_file[cnt].size + " Byte)" +  "</span>";
+            //$('#_attach').addClass('i fa fa-paperclip m-r-10 m-b-10');
+            $('#_attach').append("<td class='i fa fa-paperclip m-r-10 m-b-10'>" + fileList +"</td>");
+        } 
+    }else{
+        $('#_attach').html('');
+        $('#_attach').removeClass();
+    }
+    
+
 }

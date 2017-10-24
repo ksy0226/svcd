@@ -21,7 +21,7 @@ var IncidentSchema = new Schema({
     register_company_nm     : {type : String},  //등록자 회사명                                                              
     register_sabun          : {type : String},  //등록자 사번 
     register_nm             : {type : String},  //등록자 명                                                                
-    register_date           : {type : String , default : Date.now()},  //등록일                                                                     
+    register_date           : {type : Date , default : Date.now()},  //등록일                                                                     
     register_yyyy           : {type : String},  //등록년                                                                     
     register_mm             : {type : String},  //등록월
     real_register_mm        : {type : String},  //실제요청자
@@ -48,7 +48,6 @@ var IncidentSchema = new Schema({
     delay_reason            : {type : String},  //지연사유                                                                           
     work_time             : {type : Number},  //작업시간                                                                         
     complete_date           : {type : String, default : ''},  //완료일                                                                       
-    valuation               : {type : Number, default : 0},  //평가점수                                                                         
     reading_cnt             : {type : Number},                                                                           
     complete_open_flag      : {type : String, default : 'N'},  //완료후공개여부                                                                     
     higher_cd               : {type : String},  //상위업무 코드
@@ -59,6 +58,7 @@ var IncidentSchema = new Schema({
     add_solution_content    : {type : String},                                                                           
     process_cd           : {type : String},  //처리구분 (processGubun Model)
     process_nm           : {type : String},  //처리구분내용                                                                        
+    valuation               : {type : Number, default : 0},  //평가점수                                                                         
     valuation_content       : {type : String}, //평가내용                                                                           
     approval_gbn            : {type : String},                                                                           
     modify_yn               : {type : String, default : 'N'},                                                                           
