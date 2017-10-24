@@ -65,14 +65,10 @@ module.exports = {
                             message: err
                         });
                     } else {
-                        //완료요청일, 등록일, 접수일, 완료예정일, 완료일
-                        if(incident.request_complete_date != '') incident.request_complete_date = incident.request_complete_date.substring(0,10);
-                        if(incident.register_date != '') incident.register_date = incident.register_date.substring(0,10);
-                        if(incident.receipt_date != '') incident.receipt_date = incident.receipt_date.substring(0,10);
-                        if(incident.complete_reserve_date != '') incident.complete_reserve_date = incident.complete_reserve_date.substring(0,10);
-                        if(incident.complete_date != '') incident.complete_date = incident.complete_date.substring(0,10);
-                        //incident.complete_date = new Date(incident.complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
                         
+
+
+
                         callback(null,incident)
                     }
                 });
@@ -92,6 +88,18 @@ module.exports = {
                         err: err
                     });
                 }else{
+
+                    //완료요청일, 등록일, 접수일, 완료예정일, 완료일
+                    if(incident.request_complete_date != '') incident.request_complete_date = incident.request_complete_date.substring(0,10);
+                    if(incident.register_date != '') incident.register_date = incident.register_date.substring(0,10);
+                    if(incident.receipt_date != '') incident.receipt_date = incident.receipt_date.substring(0,10);
+                    if(incident.complete_reserve_date != '') incident.complete_reserve_date = incident.complete_reserve_date.substring(0,10);
+                    if(incident.complete_date != '') incident.complete_date = incident.complete_date.substring(0,10);
+                    //incident.complete_date = new Date(incident.complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                    
+                    
+
+
                     res.render("manager/work_detail", {
                         incident: incident,
                         lowerprocess: lowerprocess

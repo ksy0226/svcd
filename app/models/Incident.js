@@ -21,7 +21,7 @@ var IncidentSchema = new Schema({
     register_company_nm     : {type : String},  //등록자 회사명                                                              
     register_sabun          : {type : String},  //등록자 사번 
     register_nm             : {type : String},  //등록자 명                                                                
-    register_date           : {type : String , default : Date.now()},  //등록일                                                                     
+    register_date           : {type : Date , default : Date.now()},  //등록일                                                                     
     register_yyyy           : {type : String},  //등록년                                                                     
     register_mm             : {type : String},  //등록월
     real_register_mm        : {type : String},  //실제요청자
