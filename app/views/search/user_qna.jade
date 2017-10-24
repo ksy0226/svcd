@@ -97,10 +97,12 @@ block content
                 .row
                     .col-lg-12
                         .card-box
-                            table.table.table-bordered
+                            //table.table.table-bordered
+                            table.table.table-hover
                                 thead
                                     tr
                                         th(class='text-center' width='20%') 상위업무명
+                                        th(class='i fa fa-paperclip' width='5%') 
                                         th(class='text-center') 제목
                                         th(class='text-center' width='15%') 등록일
                                         th(class='text-center' width='10%') 담당자
@@ -160,10 +162,12 @@ block content
                                             td#_title
                                         tr
                                             th.bg-muted 첨부파일
-                                            td
+                                            //td
                                                 i.fa.fa-paperclip.m-r-10
                                                 a(href='#')
                                                     span.text-pink faqimage.gif
+                                            td(colspan='3')
+                                                span#_attach
 
                                         tr
                                             th.bg-muted 내용

@@ -56,37 +56,7 @@ module.exports = {
                     res.render("http/500", {
                         err: err
                     });
-                } else {
-                    /*
-                    logger.debug(">>> incident : ", incident.attach_file);
-                    //path 길이 잘라내기
-                    if (incident.attach_file.length > 0) {
-                        for (var i = 0; i < incident.attach_file.length; i++) {
-                            var path = incident.attach_file[i].path
-                            incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
-                            logger.debug("==========> incident.attach_file[i].mimetype.indexOf('image') ",incident.attach_file[i].mimetype.indexOf('image'));
-                            if(incident.attach_file[i].mimetype.indexOf('image')>-1){
-                                incident.attach_file[i].mimetype = 'image';
-                            }
-                        }
-                    }
-                    logger.debug("*** incident : ", incident.attach_file);
-                    */
-                    /*
-                    //path 길이 잘라내기
-                    if (incident.attach_file.length > 0) {
-                        for (var i = 0; i < incident.attach_file.length; i++) {
-                            var path = incident.attach_file[i].path
-                            incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
-                            if (incident.attach_file[i].mimetype.indexOf('image') > -1) {
-                                incident.attach_file[i].mimetype = 'image';
-                            }
-                        }
-                    }
-                    
-                    */
-
-                    
+                } else {          
                     //완료요청일, 등록일, 접수일, 완료예정일, 완료일
                     if(incident.request_complete_date != '') incident.request_complete_date = incident.request_complete_date.substring(0,10);
                     if(incident.register_date != '') incident.register_date = incident.register_date.substring(0,10);
@@ -140,64 +110,10 @@ module.exports = {
      * 자주묻는 질문과 답 상세조회 > OfteQna 가져오기
      */
     qna_detail: (req, res, next) => {
-        console.log("1111111111");
-        /*
-        logger.debug("Trace user_detail : ", req.params.id);
-        //console.log("Trace user_detail : ", req.params.id);
         
-        OftenQnaModel.findById({
-            _id: req.params.id
-        }, function (err, oftenqna) {
-            if (err) {
-                return res.json({
-                    success: false,
-                    message: err
-                });
-            } else {
-
-                logger.debug(">>> incident : ", incident.attach_file);
-                //path 길이 잘라내기
-                if (incident.attach_file.length > 0) {
-                    for (var i = 0; i < incident.attach_file.length; i++) {
-                        var path = incident.attach_file[i].path
-                        incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
-                        logger.debug("==========> incident.attach_file[i].mimetype.indexOf('image') ",incident.attach_file[i].mimetype.indexOf('image'));
-                        if(incident.attach_file[i].mimetype.indexOf('image')>-1){
-                            incident.attach_file[i].mimetype = 'image';
-                        }
-                    }
-                }
-                logger.debug("*** incident : ", incident.attach_file);
-
-                //path 길이 잘라내기
-                if (incident.attach_file.length > 0) {
-                    for (var i = 0; i < incident.attach_file.length; i++) {
-                        var path = incident.attach_file[i].path
-                        incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
-                        if (incident.attach_file[i].mimetype.indexOf('image') > -1) {
-                            incident.attach_file[i].mimetype = 'image';
-                        }
-                    }
-                }
-                
-
-
-                //완료요청일, 등록일, 접수일, 완료예정일, 완료일
-
-                incident.request_complete_date = new Date(incident.request_complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-                incident.register_date = new Date(incident.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-                incident.receipt_date = new Date(incident.receipt_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-                incident.complete_reserve_date = new Date(incident.complete_reserve_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-                incident.complete_date = new Date(incident.complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-                
-                res.render("search/qna_detail", {
-                    oftenqna: oftenqna
-                });
-            }
-        });*/
-        console.log("Trace qna_detail : ", req.params.id);
+        logger.debug("Trace qna_detail : ", req.params.id);
         
-        try{
+        try {
             OftenQnaModel.findById({
                 _id: req.params.id
             }, function (err, oftenqna) {
@@ -207,26 +123,22 @@ module.exports = {
                         message: err
                     });
                 } else {
-                    
-                    /*
                     //path 길이 잘라내기
-                    if (incident.attach_file.length > 0) {
-                        for (var i = 0; i < incident.attach_file.length; i++) {
-                            var path = incident.attach_file[i].path
-                            incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
-                            if (incident.attach_file[i].mimetype!= null && incident.attach_file[i].mimetype.indexOf('image') > -1) {
-                                incident.attach_file[i].mimetype = 'image';
+                    if (oftenqna.attach_file.length > 0) {
+                        for (var i = 0; i < oftenqna.attach_file.length; i++) {
+                            var path = oftenqna.attach_file[i].path
+                            oftenqna.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
+                            if (oftenqna.attach_file[i].mimetype != null && oftenqna.attach_file[i].mimetype.indexOf('image') > -1) {
+                                oftenqna.attach_file[i].mimetype = 'image';
                             }
                         }
-                    }*/
-
+                    }
                     res.json(oftenqna);
                 }
             });
-        }catch(e){
-            logger.debug('****************',e);
+        } catch (e) {
+            logger.debug('****************', e);
         }
-
     },
 
     /**

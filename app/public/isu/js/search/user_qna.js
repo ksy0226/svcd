@@ -102,13 +102,27 @@ function setDataList(dataObj, selectedPage) {
         //alert(i +"번째" +created_atVal);
 
         var idValue = dataObj[i-1]._id ;
+        var created_atVal = dataObj[i-1].created_at; 
+    
+        if(created_atVal){
+            created_atVal = created_atVal.substring(0,10);
+        }else{
+            created_atVal = ""; 
+        }
+
+
         var addList = "";
         //addList += "							<tr onclick=window.location='/search/qna_detail/" + dataObj[i-1]._id + "'>";
         addList += "							<tr onclick=detailShow('" + dataObj[i-1]._id + "')>";
         addList += "								<td>" + dataObj[i-1].higher_nm + "</td>";
+        if(dataObj[i-1].attach_file.length > 0){
+            addList += "								<td class='i fa fa-paperclip m-r-10 m-b-10'></td>";
+        }else{
+            addList += "								<td></td>";
+        }
         addList += "								<td>" + dataObj[i-1].title + "</td>";
-        addList += "								<td>" + dataObj[i-1].created_at + "</td>";
-        addList += "								<td>" + dataObj[i-1].user_nm + "</td>";
+        addList += "								<td class='text-center'>" + created_atVal + "</td>";
+        addList += "								<td class='text-center'>" + dataObj[i-1].user_nm + "</td>";
         addList += "							</tr>";
 
         $("#more_list").append(addList);
@@ -223,6 +237,26 @@ function setDetail(dataObj){
     $('#_higher_nm').html(dataObj.higher_nm);
     $('#_title').html(dataObj.title);
     $('#_content').html(dataObj.content);
+
+    
+
+    if(dataObj.attach_file.length > 0){
+        $('#_attach').html('');
+
+        for(var cnt=0; cnt <dataObj.attach_file.length; cnt++){
+            var fileList = "";
+            fileList += "<a href='/search/download/" + dataObj.attach_file[cnt].path + "'>";
+            fileList += "<span class='text-pink'> " + dataObj.attach_file[cnt].originalname +  "</span>";
+            fileList += "<span class='text-muted.m-l-10'> " + "(" + dataObj.attach_file[cnt].size + " Byte)" +  "</span>";
+            //$('#_attach').addClass('i fa fa-paperclip m-r-10 m-b-10');
+            $('#_attach').append("<td class='i fa fa-paperclip m-r-10 m-b-10'>" + fileList +"</td>");
+        } 
+        
+    }else{
+        $('#_attach').html('');
+        $('#_attach').removeClass();
+    }
+    
 
 
 }
