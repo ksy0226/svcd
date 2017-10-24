@@ -5,16 +5,16 @@ block head
     link(href='/plugins/summernote/dist/summernote.css', rel='stylesheet')
 
     link(href='/plugins/switchery/switchery.min.css', rel='stylesheet')
-    link(href='/assets/css/bootstrap.min.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/core.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/icons.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/components.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/pages.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/menu_light.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/responsive.css', rel='stylesheet', type='text/css')
+    link(type='text/css', href='/assets/css/bootstrap.min.css', rel='stylesheet')
+    link(type='text/css', href='/assets/css/core.css', rel='stylesheet')
+    link(type='text/css', href='/assets/css/icons.css', rel='stylesheet')
+    link(type='text/css', href='/assets/css/components.css', rel='stylesheet')
+    link(type='text/css', href='/assets/css/pages.css', rel='stylesheet')
+    link(type='text/css', href='/assets/css/menu_light.css', rel='stylesheet')
+    link(type='text/css', href='/assets/css/responsive.css', rel='stylesheet')
 
     //첨부파일
-    link(href='/vendor/fileupload/css/fileinput.css', media='all', rel='stylesheet', type='text/css')
+    link(type='text/css', href='/vendor/fileupload/css/fileinput.css', media='all', rel='stylesheet')
 
     script(src='/assets/js/modernizr.min.js')
     // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
@@ -36,8 +36,8 @@ block head
     script(src='/assets/js/jquery.scrollTo.min.js')
     script(src='/plugins/switchery/switchery.min.js')
     script(src='/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js')
-    script(type='text/javascript', src='/plugins/multiselect/js/jquery.multi-select.js')
-    script(type='text/javascript', src='/plugins/jquery-quicksearch/jquery.quicksearch.js')
+    script(src='/plugins/multiselect/js/jquery.multi-select.js', type='text/javascript')
+    script(src='/plugins/jquery-quicksearch/jquery.quicksearch.js', type='text/javascript')
     script(src='/plugins/select2/select2.min.js', type='text/javascript')
     script(src='/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js', type='text/javascript')
     script(src='/plugins/bootstrap-inputmask/bootstrap-inputmask.min.js', type='text/javascript')
@@ -53,6 +53,9 @@ block head
     script(src='/vendor/fileupload/js/fileinput.js', type='text/javascript')
 
     script(src='/isu/js/incident/index.js', type='text/javascript')
+    
+     // 더보기
+    script(src='/plugins/dotdotdot/jquery.dotdotdot.min.js')
 
 block content
     // ==============================================================
@@ -121,22 +124,55 @@ block content
                             .forum-container
                                 #more_list.row
                             #more_view.row
-              
-                                    
-        // end content
 
-        footer.footer.text-right
-            | 2017 © ISU Group.
+    //상세모달
+    #wdetail_modal.modal.fade(role='dialog', aria-hidden='true', aria-labelledby='custom-width-modalLabel', tabindex='-1', style='display: none;')
+        .modal-dialog(style='width:60%;')
+            .modal-content
+                .modal-header
+                    button.close(data-dismiss='modal', type='button', aria-hidden='true') ×
+                .modal-body
+                    .row
+                    .col-sm-12
+                        .page-title-box
+                            ol.breadcrumb.pull-right
+                                li
+                                    a(href='#') Home
+                                li
+                                    a(href='/incident') 문의 및 담당자
+                                li.active 처리진행현황
+                            h4.page-title 처리진행현황 상세보기
+                // start Search Area
+                .row
+                    .col-lg-12
+                        .card-box
+                            .m-b-30
+                                // Right Sidebar
+                                span.pull-right
+                                    b#_status_nm
+                                h4.m-t-0
+                                    b#_title
+                                hr
+                                .media
+                                    span.pull-right
+                                        h4#_request_company_nm-request_nm
+                                        span.pull-right#_request_complete_date
+                                    .media-body
+                                        h4.m-t-0.text-primary
+                                            i.md.md-desktop-windows.m-r-10(style='font-size:24px')
+                                            b 접수내용
+                                        //
+                                            <h4 class="text-unverse m-0"><b>박선우</b></h4>
+                                            <small class="text-muted">이수시스템</small>
+                                // media
+                                hr.m-t-10
+                                // start 접수내용
+                                p#_content
+                            // 첨부파일 1개 이상일때만 표시
 
-    #ajax_indicator(style='display:none')
-        p(style='text-align:center; padding:16px 0 0 0; left:50%; top:40%; position:absolute;')
-            img(src='/isu/images/large-loading.gif', width='26px', height='26px', alt='처리중', border='0', align='absmiddle')
+                            // start 조치내용
+                            #_complete_box
+                        // start 평가
+                        #_service_box
 
-    // dotdotdot
-    script(src='/plugins/dotdotdot/jquery.dotdotdot.min.js')
-    //script(src='https://code.jquery.com/jquery-3.1.0.slim.min.js')
-    //script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.js')
-    //script(src='/vendor/jquery/jQuery.highlight.js')
-            
-
-
+block footer

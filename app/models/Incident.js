@@ -48,7 +48,6 @@ var IncidentSchema = new Schema({
     delay_reason            : {type : String},  //지연사유                                                                           
     work_time             : {type : Number},  //작업시간                                                                         
     complete_date           : {type : String, default : ''},  //완료일                                                                       
-    valuation               : {type : Number, default : 0},  //평가점수                                                                         
     reading_cnt             : {type : Number},                                                                           
     complete_open_flag      : {type : String, default : 'N'},  //완료후공개여부                                                                     
     higher_cd               : {type : String},  //상위업무 코드
@@ -59,6 +58,7 @@ var IncidentSchema = new Schema({
     add_solution_content    : {type : String},                                                                           
     process_cd           : {type : String},  //처리구분 (processGubun Model)
     process_nm           : {type : String},  //처리구분내용                                                                        
+    valuation               : {type : Number, default : 0},  //평가점수                                                                         
     valuation_content       : {type : String}, //평가내용                                                                           
     approval_gbn            : {type : String},                                                                           
     modify_yn               : {type : String, default : 'N'},                                                                           
