@@ -363,6 +363,7 @@ function setDetail(dataObj){
         $('#_status_nm').addClass('label label-success');
     }else if(dataObj.status_cd == '4'){
         $('#_status_nm').addClass('label label-purple');
+
     }else if(dataObj.status_cd == '5'){
         $('#_status_nm').addClass('label label-info');
     }
@@ -389,23 +390,23 @@ function setDetail(dataObj){
     $('#_sharing_content').html(dataObj.sharing_content);
 
 
-    //alert(dataObj.title);
+
     if(dataObj.attach_file.length > 0){
-        //alert("file exist");
-        //alert(JSON.stringify(dataObj.attach_file));
+        $('#_attach').html('');
 
-        $('#_attach').addClass('i fa fa-paperclip m-r-10 m-b-10');
         for(var cnt=0; cnt <dataObj.attach_file.length; cnt++){
-            $('#_attach').html(dataObj.attach_file[cnt].originalname);
-        }
-       
+            var fileList = "";
+            //fileList += "<td class='i fa fa-paperclip m-r-10 m-b-10'>";
+            fileList += "<a href='/download/dataObj.attach_file[cnt].path'>";
+            fileList += "<span class='text-pink'> " + dataObj.attach_file[cnt].originalname + "</span></a>";
+            
+            //$('#_attach').addClass('i fa fa-paperclip m-r-10 m-b-10');
+            $('#_attach').append("<td class='i fa fa-paperclip m-r-10 m-b-10'>" + fileList);
+        } 
     }else{
-
-        //alert("file non-exist");
         $('#_attach').html('');
         $('#_attach').removeClass();
     }
     
-       
 
 }
