@@ -296,7 +296,7 @@ function detailShow(id){
  * 상세조회 매핑
  */
 function setDetail(dataObj){
-
+    alert("dataObj.register_date>>> "+dataObj.register_date);
 
     //상위코드
     //higher_cd = dataObj.higher_cd;

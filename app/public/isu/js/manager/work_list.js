@@ -182,6 +182,7 @@ function setDataList(dataObj, selectedPage) {
                 register_dateVal = ""; 
             }
 
+
             var addList = "";
             //addList += "							<tr onclick=window.location='/manager/work_detail/" + dataObj[i]._id + "'>";
             //addList += "							<tr style='cursor:hand' onMouserOver='changeColor(this,red)' onMouseOut='changeColer(this,#yellow)' onclick=detailShow('" + dataObj[i]._id + "')>";
@@ -422,7 +423,11 @@ function setDetail(dataObj){
     $('#_request_company_nm-request_nm').html(dataObj.request_company_nm+"/"+dataObj.request_nm);
     $('#_request_complete_date').html(dataObj.request_complete_date);
     $('#_app_menu').html(dataObj.app_menu);
-    $('#_register_nm-register_date').html(dataObj.register_nm+"/"+dataObj.register_date);
+    //$('#_register_nm-register_date').html(dataObj.register_nm+"/"+dataObj.register_date);
+    var register_dateVal = new Date(dataObj.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    $('#_register_nm-register_date').html(dataObj.register_nm+"/"+register_dateVal);
+    
+
     $('#_title').html(dataObj.title);
     $('#_content').html(dataObj.content);
 

@@ -212,7 +212,7 @@ function setDataList(dataObj, selectedPage) {
         /**
          * 진행상태
          */
-        if($(this).find('td:eq(4)').html() == "접수"){
+        if($(this).find('td:eq(4)').html() == "접수" || $(this).find('td:eq(4)').html() == "접수대기"){
             $(this).find('td:eq(4)').html('<span class="label label-inverse">접수중</span>');
         }if($(this).find('td:eq(4)').html() == "처리중"){
             $(this).find('td:eq(4)').html('<span class="label label-primary">처리중</span>');
@@ -350,7 +350,10 @@ function setDetail(dataObj){
     $('#_request_company_nm-request_nm').html(dataObj.request_company_nm+"/"+dataObj.request_nm);
     $('#_request_complete_date').html(dataObj.request_complete_date);
     $('#_app_menu').html(dataObj.app_menu);
-    $('#_register_nm-register_date').html(dataObj.register_nm+"/"+dataObj.register_date);
+    //$('#_register_nm-register_date').html(dataObj.register_nm+"/"+dataObj.register_date);
+    var register_dateVal = new Date(dataObj.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    $('#_register_nm-register_date').html(dataObj.register_nm+"/"+register_dateVal);
+
     $('#_title').html(dataObj.title);
     $('#_content').html(dataObj.content);
 
