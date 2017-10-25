@@ -51,12 +51,11 @@ $(document).ready(function () {
         valuationSave();
     });
 
-    /**
-     * 완료처리 화면
-     */
+    // 완료처리 화면
     $('#valuation_modal').on('hidden.bs.modal', function () {
         initValuationModal();
     });
+
 
     //말줄임
     /*
@@ -154,8 +153,8 @@ function setContent(dataObj) {
 
         for (var i = rowIdx; i < dataCnt; i++) {
 
+            //var register_dateVal = new Date(dataObj[i].register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
             var register_dateVal = dataObj[i].register_date;
-
             if (register_dateVal) {
                 register_dateVal = register_dateVal.substring(0, 10);
             } else {
@@ -184,7 +183,7 @@ function setContent(dataObj) {
             addList += "									<div class='col-md-11'>";
             addList += "										<div class='forum-sub-title'>";
             addList += "											<span class='text-primary'><b>" + dataObj[i].manager_nm + "</b></span>";
-            addList += "											<span class='p-w-xs'>" + dataObj[i].register_date + "</span>";
+            addList += "											<span class='p-w-xs'>" + register_dateVal + "</span>";
             addList += "										</div>";
             //addList += "										<a href='/incident/viewDetail/" + dataObj[i]._id + "' class='forum-item-title'>";
             addList += "										<a onclick=detailShow('" + dataObj[i]._id + "') class='forum-item-title'>";
@@ -266,10 +265,15 @@ function detailShow(id) {
         beforeSend: function () {
         },
         success: function (dataObj) {
+            initDetail();
             setDetail(dataObj);
             $('#wdetail_modal').modal('show');
         }
     });
+}
+
+function initDetail() {
+    $('#valuationBtn').attr('style', 'display:none');
 }
 
 /**
@@ -279,25 +283,25 @@ function setDetail(dataObj) {
     /**
      * 등록내용 세팅
      */
+    //$('#_status_nm').removeClass();
     $('#_status_nm').html(dataObj.status_nm);
-
-    /**
-    * 긴급구분
-    */
+    //긴급구분
     if (dataObj.process_speed == "2") {
         $('#_process_speed').html('<span class="label label-warning">✔</span>');
     }
-
     $('#_filelength').html(dataObj.attach_file.length);
     $('#_higher_nm').html(dataObj.higher_nm);
     $('#_lower_nm').html(dataObj.lower_nm);
     $('#_request_company_nm-request_nm').html(dataObj.request_company_nm + "/" + dataObj.request_nm);
+    //요청 완료일 양식 변경
+    //var request_complete_dateVal = new Date(dataObj.request_complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
     $('#_request_complete_date').html(dataObj.request_complete_date);
     $('#_app_menu').html(dataObj.app_menu);
-    $('#_register_nm-register_date').html(dataObj.register_nm + "/" + dataObj.register_date);
+    //등록일 양식 변경
+    var register_dateVal = new Date(dataObj.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    $('#_register_nm-register_date').html(dataObj.register_nm + "/" + register_dateVal);
     $('#_title').html(dataObj.title);
     $('#_content').html(dataObj.content);
-
     if (dataObj.status_cd == '1') {
         $('#_status_nm').addClass('label label-inverse');
         $('#valuationBtn').attr('style', 'display:none');
@@ -305,7 +309,6 @@ function setDetail(dataObj) {
         $('#_status_nm').addClass('label label-primary');
         $('#valuationBtn').attr('style', 'display:none');
     } else if (dataObj.status_cd == '3') {
-        $('#_status_nm').removeClass();
         $('#_status_nm').addClass('label label-success');
         $('#valuationBtn').attr('style', 'display:');
     } else if (dataObj.status_cd == '4') {
@@ -321,7 +324,7 @@ function setDetail(dataObj) {
         $('#_complete_box').html('');
         var addList = "";
         addList += "<div class='row'>";
-        addList += "    <div class='col-sm-12'>";
+        addList += "    <div class='col-sm-12 m-t-10'>";
         addList += "        <div style='border:1px solid #3bafda' class='card-box m-t-10'><span id='_complete_date' class='pull-right'></span>";
         addList += "            <h4 class='m-t-0 text-primary'><i style='font-size:24px' class='md md-sms m-r-10'></i><b>조치내용</b></h4>";
         addList += "            <hr>";
@@ -375,12 +378,30 @@ function setDetail(dataObj) {
         addList += "                <p class='text-inverse m-t-20'>불편사항이나 개선사항이 있으시다면 입력해주세요. </p>";
         addList += "                <textarea rows='3' id='valuation_content' name='incident[valuation_content]' class='form-control'></textarea>";
         addList += "            </form>";
-        addList += "        </div>";
+        addList += "        </form>";
         addList += "    </div>";
         addList += "</div>";
         $('#_valuation_box').append(addList);
     } else {
         $('#_valuation_box').html('');
+    }
+
+    //진행상태 완료시 서비스 만족도 평가내역 활성화
+    if (dataObj.status_cd == '4') {
+        $('#_after_valuation_box').html('');
+        var addList = "";
+        addList += "<div class='row'>";
+        addList += "    <div class='col-sm-12'>";
+        addList += "        <div style='border:1px solid #3bafda' class='card-box'><span id='_complete_date' class='pull-right'></span>";
+        addList += "            <h4 class='m-t-0 text-primary'><i style='font-size:20px' class='fa fa-pencil m-r-10'></i><b>서비스 만족도 평가 내역</b></h4>";
+        addList += "            <hr>";
+        addList += "            <p>" + dataObj.valuation_content + "</p>";
+        addList += "        </div>";
+        addList += "    </div>";
+        addList += "</div>";
+        $('#_after_valuation_box').append(addList);
+    } else {
+        $('#_after_valuation_box').html('');
     }
 
     //첨부파일
@@ -419,16 +440,21 @@ function setDetail(dataObj) {
         $('#_attach_img_box').removeClass();
     }
 
-    
     /**
      * 처리내용 세팅
      */
     $('#_manager_nm').html(dataObj.manager_nm);
+    //완료 날짜 양식 변경
+    //var receipt_dateVal = new Date(dataObj.receipt_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
     $('#_receipt_date').html(dataObj.receipt_date);
-    $('#_complete_reserve_date').html(dataObj.complete_reserve_date);
+    //완료 요청 날짜 양식 변경
+    var complete_reserve_dateVal = new Date(dataObj.complete_reserve_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    $('#_complete_reserve_date').html(complete_reserve_dateVal);
     $('#_business_level').html(dataObj.business_level);
     $('#_complete_content').html(dataObj.complete_content);
-    $('#_complete_date').html(dataObj.complete_date);
+    //완료 날짜 양식 변경
+    var complete_dateVal = new Date(dataObj.complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    $('#_complete_date').html(complete_dateVal);
     $('#_need_minute').html(dataObj.need_minute);
     $('#_delay_reason').html(dataObj.delay_reason);
     $('#_valuation').html(dataObj.valuation);
@@ -439,15 +465,11 @@ function setDetail(dataObj) {
     }
     $('#_complete_open_flag-reading_cnt').html(dataObj.complete_open_flag);
     $('#_sharing_content').html(dataObj.sharing_content);
-
     $('#_manager_info').html(dataObj.manager_dept_nm + "  " + dataObj.manager_nm + "  " + dataObj.manager_position);
     $('#_manager_email').html(dataObj.manager_email);
-
-
     if (dataObj.status_cd >= '4') {
         $('#_').addClass('label label-purple');
     }
-
 
 }
 
@@ -489,10 +511,8 @@ function valuationSave() {
 
 //서비스만족도 모달 초기화
 function initValuationModal() {
-    alert('모달 닫기');
-    $('#wdetail_modal').empty();
-    $('textarea[name="incident[valuation_content]"]').val('');
-    $('input[name = "incident[valuation]"]').nal('');
+    $('textarea[name = "incident[valuation_content]"]').val('');
+    $('input[name = "incident[valuation]"]').val('');
 }
 
 //라디오 체크 값 리턴

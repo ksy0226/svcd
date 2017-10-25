@@ -24,8 +24,8 @@ block head
     script(src='https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js')
 
     // jQuery
-    script(src='/assets/js/jquery.min.js')
-    script(src='/assets/js/bootstrap.min.js')
+    //script(src='/assets/js/jquery.min.js')
+    //script(src='/assets/js/bootstrap.min.js')
     script(src='/assets/js/detect.js')
     script(src='/assets/js/fastclick.js')
     script(src='/assets/js/jquery.slimscroll.js')
@@ -175,8 +175,10 @@ block content
                                         #_attach_box
                                     .col-lg-6
                                         #_attach_img_box
-                                    // start 조치내용
+                                // 조치내용
                                 #_complete_box
+                                // 서비스 평가 조치 내용
+                                #_after_valuation_box
     
     //서비스 평가 모달
     #valuation_modal.modal.fade(role='dialog', aria-hidden='true', aria-labelledby='custom-width-modalLabel', tabindex='-1', style='display: none;')
