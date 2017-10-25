@@ -51,12 +51,11 @@ $(document).ready(function () {
         valuationSave();
     });
 
-    /**
-     * 완료처리 화면
-     */
+    // 완료처리 화면
     $('#valuation_modal').on('hidden.bs.modal', function () {
         initValuationModal();
     });
+    
 
     //말줄임
     /*
@@ -266,10 +265,15 @@ function detailShow(id) {
         beforeSend: function () {
         },
         success: function (dataObj) {
+            initDetail();
             setDetail(dataObj);
             $('#wdetail_modal').modal('show');
         }
     });
+}
+
+function initDetail(){
+    $('#valuationBtn').attr('style', 'display:none');
 }
 
 /**
@@ -489,10 +493,8 @@ function valuationSave() {
 
 //서비스만족도 모달 초기화
 function initValuationModal() {
-    alert('모달 닫기');
-    $('#wdetail_modal').empty();
-    $('textarea[name="incident[valuation_content]"]').val('');
-    $('input[name = "incident[valuation]"]').nal('');
+    $('textarea[name = "incident[valuation_content]"]').val('');
+    $('input[name = "incident[valuation]"]').val('');
 }
 
 //라디오 체크 값 리턴
