@@ -55,7 +55,7 @@ $(document).ready(function () {
     $('#valuation_modal').on('hidden.bs.modal', function () {
         initValuationModal();
     });
-    
+
 
     //말줄임
     /*
@@ -183,7 +183,7 @@ function setContent(dataObj) {
             addList += "									<div class='col-md-11'>";
             addList += "										<div class='forum-sub-title'>";
             addList += "											<span class='text-primary'><b>" + dataObj[i].manager_nm + "</b></span>";
-            addList += "											<span class='p-w-xs'>" + dataObj[i].register_date + "</span>";
+            addList += "											<span class='p-w-xs'>" + register_dateVal + "</span>";
             addList += "										</div>";
             //addList += "										<a href='/incident/viewDetail/" + dataObj[i]._id + "' class='forum-item-title'>";
             addList += "										<a onclick=detailShow('" + dataObj[i]._id + "') class='forum-item-title'>";
@@ -272,7 +272,7 @@ function detailShow(id) {
     });
 }
 
-function initDetail(){
+function initDetail() {
     $('#valuationBtn').attr('style', 'display:none');
 }
 
@@ -283,6 +283,7 @@ function setDetail(dataObj) {
     /**
      * 등록내용 세팅
      */
+    //$('#_status_nm').removeClass();
     $('#_status_nm').html(dataObj.status_nm);
 
     /**
@@ -309,7 +310,6 @@ function setDetail(dataObj) {
         $('#_status_nm').addClass('label label-primary');
         $('#valuationBtn').attr('style', 'display:none');
     } else if (dataObj.status_cd == '3') {
-        $('#_status_nm').removeClass();
         $('#_status_nm').addClass('label label-success');
         $('#valuationBtn').attr('style', 'display:');
     } else if (dataObj.status_cd == '4') {
@@ -379,12 +379,30 @@ function setDetail(dataObj) {
         addList += "                <p class='text-inverse m-t-20'>불편사항이나 개선사항이 있으시다면 입력해주세요. </p>";
         addList += "                <textarea rows='3' id='valuation_content' name='incident[valuation_content]' class='form-control'></textarea>";
         addList += "            </form>";
-        addList += "        </div>";
+        addList += "        </form>";
         addList += "    </div>";
         addList += "</div>";
         $('#_valuation_box').append(addList);
     } else {
         $('#_valuation_box').html('');
+    }
+
+
+    //진행상태 완료시 서비스 만족도 평가내역 활성화
+    if (dataObj.status_cd == '4') {
+        $('#_after_valuation_box').html('');
+        var addList = "";
+        addList += "<div class='row'>";
+        addList += "    <div class='col-lg-12 m-t-10'>";
+        addList += "        <span class='m-t-10 text-primary'><i class='fa fa-pencil m-r-10'></i><b>서비스 만족도 평가 내역</b></span>";
+        addList += "        <div class='form-group m-t-10'>";
+        addList += "                <input name='incident[valuation_content]' type='text' value=" + dataObj.valuation_content + " class='form-control' readonly>";
+        addList += "        </div>";
+        addList += "    </div>";
+        addList += "</div>";
+        $('#_after_valuation_box').append(addList);
+    } else {
+        $('#_after_valuation_box').html('');
     }
 
     //첨부파일
@@ -423,7 +441,7 @@ function setDetail(dataObj) {
         $('#_attach_img_box').removeClass();
     }
 
-    
+
     /**
      * 처리내용 세팅
      */
@@ -432,7 +450,8 @@ function setDetail(dataObj) {
     $('#_complete_reserve_date').html(dataObj.complete_reserve_date);
     $('#_business_level').html(dataObj.business_level);
     $('#_complete_content').html(dataObj.complete_content);
-    $('#_complete_date').html(dataObj.complete_date);
+    var complete_dateVal = new Date(dataObj.complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    $('#_complete_date').html(complete_dateVal);
     $('#_need_minute').html(dataObj.need_minute);
     $('#_delay_reason').html(dataObj.delay_reason);
     $('#_valuation').html(dataObj.valuation);
