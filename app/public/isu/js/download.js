@@ -2,22 +2,17 @@
 
 function fnTableToExcel(dvData){
     var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
-    var textRange; var j=0;
+    var textRange; 
+    var j=0;
     var tab = dvData; // id of table
-    
-    for(j = 0 ; j < tab.rows.length ; j++) {     
+    for(j = 0 ; j < tab.rows.length ; j++) {
         tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
-        //tab_text=tab_text+"</tr>";
     }
-
-    //alert(tab_text);
 
     tab_text=tab_text+"</table>";
     tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
     tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
     tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
-
-    //alert(tab_text);
 
     var ua = window.navigator.userAgent;
     var msie = ua.indexOf("MSIE "); 
@@ -34,17 +29,37 @@ function fnTableToExcel(dvData){
     return (sa);
 }
 
-/*
+
 function fnAllExcel(JsonData){
-    var tab_text="<table border='2px'>";
-    var textRange; var j=0;
-    var tab = JsonData; // id of table
-    
+    alert("수정중입니다");
+    /*
+    var arrData = typeof JsonData != 'object' ? JSON.parse(JsonData) : JsonData;
+    var tab_text="<table border='1px'>";
     tab_text += "<tr bgcolor='#87AFC6'>";
-    tab_text += "<th>칼럼1</th>";
-    tab_text += "<th>칼럼2</th>";
+
+    for (var index in arrData[0]) {
+        tab_text=tab_text+ "<th>"+index+"</th>";
+    }
+
     tab_text += "</tr>";
-    tab_text += "</table>";
+    
+    for (var i = 0; i < arrData.length; i++) {
+        tab_text += "<tr>";    
+        for (var index in arrData[i]) {
+
+            if(arrData[i][index] == ""){
+                tab_text += "<td></td>";
+            }else{
+                tab_text += "<td>"+arrData[i][index]+"</td>";
+
+            }
+        }
+        
+        tab_text += "</tr>";
+    }
+     
+    tab_text=tab_text+"</table>";
+
 
     tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
     tab_text = tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
@@ -63,9 +78,13 @@ function fnAllExcel(JsonData){
         sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
     }  
     return (sa);
+    */
 }
-*/
+
 function fnJsonToExcel(JsonData){
+    //var arrData = typeof JsonData != 'object' ? JSON.parse(JsonData) : JsonData;
+    //var dataVal = JSON.stringify(arrData);
+    //alert("dataVal"+dataVal);
     var arrData = typeof JsonData != 'object' ? JSON.parse(JsonData) : JsonData;
     var tab_text = '';
 
@@ -107,12 +126,13 @@ function fnJsonToExcel(JsonData){
 function getJsonData(){
     $.ajax({
         type: "GET",
-        url: "/company/exceldownload",
+        url: "/incident/exceldownload",
         contentType: "application/json",
         data: JSON.stringify({}),
         dataType: "json",
         success: function(data, status){
-            fnJsonToExcel(JSON.stringify(data));
+            //fnJsonToExcel(JSON.stringify(data));
+            fnAllExcel(JSON.stringify(data));
         },
         error: function(data, status, err) {
             console.log("err : "+err);

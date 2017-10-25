@@ -20,5 +20,7 @@ router.route('/getIncident').get(ssc.sessionCheck, controller.getIncident);
 router.route('/getIncidentDetail/:id').get(ssc.sessionCheck, controller.getIncidentDetail);
 router.route('/download/:path1/:path2').get(ssc.sessionCheck, controller.download);
 router.route('/valuationSave/:id').post(controller.valuationSave);
+router.route('/exceldownload').get(controller.exceldownload);
+
 
 module.exports = router;
