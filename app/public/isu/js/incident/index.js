@@ -153,16 +153,13 @@ function setContent(dataObj) {
 
         for (var i = rowIdx; i < dataCnt; i++) {
 
-            var register_dateVal = new Date(dataObj[i].register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-
-            /*
+            //var register_dateVal = new Date(dataObj[i].register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
             var register_dateVal = dataObj[i].register_date;
             if (register_dateVal) {
                 register_dateVal = register_dateVal.substring(0, 10);
             } else {
                 register_dateVal = "";
             }
-            */
 
             var addList = "";
             //addList += "                <div class='col-lg-12'>";
@@ -297,8 +294,8 @@ function setDetail(dataObj) {
     $('#_lower_nm').html(dataObj.lower_nm);
     $('#_request_company_nm-request_nm').html(dataObj.request_company_nm + "/" + dataObj.request_nm);
     //요청 완료일 양식 변경
-    var request_complete_dateVal = new Date(dataObj.request_complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-    $('#_request_complete_date').html(request_complete_dateVal);
+    //var request_complete_dateVal = new Date(dataObj.request_complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    $('#_request_complete_date').html(dataObj.request_complete_date);
     $('#_app_menu').html(dataObj.app_menu);
     //등록일 양식 변경
     var register_dateVal = new Date(dataObj.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
@@ -394,10 +391,11 @@ function setDetail(dataObj) {
         $('#_after_valuation_box').html('');
         var addList = "";
         addList += "<div class='row'>";
-        addList += "    <div class='col-lg-12 m-t-10'>";
-        addList += "        <span class='m-t-10 text-primary'><i class='fa fa-pencil m-r-10'></i><b>서비스 만족도 평가 내역</b></span>";
-        addList += "        <div class='form-group m-t-10'>";
-        addList += "                <input name='incident[valuation_content]' type='text' value=" + dataObj.valuation_content + " class='form-control' readonly>";
+        addList += "    <div class='col-sm-12'>";
+        addList += "        <div style='border:1px solid #3bafda' class='card-box'><span id='_complete_date' class='pull-right'></span>";
+        addList += "            <h4 class='m-t-0 text-primary'><i style='font-size:20px' class='fa fa-pencil m-r-10'></i><b>서비스 만족도 평가 내역</b></h4>";
+        addList += "            <hr>";
+        addList += "            <p>" + dataObj.valuation_content + "</p>";
         addList += "        </div>";
         addList += "    </div>";
         addList += "</div>";
@@ -447,8 +445,8 @@ function setDetail(dataObj) {
      */
     $('#_manager_nm').html(dataObj.manager_nm);
     //완료 날짜 양식 변경
-    var receipt_dateVal = new Date(dataObj.receipt_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-    $('#_receipt_date').html(receipt_dateVal);
+    //var receipt_dateVal = new Date(dataObj.receipt_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    $('#_receipt_date').html(dataObj.receipt_date);
     //완료 요청 날짜 양식 변경
     var complete_reserve_dateVal = new Date(dataObj.complete_reserve_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
     $('#_complete_reserve_date').html(complete_reserve_dateVal);
