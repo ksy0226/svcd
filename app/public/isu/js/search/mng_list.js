@@ -335,8 +335,13 @@ function setDetail(dataObj){
     /**
      * 등록내용 세팅
      */
-    $('#_status_nm').html(dataObj.status_nm);
+    //$('#_status_nm').html(dataObj.status_nm);
     //$('#_process_speed').html(dataObj.process_speed);
+    if(dataObj.status_nm !="접수대기"){
+        $('#_status_nm').html(dataObj.status_nm);
+    }else{
+        $('#_status_nm').html("접수중");
+    }
 
     /**
     * 긴급구분
