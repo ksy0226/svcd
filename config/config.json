@@ -28,8 +28,8 @@
         "service": "Isu",
         "host": "mail.isu.co.kr",
         "port": "25",
-        "user": "ksy0226@isu.co.kr",
-        "password": "tkdduq2"
+        "user": "servicedesk@isu.co.kr",
+        "password": "a1234"
     },
     "fileUpload":{
         "directory":"upload-file"
