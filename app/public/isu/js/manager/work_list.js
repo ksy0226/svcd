@@ -175,11 +175,18 @@ function setDataList(dataObj, selectedPage) {
     if(dataObj.length > 0){
         for(var i = startIdx ; i <endIdx+1 ; i++){ 
             var register_dateVal = dataObj[i-1].register_date; 
-            
+            var receipt_dateVal = dataObj[i-1].receipt_date;
+
             if(register_dateVal){
                 register_dateVal = register_dateVal.substring(0,10);
             }else{
                 register_dateVal = ""; 
+            }
+
+            if(receipt_dateVal){
+                receipt_dateVal = receipt_dateVal.substring(0,10);
+            }else{
+                receipt_dateVal = ""; 
             }
 
             var addList = "";
@@ -191,7 +198,7 @@ function setDataList(dataObj, selectedPage) {
             addList += "								<td>" + dataObj[i-1].title + "</td>";
             addList += "								<td>" + dataObj[i-1].request_company_nm +"/"+ dataObj[i-1].request_nm + "</td>";
             addList += "								<td class='text-center'>" + register_dateVal + "</td>";
-            addList += "								<td class='text-center'>" + dataObj[i-1].receipt_date + "</td>";
+            addList += "								<td class='text-center'>" + receipt_dateVal + "</td>";
             //addList += "								<td>" + dataObj[i].lower_nm + "</td>";
             addList += "							</tr>";
 
@@ -222,6 +229,7 @@ function setDataList(dataObj, selectedPage) {
         /**
          * 진행상태
          */
+        
         if($(this).find('td:eq(1)').html() == "1"){
             $(this).find('td:eq(1)').html('<span class="label label-inverse">접수중</span>');
         }if($(this).find('td:eq(1)').html() == "2"){
@@ -407,8 +415,11 @@ function setDetail(dataObj){
     /**
      * 등록내용 세팅
      */
-    $('#_status_nm').html(dataObj.status_nm);
-    //$('#_process_speed').html(dataObj.process_speed);
+    if(dataObj.status_nm !="접수대기"){
+        $('#_status_nm').html(dataObj.status_nm);
+    }else{
+        $('#_status_nm').html("접수중");
+    }
 
     /**
     * 긴급구분
@@ -422,7 +433,13 @@ function setDetail(dataObj){
     $('#_request_company_nm-request_nm').html(dataObj.request_company_nm+"/"+dataObj.request_nm);
     $('#_request_complete_date').html(dataObj.request_complete_date);
     $('#_app_menu').html(dataObj.app_menu);
-    $('#_register_nm-register_date').html(dataObj.register_nm+"/"+dataObj.register_date);
+    //$('#_register_nm-register_date').html(dataObj.register_nm+"/"+dataObj.register_date);
+    var register_dateVal = new Date(dataObj.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    $('#_register_nm-register_date').html(dataObj.register_nm+"/"+register_dateVal);
+
+
+
+
     $('#_title').html(dataObj.title);
     $('#_content').html(dataObj.content);
 
@@ -434,9 +451,9 @@ function setDetail(dataObj){
         $('#_status_nm').removeClass();
         $('#_status_nm').addClass('label label-success');
     }else if(dataObj.status_cd == '4'){
-        $('#_status_nm').addClass('.label label-purple');
+        $('#_status_nm').addClass('label label-purple');
     }else if(dataObj.status_cd == '5'){
-        $('#_status_nm').addClass('.label label-info');
+        $('#_status_nm').addClass('label label-info');
     }
 
     /**

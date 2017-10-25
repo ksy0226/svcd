@@ -303,8 +303,13 @@ function setDetail(dataObj){
     /**
      * 등록내용 세팅
      */
-    $('#_status_nm').html(dataObj.status_nm);
+    //$('#_status_nm').html(dataObj.status_nm);
     //$('#_process_speed').html(dataObj.process_speed);
+    if(dataObj.status_nm !="접수대기"){
+        $('#_status_nm').html(dataObj.status_nm);
+    }else{
+        $('#_status_nm').html("접수중");
+    }
 
     /**
     * 긴급구분
@@ -334,9 +339,9 @@ function setDetail(dataObj){
         $('#_status_nm').removeClass();
         $('#_status_nm').addClass('label label-success');
     }else if(dataObj.status_cd == '4'){
-        $('#_status_nm').addClass('.label label-purple');
+        $('#_status_nm').addClass('label label-purple');
     }else if(dataObj.status_cd == '5'){
-        $('#_status_nm').addClass('.label label-info');
+        $('#_status_nm').addClass('label label-info');
     }
 
     /**

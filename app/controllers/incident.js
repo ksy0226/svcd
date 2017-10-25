@@ -365,4 +365,19 @@ module.exports = {
             });
         }
     },
+    /**
+     * 엑셀다운로드 기능
+     */
+    exceldownload: (req, res, next) => {
+        logger.debug(1);
+        Incident.find(req.body.incident, function(err, incidentJsonData) {
+            if (err) return res.json({
+                success: false,
+                message: err
+            });
+            logger.debug(incidentJsonData);
+            
+            res.json(incidentJsonData);
+        });
+    }
 };
