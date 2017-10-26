@@ -344,11 +344,9 @@ module.exports = {
                                 message: "No data found to update"
                             });
                         } else {
-                            //완료 업데이트 성공 시
-                            mailer.mailSend(Incident);
-                            logger.debug("=====================================================================================");
-                            logger.debug("=========== 메일발송 대상인지 체크 후 처리로직 추가구현(TODO mailLogic )  ==============");
-                            logger.debug("=====================================================================================");
+                            //완료 업데이트 성공 시 메일 전송
+                            mailer.finalSend(Incident);
+
                             return res.json({
                                 success: true,
                                 message: "update successed"

@@ -10,7 +10,7 @@ var sender = '서비스데스크 관리자 <servicedesk@isu.co.kr>';
 
 module.exports = {
 
-    mailSend: (req, res, next) => {
+    finalSend: (req, res, next) => {
 
         var receiver = req.request_nm + " <" + req.request_id + ">";
         var mailTitle = "[서비스데스크 처리 완료] " + req.title;
