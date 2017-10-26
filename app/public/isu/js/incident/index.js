@@ -280,11 +280,15 @@ function initDetail() {
  * 상세조회 매핑
  */
 function setDetail(dataObj) {
+
     /**
      * 등록내용 세팅
      */
-    //$('#_status_nm').removeClass();
-    $('#_status_nm').html(dataObj.status_nm);
+    if(dataObj.status_nm !="접수대기"){
+        $('#_status_nm').html(dataObj.status_nm);
+    }else{
+        $('#_status_nm').html("접수중");
+    }
     //긴급구분
     if (dataObj.process_speed == "2") {
         $('#_process_speed').html('<span class="label label-warning">✔</span>');
@@ -302,6 +306,7 @@ function setDetail(dataObj) {
     $('#_register_nm-register_date').html(dataObj.register_nm + "/" + register_dateVal);
     $('#_title').html(dataObj.title);
     $('#_content').html(dataObj.content);
+    
     if (dataObj.status_cd == '1') {
         $('#_status_nm').addClass('label label-inverse');
         $('#valuationBtn').attr('style', 'display:none');
@@ -309,6 +314,7 @@ function setDetail(dataObj) {
         $('#_status_nm').addClass('label label-primary');
         $('#valuationBtn').attr('style', 'display:none');
     } else if (dataObj.status_cd == '3') {
+        $('#_status_nm').removeClass();
         $('#_status_nm').addClass('label label-success');
         $('#valuationBtn').attr('style', 'display:');
     } else if (dataObj.status_cd == '4') {
@@ -448,13 +454,13 @@ function setDetail(dataObj) {
     //var receipt_dateVal = new Date(dataObj.receipt_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
     $('#_receipt_date').html(dataObj.receipt_date);
     //완료 요청 날짜 양식 변경
-    var complete_reserve_dateVal = new Date(dataObj.complete_reserve_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-    $('#_complete_reserve_date').html(complete_reserve_dateVal);
+    //var complete_reserve_dateVal = new Date(dataObj.complete_reserve_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    $('#_complete_reserve_date').html(dataObj.complete_reserve_date);
     $('#_business_level').html(dataObj.business_level);
     $('#_complete_content').html(dataObj.complete_content);
     //완료 날짜 양식 변경
-    var complete_dateVal = new Date(dataObj.complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-    $('#_complete_date').html(complete_dateVal);
+    //var complete_dateVal = new Date(dataObj.complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    $('#_complete_date').html(dataObj.complete_date);
     $('#_need_minute').html(dataObj.need_minute);
     $('#_delay_reason').html(dataObj.delay_reason);
     $('#_valuation').html(dataObj.valuation);
