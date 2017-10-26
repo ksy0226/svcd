@@ -5,6 +5,7 @@ var async = require('async');
 var Incident = require('../models/Incident');
 var CompanyProcess = require('../models/CompanyProcess');
 var ProcessStatus = require('../models/ProcessStatus');
+var Usermanage = require('../models/Usermanage');
 var service = require('../services/incident');
 var fs = require('fs');
 var path = require('path');
@@ -345,8 +346,18 @@ module.exports = {
                             });
                         } else {
                             //완료 업데이트 성공 시 메일 전송
-                            mailer.finalSend(Incident);
-
+                            Usermanage.find({ email: Incident.request_id }, function (err, usermanage) {
+                                if (err) {
+                                    return res.json({
+                                        success: false,
+                                        message: err
+                                    });
+                                } else {
+                                    if (usermanage.email_send_yn == 'Y') {
+                                        mailer.finalSend(Incident);
+                                    }
+                                }
+                            });
                             return res.json({
                                 success: true,
                                 message: "update successed"
@@ -367,32 +378,32 @@ module.exports = {
      * 엑셀다운로드 기능
      */
     exceldownload: (req, res, next) => {
-        logger.debug("====>",1);
-        
+        logger.debug("====>", 1);
+
         Incident.find(req.body.incident)
-                .select('_id title')
-                .exec(function(err, incidentJsonData) {
-                    if (err){
-                        //console.log("excel 2>>>>>>>>>>>>>>>", err);
-                        return res.json({
-                            success: false,
-                            message: err
-                        });
-                    }
-                    //console.log("excel 2>>>>>>>>>>>>>>>",incidentJsonData);
-        
+            .select('_id title')
+            .exec(function (err, incidentJsonData) {
+                if (err) {
+                    //console.log("excel 2>>>>>>>>>>>>>>>", err);
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                }
+                //console.log("excel 2>>>>>>>>>>>>>>>",incidentJsonData);
+
                 res.json(incidentJsonData);
-        });
-       /*
-        Incident.find(req.body.incident, function(err, incidentJsonData) {
-            if (err) return res.json({
-                success: false,
-                message: err
             });
-            logger.debug(incidentJsonData);
-            
-            res.json(incidentJsonData);
-        });
-       */
+        /*
+         Incident.find(req.body.incident, function(err, incidentJsonData) {
+             if (err) return res.json({
+                 success: false,
+                 message: err
+             });
+             logger.debug(incidentJsonData);
+             
+             res.json(incidentJsonData);
+         });
+        */
     }
 };

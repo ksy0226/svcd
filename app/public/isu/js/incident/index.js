@@ -169,15 +169,15 @@ function setContent(dataObj) {
             addList += "								<div class='row'>";
             addList += "									<div class='col-md-1 forum-info'>";
             if (dataObj[i].status_cd == '1') {
-                addList += "										<span class='btn-outline outline-pink'>" + dataObj[i].status_nm + "</span>";
+                addList += "										<span class='label label-inverse'>" + dataObj[i].status_nm + "</span>";
             } else if (dataObj[i].status_cd == '2') {
-                addList += "										<span class='btn-outline outline-primary'>" + dataObj[i].status_nm + "</span>";
+                addList += "										<span class='label label-primary'>" + dataObj[i].status_nm + "</span>";
             } else if (dataObj[i].status_cd == '3') {
-                addList += "										<span class='btn-outline outline-success'>" + dataObj[i].status_nm + "</span>";
+                addList += "										<span class='label label-success'>" + dataObj[i].status_nm + "</span>";
             } else if (dataObj[i].status_cd == '4') {
-                addList += "										<span class='btn-outline outline-warning'>" + dataObj[i].status_nm + "</span>";
+                addList += "										<span class='label label-purple'>" + dataObj[i].status_nm + "</span>";
             } else if (dataObj[i].status_cd == '5') {
-                addList += "										<span class='btn-outline outline-inverse'>" + dataObj[i].status_nm + "</span>";
+                addList += "										<span class='label label-info'>" + dataObj[i].status_nm + "</span>";
             }
             addList += "									</div>";
             addList += "									<div class='col-md-11'>";
@@ -284,9 +284,9 @@ function setDetail(dataObj) {
     /**
      * 등록내용 세팅
      */
-    if(dataObj.status_nm !="접수대기"){
+    if (dataObj.status_nm != "접수대기") {
         $('#_status_nm').html(dataObj.status_nm);
-    }else{
+    } else {
         $('#_status_nm').html("접수중");
     }
     //긴급구분
@@ -306,23 +306,26 @@ function setDetail(dataObj) {
     $('#_register_nm-register_date').html(dataObj.register_nm + "/" + register_dateVal);
     $('#_title').html(dataObj.title);
     $('#_content').html(dataObj.content);
-    
-    if (dataObj.status_cd == '1') {
-        $('#_status_nm').addClass('label label-inverse');
-        $('#valuationBtn').attr('style', 'display:none');
-    } else if (dataObj.status_cd == '2') {
-        $('#_status_nm').addClass('label label-primary');
-        $('#valuationBtn').attr('style', 'display:none');
-    } else if (dataObj.status_cd == '3') {
+
+    //진행상태 클래스 세팅
+    if (dataObj.status_cd != null) {
         $('#_status_nm').removeClass();
-        $('#_status_nm').addClass('label label-success');
-        $('#valuationBtn').attr('style', 'display:');
-    } else if (dataObj.status_cd == '4') {
-        $('#_status_nm').addClass('.label label-purple');
-        $('#valuationBtn').attr('style', 'display:none');
-    } else if (dataObj.status_cd == '5') {
-        $('#_status_nm').addClass('.label label-info');
-        $('#valuationBtn').attr('style', 'display:none');
+        if (dataObj.status_cd == '1') {
+            $('#_status_nm').addClass('label label-inverse');
+            $('#valuationBtn').attr('style', 'display:none');
+        } else if (dataObj.status_cd == '2') {
+            $('#_status_nm').addClass('label label-primary');
+            $('#valuationBtn').attr('style', 'display:none');
+        } else if (dataObj.status_cd == '3') {
+            $('#_status_nm').addClass('label label-success');
+            $('#valuationBtn').attr('style', 'display:');
+        } else if (dataObj.status_cd == '4') {
+            $('#_status_nm').addClass('label label-purple');
+            $('#valuationBtn').attr('style', 'display:none');
+        } else if (dataObj.status_cd == '5') {
+            $('#_status_nm').addClass('label label-info');
+            $('#valuationBtn').attr('style', 'display:none');
+        }
     }
 
     //진행상태 미평가, 완료시 담당자 코멘트 활성화

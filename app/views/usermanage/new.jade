@@ -85,6 +85,12 @@ block content
                                                             .col-sm-9
                                                                 input.form-control(name='usermanage[jikchk_nm]' type='text' value='')
                                                         .form-group
+                                                            label.col-sm-2.control-label 메일 발송여부
+                                                            .col-sm-9
+                                                                select.form-control(id='email_send_yn' name='usermanage[email_send_yn]' type='text')
+                                                                    option(value='Y') 사용 
+                                                                    option(value='N' Selected) 사용안함
+                                                        .form-group
                                                             label.col-sm-2.control-label 핸드폰번호
                                                             .col-sm-9
                                                                 input.form-control(name='usermanage[hp_telno]' type='text' value='')

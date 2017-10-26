@@ -41,8 +41,6 @@ module.exports = {
                 res.clearCookie('user_flag');
                 res.clearCookie('group_flag');
             }
-            
-            
 
             Usermanage.findOne(
                 { email: req.body.email }

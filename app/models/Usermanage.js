@@ -24,7 +24,7 @@ var usermanageSchema = mongoose.Schema({
     modify_id        : { type : String },
     modify_date      : { type : Date },
     email_ref        : { type : String },
-    email_send_yn    : { type : String },
+    email_send_yn    : { type : String , default : 'N'},
     sabun            : { type : String },
     access_yn        : { type : String , default : 'N'},
     
