@@ -182,7 +182,7 @@ function setDataList(dataObj, selectedPage) {
         if(dataObj[i-1].complete_open_flag == "Y"){
             addList += "								<td>" + dataObj[i-1].title + "</td>";
         }else{
-            addList += "								<td class='fa fa-lock m-r-5'>&nbsp;&nbsp;" + dataObj[i-1].title + "</td>";
+            addList += "								<td><i class='fa fa-lock m-r-5' style='color:darkblue'/>&nbsp;&nbsp;" + dataObj[i-1].title + "</td>";
         }
         addList += "								<td class='text-center'>" + dataObj[i-1].request_nm + "</td>";
         addList += "								<td class='text-center'>" + register_dateVal + "</td>";
