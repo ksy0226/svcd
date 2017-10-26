@@ -31,8 +31,8 @@ function fnTableToExcel(dvData){
 
 
 function fnAllExcel(JsonData){
-    alert("수정중입니다");
-    /*
+    //alert("수정중입니다");
+    
     var arrData = typeof JsonData != 'object' ? JSON.parse(JsonData) : JsonData;
     var tab_text="<table border='1px'>";
     tab_text += "<tr bgcolor='#87AFC6'>";
@@ -78,7 +78,7 @@ function fnAllExcel(JsonData){
         sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
     }  
     return (sa);
-    */
+    
 }
 
 function fnJsonToExcel(JsonData){
