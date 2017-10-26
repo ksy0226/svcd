@@ -8,6 +8,7 @@ var ProcessStatus = require('../models/ProcessStatus');
 var service = require('../services/incident');
 var fs = require('fs');
 var path = require('path');
+var mailer = require('../util/nodemailer');
 var CONFIG = require('../../config/config.json');
 var logger = require('log4js').getLogger('app');
 
@@ -307,8 +308,6 @@ module.exports = {
         //res.send( '/uploads/' + req.file.filename);
         logger.debug("=====================>incident controllers insertedImage");
         res.send(req.file.filename);
-        logger.debug("=====================>incident controllers insertedImage");
-        logger.debug("=====================>incident controllers insertedImage");
     },
 
     /**
@@ -346,6 +345,7 @@ module.exports = {
                             });
                         } else {
                             //완료 업데이트 성공 시
+                            mailer.mailSend(Incident);
                             logger.debug("=====================================================================================");
                             logger.debug("=========== 메일발송 대상인지 체크 후 처리로직 추가구현(TODO mailLogic )  ==============");
                             logger.debug("=====================================================================================");
