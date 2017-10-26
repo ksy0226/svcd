@@ -55,7 +55,7 @@ module.exports = {
      * 인시던트 관리자용 상세 조회 화면
      */
     work_detail: (req, res, next) => {
-        console.log(new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') );
+        //console.log(new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') );
         try{
             async.waterfall([function (callback) {
                 Incident.findById({

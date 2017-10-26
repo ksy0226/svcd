@@ -61,7 +61,7 @@ module.exports = {
      * 저장 처리
      */
     save: (req, res, next) => {
-        console.log('processGubun controller save start!! ');
+        //console.log('processGubun controller save start!! ');
         var processGubun = req.body.processGubun;
         ProcessGubunModel.create(req.body.processGubun, function (err, processGubun) {
             if (err) {
@@ -105,8 +105,8 @@ module.exports = {
      * 업데이트 처리
      */
     update: (req, res, next) => {
-        console.log("Trace update", req.params.id);
-        console.log(req.body);
+        //console.log("Trace update", req.params.id);
+        //console.log(req.body);
         //req.body.processGubun.updatedAt = Date.now();
         try {
             ProcessGubunModel.findOneAndUpdate({

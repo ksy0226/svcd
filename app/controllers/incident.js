@@ -241,7 +241,7 @@ module.exports = {
     getIncident: (req, res, next) => {
 
         var search = service.createSearch(req);
-        console.log("search" + search);
+        //console.log("search" + search);
 
         async.waterfall([function (callback) {
             //if (search.findIncident) return callback(null, []);
@@ -373,13 +373,13 @@ module.exports = {
                 .select('_id title')
                 .exec(function(err, incidentJsonData) {
                     if (err){
-                        console.log("excel 2>>>>>>>>>>>>>>>", err);
+                        //console.log("excel 2>>>>>>>>>>>>>>>", err);
                         return res.json({
                             success: false,
                             message: err
                         });
                     }
-                    console.log("excel 2>>>>>>>>>>>>>>>",incidentJsonData);
+                    //console.log("excel 2>>>>>>>>>>>>>>>",incidentJsonData);
         
                 res.json(incidentJsonData);
         });

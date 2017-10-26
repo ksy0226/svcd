@@ -20,14 +20,14 @@ module.exports = {
                     OrQueries.push({
                         title: { $regex: new RegExp(req.query.searchText, "i") }
                     });
-                    console.log('OrQueries : ' + JSON.stringify(OrQueries));
+                    //console.log('OrQueries : ' + JSON.stringify(OrQueries));
                     highlight.title = req.query.searchText;
                 }
                 if (searchTypes.indexOf("content") >= 0) {
                     OrQueries.push({
                         content: { $regex: new RegExp(req.query.searchText, "i") }
                     });
-                    console.log('OrQueries : ' + OrQueries);
+                    //console.log('OrQueries : ' + OrQueries);
                     highlight.content = req.query.searchText;
                 }
                 if (OrQueries.length > 0) {

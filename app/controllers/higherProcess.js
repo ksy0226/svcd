@@ -81,8 +81,8 @@ module.exports = {
     },
 
     update: (req, res, next) => {
-        console.log("Trace update", req.params.id);
-        console.log(req.body);
+        //console.log("Trace update", req.params.id);
+        //console.log(req.body);
         //req.body.higherProcess.updatedAt = Date.now();
         HigherProcessModel.findOneAndUpdate({
             _id: req.params.id

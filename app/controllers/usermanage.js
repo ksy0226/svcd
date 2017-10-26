@@ -164,14 +164,14 @@ module.exports = {
     },
 
     sendmail: (req, res, next) => {
-        console.log('Enter sendmail!!!');
+        //console.log('Enter sendmail!!!');
         Usermanage.find(req.body.usermanage, function (err, usermanageData) {
             if (err) return res.json({
                 success: false,
                 message: err
             });
 
-            console.log(usermanageData);
+            //console.log(usermanageData);
             //res.json(companyJsonData);
             //res.send({usermanageData : usermanageData});
 
