@@ -28,22 +28,22 @@ block content
                             table.table.table-hover(id='dvData' data-tablesaw-mode='swipe')
                                 thead
                                     tr
-                                        th(width='20%') 상위업무명
-                                        th(width='30%') 처리구분명
-                                        th(width='20%') 설명
+                                        th(width='15%') 상위업무
+                                        th(width='20%') 처리구분명
+                                        th(width='25%') 설명
                                         th(width='10%') 등록자
-                                        th(width='10%') 등록일
-                                        th(width='10%') 사용여부
+                                        th 등록일
+                                        th(width='10%') 사용
                                 tbody
                                     - if (processGubun.length > 0) {
                                         // - for( var i = 0 ; length = question.length > i ; i++ ){ //속도가 빠르다고 알고 있음.
                                         - for( var i in processGubun ){ //속도가 느리다고 알고 있음.
                                             tr(onclick="onclick=location.href='/processGubun/edit/#{processGubun[i]._id}'")
-                                                td #{processGubun[i].higher_cd}
+                                                td #{processGubun[i].higher_nm}
                                                 td #{processGubun[i].process_nm}
                                                 td #{processGubun[i].description}
                                                 td #{processGubun[i].user_nm}
-                                                td #{processGubun[i].created_at}
+                                                td #{processGubun[i].created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
                                                 td #{processGubun[i].use_yn}
                                         - }
                                     - }else{

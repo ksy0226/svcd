@@ -19,13 +19,7 @@ module.exports = {
                     err: err
                 });
             } else {
-                //if(processGubun.created_at != '') processGubun.created_at = processGubun.created_at.substring(0,10);
-                //if(processGubun.register_date != '') processGubun.register_date = processGubun.register_date.substring(0,10);
-                //processGubun.created_at = new Date(incident.complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-                //var d = new Date("Fri Jun 21 00:00:00 UTC+0100 2013");
-                //alert( d.getFullYear() + '-' + d.getUTCMonth() + '-' + d.getUTCDay())
-                //if(processGubun.created_at != '') processGubun.created_at = processGubun.created_at.toDateString() ;
-        
+              
                 res.render("processGubun/index", {
                     processGubun: processGubun
                 });
