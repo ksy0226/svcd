@@ -80,7 +80,7 @@ block content
                                 tr(onclick="onclick=location.href='/higherProcess/#{higherProcess[i]._id}/show'")
                                     td  #{higherProcess[i].higher_nm}  
                                     td.highlight(data-highlight='search.highlight.title') #{higherProcess[i].description}
-                                    td #{higherProcess[i].created_at}
+                                    td #{higherProcess[i].created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
                                     td #{higherProcess[i].user_flag}
                             - }
                         - }else{

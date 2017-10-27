@@ -48,7 +48,7 @@ block content
                                     td.highlight(data-highlight='search.highlight.title') #{lowerProcess[i].description}
                                     td #{lowerProcess[i].need_hour}
                                     td #{lowerProcess[i].user_nm}
-                                    td #{lowerProcess[i].created_at}
+                                    td #{lowerProcess[i].created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
                                     td #{lowerProcess[i].user_flag}
                             - }
                         - }else{
