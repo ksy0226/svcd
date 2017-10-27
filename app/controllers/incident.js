@@ -6,10 +6,10 @@ var Incident = require('../models/Incident');
 var CompanyProcess = require('../models/CompanyProcess');
 var ProcessStatus = require('../models/ProcessStatus');
 var Usermanage = require('../models/Usermanage');
+var mailer = require('../util/nodemailer');
 var service = require('../services/incident');
 var fs = require('fs');
 var path = require('path');
-var mailer = require('../util/nodemailer');
 var CONFIG = require('../../config/config.json');
 var logger = require('log4js').getLogger('app');
 
@@ -345,8 +345,8 @@ module.exports = {
                                 message: "No data found to update"
                             });
                         } else {
-                            //완료 업데이트 성공 시 메일 전송
-                            Usermanage.find({ email: Incident.request_id }, function (err, usermanage) {
+                            //평가 완료 업데이트 성공 시 메일 전송
+                            Usermanage.findOne({ email: Incident.request_id }, function (err, usermanage) {
                                 if (err) {
                                     return res.json({
                                         success: false,
@@ -354,7 +354,7 @@ module.exports = {
                                     });
                                 } else {
                                     if (usermanage.email_send_yn == 'Y') {
-                                        mailer.finalSend(Incident);
+                                        mailer.evaluationSend(Incident);
                                     }
                                 }
                             });

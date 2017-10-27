@@ -6,9 +6,11 @@ const Incident = require('../models/Incident');
 const ProcessStatus = require('../models/ProcessStatus');
 const ProcessGubun = require('../models/ProcessGubun');
 const LowerProcess = require('../models/LowerProcess');
+const Usermanage = require('../models/Usermanage');
+const mailer = require('../util/nodemailer');
 const service = require('../services/incident');
 const logger = require('log4js').getLogger('app');
-const Iconv  = require('iconv-lite');
+const Iconv = require('iconv-lite');
 var path = require('path');
 var CONFIG = require('../../config/config.json');
 
@@ -42,7 +44,7 @@ module.exports = {
                 res.render("http/500", {
                     err: err
                 });
-            }else{
+            } else {
                 res.render("manager/work_list", {
                     status: status,
                     lowerprocess: lowerprocess
@@ -56,7 +58,7 @@ module.exports = {
      */
     work_detail: (req, res, next) => {
         //console.log(new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') );
-        try{
+        try {
             async.waterfall([function (callback) {
                 Incident.findById({
                     _id: req.params.id
@@ -67,16 +69,16 @@ module.exports = {
                             message: err
                         });
                     } else {
-                        
 
 
 
-                        callback(null,incident)
+
+                        callback(null, incident)
                     }
                 });
 
             }, function (incident, callback) {
-                LowerProcess.find({"higher_cd":incident.higher_cd}).sort('lower_nm').exec(function (err, lowerprocess) {
+                LowerProcess.find({ "higher_cd": incident.higher_cd }).sort('lower_nm').exec(function (err, lowerprocess) {
                     if (err) {
                         res.render("http/500", {
                             err: err
@@ -89,17 +91,17 @@ module.exports = {
                     res.render("http/500", {
                         err: err
                     });
-                }else{
+                } else {
 
                     //완료요청일, 등록일, 접수일, 완료예정일, 완료일
-                    if(incident.request_complete_date != '') incident.request_complete_date = incident.request_complete_date.substring(0,10);
-                    if(incident.register_date != '') incident.register_date = incident.register_date.substring(0,10);
-                    if(incident.receipt_date != '') incident.receipt_date = incident.receipt_date.substring(0,10);
-                    if(incident.complete_reserve_date != '') incident.complete_reserve_date = incident.complete_reserve_date.substring(0,10);
-                    if(incident.complete_date != '') incident.complete_date = incident.complete_date.substring(0,10);
+                    if (incident.request_complete_date != '') incident.request_complete_date = incident.request_complete_date.substring(0, 10);
+                    if (incident.register_date != '') incident.register_date = incident.register_date.substring(0, 10);
+                    if (incident.receipt_date != '') incident.receipt_date = incident.receipt_date.substring(0, 10);
+                    if (incident.complete_reserve_date != '') incident.complete_reserve_date = incident.complete_reserve_date.substring(0, 10);
+                    if (incident.complete_date != '') incident.complete_date = incident.complete_date.substring(0, 10);
                     //incident.complete_date = new Date(incident.complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-                    
-                    
+
+
 
 
                     res.render("manager/work_detail", {
@@ -109,8 +111,8 @@ module.exports = {
                 }
             });
 
-        }catch(e){
-            logger.error("manager control work_detail : ",e);
+        } catch (e) {
+            logger.error("manager control work_detail : ", e);
         }
     },
 
@@ -152,7 +154,7 @@ module.exports = {
      * 담당자별 업무 지정
      */
     work_assign: (req, res, next) => {
-        Incident.find(req.body.incident, function(err, incident) {
+        Incident.find(req.body.incident, function (err, incident) {
             //logger.debug('err', err, '\n');
             logger.debug('list 호출');
             if (err) {
@@ -170,7 +172,7 @@ module.exports = {
      * 담당자 월별 처리 내역
      */
     month_list: (req, res, next) => {
-        Incident.find(req.body.incident, function(err, incident) {
+        Incident.find(req.body.incident, function (err, incident) {
             //logger.debug('err', err, '\n');
             logger.debug('list 호출');
             if (err) {
@@ -187,8 +189,8 @@ module.exports = {
     /**
      * 회사별 상위업무 지정
      */
-    com_process : (req, res, next) => {
-        Incident.find(req.body.incident, function(err, incident) {
+    com_process: (req, res, next) => {
+        Incident.find(req.body.incident, function (err, incident) {
             //logger.debug('err', err, '\n');
             logger.debug('list 호출');
             if (err) {
@@ -205,24 +207,22 @@ module.exports = {
     /**
      * 접수내용 등록
      */
-    saveReceipt : (req, res, next) => {
+    saveReceipt: (req, res, next) => {
         logger.debug("saveReceipt =====================> " + JSON.stringify(req.body));
-        logger.debug("req.body.incident : ",req.body.incident);
+        logger.debug("req.body.incident : ", req.body.incident);
 
-        try{
+        try {
             async.waterfall([function (callback) {
-                
+
                 var upIncident = req.body.incident;
                 var dt = new Date();
-                logger.debug("=========>1 ",dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate()+" "+dt.getHours()+":"+dt.getMinutes()+":"+dt.getSeconds());
-                logger.debug("=========>2 ",new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
-
-                upIncident.receipt_date = dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate()+" "+dt.getHours()+":"+dt.getMinutes()+":"+dt.getSeconds();
-                
+                //logger.debug("=========>1 ", dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds());
+                //logger.debug("=========>2 ", new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
+                upIncident.receipt_date = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
                 //upIncident.receipt_date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
                 upIncident.status_cd = '2';
                 upIncident.status_nm = '처리중';
-                callback(null,upIncident);
+                callback(null, upIncident);
 
             }], function (err, upIncident) {
                 if (err) {
@@ -230,7 +230,7 @@ module.exports = {
                         success: false,
                         message: "No data found to update"
                     });
-                }else{
+                } else {
                     Incident.findOneAndUpdate({
                         _id: req.params.id
                     }, upIncident, function (err, Incident) {
@@ -238,18 +238,25 @@ module.exports = {
                             success: false,
                             message: err
                         });
-                        if (!Incident){ 
+                        if (!Incident) {
                             return res.json({
-                                    success: false,
-                                    message: "No data found to update"
+                                success: false,
+                                message: "No data found to update"
                             });
-                        }else{
-                            //접수 업데이트 성공 시
-                            logger.debug("=====================================================================================");
-                            logger.debug("=========== 메일발송 대상인지 체크 후 처리로직 추가구현(TODO mailLogic )  ==============");
-                            logger.debug("=====================================================================================");
-                            
-                            
+                        } else {
+                            //접수 업데이트 성공 시 메일 전송
+                            Usermanage.findOne({ email: Incident.request_id }, function (err, usermanage) {
+                                if (err) {
+                                    return res.json({
+                                        success: false,
+                                        message: err
+                                    });
+                                } else {
+                                    if (usermanage.email_send_yn == 'Y') {
+                                        mailer.receiveSend(Incident);
+                                    }
+                                }
+                            });
                             return res.json({
                                 success: true,
                                 message: "update successed"
@@ -259,47 +266,47 @@ module.exports = {
                 }
             });
 
-        }catch(e){
-            logger.error("manager control saveReceipt : ",e);
+        } catch (e) {
+            logger.error("manager control saveReceipt : ", e);
             return res.json({
                 success: false,
                 message: err
             });
         }
-        
+
     },
-    
+
     /**
      * 완료내용 등록
      */
-    saveComplete : (req, res, next) => {
+    saveComplete: (req, res, next) => {
         logger.debug("saveComplete =====================> " + JSON.stringify(req.body));
-        logger.debug("req.body.incident : ",req.body.incident);
+        logger.debug("req.body.incident : ", req.body.incident);
 
-        try{
+        try {
             async.waterfall([function (callback) {
-                
+
                 var upIncident = req.body.incident;
                 var dt = new Date();
-                logger.debug("=========>1 ",dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate()+" "+dt.getHours()+":"+dt.getMinutes()+":"+dt.getSeconds());
-                logger.debug("=========>2 ",new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
+                logger.debug("=========>1 ", dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds());
+                logger.debug("=========>2 ", new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
 
-                upIncident.complete_date = dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate()+" "+dt.getHours()+":"+dt.getMinutes()+":"+dt.getSeconds();
-                
+                upIncident.complete_date = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+
                 //upIncident.receipt_date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
                 upIncident.status_cd = '3';
                 upIncident.status_nm = '미평가';
-                callback(null,upIncident);
+                callback(null, upIncident);
 
             }], function (err, upIncident) {
-                logger.debug("=========> upIncident ",upIncident);
+                logger.debug("=========> upIncident ", upIncident);
 
                 if (err) {
                     res.json({
                         success: false,
                         message: "No data found to update"
                     });
-                }else{
+                } else {
                     Incident.findOneAndUpdate({
                         _id: req.params.id
                     }, upIncident, function (err, Incident) {
@@ -307,18 +314,25 @@ module.exports = {
                             success: false,
                             message: err
                         });
-                        if (!Incident){ 
+                        if (!Incident) {
                             return res.json({
-                                    success: false,
-                                    message: "No data found to update"
+                                success: false,
+                                message: "No data found to update"
                             });
-                        }else{
-                            //완료 업데이트 성공 시
-                            logger.debug("=====================================================================================");
-                            logger.debug("=========== 메일발송 대상인지 체크 후 처리로직 추가구현(TODO mailLogic )  ==============");
-                            logger.debug("=====================================================================================");
-                            
-                            
+                        } else {
+                            //완료 업데이트 성공 시 메일 전송
+                            Usermanage.findOne({ email: Incident.request_id }, function (err, usermanage) {
+                                if (err) {
+                                    return res.json({
+                                        success: false,
+                                        message: err
+                                    });
+                                } else {
+                                    if (usermanage.email_send_yn == 'Y') {
+                                        mailer.finishSend(Incident);
+                                    }
+                                }
+                            });
                             return res.json({
                                 success: true,
                                 message: "update successed"
@@ -328,16 +342,16 @@ module.exports = {
                 }
             });
 
-        }catch(e){
-            logger.error("manager control saveComplete : ",e);
+        } catch (e) {
+            logger.error("manager control saveComplete : ", e);
             return res.json({
                 success: false,
                 message: err
             });
         }
-        
+
     },
-    
+
     /** 
      * incident 첨부파일 다운로드
      */

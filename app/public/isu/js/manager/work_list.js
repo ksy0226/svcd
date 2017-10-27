@@ -579,7 +579,7 @@ function receiptSave(){
  * 접수모달 초기화
  */
 function initReceiptModal(){
-    $('textarea[name="incident[receipt_content]"]').val('접수하였습니다.');
+    $('textarea[name="incident[receipt_content]"]').val('문의하신 내용이 접수되었습니다.');
     setDatepickerToday($('input[name="incident[complete_reserve_date]"]'));
     $('select[name="complete_hh"]').val('18');
     $('select[name="complete_mi"]').val('00');

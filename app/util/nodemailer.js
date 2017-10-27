@@ -7,29 +7,31 @@ var config = require('../../config/config.json');
 var logger = require('log4js').getLogger('app');
 
 var sender = '서비스데스크 관리자 <servicedesk@isu.co.kr>';
+var coment = "";
+coment += "<br><br>";
+coment += "더 자세한 내용은 서비스 데스크 게시판에서 확인 하세요.<br>";
+coment += "서비스 데스크 ( https://helpdesk.isusystem.co.kr )<br>";
+coment += "<br>";
+coment += "※ 이 메일은 발신 전용입니다. 회신은 처리되지 않습니다.";
 
 module.exports = {
 
-    finalSend: (req, res, next) => {
-
+    //접수메일
+    receiveSend: (req, res, next) => {
         var receiver = req.request_nm + " <" + req.request_id + ">";
-        var mailTitle = "[서비스데스크 처리 완료] " + req.title;
+        var mailTitle = "[서비스데스크 접수 처리] " + req.title;
         var html = "";
+        html += req.receipt_content + "<br><br>";
         html += "고객사명 : " + req.request_company_nm + "<br>";
-        html += "요청자 : " + req.request_nm + "<br>";
-        html += "완료요청일 : " + req.request_complete_date + "<br>";
+        html += "요청자명 : " + req.request_nm + "<br>";
+        html += "완료요청일자 : " + req.request_complete_date + "<br>";
         html += "< 문의내용 ><br>";
         html += req.content + "<br>";
         html += "<br><hr><br>";
-        html += "처리일자 : " + req.complete_date + "<br>";
-        html += "처리담당자 : " + req.manager_nm + "<br>";
-        html += "< 처리내용 ><br>";
-        html += req.complete_content + "<br>";
-        html += "<br><br>";
-        html += "더 자세한 내용은 서비스 데스크 게시판에서 확인 하세요.<br>";
-        html += "서비스 데스크 ( https://helpdesk.isusystem.co.kr )<br>";
-        html += "<br>";
-        html += "※ 이 메일은 발신 전용입니다. 회신은 처리되지 않습니다.";
+        html += "접수일자 : " + req.receipt_date + "<br>";
+        html += "접수담당자명 : " + req.manager_nm + "<br>";
+        html += "완료예정일자 : " + req.complete_reserve_date + "<br>";
+        html += coment;
 
         var mailOptions = {
             from: sender,
@@ -55,7 +57,109 @@ module.exports = {
 
         transporter.sendMail(mailOptions, function (err, res) {
             if (err) {
-                logger.debug('Nodemailer sendMail Failes >>>>>>>>>> ' + err)
+                logger.debug('Nodemailer receiveSend Failes >>>>>>>>>> ' + err)
+            }
+            transporter.close();
+        });
+    },
+
+    //완료메일
+    finishSend: (req, res, next) => {
+        var receiver = req.request_nm + " <" + req.request_id + ">";
+        var mailTitle = "[서비스데스크 완료 처리] " + req.title;
+        var html = "";
+        html += "고객사명 : " + req.request_company_nm + "<br>";
+        html += "요청자명 : " + req.request_nm + "<br>";
+        html += "완료요청일자 : " + req.request_complete_date + "<br>";
+        html += "< 문의내용 ><br>";
+        html += req.content + "<br>";
+        html += "<br><hr><br>";
+        html += "처리일자 : " + req.complete_date + "<br>";
+        html += "처리담당자명 : " + req.manager_nm + "<br>";
+        html += "< 처리내용 ><br>";
+        html += req.complete_content + "<br>";
+        html += coment;
+
+        var mailOptions = {
+            from: sender,
+            to: receiver,
+            subject: mailTitle,
+            html: html
+        };
+
+        var transporter = nodemailer.createTransport(smtpPool({
+            service: config.mailer.service,
+            host: config.mailer.host,
+            port: config.mailer.port,
+            auth: {
+                user: config.mailer.user,
+                pass: config.mailer.password
+            },
+            tls: {
+                rejectUnauthorize: false
+            },
+            maxConnections: 5,
+            maxMessages: 10
+        }));
+
+        transporter.sendMail(mailOptions, function (err, res) {
+            if (err) {
+                logger.debug('Nodemailer finishSend Failes >>>>>>>>>> ' + err)
+            }
+            transporter.close();
+        });
+    },
+
+    //평가메일
+    evaluationSend: (req, res, next) => {
+        var evaluationValue = req.valuation;
+        if (evaluationValue == '1') {
+            evaluationValueNM = "매우 불만족"
+        } else if (evaluationValue == '2') {
+            evaluationValueNM = "불만족"
+        } else if (evaluationValue == '3') {
+            evaluationValueNM = "보통"
+        } else if (evaluationValue == '4') {
+            evaluationValueNM = "만족"
+        } else if (evaluationValue == '5') {
+            evaluationValueNM = "매우 만족"
+        }
+
+        var receiver = req.manager_nm + " <" + req.manager_email + ">";
+        var mailTitle = "[서비스데스크 평가 완료] " + req.title;
+        var html = "";
+        html += "고객사명 : " + req.request_company_nm + "<br>";
+        html += "요청자명 : " + req.request_nm + "<br>";
+        html += "평가점수 : " + evaluationValueNM + " ( " + evaluationValue + " 점)" + "<br>";
+        html += "< 문의내용 ><br>";
+        html += req.content + "<br>";
+        html += coment;
+
+        var mailOptions = {
+            from: sender,
+            to: receiver,
+            subject: mailTitle,
+            html: html
+        };
+
+        var transporter = nodemailer.createTransport(smtpPool({
+            service: config.mailer.service,
+            host: config.mailer.host,
+            port: config.mailer.port,
+            auth: {
+                user: config.mailer.user,
+                pass: config.mailer.password
+            },
+            tls: {
+                rejectUnauthorize: false
+            },
+            maxConnections: 5,
+            maxMessages: 10
+        }));
+
+        transporter.sendMail(mailOptions, function (err, res) {
+            if (err) {
+                logger.debug('Nodemailer evaluationSend Failes >>>>>>>>>> ' + err)
             }
             transporter.close();
         });

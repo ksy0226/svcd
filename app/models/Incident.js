@@ -38,7 +38,7 @@ var IncidentSchema = new Schema({
     manager_position        : {type : String},  //담당자 직위명
     manager_email           : {type : String},  //담당자 이메일
     manager_phone           : {type : String},  //담당자 전화
-    receipt_date            : {type : String, default : ''},  //접수일                                                                          
+    receipt_date            : {type : String, default : Date.now()},  //접수일                                                                          
     business_level          : {type : String},  //난이도                                                                        
     complete_reserve_date   : {type : String, default : ''},  //완료예정일                                                                       
     solution_flag           : {type : String},  //해결여부                                                                           
