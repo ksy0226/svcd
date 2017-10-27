@@ -77,6 +77,7 @@ function getLowerProcessList(){
         url: "/search/getlowerprocess",
         contentType: "application/json",
         data: JSON.stringify({"higher_cd":reqParam}),
+        //data: reqParam,
         dataType: "json",
         success: function(data, status){
             setContent(data, reqParam);
