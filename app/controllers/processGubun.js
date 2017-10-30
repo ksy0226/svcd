@@ -19,9 +19,7 @@ module.exports = {
                     err: err
                 });
             } else {
-                //if(processGubun.created_at != '') processGubun.created_at = processGubun.created_at.substring(0,10);
-                //if(processGubun.register_date != '') processGubun.register_date = processGubun.register_date.substring(0,10);
-
+              
                 res.render("processGubun/index", {
                     processGubun: processGubun
                 });
