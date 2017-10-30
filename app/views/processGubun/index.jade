@@ -2,6 +2,7 @@ extends ../layouts/default
 
 block head
     script(src='/vendor/jquery/jquery.min.js')
+    script(src='/isu/js/processGubun/index.js', type='text/javascript')
 
 block content
     .content-page
@@ -18,6 +19,16 @@ block content
                                 li.active 처리구분 처리조회
                             h4.page-title 처리구분 처리조회
                 .row
+                    .col-lg-12
+                        .card-box
+                            form.form-horizontal.group-border-dashed(action='#', onsubmit='return false;')
+                                .form-group.m-b-0
+                                    label.col-sm-2.control-label 처리구분명
+                                    .col-sm-4
+                                        input.form-control(id='searchText' name='searchText' type='text' value=searchText)
+                                    .col-sm-2
+                                        button.btn.btn-primary(id='searchBtn' type='button') 조회
+                .row
                     .col-sm-12
                         .card-box
                             .btn-toolbar.form-group
@@ -28,25 +39,18 @@ block content
                             table.table.table-hover(id='dvData' data-tablesaw-mode='swipe')
                                 thead
                                     tr
-                                        th(width='15%') 상위업무
+                                        //th(width='15%') 상위업무
                                         th(width='20%') 처리구분명
-                                        th(width='25%') 설명
+                                        th 설명
                                         th(width='10%') 등록자
-                                        th 등록일
+                                        th(width='10%') 등록일
                                         th(width='10%') 사용
-                                tbody
-                                    - if (processGubun.length > 0) {
-                                        // - for( var i = 0 ; length = question.length > i ; i++ ){ //속도가 빠르다고 알고 있음.
-                                        - for( var i in processGubun ){ //속도가 느리다고 알고 있음.
-                                            tr(onclick="onclick=location.href='/processGubun/edit/#{processGubun[i]._id}'")
-                                                td #{processGubun[i].higher_nm}
-                                                td #{processGubun[i].process_nm}
-                                                td #{processGubun[i].description}
-                                                td #{processGubun[i].user_nm}
-                                                td #{processGubun[i].created_at.toISOString().replace(/T/, ' ').replace(/\..+/, '')}
-                                                td #{processGubun[i].use_yn}
-                                        - }
-                                    - }else{
-                                        tr
-                                            td(colspan='5' align='center') 조회된 데이타가 없습니다.
-                                    - }  
+                                tbody(id='more_list')
+                        .row
+                            .col-sm-4
+                                .dataTables_info Showing 1 to 15 of 
+                                    span(id='totalPage')
+                                    |  pages
+                            .col-sm-8
+                                .dataTables_paginate.paging_simple_numbers.pull-right
+                                    ul#paging.pagination

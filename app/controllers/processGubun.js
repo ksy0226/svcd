@@ -5,6 +5,7 @@ const async = require('async');
 const HigherProcessModel = require('../models/HigherProcess');
 const ProcessGubunModel = require('../models/ProcessGubun');
 const logger = require('log4js').getLogger('app');
+const service = require('../services/processgubun');
 
 module.exports = {
 
@@ -12,6 +13,8 @@ module.exports = {
      * 초기 페이지 출력
      */
     index: (req, res, next) => {
+        console.log(1);
+        /*
         ProcessGubunModel.find(req.body.processGubun, function (err, processGubun) {
             logger.debug('index 호출');
             if (err) {
@@ -25,6 +28,28 @@ module.exports = {
                 });
             }
         });
+        */
+        async.waterfall([function (callback) {
+            ProcessGubunModel.find({},function (err, processGubun) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null, processGubun)
+            });
+        }], function (err, processGubun) {
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            }else{
+                res.render("processGubun/", {
+                    processGubun: processGubun
+                });
+            }
+        });
+
     },
 
     /**
@@ -189,4 +214,26 @@ module.exports = {
             });
         }
     },
+
+    list: (req, res, next) => {
+        var search = service.createSearch(req);
+    
+        async.waterfall([function (callback) {
+            ProcessGubunModel.find(search.findIncident, function (err, processGubun) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null, processGubun)
+            });
+        }], function (err, processGubun) {
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            }
+            res.send(processGubun);
+        });
+    }
 };
