@@ -117,7 +117,7 @@ function setMoreBtn(dataObj) {
         $("#more_view").append(addList);
         return;
     } else {
-        if (rowIdx < dataObj.length - 1 && dataObj.length > 3 ) { //더보기할 내용이 남아 있을 시
+        if (rowIdx < dataObj.length - 1 && dataObj.length > 3) { //더보기할 내용이 남아 있을 시
             var addList = "<div class='row'>";
             addList = "        <div class='col-lg-12'>";
             addList += "        <p class='pull-right'><span id='moreBtn' class='text-primary'><b>더보기 >>></b></span></p>";
@@ -329,6 +329,32 @@ function setDetail(dataObj) {
     }
 
     //진행상태 미평가, 완료시 담당자 코멘트 활성화
+    if (dataObj.status_cd == '2') {
+        $('#_receive_box').html('');
+        var addList = "";
+        addList += "<div class='row'>";
+        addList += "    <div class='col-sm-12 m-t-10'>";
+        addList += "        <div style='border:1px solid #3bafda' class='card-box m-t-10'><span id='_complete_reserve_date' class='pull-right'></span>";
+        addList += "            <h4 class='m-t-0 text-primary'><i style='font-size:24px' class='md md-sms m-r-10'></i><b>접수내용</b></h4>";
+        addList += "            <hr>";
+        addList += "            <p id='_receipt_content'></p>";
+        addList += "            <hr>";
+        addList += "            <div style='min-height:0;' class='widget-user'>";
+        addList += "                <div><img src='/assets/images/users/avatar-2.jpg' alt='user' class='img-responsive img-circle'>";
+        addList += "                    <div class='wid-u-info'><small class='text-primary'><b>담당자</b></small>";
+        addList += "                    <h4 id='_manager_info' class='m-t-5 m-b-5'></h4>";
+        addList += "                    <p class='text-muted m-b-5 font-13'><i id='_manager_email' class='md md-mail m-r-5'></i></p>";
+        addList += "                </div>";
+        addList += "            </div>";
+        addList += "        </div>";
+        addList += "    </div>";
+        addList += "</div>";
+        $('#_receive_box').append(addList);
+    } else {
+        $('#_receive_box').html('');
+    }
+
+    //진행상태 미평가, 완료시 담당자 코멘트 활성화
     if (dataObj.status_cd == '3' || dataObj.status_cd == '4') {
         $('#_complete_box').html('');
         var addList = "";
@@ -464,6 +490,7 @@ function setDetail(dataObj) {
     //완료 날짜 양식 변경
     //var complete_dateVal = new Date(dataObj.complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
     $('#_complete_date').html(dataObj.complete_date);
+    $('#_receipt_content').html(dataObj.receipt_content);
     $('#_need_minute').html(dataObj.need_minute);
     $('#_delay_reason').html(dataObj.delay_reason);
     $('#_valuation').html(dataObj.valuation);
@@ -479,6 +506,9 @@ function setDetail(dataObj) {
     if (dataObj.status_cd >= '4') {
         $('#_').addClass('label label-purple');
     }
+    //등록일
+    var register_dateVal = new Date(dataObj.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    $('#_register_date').html(register_dateVal);
 
 }
 

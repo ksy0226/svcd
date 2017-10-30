@@ -209,8 +209,8 @@ module.exports = {
      * 접수내용 등록
      */
     saveReceipt: (req, res, next) => {
-        logger.debug("saveReceipt =====================> " + JSON.stringify(req.body));
-        logger.debug("req.body.incident : ", req.body.incident);
+        //logger.debug("saveReceipt =====================> " + JSON.stringify(req.body));
+        //logger.debug("req.body.incident : ", req.body.incident);
 
         try {
             async.waterfall([function (callback) {
@@ -231,10 +231,6 @@ module.exports = {
                 upIncident.manager_position = req.session.position_nm;
                 upIncident.manager_phone = req.session.office_tel_no;
 
-                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", upIncident);
-                
                 callback(null, upIncident);
             }], function (err, upIncident) {
                 if (err) {

@@ -31,6 +31,8 @@ module.exports = {
         html += "접수일자 : " + req2.receipt_date + "<br>";
         html += "접수담당자명 : " + req2.manager_nm + "<br>";
         html += "완료예정일자 : " + req2.complete_reserve_date + "<br>";
+        html += "< 접수내용 ><br>";
+        html += req2.receipt_content + "<br>";
         html += coment;
 
         var mailOptions = {
