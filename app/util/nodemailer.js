@@ -29,7 +29,7 @@ module.exports = {
         html += req.content + "<br>";
         html += "<br><hr><br>";
         html += "접수일자 : " + req2.receipt_date + "<br>";
-        html += "접수담당자명 : " + req2.manager_nm + "<br>";
+        html += "담당자명 : " + req2.manager_nm + "<br>";
         html += "완료예정일자 : " + req2.complete_reserve_date + "<br>";
         html += "< 접수내용 ><br>";
         html += req2.receipt_content + "<br>";
@@ -66,7 +66,7 @@ module.exports = {
     },
 
     //완료메일
-    finishSend: (req, res, next) => {
+    finishSend: (req, req2, res, next) => {
         var receiver = req.request_nm + " <" + req.request_id + ">";
         var mailTitle = "[서비스데스크 완료 처리] " + req.title;
         var html = "";
@@ -76,10 +76,10 @@ module.exports = {
         html += "< 문의내용 ><br>";
         html += req.content + "<br>";
         html += "<br><hr><br>";
-        html += "처리일자 : " + req.complete_date + "<br>";
-        html += "처리담당자명 : " + req.manager_nm + "<br>";
+        html += "완료일자 : " + req2.complete_date + "<br>";
+        html += "담당자명 : " + req.manager_nm + "<br>";
         html += "< 처리내용 ><br>";
-        html += req.complete_content + "<br>";
+        html += req2.complete_content + "<br>";
         html += coment;
 
         var mailOptions = {
@@ -115,6 +115,8 @@ module.exports = {
     //평가메일
     evaluationSend: (req, res, next) => {
         var evaluationValue = req.valuation;
+        var evaluationValueNM = "";
+
         if (evaluationValue == '1') {
             evaluationValueNM = "매우 불만족"
         } else if (evaluationValue == '2') {
@@ -132,9 +134,10 @@ module.exports = {
         var html = "";
         html += "고객사명 : " + req.request_company_nm + "<br>";
         html += "요청자명 : " + req.request_nm + "<br>";
-        html += "평가점수 : " + evaluationValueNM + " ( " + evaluationValue + " 점)" + "<br>";
+        html += "평가점수 : " + evaluationValueNM + " (" + evaluationValue + " 점)" + "<br>";
         html += "< 문의내용 ><br>";
-        html += req.content + "<br>";
+        html += req.content;
+        html += "<br><hr><br>";
         html += coment;
 
         var mailOptions = {

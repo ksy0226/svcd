@@ -315,8 +315,8 @@ module.exports = {
      * 서비스 평가 내용 등록
      */
     valuationSave: (req, res, next) => {
-        logger.debug("valuationSave =====================> " + JSON.stringify(req.body));
-        logger.debug("req.body.incident : ", req.body.incident);
+        //logger.debug("valuationSave =====================> " + JSON.stringify(req.body));
+        //logger.debug("req.body.incident : ", req.body.incident);
         try {
             async.waterfall([function (callback) {
                 var upIncident = req.body.incident;

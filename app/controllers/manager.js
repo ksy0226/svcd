@@ -284,27 +284,18 @@ module.exports = {
      * 완료내용 등록
      */
     saveComplete: (req, res, next) => {
-        logger.debug("saveComplete =====================> " + JSON.stringify(req.body));
-        logger.debug("req.body.incident : ", req.body.incident);
-
+        //logger.debug("saveComplete =====================> " + JSON.stringify(req.body));
+        //logger.debug("req.body.incident : ", req.body.incident);
         try {
             async.waterfall([function (callback) {
-
                 var upIncident = req.body.incident;
                 var dt = new Date();
-                logger.debug("=========>1 ", dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds());
-                logger.debug("=========>2 ", new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
-
                 upIncident.complete_date = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
-
-                //upIncident.receipt_date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
                 upIncident.status_cd = '3';
                 upIncident.status_nm = '미평가';
+
                 callback(null, upIncident);
-
             }], function (err, upIncident) {
-                logger.debug("=========> upIncident ", upIncident);
-
                 if (err) {
                     res.json({
                         success: false,
@@ -333,7 +324,7 @@ module.exports = {
                                     });
                                 } else {
                                     if (usermanage.email_send_yn == 'Y') {
-                                        mailer.finishSend(Incident);
+                                        mailer.finishSend(Incident, upIncident);
                                     }
                                 }
                             });
