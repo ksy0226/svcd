@@ -242,15 +242,6 @@ module.exports = {
                     Incident.findOneAndUpdate({
                         _id: req.params.id
                     }, upIncident, function (err, Incident) {
-                        /*
-                        console.log(">>>>>>>>>>>>>>>>>>> ");
-                        console.log(">>>>>>>>>>>>>>>>>>> ");
-                        console.log(">>>>>>>>>>>>>>>>>>> " + JSON.stringify(upIncident));
-                        console.log(">>>>>>>>>>>>>>>>>>> ");
-                        console.log(">>>>>>>>>>>>>>>>>>> ");
-                        console.log(">>>>>>>>>>>>>>>>>>> " + Incident);
-                        */
-
                         if (err) {
                             return res.json({
                                 success: false,
@@ -265,11 +256,8 @@ module.exports = {
                                         message: err
                                     });
                                 } else {
-                                    console.log(">>>>>>>>>>>>>>>>>>> ");
-                                    console.log(">>>>>>>>>>>>>>>>>>> ");
-                                    console.log(">>>>>>>>>>>>>>>>>>> " + Incident);
                                     if (usermanage.email_send_yn == 'Y') {
-                                        mailer.receiveSend(Incident);
+                                        mailer.receiveSend(Incident, upIncident);
                                     }
                                 }
                             });
@@ -282,7 +270,6 @@ module.exports = {
                     });
                 }
             });
-
         } catch (e) {
             logger.error("manager control saveReceipt : ", e);
             return res.json({

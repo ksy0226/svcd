@@ -17,7 +17,7 @@ coment += "※ 이 메일은 발신 전용입니다. 회신은 처리되지 않�
 module.exports = {
 
     //접수메일
-    receiveSend: (req, res, next) => {
+    receiveSend: (req, req2, res, next) => {
         var receiver = req.request_nm + " <" + req.request_id + ">";
         var mailTitle = "[서비스데스크 접수 처리] " + req.title;
         var html = "";
@@ -28,9 +28,9 @@ module.exports = {
         html += "< 문의내용 ><br>";
         html += req.content + "<br>";
         html += "<br><hr><br>";
-        html += "접수일자 : " + req.receipt_date + "<br>";
-        html += "접수담당자명 : " + req.manager_nm + "<br>";
-        html += "완료예정일자 : " + req.complete_reserve_date + "<br>";
+        html += "접수일자 : " + req2.receipt_date + "<br>";
+        html += "접수담당자명 : " + req2.manager_nm + "<br>";
+        html += "완료예정일자 : " + req2.complete_reserve_date + "<br>";
         html += coment;
 
         var mailOptions = {

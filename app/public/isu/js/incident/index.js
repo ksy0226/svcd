@@ -169,15 +169,15 @@ function setContent(dataObj) {
             addList += "								<div class='row'>";
             addList += "									<div class='col-md-1 forum-info'>";
             if (dataObj[i].status_cd == '1') {
-                addList += "										<span class='label label-inverse'>" + dataObj[i].status_nm + "</span>";
+                addList += "										<span class='btn-outline outline-inverse'>" + dataObj[i].status_nm + "</span>";
             } else if (dataObj[i].status_cd == '2') {
-                addList += "										<span class='label label-primary'>" + dataObj[i].status_nm + "</span>";
+                addList += "										<span class='btn-outline outline-primary'>" + dataObj[i].status_nm + "</span>";
             } else if (dataObj[i].status_cd == '3') {
-                addList += "										<span class='label label-success'>" + dataObj[i].status_nm + "</span>";
+                addList += "										<span class='btn-outline outline-success'>" + dataObj[i].status_nm + "</span>";
             } else if (dataObj[i].status_cd == '4') {
-                addList += "										<span class='label label-purple'>" + dataObj[i].status_nm + "</span>";
+                addList += "										<span class='btn-outline outline-purple'>" + dataObj[i].status_nm + "</span>";
             } else if (dataObj[i].status_cd == '5') {
-                addList += "										<span class='label label-info'>" + dataObj[i].status_nm + "</span>";
+                addList += "										<span class='btn-outline outline-info'>" + dataObj[i].status_nm + "</span>";
             }
             addList += "									</div>";
             addList += "									<div class='col-md-11'>";
