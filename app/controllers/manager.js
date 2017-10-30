@@ -1,5 +1,6 @@
 'use strict';
-
+const express = require('express');
+const session = require('express-session');
 const mongoose = require('mongoose');
 const async = require('async');
 const Incident = require('../models/Incident');
@@ -11,8 +12,8 @@ const mailer = require('../util/nodemailer');
 const service = require('../services/incident');
 const logger = require('log4js').getLogger('app');
 const Iconv = require('iconv-lite');
-var path = require('path');
-var CONFIG = require('../../config/config.json');
+const path = require('path');
+const CONFIG = require('../../config/config.json');
 
 module.exports = {
 
@@ -213,7 +214,6 @@ module.exports = {
 
         try {
             async.waterfall([function (callback) {
-
                 var upIncident = req.body.incident;
                 var dt = new Date();
                 //logger.debug("=========>1 ", dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds());
@@ -222,8 +222,16 @@ module.exports = {
                 //upIncident.receipt_date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
                 upIncident.status_cd = '2';
                 upIncident.status_nm = '처리중';
-                callback(null, upIncident);
 
+                //접수자 세션체크 후 데이타 맵핑
+                upIncident.manager_email = req.session.email;
+                upIncident.manager_nm = req.session.user_nm;
+                upIncident.manager_company_nm = req.session.company_nm;
+                upIncident.manager_dept_nm = req.session.dept_nm;
+                upIncident.manager_position = req.session.position_nm;
+                upIncident.manager_phone = req.session.office_tel_no;
+
+                callback(null, upIncident);
             }], function (err, upIncident) {
                 if (err) {
                     res.json({
@@ -234,14 +242,19 @@ module.exports = {
                     Incident.findOneAndUpdate({
                         _id: req.params.id
                     }, upIncident, function (err, Incident) {
-                        if (err) return res.json({
-                            success: false,
-                            message: err
-                        });
-                        if (!Incident) {
+                        /*
+                        console.log(">>>>>>>>>>>>>>>>>>> ");
+                        console.log(">>>>>>>>>>>>>>>>>>> ");
+                        console.log(">>>>>>>>>>>>>>>>>>> " + JSON.stringify(upIncident));
+                        console.log(">>>>>>>>>>>>>>>>>>> ");
+                        console.log(">>>>>>>>>>>>>>>>>>> ");
+                        console.log(">>>>>>>>>>>>>>>>>>> " + Incident);
+                        */
+
+                        if (err) {
                             return res.json({
                                 success: false,
-                                message: "No data found to update"
+                                message: err
                             });
                         } else {
                             //접수 업데이트 성공 시 메일 전송
@@ -252,11 +265,15 @@ module.exports = {
                                         message: err
                                     });
                                 } else {
+                                    console.log(">>>>>>>>>>>>>>>>>>> ");
+                                    console.log(">>>>>>>>>>>>>>>>>>> ");
+                                    console.log(">>>>>>>>>>>>>>>>>>> " + Incident);
                                     if (usermanage.email_send_yn == 'Y') {
                                         mailer.receiveSend(Incident);
                                     }
                                 }
                             });
+
                             return res.json({
                                 success: true,
                                 message: "update successed"
