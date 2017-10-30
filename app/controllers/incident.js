@@ -324,7 +324,7 @@ module.exports = {
                 upIncident.status_nm = '완료';
                 callback(null, upIncident);
             }], function (err, upIncident) {
-                logger.debug("=========> upIncident ", upIncident);
+                //logger.debug("=========> upIncident ", upIncident);
 
                 if (err) {
                     res.json({
@@ -354,7 +354,7 @@ module.exports = {
                                     });
                                 } else {
                                     if (usermanage.email_send_yn == 'Y') {
-                                        mailer.evaluationSend(Incident);
+                                        mailer.evaluationSend(Incident, upIncident);
                                     }
                                 }
                             });

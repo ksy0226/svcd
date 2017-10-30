@@ -113,8 +113,8 @@ module.exports = {
     },
 
     //평가메일
-    evaluationSend: (req, res, next) => {
-        var evaluationValue = req.valuation;
+    evaluationSend: (req, req2, res, next) => {
+        var evaluationValue = req2.valuation;
         var evaluationValueNM = "";
 
         if (evaluationValue == '1') {
