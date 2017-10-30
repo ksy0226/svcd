@@ -179,7 +179,11 @@ function setDataList(dataObj, selectedPage) {
         var addList = "";
         //addList += "							<tr onclick=window.location='/search/mng_detail/" + dataObj[i-1]._id + "'>";
         addList += "							<tr onclick=detailShow('" + dataObj[i-1]._id + "') style='cursor:pointer'>";
-        addList += "								<td>" + dataObj[i-1].higher_nm + " / " + dataObj[i-1].lower_nm + "</td>";
+        if(dataObj[i-1].status_cd == "1"){
+            addList += "								<td>" + dataObj[i-1].higher_nm + " / " + " " + "</td>";
+        }else{
+            addList += "								<td>" + dataObj[i-1].higher_nm + " / " + dataObj[i-1].lower_nm + "</td>";
+        }
         if(dataObj[i-1].complete_open_flag == "Y"){
             addList += "								<td>" + dataObj[i-1].title + "</td>";
         }else{
