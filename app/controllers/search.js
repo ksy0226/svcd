@@ -288,6 +288,7 @@ module.exports = {
 
         async.waterfall([function (callback) {
             IncidentModel.find(search.findIncident, function (err, incident) {
+
                 
                 if (err) {
                     res.render("http/500", {

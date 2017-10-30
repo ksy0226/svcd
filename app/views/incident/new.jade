@@ -84,6 +84,7 @@ block content
                                     .form-group
                                         label.col-sm-2.control-label 요청업무
                                         .col-sm-4
+                                            input#higher_nm.form-control(type='hidden' name='incident[higher_nm]')
                                             select#higher_cd.form-control(name='incident[higher_cd]')
                                                 option(value ='') 선택하세요
                                                 - if (companyProcess.length > 0) {

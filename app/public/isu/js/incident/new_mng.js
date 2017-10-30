@@ -6,7 +6,8 @@ $(document).ready(function () {
     //$('input[name="incident[app_menu]"]').val();
 
     $('#higher_cd').on('change',function(){
-        selectedHighProcess(this)
+        selectedHighProcess(this);
+        $('#higher_nm').val($('#higher_cd option:selected').text());
     });
 
     $('.summernote').summernote({
