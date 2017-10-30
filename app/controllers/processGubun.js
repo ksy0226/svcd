@@ -13,22 +13,6 @@ module.exports = {
      * 초기 페이지 출력
      */
     index: (req, res, next) => {
-        console.log(1);
-        /*
-        ProcessGubunModel.find(req.body.processGubun, function (err, processGubun) {
-            logger.debug('index 호출');
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            } else {
-              
-                res.render("processGubun/index", {
-                    processGubun: processGubun
-                });
-            }
-        });
-        */
         async.waterfall([function (callback) {
             ProcessGubunModel.find({},function (err, processGubun) {
                 if (err) {
