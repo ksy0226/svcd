@@ -335,7 +335,7 @@ function setDetail(dataObj) {
         addList += "<div class='row'>";
         addList += "    <div class='col-sm-12 m-t-10'>";
         addList += "        <div style='border:1px solid #3bafda' class='card-box m-t-10'><span id='_complete_reserve_date' class='pull-right'></span>";
-        addList += "            <h4 class='m-t-0 text-primary'><i style='font-size:24px' class='md md-sms m-r-10'></i><b>접수내용</b></h4>";
+        addList += "            <h4 class='m-t-0 text-primary'><i style='font-size:24px' class='md md-sms m-r-10'></i><b>조치사항</b></h4>";
         addList += "            <hr>";
         addList += "            <p id='_receipt_content'></p>";
         addList += "            <hr>";
@@ -361,7 +361,7 @@ function setDetail(dataObj) {
         addList += "<div class='row'>";
         addList += "    <div class='col-sm-12 m-t-10'>";
         addList += "        <div style='border:1px solid #3bafda' class='card-box m-t-10'><span id='_complete_date' class='pull-right'></span>";
-        addList += "            <h4 class='m-t-0 text-primary'><i style='font-size:24px' class='md md-sms m-r-10'></i><b>조치내용</b></h4>";
+        addList += "            <h4 class='m-t-0 text-primary'><i style='font-size:24px' class='md md-sms m-r-10'></i><b>조치사항</b></h4>";
         addList += "            <hr>";
         addList += "            <p id='_complete_content'></p>";
         addList += "            <hr>";
