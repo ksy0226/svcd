@@ -219,7 +219,7 @@ module.exports = {
                 //logger.debug("=========>1 ", dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds());
                 //logger.debug("=========>2 ", new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
                 upIncident.receipt_date = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
-                //upIncident.receipt_date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                upIncident.complete_reserve_date = upIncident.complete_reserve_date + " " + upIncident.complete_hh + ":" + upIncident.complete_mi + ":" + "00"
                 upIncident.status_cd = '2';
                 upIncident.status_nm = '처리중';
 
@@ -231,6 +231,10 @@ module.exports = {
                 upIncident.manager_position = req.session.position_nm;
                 upIncident.manager_phone = req.session.office_tel_no;
 
+                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", upIncident);
+                
                 callback(null, upIncident);
             }], function (err, upIncident) {
                 if (err) {
