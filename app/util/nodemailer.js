@@ -136,8 +136,8 @@ module.exports = {
         html += "요청자명 : " + req.request_nm + "<br>";
         html += "평가점수 : " + evaluationValueNM + " (" + evaluationValue + " 점)" + "<br>";
         html += "< 문의내용 ><br>";
-        html += req.content;
-        html += "<br><hr><br>";
+        html += req.content + "<br>";
+        html += "<br><hr>";
         html += coment;
 
         var mailOptions = {
