@@ -157,7 +157,6 @@ function setDataList(dataObj, selectedPage) {
         //기존 데이터 삭제
         $("#more_list tr").remove();
     //}
-    alert(JSON.stringify(dataObj[dataObj.length-1]));
 
     var startIdx = dataPerPage*(selectedPage-1)+1;
     var endIdx = dataPerPage*selectedPage+1;
