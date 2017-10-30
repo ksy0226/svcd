@@ -585,6 +585,12 @@ function initReceiptModal(){
     $('select[name="complete_mi"]').val('00');
     $('select[name="incident[lower_cd]"] option:eq(0)').attr("selected", "selected");
     $('select[name="incident[business_level]"]').val('A');
+    $('input[name="incident[manager_email]"]').val('');
+    $('input[name="incident[manager_nm]"]').val('');
+    $('input[name="incident[manager_company_nm]"]').val('');
+    $('input[name="incident[manager_dept_nm]"]').val('');
+    $('input[name="incident[manager_position]"]').val('');
+    $('input[name="incident[manager_phone]"]').val('');
 }
 //<<================== 접수처리 스크립트 ==============
 

@@ -30,19 +30,19 @@ var IncidentSchema = new Schema({
     register_dd             : {type : String},  //등록일                                                                     
     receipt_content         : {type : String},  //등록내용                                                                         
     manager_company_cd      : {type : String},  //담당자 회사코드
-    manager_company_nm      : {type : String},  //담당자 회사명                                                                          
+    manager_company_nm      : {type : String},  //담당자 회사명
     manager_sabun           : {type : String},  //담당자 사번
-    manager_nm              : {type : String, default:'담당미지정'},  //담당자 명                                                                       
+    manager_nm              : {type : String, default:'담당미지정'},  //담당자 명
     manager_dept_cd         : {type : String},  //담당자 부코드
-    manager_dept_nm         : {type : String},  //담당자 부서명   
+    manager_dept_nm         : {type : String},  //담당자 부서명
     manager_position        : {type : String},  //담당자 직위명
     manager_email           : {type : String},  //담당자 이메일
     manager_phone           : {type : String},  //담당자 전화
-    receipt_date            : {type : String, default : Date.now()},  //접수일                                                                          
-    business_level          : {type : String},  //난이도                                                                        
-    complete_reserve_date   : {type : String, default : ''},  //완료예정일                                                                       
-    solution_flag           : {type : String},  //해결여부                                                                           
-    complete_content        : {type : String},  //완료 코멘트                                                                     
+    receipt_date            : {type : String, default : Date.now()},  //접수일
+    business_level          : {type : String},  //난이도
+    complete_reserve_date   : {type : String, default : ''},  //완료예정일
+    solution_flag           : {type : String},  //해결여부
+    complete_content        : {type : String},  //완료 코멘트
     add_complete_content    : {type : String},  //추가 완료 코멘트                                                                         
     program_id              : {type : String},                                                                           
     delay_reason            : {type : String},  //지연사유                                                                           

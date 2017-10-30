@@ -117,7 +117,7 @@ function setMoreBtn(dataObj) {
         $("#more_view").append(addList);
         return;
     } else {
-        if (rowIdx < dataObj.length - 1) { //더보기할 내용이 남아 있을 시
+        if (rowIdx < dataObj.length - 1 && dataObj.length > 3 ) { //더보기할 내용이 남아 있을 시
             var addList = "<div class='row'>";
             addList = "        <div class='col-lg-12'>";
             addList += "        <p class='pull-right'><span id='moreBtn' class='text-primary'><b>더보기 >>></b></span></p>";
