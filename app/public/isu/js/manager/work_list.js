@@ -438,7 +438,7 @@ function setDetail(dataObj) {
     if (dataObj.process_speed == "Y") {
         $('#_process_speed').html('<span class="label label-warning">✔</span>');
     }
-    $('#_higher_nm').html(dataObj.higher_nm + dataObj.higher_cd);
+    $('#_higher_nm').html(dataObj.higher_nm);
 
     $('#_lower_nm').html(dataObj.lower_nm);
     $('#_request_company_nm-request_nm').html(dataObj.request_company_nm + "/" + dataObj.request_nm);
