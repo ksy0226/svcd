@@ -13,8 +13,8 @@ const CompanyModel = require('../models/Company');
 module.exports = {
 
     index: (req, res, next) => {
-        logger.debug('req.params.searchType : ' + req.query.searchType);
-        logger.debug('req.params.searchText : ' + req.query.searchText);
+        //logger.debug('req.params.searchType : ' + req.query.searchType);
+        //logger.debug('req.params.searchText : ' + req.query.searchText);
 
         var vistorCounter = null;
         var page = Math.max(1, req.params.page) > 1 ? parseInt(req.query.page) : 1;
@@ -23,7 +23,7 @@ module.exports = {
 
         async.waterfall([function (callback) {
             if (search.findUser && !search.findUsermanage.$or) return callback(null, null, 0);
-            logger.debug("search : " + JSON.stringify(search));
+            //logger.debug("search : " + JSON.stringify(search));
             Usermanage.count(search.findUsermanage, function (err, count) {
                 if (err) {
                     return res.json({
@@ -37,7 +37,7 @@ module.exports = {
             });
         }, function (skip, maxPage, callback) {
             if (search.findUser && !search.findUsermanage.$or) return callback(null, [], 0);
-            logger.debug("search : " + JSON.stringify(search));
+            //logger.debug("search : " + JSON.stringify(search));
             Usermanage.find(search.findUsermanage)
                 .populate("_id")
                 .sort('-createdAt')
@@ -90,7 +90,7 @@ module.exports = {
     },
 
     save: (req, res, next) => {
-        logger.debug('Usermanage save debug Start >>> ', req.body.usermanage);
+        //logger.debug('Usermanage save debug Start >>> ', req.body.usermanage);
         var usermanage = req.body.usermanage;
         Usermanage.create(req.body.usermanage, function (err, usermanage) {
             if (err) {

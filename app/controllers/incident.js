@@ -118,7 +118,7 @@ module.exports = {
                 callback(null);
             });
         }], function (err) {
-            logger.debug("trace 2");
+            //logger.debug("trace 2");
             if (err) {
                 res.render("http/500", {
                     err: err
@@ -165,7 +165,7 @@ module.exports = {
                 callback(null);
             });
         }], function (err) {
-            logger.debug("trace 2");
+            //logger.debug("trace 2");
             if (err) {
                 res.render("http/500", {
                     err: err
@@ -258,7 +258,7 @@ module.exports = {
      * incident 상세 화면 조회
      */
     viewDetail: (req, res, next) => {
-        logger.debug("Trace viewDetail : ", req.params.id);
+        //logger.debug("Trace viewDetail : ", req.params.id);
         try {
             Incident.findById({
                 _id: req.params.id
@@ -337,7 +337,7 @@ module.exports = {
      */
     getIncidentDetail: (req, res, next) => {
 
-        logger.debug("Trace viewDetail : ", req.params.id);
+        //logger.debug("Trace viewDetail : ", req.params.id);
         try {
             Incident.findById({
                 _id: req.params.id
@@ -373,7 +373,7 @@ module.exports = {
      */
     insertedImage: (req, res, next) => {
         //res.send( '/uploads/' + req.file.filename);
-        logger.debug("=====================>incident controllers insertedImage");
+        //logger.debug("=====================>incident controllers insertedImage");
         res.send(req.file.filename);
     },
 
@@ -444,7 +444,7 @@ module.exports = {
      * 엑셀다운로드 기능
      */
     exceldownload: (req, res, next) => {
-        logger.debug("====>", 1);
+        //logger.debug("====>", 1);
 
         Incident.find(req.body.incident)
             .select('_id title')

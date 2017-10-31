@@ -45,7 +45,7 @@ module.exports = {
             Usermanage.findOne(
                 { email: req.body.email }
             ).exec(function (err, usermanage) {
-                logger.debug("password : ",usermanage.authenticate(req.body.password));
+                //logger.debug("password : ",usermanage.authenticate(req.body.password));
                 if (err) callback(err);
                 //if (usermanage.authenticate(req.body.password)) { //비밀번호가 일치하면
                 if (usermanage.authenticate(req.body.password) && usermanage.access_yn == 'Y') {
@@ -162,7 +162,7 @@ module.exports = {
     //계정신청
     new: (req, res, next) => {
         try {
-            logger.debug('Login controller New debug >>> ', req.body.usermanage);
+            //logger.debug('Login controller New debug >>> ', req.body.usermanage);
             var usermanage = req.body.usermanage;
             Usermanage.create(req.body.usermanage, function (err, usermanage) {
                 if (err) {

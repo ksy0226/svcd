@@ -12,7 +12,7 @@ module.exports = {
 
     index: (req, res, next) => {
         LowerProcessModel.find(req.body.lowerProcess, function (err, lowerProcess) {
-            logger.debug('index 호출');
+            //logger.debug('index 호출');
             if (err) {
                 res.render("http/500", {
                     err: err
