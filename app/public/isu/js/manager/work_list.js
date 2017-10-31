@@ -86,6 +86,15 @@ $(document).ready(function () {
 
 
     /**
+     * 접수처리 화면
+     */
+    $('#receipt_modal').on('show.bs.modal', function () {
+        getLowerNm();
+    });
+
+
+
+    /**
      * 완료처리 화면
      */
     $('#complete_modal').on('show.bs.modal', function () {
@@ -119,7 +128,7 @@ function getDataList(selectedPage) {
         $('#lower_cd').val() = "*";
     }
     var reqParam = 'searchType=' + $('#searchType').val() + '&status_cd=' + $('#status_cd').val()
-        + '&lower_cd=' + $('#lower_cd').val() + '&reg_date_from='
+        + '&lower_cd=' + $('#lower_cd').val()  + '&reg_date_from='
         + $('#reg_date_from').val() + '&reg_date_to=' + $('#reg_date_to').val()
         + '&searchText=' + encodeURIComponent($('#searchText').val());
 
@@ -412,6 +421,8 @@ function setDetail(dataObj) {
     //상위코드
     higher_cd = dataObj.higher_cd;
 
+
+
     /**
      * 등록내용 세팅
      */
@@ -427,8 +438,8 @@ function setDetail(dataObj) {
     if (dataObj.process_speed == "Y") {
         $('#_process_speed').html('<span class="label label-warning">✔</span>');
     }
+    $('#_higher_nm').html(dataObj.higher_nm + dataObj.higher_cd);
 
-    $('#_higher_nm').html(dataObj.higher_nm);
     $('#_lower_nm').html(dataObj.lower_nm);
     $('#_request_company_nm-request_nm').html(dataObj.request_company_nm + "/" + dataObj.request_nm);
     $('#_request_complete_date').html(dataObj.request_complete_date);
@@ -438,7 +449,7 @@ function setDetail(dataObj) {
     $('#_register_nm-register_date').html(dataObj.register_nm + "/" + register_dateVal);
 
 
-
+    
 
     $('#_title').html(dataObj.title);
     $('#_content').html(dataObj.content);
@@ -549,7 +560,7 @@ function setDatepickerToday(datepicker) {
  */
 function receiptSave() {
     var reqParam = $('#receipt_form').serialize();
-    reqParam += "&incident[lower_nm]=" + $('select[name="incident[lower_cd]"] option:selected').text();
+    reqParam += "&incident[lower_nm]=" + $('select[name="incident[lower_cd]"] option:selected').text() ;
     $.ajax({
         type: "POST",
         async: true,
@@ -565,9 +576,10 @@ function receiptSave() {
         beforeSend: function () {
         },
         success: function (dataObj) {
+
             if (dataObj.success) {
                 $('.modal').modal('hide');
-                initReceiptModal();
+                initReceiptModal(dataObj);
                 research(selectedPage);
             } else {
                 alert('e : ' + JSON.stringify(dataObj));
@@ -579,7 +591,8 @@ function receiptSave() {
 /**
  * 접수모달 초기화
  */
-function initReceiptModal() {
+function initReceiptModal(dataObj) {
+
     $('textarea[name="incident[receipt_content]"]').val('문의하신 내용이 접수되었습니다.');
     setDatepickerToday($('input[name="incident[complete_reserve_date]"]'));
     $('select[name="incident[complete_hh]"]').val('18');
@@ -675,6 +688,44 @@ function setQuestionType(dataObj) {
 }
 
 //<<================== 완료처리 스크립트 ==============
+
+
+/**
+ * 요청타입 세팅
+ */
+function getLowerNm() {
+    var reqParam = "";
+    $.ajax({
+        type: "GET",
+        async: true,
+        url: "/lowerProcess/getJSON/" + higher_cd,
+        dataType: "json", // xml, html, script, json 미지정시 자동판단
+        timeout: 30000,
+        cache: false,
+        data: reqParam,
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        error: function (request, status, error) {
+            alert("error : " + error + " : " + JSON.stringify(request));
+        },
+        beforeSend: function () {
+        },
+        success: function (dataObj) {
+            setLowerNm(dataObj);
+        }
+    });
+}
+
+/**
+ * 요청타입 세팅
+ */
+
+function setLowerNm(dataObj) {
+    $('select[name="incident[lower_cd]"]').empty();
+    for (var i = 0; i < dataObj.length; i++) {
+        $('select[name="incident[lower_cd]"]').append("<option value='" + dataObj[i].lower_cd + "'>" + dataObj[i].lower_nm + "</option>");
+    }
+}
+
 
 
 
