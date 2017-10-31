@@ -147,8 +147,6 @@ module.exports = {
         async.waterfall([function (callback) {
             var newincident = req.body.incident;
 
-            console.log("newincident >>>>>>>>>>>>>>>>>>>> " + JSON.stringify(newincident));
-
             //등록자
             newincident.register_company_cd = req.session.company_cd;
             newincident.register_company_nm = req.session.company_nm;
