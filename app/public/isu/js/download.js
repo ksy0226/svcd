@@ -31,13 +31,8 @@ function fnTableToExcel(dvData){
 
 
 function fnAllExcel(JsonData){
-    alert("fnAllExcel"+JsonData);
-
     var arrData = typeof JsonData != 'object' ? JSON.parse(JsonData) : JsonData;
 
-    //alert("arrData"+JSON.stringify(arrData));
-
-   
     var tab_text="<table border='1px'>";
     tab_text += "<tr bgcolor='#87AFC6'>";
     
@@ -208,10 +203,7 @@ function fnJsonToExcel(JsonData){
 }
 
 function getJsonData(){
-    alert(1);
     var reqParam = $($('form')).serialize();
-    alert(2);
-    alert(reqParam);
     $.ajax({
         type: "GET",
         url: "/incident/exceldownload",
@@ -224,7 +216,6 @@ function getJsonData(){
             fnAllExcel(JSON.stringify(data));
         },
         error: function(data, status, err) {
-            console.log("err : "+err);
             return;
         }
     });
