@@ -85,7 +85,7 @@ module.exports = {
     },
 
     save: (req, res, next) => {
-        logger.debug('save start >>>>>>> ' + req);
+        //logger.debug('save start >>>>>>> ' + req);
         var newOftenqna = req.body.oftenqna;
 
         if (req.files) {
@@ -152,7 +152,7 @@ module.exports = {
     },
 
     update: (req, res, next) => {
-        logger.debug("oftenQna controllers update start =====> " + JSON.stringify(req.body));
+        //logger.debug("oftenQna controllers update start =====> " + JSON.stringify(req.body));
         var newOftenqna = req.body.oftenqna;
         if (req.files) {
             newOftenqna.attach_file = req.files;
@@ -188,7 +188,7 @@ module.exports = {
 
     //summernote 이미지링크 처리
     insertedImage: (req, res, next) => {
-        logger.debug("=====================>oftenqna controllers insertedImage");
+        //logger.debug("=====================>oftenqna controllers insertedImage");
         res.send(req.file.filename);
     },
 
@@ -202,7 +202,7 @@ module.exports = {
     list: (req, res, next) => {
         var search = service.createSearch(req);
 
-        logger.debug("=====================> " + JSON.stringify(search));
+        //logger.debug("=====================> " + JSON.stringify(search));
         //console.log("=====================> " + search.order_by);
 
         try {

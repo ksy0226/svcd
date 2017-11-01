@@ -57,9 +57,9 @@ function selectedHighProcess(obj){
 
 //필수값 체크
 function checkValue(){
-    alert($('input[name="incident[request_employee_nm]"]').val());
+    //alert($('input[name="incident[request_nm]"]').val());
 
-    if($('input[name="incident[request_employee_nm]"]').val() == ''){
+    if($('input[name="incident[request_nm]"]').val() == ''){
         alert("요청자를 입력하세요.");
         $('input[name="incident[real_register_mm]"]').focus();
         return false;
@@ -149,7 +149,7 @@ function setUserInfo(item){
     $('input[name="incident[request_email]"]').val(item.email);
     $('input[name="incident[request_hp_telno]"]').val(item.hp_telno);
     $('input[name="incident[request_office_tel_no]"]').val(item.office_tel_no);
-    $('input[name="incident[request_employee_nm]"]').val(item.value);
+    $('input[name="incident[request_nm]"]').val(item.value);
 
     setHighProcess(item.company_cd);
 }

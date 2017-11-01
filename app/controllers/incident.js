@@ -5,6 +5,7 @@ var async = require('async');
 var Incident = require('../models/Incident');
 var CompanyProcess = require('../models/CompanyProcess');
 var ProcessStatus = require('../models/ProcessStatus');
+var LowerProcess = require('../models/LowerProcess');
 var Usermanage = require('../models/Usermanage');
 var mailer = require('../util/nodemailer');
 var service = require('../services/incident');
@@ -117,7 +118,7 @@ module.exports = {
                 callback(null);
             });
         }], function (err) {
-            logger.debug("trace 2");
+            //logger.debug("trace 2");
             if (err) {
                 res.render("http/500", {
                     err: err
@@ -136,6 +137,71 @@ module.exports = {
                 }
             });
 
+        });
+    },
+
+    /** 
+     * incident 상담접수(전화) 저장
+    */
+    mng_save: (req, res, next) => {
+        async.waterfall([function (callback) {
+            var newincident = req.body.incident;
+
+            //등록자
+            newincident.register_company_cd = req.session.company_cd;
+            newincident.register_company_nm = req.session.company_nm;
+            newincident.register_nm = req.session.user_nm;
+            newincident.register_id = req.session.user_id;
+
+            if (req.files) {
+                newincident.attach_file = req.files;
+            }
+            Incident.create(newincident, function (err, newincident) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null);
+            });
+        }], function (err) {
+            //logger.debug("trace 2");
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            } else {
+                async.waterfall([function (callback) {
+                    ProcessStatus.find({}, function (err, status) {
+                        if (err) {
+                            res.render("http/500", {
+                                err: err
+                            });
+                        }
+                        callback(null, status);
+                    });
+                }, function (status, callback) {
+                    LowerProcess.find().sort('higher_cd').sort('lower_nm').exec(function (err, lowerprocess) {
+                        if (err) {
+                            res.render("http/500", {
+                                err: err
+                            });
+                        }
+                        callback(null, status, lowerprocess)
+                    });
+                }], function (err, status, lowerprocess) {
+                    if (err) {
+                        res.render("http/500", {
+                            err: err
+                        });
+                    } else {
+                        res.render("manager/work_list", {
+                            status: status,
+                            lowerprocess: lowerprocess
+                        });
+                    }
+                });
+            }
         });
     },
 
@@ -192,7 +258,7 @@ module.exports = {
      * incident 상세 화면 조회
      */
     viewDetail: (req, res, next) => {
-        logger.debug("Trace viewDetail : ", req.params.id);
+        //logger.debug("Trace viewDetail : ", req.params.id);
         try {
             Incident.findById({
                 _id: req.params.id
@@ -271,7 +337,7 @@ module.exports = {
      */
     getIncidentDetail: (req, res, next) => {
 
-        logger.debug("Trace viewDetail : ", req.params.id);
+        //logger.debug("Trace viewDetail : ", req.params.id);
         try {
             Incident.findById({
                 _id: req.params.id
@@ -307,7 +373,7 @@ module.exports = {
      */
     insertedImage: (req, res, next) => {
         //res.send( '/uploads/' + req.file.filename);
-        logger.debug("=====================>incident controllers insertedImage");
+        //logger.debug("=====================>incident controllers insertedImage");
         res.send(req.file.filename);
     },
 
@@ -378,7 +444,7 @@ module.exports = {
      * 엑셀다운로드 기능
      */
     exceldownload: (req, res, next) => {
-        logger.debug("====>", 1);
+        //logger.debug("====>", 1);
 
         Incident.find(req.body.incident)
             .select('_id title')
