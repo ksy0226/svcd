@@ -31,29 +31,113 @@ function fnTableToExcel(dvData){
 
 
 function fnAllExcel(JsonData){
-    //alert("수정중입니다");
-    
+    alert("fnAllExcel"+JsonData);
+
     var arrData = typeof JsonData != 'object' ? JSON.parse(JsonData) : JsonData;
+
+    //alert("arrData"+JSON.stringify(arrData));
+
+   
     var tab_text="<table border='1px'>";
     tab_text += "<tr bgcolor='#87AFC6'>";
-
+    
+    /*
     for (var index in arrData[0]) {
         tab_text=tab_text+ "<th>"+index+"</th>";
     }
+    */
+    tab_text=tab_text+ "<th>진행상태</th>";
+    tab_text=tab_text+ "<th>상위업무</th>";
+    tab_text=tab_text+ "<th>하위업무</th>";
+    tab_text=tab_text+ "<th>요청자이름</th>";
+    tab_text=tab_text+ "<th>요청자회사</th>";
+    tab_text=tab_text+ "<th>요청자부서</th>";
+    tab_text=tab_text+ "<th>등록일자</th>";
+    tab_text=tab_text+ "<th>완료일자</th>";
+    tab_text=tab_text+ "<th>요청제목</th>";
+    tab_text=tab_text+ "<th>고객요청내용</th>";
+    tab_text=tab_text+ "<th>처리내용</th>";
+    tab_text=tab_text+ "<th>처리소요시간</th>";
+
 
     tab_text += "</tr>";
     
     for (var i = 0; i < arrData.length; i++) {
         tab_text += "<tr>";    
-        for (var index in arrData[i]) {
-
+        /*for (var index in arrData[i]) {
+            alert("index"+index);
             if(arrData[i][index] == ""){
                 tab_text += "<td></td>";
             }else{
                 tab_text += "<td>"+arrData[i][index]+"</td>";
 
             }
+        }*/
+        if(arrData[i]['status_nm'] != null){
+            tab_text += "<td>"+arrData[i]['status_nm']+"</td>";
+        }else{
+            tab_text += "<td></td>";
         }
+        if(arrData[i]['higher_nm'] != null){
+            tab_text += "<td>"+arrData[i]['higher_nm']+"</td>";
+        }else{
+            tab_text += "<td></td>";
+        }
+        if(arrData[i]['lower_nm'] != null){
+            tab_text += "<td>"+arrData[i]['lower_nm']+"</td>";
+        }else{
+            tab_text += "<td></td>";
+        }
+        if(arrData[i]['request_nm'] != null){
+            tab_text += "<td>"+arrData[i]['request_nm']+"</td>";
+        }else{
+            tab_text += "<td></td>";
+        }
+        if(arrData[i]['request_company_nm'] != null){
+            tab_text += "<td>"+arrData[i]['request_company_nm']+"</td>";
+        }else{
+            tab_text += "<td></td>";
+        }
+        if(arrData[i]['request_dept_nm'] != null){
+            tab_text += "<td>"+arrData[i]['request_dept_nm']+"</td>";
+        }else{
+            tab_text += "<td></td>";
+        }
+        if(arrData[i]['register_date'] != null){
+            tab_text += "<td>"+arrData[i]['register_date']+"</td>";
+        }else{
+            tab_text += "<td></td>";
+        }
+        if(arrData[i]['complete_date'] != null){
+            tab_text += "<td>"+arrData[i]['complete_date']+"</td>";
+        }else{
+            tab_text += "<td></td>";
+        }
+        if(arrData[i]['title'] != null){
+            tab_text += "<td>"+arrData[i]['title']+"</td>";
+        }else{
+            tab_text += "<td></td>";
+        }
+        if(arrData[i]['content'] != null){
+            tab_text += "<td>"+arrData[i]['content']+"</td>";
+        }else{
+            tab_text += "<td></td>";
+        }
+        if(arrData[i]['complete_content'] != null){
+            tab_text += "<td>"+arrData[i]['complete_content']+"</td>";
+        }else{
+            tab_text += "<td></td>";
+        }
+        if(arrData[i]['work_time'] != null){
+            tab_text += "<td>"+arrData[i]['work_time']+"</td>";
+        }else{
+            tab_text += "<td></td>";
+        }
+
+
+        //.select ('title content')
+        //.select('status_nm higher_nm lower_nm request_nm request_company_nm request_dept_nm register_date receipt_date complete_date title content complete_content work_time')
+        //.sort('-created_at');
         
         tab_text += "</tr>";
     }
@@ -124,11 +208,16 @@ function fnJsonToExcel(JsonData){
 }
 
 function getJsonData(){
+    alert(1);
+    var reqParam = $($('form')).serialize();
+    alert(2);
+    alert(reqParam);
     $.ajax({
         type: "GET",
         url: "/incident/exceldownload",
         contentType: "application/json",
-        data: JSON.stringify({}),
+        //data: JSON.stringify({}),
+        data: reqParam, // $($('form')).serialize()
         dataType: "json",
         success: function(data, status){
             //fnJsonToExcel(JSON.stringify(data));

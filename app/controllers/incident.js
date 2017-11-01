@@ -440,14 +440,15 @@ module.exports = {
             });
         }
     },
+
     /**
      * 엑셀다운로드 기능
      */
     exceldownload: (req, res, next) => {
         //logger.debug("====>", 1);
-
+        /*
         Incident.find(req.body.incident)
-            .select('_id title')
+            .select('status_nm higher_nm lower_nm request_nm request_company_nm request_dept_nm register_date receipt_date complete_date title content complete_content work_time')
             .exec(function (err, incidentJsonData) {
                 if (err) {
                     //console.log("excel 2>>>>>>>>>>>>>>>", err);
@@ -460,16 +461,34 @@ module.exports = {
 
                 res.json(incidentJsonData);
             });
-        /*
-         Incident.find(req.body.incident, function(err, incidentJsonData) {
-             if (err) return res.json({
-                 success: false,
-                 message: err
-             });
-             logger.debug(incidentJsonData);
-             
-             res.json(incidentJsonData);
-         });
         */
+        
+        var search = service.createSearch(req);
+        async.waterfall([function (callback) {
+            Incident.find(search.findIncident, function (err, incident) {
+            //우선 주석처리
+            //Incident.find(search.findIncident)
+            //.select ('status_nm higher_nm lower_nm title content')
+            //.exec(function (err, incident) {
+                if (err) {
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                }
+                console.log(search.findIncident);
+                callback(null, incident)
+            })
+        }], function (err, incident) {
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: err
+                });
+            }
+            console.log(incident);
+            res.json(incident);
+        });
+        
     }
 };
