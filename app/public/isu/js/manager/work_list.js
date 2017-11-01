@@ -421,8 +421,6 @@ function setDetail(dataObj) {
     //상위코드
     higher_cd = dataObj.higher_cd;
 
-
-
     /**
      * 등록내용 세팅
      */
@@ -479,13 +477,17 @@ function setDetail(dataObj) {
     $('#_need_minute').html(dataObj.need_minute);
     $('#_delay_reason').html(dataObj.delay_reason);
     $('#_valuation').html(dataObj.valuation);
-    if (dataObj.complete_open_flag == 'Y') {
-        dataObj.complete_open_flag = '공개';
-    } else {
-        dataObj.complete_open_flag = '비공개';
+    if (dataObj.status_cd == "3" || dataObj.status_cd == "4" || dataObj.status_cd == "5") {
+        if (dataObj.complete_open_flag == 'Y') {
+            dataObj.complete_open_flag = '공개';
+        } else {
+            dataObj.complete_open_flag = '비공개';
+        }
+    }else{
+        dataObj.complete_open_flag = '';
     }
     //$('#_complete_open_flag-reading_cnt').html(dataObj.complete_open_flag+"/"+dataObj.reading_cnt);
-    $('#_complete_open_flag-reading_cnt').html(dataObj.complete_open_flag);
+    $('#_complete_open_flag').html(dataObj.complete_open_flag);
     $('#_sharing_content').html(dataObj.sharing_content);
     $('#_receipt_content').html(dataObj.receipt_content);
 
