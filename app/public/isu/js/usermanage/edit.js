@@ -5,8 +5,9 @@ $(document).ready(function () {
     $('#group_flag').val(usermanageObj.group_flag);
     $('#access_yn').val(usermanageObj.access_yn);
     $('#email_send_yn').val(usermanageObj.email_send_yn);
+    $('#using_yn').val(usermanageObj.using_yn);
     //$('#company_cd').val(usermanageObj.company_nm);
-    $('#company_nm').val(usermanageObj.company_cd);
+    $('#company_cd').val(usermanageObj.company_cd);
 });
 
 function companyCd() {

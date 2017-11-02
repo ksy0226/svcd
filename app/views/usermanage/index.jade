@@ -1,29 +1,7 @@
 extends ../layouts/default
 block head
     script(src='/vendor/jquery/jquery.min.js')
-    //script(src='../../util/nodemailer.js', type='text/javascript')
-    script(type='text/javascript').
-        function sendMail(){
-            $.ajax({
-                type: "GET",
-                url: "/usermanage/sendmail",
-                contentType: "application/json",
-                data: JSON.stringify({}),
-                dataType: "json",
-                success: function(data, status){
-                    alert(data);
-                    alert(JSON.stringify(data));
-                    //console.log("test : "+data);
-                    //fnJsonToExcel(JSON.stringify(data));
-
-                    //fnJsonToExcel(data);
-                },
-                error: function(data, status, err) {
-                    console.log("err : "+err);
-                    return;
-                }
-            });
-        }
+    script(src='/isu/js/usermanage/index.js', type='text/javascript')
 
 block content
     .content-page
@@ -40,62 +18,65 @@ block content
                                     a(href='#') SD 기본정보
                                 li.active 사원정보관리(내외)
                             h4.page-title 사원정보관리(내외)
-                 // Form TYPE 1
                 .row
                     .col-lg-12
                         .card-box
-                            .p-20
-                                form.form-horizontal.group-border-dashed(id='usermanage' name='form' action='/usermanage/new' method='post')
-                                    .form-group
-                                        .row
-                                            .col-xs-6.col-sm-6.col-md-6
-                                                a.btn.btn-primary(href='/usermanage/new')
-                                                    | 추가 
-                                                // Button trigger modal
-                                                a.btn.btn-info(id='sendmail' onclick="sendMail();") mailer
-                                            .col-xs-3.col-sm-3.col-md-3
-                                                input.form-control(id='searchText' name='usermanage[searchText]' type='text')
-                                            .col-xs-2.col-sm-2.col-md-2
-                                                .dropdown
-                                                    button.btn.btn-default.dropdown-toggle(data-toggle='dropdown' type='button') 검색유형
-                                                        span.span.caret
-                                                    ul.dropdown-menu.dropdown-menu(role='menu', aria-labelledby='menu1')
-                                                        li(role='presentation')
-                                                            a(data-type='title,content', href='#', role='menuitem', tabindex='-1') 제목,본문
-                                                        li(role='presentation')
-                                                            a(data-type='title', href='#', role='menuitem', tabindex='-1') 제목
-                                                        li(role='presentation')
-                                                            a(data-type='content', href='#', role='menuitem', tabindex='-1') 본문
-                                    hr
-                                    .form-group
-                                        .row
-                                            .col-md-12.portlets
-                                                // Your awesome content goes here
-                                                .m-b-30
-                                                    table.table.table-striped
-                                                        thead
-                                                            tr
-                                                                th(width='20%') 회사명
-                                                                th(width='20%') email
-                                                                th(width='10%') 사원명
-                                                                th(width='20%') 부서명
-                                                                th(width='8%') 직위
-                                                                th(width='8%') 직책
-                                                                th(width='14%') 핸드폰번호
-                                                        tbody
-                                                            - if (usermanage.length > 0) {
-                                                                // - for( var i = 0 ; length = usermanage.length > i ; i++ ){ //속도가 빠르다고 알고 있음.
-                                                                - for( var i in usermanage ){ //속도가 느리다고 알고 있음.
-                                                                    tr(onclick="onclick=location.href='/usermanage/#{usermanage[i]._id}/edit'")
-                                                                        td.highlight(data-highlight='search.highlight.title') #{usermanage[i].company_nm}
-                                                                        td #{usermanage[i].email}
-                                                                        td #{usermanage[i].employee_nm}
-                                                                        td #{usermanage[i].dept_nm}
-                                                                        td #{usermanage[i].position_nm}
-                                                                        td #{usermanage[i].jikchk_nm}
-                                                                        td #{usermanage[i].hp_telno}
-                                                                - }
-                                                            - }else{
-                                                                tr
-                                                                    td(colspan='5' align='center') 조회된 데이타가 없습니다.
-                                                            - }
+                            form.form-horizontal.group-border-dashed(action='#', onsubmit='return false;')
+                                .form-group
+                                    label.col-sm-2.control-label 회사명 
+                                    .col-sm-4
+                                        select.form-control(id='company_cd' name='company_cd')
+                                            option(value ='*') 전체
+                                            - if (company.length > 0) {
+                                                - for( var i = 0 ; length = company.length > i ; i++ ){ //속도가 느리다고 알고 있음.
+                                                    option(value ='#{company[i].company_cd}') #{company[i].company_nm}
+                                                - }
+                                            - }
+                                    label.col-sm-2.control-label 사용유무
+                                    .col-sm-2
+                                        select.form-control(id='using_yn' name='using_yn')
+                                            option(value ='Y') 사용
+                                            option(value ='N') 미사용
+                                .form-group.m-b-0
+                                    label.col-sm-2.control-label 검색어
+                                    .col-sm-2
+                                        select.form-control(id='searchType' name='searchType')
+                                            option(value='company_nm,employee_nm') 전체
+                                            option(value='company_nm') 회사명
+                                            option(value='employee_nm') 사원명
+                                    .col-sm-6
+                                        input.form-control(id='searchText' name='searchText' type='text')
+                                    .col-sm-2
+                                        button.btn.btn-primary(id='searchBtn' type='button') 조회
+                .row
+                    .col-sm-12
+                        .btn-toolbar.form-group
+                                .pull-left
+                                    a.btn.btn-primary.waves-effect.waves-light.m-l-5(href='/usermanage/new')
+                                        i.fa.fa-edit
+                                        |  추가
+                        .card-box
+                            table.table.table-bordered
+                                thead
+                                    tr
+                                        th.text-center 회사명
+                                        th.text-center(width='25%') email
+                                        th.text-center(width='10%') 사원명
+                                        th.text-center(width='18%') 부서명
+                                        th.text-center(width='6%') 직위
+                                        th.text-center(width='14%') 연락처
+                                tbody(id='more_list')
+                        .row
+                            .col-sm-4
+                                .dataTables_info Showing 1 to 15 of 
+                                    span(id='totalPage')
+                                    |  pages
+                            .col-sm-8
+                                .dataTables_paginate.paging_simple_numbers.pull-right
+                                    ul#paging.pagination
+
+    #ajax_indicator(style='display:none')
+        p(style='text-align:center; padding:16px 0 0 0; left:50%; top:40%; position:absolute;')
+            img(src='/isu/images/large-loading.gif', width='26px', height='26px', alt='처리중', border='0', align='absmiddle')
+
+block footer

@@ -27,7 +27,7 @@ var usermanageSchema = mongoose.Schema({
     email_send_yn    : { type : String , default : 'Y'},
     sabun            : { type : String },
     access_yn        : { type : String , default : 'N'},
-    
+    using_yn         : { type : String , default : 'Y'},
     user_flag        : { type : String, default : 9 },
     group_flag       : { type : String, default : 'out' },
     created_at       : { type : Date, default: Date.now },
