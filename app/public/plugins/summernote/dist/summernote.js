@@ -2533,7 +2533,7 @@
       plugin : { },
 
       // air mode: inline editor
-      airMode: false,
+      airMode: true,
       // airPopover: [
       //   ['style', ['style']],
       //   ['font', ['bold', 'italic', 'underline', 'clear']],
