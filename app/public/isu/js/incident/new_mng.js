@@ -30,6 +30,28 @@ $(document).ready(function () {
         airMode: true
     });
 
+    $('#form').submit(function(){
+        $('input[name=files]').remove();
+    });
+
+    function sendFile(file, editor, welEditable) {
+        data = new FormData();
+        data.append("incident[attach-file]", file);
+        $.ajax({
+            data: data,
+            type: "POST",
+            url: '/incident/insertedImage',
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(url) {
+                $('#summernote').summernote("insertImage", url);
+            }
+        });
+    }
+
+
+
     $('#datepicker-rcd').datepicker({
         autoclose: true,
         todayHighlight: true,

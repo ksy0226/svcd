@@ -11,12 +11,11 @@ $(document).ready(function () {
     });
 
     $('.summernote').summernote({
-       
         height: 230, // set editor height;
         minHeight: null, // set minimum height of editor
         maxHeight: null, // set maximum height of editor
-        //focus: false // set focus to editable area after initializing summernote
-        //,
+        focus: false // set focus to editable area after initializing summernote
+        ,
         callbacks: {
             onImageUpload: function(files, editor, welEditable) {
                 for (var i = files.length - 1; i >= 0; i--) {
@@ -29,8 +28,7 @@ $(document).ready(function () {
     $('.inline-editor').summernote({
         airMode: true
     });
-    
-    //추가
+
     $('#form').submit(function(){
         $('input[name=files]').remove();
     });

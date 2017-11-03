@@ -223,7 +223,7 @@ function setContent(dataObj) {
                 $('.m-l-15:eq(' + i + ') i:eq(' + j + ')').attr('class', 'md md-star text-warning');
             }
 
-            $("img").attr('display','none');
+            $("img").attr('style','display:none');
 
             //말줄임
             $(".truncate1").dotdotdot({
