@@ -80,7 +80,39 @@ module.exports = {
      * incident 등록 화면(담당자)
      */
     new_mng: (req, res, next) => {
-        res.render("incident/new_mng");
+        //res.render("incident/new_mng");
+
+        async.waterfall([function (callback) {
+            CompanyProcess.find({ "company_cd": req.session.company_cd }, function (err, companyProcess) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null, companyProcess)
+            });
+        }], function (err, companyProcess) {
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            }
+            var real_contact = req.session.office_tel_no + '/';
+            real_contact += req.session.hp_telno + '/';
+            real_contact += req.session.email + '/';
+            if (real_contact == "//") real_contact = "";
+
+            res.render("incident/new_mng", {
+                companyProcess: companyProcess,
+                user_nm: req.session.user_nm,
+                sabun: req.session.sabun,
+                office_tel_no: req.session.office_tel_no,
+                hp_telno: req.session.hp_telno,
+                real_contact: real_contact
+            });
+        });
+
+
     },
 
 
