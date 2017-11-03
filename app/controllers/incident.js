@@ -60,10 +60,15 @@ module.exports = {
                     err: err
                 });
             }
-            var real_contact = req.session.office_tel_no + '/';
-            real_contact += req.session.hp_telno + '/';
-            real_contact += req.session.email + '/';
-            if (real_contact == "//") real_contact = "";
+            
+            var real_contact = "";
+            if( req.session.office_tel_no != ""){
+                real_contact = req.session.office_tel_no;
+            }else if(req.session.hp_telno != ""){
+                real_contact = req.session.hp_telno;
+            }else if(req.session.email != ""){
+                real_contact = req.session.email;
+            }
 
             res.render("incident/new", {
                 companyProcess: companyProcess,
