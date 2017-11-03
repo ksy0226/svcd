@@ -16,15 +16,15 @@ module.exports = {
      * Validation action
      */
     index: (req, res) => {
-        if(req.session.user_flag == '1'){
+        if (req.session.user_flag == '1') {
             res.render("main/admin");
-        }else{
+        } else {
             res.render("main/user");
         }
     },
 
     logincheck: (req, res) => {
-        try{
+        try {
             //logger.debug('logincheck is called '+req.body.remember_me);
             if (req.body.remember_me === "on") {
                 //logger.debug('req.body.remember_me is on ');
@@ -43,20 +43,58 @@ module.exports = {
                 res.clearCookie('group_flag');
             }
 
+            Usermanage.findOne({
+                email: req.body.email
+            }).exec(function (err, usermanage) {
+                logger.debug("password : ", usermanage.authenticate(req.body.password));
+                if (err) callback(err);
+                //if (usermanage.authenticate(req.body.password)) { //비밀번호가 일치하면
+                if (usermanage.authenticate(req.body.password) && usermanage.access_yn == 'Y') {
+                    req.session.save(function () {
+                        req.session.email = usermanage.email;
+                        req.session.user_id = usermanage.user_id;
+                        req.session.password = usermanage.password;
+                        req.session.user_flag = usermanage.user_flag;
+                        req.session.group_flag = usermanage.group_flag;
+                        req.session.user_nm = usermanage.employee_nm;
+                        req.session.company_cd = usermanage.company_cd;
+                        req.session.company_nm = usermanage.company_nm;
+                        req.session.dept_nm = usermanage.dept_nm;
+                        req.session.position_nm = usermanage.position_nm;
+                        req.session.jikchk_nm = usermanage.jikchk_nm;
+                        req.session.office_tel_no = usermanage.office_tel_no;
+                        req.session.hp_telno = usermanage.hp_telno;
 
-                Usermanage.findOne(
-                    { email: req.body.email }
-                ).exec(function (err, usermanage) {
-                    logger.debug("password : ",usermanage.authenticate(req.body.password));
-                    if (err) callback(err);
-                    //if (usermanage.authenticate(req.body.password)) { //비밀번호가 일치하면
-                    if (usermanage.authenticate(req.body.password) && usermanage.access_yn == 'Y') {
-                        req.session.save(function () {
+                        if (req.session.user_flag == '1') {
+                            res.render("main/admin");
+                        } else {
+                            res.render("main/user");
+                        }
+                        /*
+                        res.render('main/main',
+                                {
+                                    user_flag: req.session.user_flag,
+                                    group_flag: req.session.group_flag,
+                                    user_nm: req.session.user_nm,
+                                    sabun: req.session.sabun
+                                });
+                        */
+                    });
+                } else { //계정이 존재하지 않으면
+
+                    request({
+                        uri: "http://gw.isu.co.kr/CoviWeb/api/UserInfo.aspx?email=" + req.body.email + "&password=" + req.body.password,
+                        headers: {
+                            'Content-type': 'application/json'
+                        },
+                        method: "GET",
+                    }, function (err, response, usermanage) {
+                        if (JSON.parse(usermanage).status == "OK") {
                             req.session.email = usermanage.email;
                             req.session.user_id = usermanage.user_id;
                             req.session.password = usermanage.password;
-                            req.session.user_flag = usermanage.user_flag;
-                            req.session.group_flag = usermanage.group_flag;
+                            req.session.user_flag = "9";
+                            req.session.group_flag = "in";
                             req.session.user_nm = usermanage.employee_nm;
                             req.session.company_cd = usermanage.company_cd;
                             req.session.company_nm = usermanage.company_nm;
@@ -65,77 +103,38 @@ module.exports = {
                             req.session.jikchk_nm = usermanage.jikchk_nm;
                             req.session.office_tel_no = usermanage.office_tel_no;
                             req.session.hp_telno = usermanage.hp_telno;
-                            
-                            if(req.session.user_flag == '1'){
-                                res.render("main/admin");
-                            }else{
-                                res.render("main/user");
+                            res.render("main/user");
+                        } else {
+                            if (req.body.remember_me === "on") {
+                                //logger.debug('req.body.remember_me === '+req.body.remember_me)
+                                remember_me = "true";
+                            } else {
+                                //logger.debug('req.body.remember_me !== '+req.body.remember_me)
+                                remember_me = "false";
                             }
-                            /*
-                            res.render('main/main',
-                                    {
-                                        user_flag: req.session.user_flag,
-                                        group_flag: req.session.group_flag,
-                                        user_nm: req.session.user_nm,
-                                        sabun: req.session.sabun
-                                    });
-                            */
-                        });
-                    } else { //계정이 존재하지 않으면
 
-                        request({
-                            uri: "http://gw.isu.co.kr/CoviWeb/api/UserInfo.aspx?email=" + req.body.email + "&password=" + req.body.password,
-                            headers: {
-                                'Content-type': 'application/json'
-                            },
-                            method: "GET",
-                        }, function (err, response, usermanage) {
-                            if(JSON.parse(usermanage).status == "OK"){
-                                req.session.email = usermanage.email;
-                                req.session.user_id = usermanage.user_id;
-                                req.session.password = usermanage.password;
-                                req.session.user_flag = "9";
-                                req.session.group_flag = "in";
-                                req.session.user_nm = usermanage.employee_nm;
-                                req.session.company_cd = usermanage.company_cd;
-                                req.session.company_nm = usermanage.company_nm;
-                                req.session.dept_nm = usermanage.dept_nm;
-                                req.session.position_nm = usermanage.position_nm;
-                                req.session.jikchk_nm = usermanage.jikchk_nm;
-                                req.session.office_tel_no = usermanage.office_tel_no;
-                                req.session.hp_telno = usermanage.hp_telno;
-                                res.render("main/user");
-                            }else{
-                                if (req.body.remember_me === "on") {
-                                    //logger.debug('req.body.remember_me === '+req.body.remember_me)
-                                    remember_me = "true";
-                                } else {
-                                    //logger.debug('req.body.remember_me !== '+req.body.remember_me)
-                                    remember_me = "false";
-                                }
-        
-                                if (email == null) email = "";
-        
-                                //승인여부에 따른 메세지 변경
-                                if (usermanage.access_yn == 'N') {
-                                    res.render('index', {
-                                        email: email,
-                                        remember_me: remember_me,
-                                        message: "미승인 계정입니다.<br>관리팀에 권한을 요청하세요."
-                                    });
-                                } else {
-                                    res.render('index', {
-                                        email: email,
-                                        remember_me: remember_me,
-                                        message: "등록된 계정이 없습니다.<br>다시 시도해주세요."
-                                    });
-                                }
+                            if (email == null) email = "";
+
+                            //승인여부에 따른 메세지 변경
+                            if (usermanage.access_yn == 'N') {
+                                res.render('index', {
+                                    email: email,
+                                    remember_me: remember_me,
+                                    message: "미승인 계정입니다.<br>관리팀에 권한을 요청하세요."
+                                });
+                            } else {
+                                res.render('index', {
+                                    email: email,
+                                    remember_me: remember_me,
+                                    message: "등록된 계정이 없습니다.<br>다시 시도해주세요."
+                                });
                             }
-                        });     
-                    }
-                });
+                        }
+                    });
+                }
+            });
 
-        }catch(e){
+        } catch (e) {
             logger.debug(e);
         }
     },

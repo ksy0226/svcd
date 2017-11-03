@@ -11,12 +11,12 @@ $(document).ready(function () {
     });
 
     $('.summernote').summernote({
-        height: 170, // set editor height
+        height: 230, // set editor height;
         minHeight: null, // set minimum height of editor
         maxHeight: null, // set maximum height of editor
         focus: false // set focus to editable area after initializing summernote
-        
-        ,callbacks: {
+        ,
+        callbacks: {
             onImageUpload: function(files, editor, welEditable) {
                 for (var i = files.length - 1; i >= 0; i--) {
                     sendFile(files[i], this);
@@ -28,6 +28,27 @@ $(document).ready(function () {
     $('.inline-editor').summernote({
         airMode: true
     });
+
+    $('#form').submit(function(){
+        $('input[name=files]').remove();
+    });
+
+    function sendFile(file, editor, welEditable) {
+        data = new FormData();
+        data.append("incident[attach-file]", file);
+        $.ajax({
+            data: data,
+            type: "POST",
+            url: '/incident/insertedImage',
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(url) {
+                $('#summernote').summernote("insertImage", url);
+            }
+        });
+    }
+
 
     $('#datepicker-rcd').datepicker({
         autoclose: true,

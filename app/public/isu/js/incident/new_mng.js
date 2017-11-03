@@ -10,7 +10,7 @@ $(document).ready(function () {
     });
 
     $('.summernote').summernote({
-        height: 170, // set editor height
+        height: 230, // set editor height
         minHeight: null, // set minimum height of editor
         maxHeight: null, // set maximum height of editor
         focus: false // set focus to editable area after initializing summernote
@@ -27,6 +27,28 @@ $(document).ready(function () {
     $('.inline-editor').summernote({
         airMode: true
     });
+
+    $('#form').submit(function(){
+        $('input[name=files]').remove();
+    });
+
+    function sendFile(file, editor, welEditable) {
+        data = new FormData();
+        data.append("incident[attach-file]", file);
+        $.ajax({
+            data: data,
+            type: "POST",
+            url: '/incident/insertedImage',
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(url) {
+                $('#summernote').summernote("insertImage", url);
+            }
+        });
+    }
+
+
 
     $('#datepicker-rcd').datepicker({
         autoclose: true,
@@ -54,9 +76,9 @@ function selectedHighProcess(obj){
 
 //필수값 체크
 function checkValue(){
-    alert($('input[name="incident[request_employee_nm]"]').val());
+    //alert($('input[name="incident[request_nm]"]').val());
 
-    if($('input[name="incident[request_employee_nm]"]').val() == ''){
+    if($('input[name="incident[request_nm]"]').val() == ''){
         alert("요청자를 입력하세요.");
         $('input[name="incident[real_register_mm]"]').focus();
         return false;
@@ -84,7 +106,7 @@ $(function() {
         source: function( request, response ) {
             $.ajax({  
                 type: "GET",        
-                url: "/usermanage/userinfo/",
+                url: "/usermanage/userJSON/",
                 data: 'searchText='+encodeURIComponent($('#request_info').val()),
                 dataType: "json", 
                 error: function (request, status, error) {
@@ -150,7 +172,7 @@ function setUserInfo(item){
     $('input[name="incident[request_email]"]').val(item.email);
     $('input[name="incident[request_hp_telno]"]').val(item.hp_telno);
     $('input[name="incident[request_office_tel_no]"]').val(item.office_tel_no);
-    $('input[name="incident[request_employee_nm]"]').val(item.value);
+    $('input[name="incident[request_nm]"]').val(item.value);
 
     setHighProcess(item.company_cd);
 }

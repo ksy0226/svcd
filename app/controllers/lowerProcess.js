@@ -12,7 +12,7 @@ module.exports = {
 
     index: (req, res, next) => {
         LowerProcessModel.find(req.body.lowerProcess, function (err, lowerProcess) {
-            logger.debug('index 호출');
+            //logger.debug('index 호출');
             if (err) {
                 res.render("http/500", {
                     err: err
@@ -116,5 +116,42 @@ module.exports = {
             });
             res.redirect('/lowerProcess');
         });
+    },
+
+    /**
+    * 처리구분 JSON 조회
+    */
+    getJSON: (req, res, next) => {
+        try {
+            async.waterfall([function (callback) {
+                //상위코드용 업무처리 개수 조회
+                LowerProcessModel.count({ "higher_cd": req.params.higher_cd }, function (err, count) {
+                    if (err) return res.json({
+                        success: false,
+                        message: err
+                    });
+                    callback(null, count)
+                });
+            }], function (err, count) {
+                var higher_cd = req.params.higher_cd;
+                //if (count == 0) higher_cd = '000'; //상위코드용 업무처리가 없으면 공통으로 조회
+                LowerProcessModel.find({ "higher_cd": higher_cd }, function (err, lowerprocess) {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+                        res.json(lowerprocess);
+                    }
+                });
+            });
+        } catch (e) {
+            logger.error("manager control saveReceipt : ", e);
+            return res.json({
+                success: false,
+                message: err
+            });
+        }
     }
 };

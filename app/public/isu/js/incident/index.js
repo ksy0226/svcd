@@ -223,8 +223,9 @@ function setContent(dataObj) {
                 $('.m-l-15:eq(' + i + ') i:eq(' + j + ')').attr('class', 'md md-star text-warning');
             }
 
-            //말줄임
+            $("img").attr('style','display:none');
 
+            //말줄임
             $(".truncate1").dotdotdot({
                 ellipsis: '...', //말줄임 뭘로 할지
                 watch: false //윈도우 창에따라서 업데이트 할건지, 윈도우가 리사이즈될 때 업데이트할 건지

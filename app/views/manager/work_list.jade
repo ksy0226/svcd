@@ -216,7 +216,7 @@ block content
                                                 td#_process_speed
                                         tr
                                             th.bg-muted 상위업무
-                                            td#_higher_nm
+                                            td#_higher_nm 
                                             th.bg-muted 하위업무
                                             td#_lower_nm
                                         tr
@@ -293,7 +293,7 @@ block content
                                             td#_valuation
                                             //th.bg-muted 공개여부 / 조회수
                                             th.bg-muted 공개여부
-                                            td#_complete_open_flag-reading_cnt
+                                            td#_complete_open_flag
                                         tr
                                             th.bg-muted.text-danger 내부공유사항
                                             td#_sharing_content(colspan='3')
@@ -345,11 +345,6 @@ block content
                                         label.col-sm-2.control-label 하위업무구분
                                         .col-sm-5
                                             select.form-control(name='incident[lower_cd]')
-                                                - if (lowerprocess.length > 0) {
-                                                    - for( var i = 0 ; length = lowerprocess.length > i ; i++ ){ 
-                                                        option(value ='#{lowerprocess[i].lower_cd}') #{lowerprocess[i].lower_nm}
-                                                    - }
-                                                - } 
                                     .form-group
                                         label.col-sm-2.control-label 난이도
                                         .col-sm-5

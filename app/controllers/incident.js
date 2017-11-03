@@ -5,6 +5,7 @@ var async = require('async');
 var Incident = require('../models/Incident');
 var CompanyProcess = require('../models/CompanyProcess');
 var ProcessStatus = require('../models/ProcessStatus');
+var LowerProcess = require('../models/LowerProcess');
 var Usermanage = require('../models/Usermanage');
 var mailer = require('../util/nodemailer');
 var service = require('../services/incident');
@@ -79,7 +80,39 @@ module.exports = {
      * incident 등록 화면(담당자)
      */
     new_mng: (req, res, next) => {
-        res.render("incident/new_mng");
+        //res.render("incident/new_mng");
+
+        async.waterfall([function (callback) {
+            CompanyProcess.find({ "company_cd": req.session.company_cd }, function (err, companyProcess) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null, companyProcess)
+            });
+        }], function (err, companyProcess) {
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            }
+            var real_contact = req.session.office_tel_no + '/';
+            real_contact += req.session.hp_telno + '/';
+            real_contact += req.session.email + '/';
+            if (real_contact == "//") real_contact = "";
+
+            res.render("incident/new_mng", {
+                companyProcess: companyProcess,
+                user_nm: req.session.user_nm,
+                sabun: req.session.sabun,
+                office_tel_no: req.session.office_tel_no,
+                hp_telno: req.session.hp_telno,
+                real_contact: real_contact
+            });
+        });
+
+
     },
 
 
@@ -117,7 +150,7 @@ module.exports = {
                 callback(null);
             });
         }], function (err) {
-            logger.debug("trace 2");
+            //logger.debug("trace 2");
             if (err) {
                 res.render("http/500", {
                     err: err
@@ -136,6 +169,71 @@ module.exports = {
                 }
             });
 
+        });
+    },
+
+    /** 
+     * incident 상담접수(전화) 저장
+    */
+    mng_save: (req, res, next) => {
+        async.waterfall([function (callback) {
+            var newincident = req.body.incident;
+
+            //등록자
+            newincident.register_company_cd = req.session.company_cd;
+            newincident.register_company_nm = req.session.company_nm;
+            newincident.register_nm = req.session.user_nm;
+            newincident.register_id = req.session.user_id;
+
+            if (req.files) {
+                newincident.attach_file = req.files;
+            }
+            Incident.create(newincident, function (err, newincident) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null);
+            });
+        }], function (err) {
+            //logger.debug("trace 2");
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            } else {
+                async.waterfall([function (callback) {
+                    ProcessStatus.find({}, function (err, status) {
+                        if (err) {
+                            res.render("http/500", {
+                                err: err
+                            });
+                        }
+                        callback(null, status);
+                    });
+                }, function (status, callback) {
+                    LowerProcess.find().sort('higher_cd').sort('lower_nm').exec(function (err, lowerprocess) {
+                        if (err) {
+                            res.render("http/500", {
+                                err: err
+                            });
+                        }
+                        callback(null, status, lowerprocess)
+                    });
+                }], function (err, status, lowerprocess) {
+                    if (err) {
+                        res.render("http/500", {
+                            err: err
+                        });
+                    } else {
+                        res.render("manager/work_list", {
+                            status: status,
+                            lowerprocess: lowerprocess
+                        });
+                    }
+                });
+            }
         });
     },
 
@@ -192,7 +290,7 @@ module.exports = {
      * incident 상세 화면 조회
      */
     viewDetail: (req, res, next) => {
-        logger.debug("Trace viewDetail : ", req.params.id);
+        //logger.debug("Trace viewDetail : ", req.params.id);
         try {
             Incident.findById({
                 _id: req.params.id
@@ -271,7 +369,7 @@ module.exports = {
      */
     getIncidentDetail: (req, res, next) => {
 
-        logger.debug("Trace viewDetail : ", req.params.id);
+        //logger.debug("Trace viewDetail : ", req.params.id);
         try {
             Incident.findById({
                 _id: req.params.id
@@ -306,9 +404,10 @@ module.exports = {
      * summernote 이미지링크 처리
      */
     insertedImage: (req, res, next) => {
+        console.log("image upload .....");
         //res.send( '/uploads/' + req.file.filename);
-        logger.debug("=====================>incident controllers insertedImage");
-        res.send(req.file.filename);
+        //logger.debug("=====================>incident controllers insertedImage");
+        res.send('/uploads/' + req.file.filename);
     },
 
     /**
@@ -374,14 +473,16 @@ module.exports = {
             });
         }
     },
+
     /**
      * 엑셀다운로드 기능
      */
     exceldownload: (req, res, next) => {
-        logger.debug("====>", 1);
-
+        //logger.debug("====>", 1);
+        
+        /*
         Incident.find(req.body.incident)
-            .select('_id title')
+            .select('status_nm higher_nm lower_nm request_nm request_company_nm request_dept_nm register_date receipt_date complete_date title content complete_content work_time')
             .exec(function (err, incidentJsonData) {
                 if (err) {
                     //console.log("excel 2>>>>>>>>>>>>>>>", err);
@@ -394,16 +495,34 @@ module.exports = {
 
                 res.json(incidentJsonData);
             });
-        /*
-         Incident.find(req.body.incident, function(err, incidentJsonData) {
-             if (err) return res.json({
-                 success: false,
-                 message: err
-             });
-             logger.debug(incidentJsonData);
-             
-             res.json(incidentJsonData);
-         });
         */
+        
+        var search = service.createSearch(req);
+        async.waterfall([function (callback) {
+            Incident.find(search.findIncident, function (err, incident) {
+            //우선 주석처리
+            //Incident.find(search.findIncident)
+            //.select ('status_nm higher_nm lower_nm title content')
+            //.exec(function (err, incident) {
+                if (err) {
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                }
+                console.log(search.findIncident);
+                callback(null, incident)
+            })
+        }], function (err, incident) {
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: err
+                });
+            }
+            console.log(incident);
+            res.json(incident);
+        });
+        
     }
 };

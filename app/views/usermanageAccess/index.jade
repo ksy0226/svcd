@@ -1,7 +1,7 @@
 extends ../layouts/default
 block head
     script(src='/vendor/jquery/jquery.min.js')
-    script(src='/isu/js/usermanage/index.js', type='text/javascript')
+    script(src='/isu/js/usermanageAccess/index.js', type='text/javascript')
 
 block content
     .content-page
@@ -51,11 +51,6 @@ block content
                                         button.btn.btn-primary(id='searchBtn' type='button') 조회
                 .row
                     .col-sm-12
-                        .btn-toolbar.form-group
-                                .pull-left
-                                    a.btn.btn-primary.waves-effect.waves-light.m-l-5(href='/usermanage/new')
-                                        i.fa.fa-edit
-                                        |  추가
                         .card-box
                             table.table.table-bordered
                                 thead

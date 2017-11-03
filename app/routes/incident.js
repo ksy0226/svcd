@@ -14,13 +14,17 @@ router.route('/list').get(ssc.sessionCheck, controller.getIncident);
 router.route('/new/:title').get(ssc.sessionCheck, controller.new);
 router.route('/new_mng').get(ssc.sessionCheck, controller.new_mng);
 router.route('/new').post(upload.array('incident[attach-file]'), ssc.sessionCheck, controller.save);
-router.route('/insertedImage').post(upload2.array('insertedImage'), ssc.sessionCheck, controller.insertedImage);
+router.route('/new_mng').post(upload.array('incident[attach-file]'), ssc.sessionCheck, controller.mng_save);
+//router.route('/insertedImage').post(upload2.array('insertedImage'), ssc.sessionCheck, controller.insertedImage);
 router.route('/viewDetail/:id').get(ssc.sessionCheck, controller.viewDetail);
 router.route('/getIncident').get(ssc.sessionCheck, controller.getIncident);
 router.route('/getIncidentDetail/:id').get(ssc.sessionCheck, controller.getIncidentDetail);
 router.route('/download/:path1/:path2').get(ssc.sessionCheck, controller.download);
 router.route('/valuationSave/:id').post(ssc.sessionCheck,controller.valuationSave);
 router.route('/exceldownload').get(controller.exceldownload);
+router.route('/insertedImage').get(controller.insertedImage);
+
+
 
 
 module.exports = router;

@@ -21,7 +21,6 @@ module.exports = {
         var receiver = req.request_nm + " <" + req.request_id + ">";
         var mailTitle = "[서비스데스크 접수 처리] " + req.title;
         var html = "";
-        html += req.receipt_content + "<br><br>";
         html += "고객사명 : " + req.request_company_nm + "<br>";
         html += "요청자명 : " + req.request_nm + "<br>";
         html += "완료요청일자 : " + req.request_complete_date + "<br>";
