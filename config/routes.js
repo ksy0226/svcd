@@ -22,6 +22,7 @@ module.exports = () => {
     router.use('/myBusiness', require('../app/routes/myBusiness'));
     router.use('/processGubun', require('../app/routes/processGubun'));
     router.use('/statistic', require('../app/routes/statistic'));
+    router.use('/usermanageAccess', require('../app/routes/usermanageAccess'));
 
 
     /// catch 404 and forward to error handler
