@@ -217,23 +217,22 @@ module.exports = {
     }*/
 
     userInfo: (req, res, next) => {
-        Usermanage.find({ employee_nm: { $regex: new RegExp(req.query.request_info, "i") } }, function (err, usermanageData) {
-            if (err) return res.json({
-                success: false,
-                message: err
+        Usermanage.find({
+                employee_nm: {
+                    $regex: new RegExp(req.query.searchText, "i")
+                }
+            })
+            .limit(10)
+            .exec(function (err, usermanageData) {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+                        res.json(usermanageData);
+                }
             });
-
-            //console.log(usermanageData);
-            //res.json(companyJsonData);
-            //res.send({usermanageData : usermanageData});
-
-            //res.render("usermanage/index", {
-            //usermanageData : usermanageData
-            //});
-            res.json(usermanageData);
-        });
-    }
-
-
+    },
 
 };

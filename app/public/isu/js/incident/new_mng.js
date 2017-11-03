@@ -6,8 +6,7 @@ $(document).ready(function () {
     //$('input[name="incident[app_menu]"]').val();
 
     $('#higher_cd').on('change',function(){
-        selectedHighProcess(this);
-        $('#higher_nm').val($('#higher_cd option:selected').text());
+        selectedHighProcess(this)
     });
 
     $('.summernote').summernote({
@@ -15,7 +14,6 @@ $(document).ready(function () {
         minHeight: null, // set minimum height of editor
         maxHeight: null, // set maximum height of editor
         focus: false // set focus to editable area after initializing summernote
-
         ,callbacks: {
             onImageUpload: function(files, editor, welEditable) {
                 for (var i = files.length - 1; i >= 0; i--) {
@@ -42,8 +40,7 @@ $(document).ready(function () {
                 $('#form').submit();
             }
         }
-    })
-    
+    });   
 });
 
 function selectedHighProcess(obj){
@@ -83,14 +80,12 @@ function checkValue(){
 
 //요청자
 $(function() {      
-    $('#request_info').autocomplete({   
-        source: function( request, response ) {           
-            $.ajax({          
-                type: "GET",
-                async: true,
+    $('#request_info').autocomplete({
+        source: function( request, response ) {
+            $.ajax({  
+                type: "GET",        
                 url: "/usermanage/userinfo/",
-                contentType: "application/json",
-                data: 'searchText='+$('#request_info').val(),
+                data: 'searchText='+encodeURIComponent($('#request_info').val()),
                 dataType: "json", 
                 error: function (request, status, error) {
                     alert("autocomplete error : " + error+ " "+request.responseText);
@@ -98,7 +93,7 @@ $(function() {
                 success: function( data ) { 
                     response( $.map( data, function( item ) { 
                         if (item.employee_nm.toLowerCase().indexOf($('#request_info').val().toLowerCase()) >= 0)
-                        {                             
+                        {   
                             return {
                                 label: item.employee_nm.toLowerCase().replace($( '#request_info' ).val().toLowerCase(),"<span style='font-weight:bold;color:Blue;'>" + $( '#request_info' ).val().toLowerCase() + "</span>"),                                 
                                 value: item.employee_nm,
@@ -110,18 +105,25 @@ $(function() {
                                 office_tel_no:item.office_tel_no,
                                 hp_telno:item.hp_telno,
                                 email:item.email
-                            }                         
+                            }        
                         }                     
                     }));
                 }             
             });         
-        },         
+        },
+        autoFocus:true,   
+        //delay:2,
         minLength: 1,         
         select: function( event, ui ) {                
             setUserInfo(ui.item);   
-        },         
+        }, 
+        focus : function(event, ui){
+            //$('#request_info').val(ui.item.value);
+            return false;
+            //event.preventDefault();
+        },     
         open: function() {          
-            $( this ).autocomplete("widget").width("550px");             
+            $( this ).autocomplete("widget").width("580px");             
             $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );         
         },         
         close: function() {             
@@ -130,8 +132,7 @@ $(function() {
         error: function(xhr, ajaxOptions, thrownError){ alert(thrownError);  alert(xhr.responseText); } 
     })     
     .data('uiAutocomplete')._renderItem = function( ul, item ) {    
-        //return $( "<div style='backgroud-color:#fff;padding:10px'><li style='cursor:hand; cursor:pointer; font-size:1em'></li></div>" )  
-        return $( "<li style='cursor:hand; font-size:11pt'></li>" )          
+        return $( "<li style='cursor:hand; font-size:10pt'></li>" )          
         .data( "item.autocomplete", item ).append("<a onclick=\"#\">" +unescape(item.label)+"&nbsp;"+ unescape(item.company_nm)+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +unescape(item.dept_nm)+"&nbsp;&nbsp;&nbsp;" +unescape(item.position_nm)+"&nbsp;&nbsp;&nbsp;" +unescape(item.office_tel_no)+ "</a>")      
         .appendTo( ul );  
     }; 
@@ -156,6 +157,7 @@ function setUserInfo(item){
 
 //요청자 회사에 상위업무를 조회
 function setHighProcess(company_cd){
+    alert(company_cd);
     $.ajax({          
         type: "GET",
         async: true,
