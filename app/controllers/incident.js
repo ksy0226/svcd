@@ -404,9 +404,10 @@ module.exports = {
      * summernote 이미지링크 처리
      */
     insertedImage: (req, res, next) => {
+        console.log("image upload .....");
         //res.send( '/uploads/' + req.file.filename);
         //logger.debug("=====================>incident controllers insertedImage");
-        res.send(req.file.filename);
+        res.send('/uploads/' + req.file.filename);
     },
 
     /**
