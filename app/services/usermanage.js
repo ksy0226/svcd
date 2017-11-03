@@ -41,7 +41,7 @@ module.exports = {
                 });
             }
 
-            if (using_yn != "" || using_yn != null) {
+            if (using_yn != '*') {
                 AndQueries.push({
                     using_yn: req.query.using_yn
                 });

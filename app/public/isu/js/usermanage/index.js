@@ -30,7 +30,7 @@ $(document).ready(function () {
         research(1);
     });
 
-    //상위업무 변경 시
+    //회사명 변경 시
     $('#company_cd').on('change', function () {
         research(1);
     });
@@ -72,12 +72,11 @@ function getDataList(selectedPage) {
         },
         success: function (dataObj) {
             $('#ajax_indicator').css("display", "none");
-            setDataList(dataObj, selectedPage);
             //페이징 처리
+            setDataList(dataObj, selectedPage);
             totalData = dataObj.length;
             totalPage = Math.ceil(totalData / dataPerPage);
             $('#totalPage').text(totalPage);
-
             paging(totalData, dataPerPage, pageCount, selectedPage);
         }
     });
@@ -100,13 +99,13 @@ function setDataList(dataObj, selectedPage) {
     if (endIdx > 0) {
         for (var i = startIdx; i < endIdx + 1; i++) {
             var addList = "";
-            addList += "							<tr id='dataTR' onclick=window.location='/usermanage/" + dataObj[i]._id + "/edit'>";
-            addList += "								<td>" + dataObj[i].company_nm + "</td>";
-            addList += "								<td>" + dataObj[i].email + "</td>";
-            addList += "								<td class='text-center'>" + dataObj[i].employee_nm + "</td>";
-            addList += "								<td>" + dataObj[i].dept_nm + "</td>";
-            addList += "								<td class='text-center'>" + dataObj[i].position_nm + "</td>";
-            addList += "								<td class='text-center'>" + dataObj[i].hp_telno + "</td>";
+            addList += "							<tr onclick=location='/usermanage/edit/" + dataObj[i-1]._id + "'>";
+            addList += "								<td>" + dataObj[i-1].company_nm + "</td>";
+            addList += "								<td>" + dataObj[i-1].email + "</td>";
+            addList += "								<td class='text-center'>" + dataObj[i-1].employee_nm + "</td>";
+            addList += "								<td>" + dataObj[i-1].dept_nm + "</td>";
+            addList += "								<td class='text-center'>" + dataObj[i-1].position_nm + "</td>";
+            addList += "								<td class='text-center'>" + dataObj[i-1].hp_telno + "</td>";
             addList += "							</tr>";
 
             $("#more_list").append(addList);

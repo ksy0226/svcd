@@ -29,12 +29,12 @@ block content
                     .col-lg-12
                         .card-box
                             .p-20
-                                form.form-horizontal.group-border-dashed(id='usermanageForm' name='form' action='/usermanage/#{usermanage._id}/edit' method='post')
+                                form.form-horizontal.group-border-dashed(id='usermanageForm' name='form' action='/usermanage/edit/#{usermanage._id}' method='post')
                                     .form-group
                                         .row
                                             .col-xs-12.col-sm-12.col-md-12
                                                 .btn.btn-primary.btn-signup(onclick="location.href='/usermanage'") 목록
-                                                .btn.btn-primary.btn-danger(onclick="location.href='/usermanage/#{usermanage._id}/delete'") 삭제
+                                                .btn.btn-primary.btn-danger(onclick="location.href='/usermanage/delete/#{usermanage._id}'") 삭제
                                                 button.btn.btn-success.btn-md(type='submit') 저장
                                     hr
                                     .form-group
