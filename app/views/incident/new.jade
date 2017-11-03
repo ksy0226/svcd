@@ -1,9 +1,14 @@
 extends ../layouts/default
 block head
     // summernot
-    //link(href='/plugins/summernote/dist/summernote.css', rel='stylesheet')
-    link(href='http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.6/summernote.css', rel='stylesheet')
-    
+    link(href='/plugins/summernote/dist/summernote.css', rel='stylesheet')
+    // form summernote
+    script(src='/plugins/summernote/dist/summernote.min.js')
+
+
+    //첨부파일
+    script(src='/vendor/fileupload/js/fileinput.js', type='text/javascript')
+    link(href='/vendor/fileupload/css/fileinput.css', media='all', rel='stylesheet', type='text/css')
 
     link(href='/plugins/switchery/switchery.min.css', rel='stylesheet')
     link(href='/assets/css/bootstrap.min.css', rel='stylesheet', type='text/css')
@@ -14,15 +19,8 @@ block head
     link(href='/assets/css/menu_light.css', rel='stylesheet', type='text/css')
     link(href='/assets/css/responsive.css', rel='stylesheet', type='text/css')
 
-    //첨부파일
-    //link(href='/vendor/fileupload/css/fileinput.css', media='all', rel='stylesheet', type='text/css')
 
     script(src='/assets/js/modernizr.min.js')
-    // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
-    // WARNING: Respond.js doesn't work if you view the page via file://
-    //if lt IE 9
-    script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
-    script(src='https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js')
 
     // jQuery
     script(src='/assets/js/jquery.min.js')
@@ -47,15 +45,10 @@ block head
     script(src='/plugins/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js')
     script(src='/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')
     script(src='/plugins/bootstrap-daterangepicker/daterangepicker.js')
-    // form summernote
-    //script(src='/plugins/summernote/dist/summernote.min.js')
-    script(src='http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.6/summernote.js')
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.6/lang/summernote-ko-KR.min.js')
     
     
-    //첨부파일
-    //script(src='/vendor/fileupload/js/fileinput.js', type='text/javascript')
-    //link(href='/vendor/fileupload/css/fileinput.css', media='all', rel='stylesheet', type='text/css')
+    
+    
 
     script(src='/isu/js/incident/new.js', type='text/javascript')
     
