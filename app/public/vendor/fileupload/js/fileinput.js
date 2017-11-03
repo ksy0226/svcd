@@ -3238,6 +3238,7 @@
                     'uploadTitle': config.uploadTitle
                 });
                 */
+                
             }
             if (showZoom) {
                 btnZoom = self._getLayoutTemplate('actionZoom').setTokens({
