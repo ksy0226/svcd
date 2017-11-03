@@ -1,8 +1,8 @@
 extends ../layouts/default
 block head 
     script(type='text/javascript').
-        var usermanageObj = !{JSON.stringify(usermanage).replace(/<\//g, '<\\/')};
-    script(src='/isu/js/usermanage/edit.js')
+        var usermanageAccessObj = !{JSON.stringify(usermanageAccess).replace(/<\//g, '<\\/')};
+    script(src='/isu/js/usermanageAccess/edit.js')
     
     // postcode
     script(src='/isu/js/postcode.js')
@@ -29,12 +29,12 @@ block content
                     .col-lg-12
                         .card-box
                             .p-20
-                                form.form-horizontal.group-border-dashed(id='usermanageForm' name='form' action='/usermanage/edit/#{usermanage._id}' method='post')
+                                form.form-horizontal.group-border-dashed(id='usermanageAccessForm' name='form' action='/usermanageAccess/edit/#{usermanageAccess._id}' method='post')
                                     .form-group
                                         .row
                                             .col-xs-12.col-sm-12.col-md-12
-                                                .btn.btn-primary.btn-signup(onclick="location.href='/usermanage'") 목록
-                                                .btn.btn-primary.btn-danger(onclick="location.href='/usermanage/delete/#{usermanage._id}'") 삭제
+                                                .btn.btn-primary.btn-signup(onclick="location.href='/usermanageAccess'") 목록
+                                                .btn.btn-primary.btn-danger(onclick="location.href='/usermanageAccess/delete/#{usermanageAccess._id}'") 삭제
                                                 button.btn.btn-success.btn-md(type='submit') 저장
                                     hr
                                     .form-group
@@ -45,18 +45,18 @@ block content
                                                     .form-group
                                                         label.col-sm-2.control-label 입력한 회사명
                                                         .col-sm-9
-                                                            input.form-control(name='usermanage[userCompany_nm]', type='text', value=usermanage.userCompany_nm, readonly)
+                                                            input.form-control(name='usermanageAccess[userCompany_nm]', type='text', value=usermanageAccess.userCompany_nm, readonly)
                                                     .form-group(style='display:none')
                                                         label.col-sm-2.control-label 회사코드명
                                                         .col-sm-9
-                                                            input.form-control(id='company_nm' name='usermanage[company_nm]' type='text' value='#{usermanage.company_nm}' required)
+                                                            input.form-control(id='company_nm' name='usermanageAccess[company_nm]' type='text' value='#{usermanageAccess.company_nm}' required)
                                                     .form-group
                                                             label.col-sm-2.control-label 회사코드
                                                             .col-sm-9
-                                                                select.form-control(id='company_cd' name='usermanage[company_cd]' onchange='companyCd()' required) 
+                                                                select.form-control(id='company_cd' name='usermanageAccess[company_cd]' onchange='companyCd()' required) 
                                                                     - if (company.length > 0) {
                                                                         - for( var i = 0 ; length = company.length > i ; i++ ){ 
-                                                                            -if(usermanage.company_cd == company[i].company_cd){
+                                                                            -if(usermanageAccess.company_cd == company[i].company_cd){
                                                                                 option(value='#{company[i].company_cd}' seleceted) #{company[i].company_nm}
                                                                             -}else{
                                                                                 option(value='#{company[i].company_cd}') #{company[i].company_nm}
@@ -66,57 +66,57 @@ block content
                                                     .form-group
                                                         label.col-sm-2.control-label email
                                                         .col-sm-9
-                                                            input.form-control(name='usermanage[email]' type='text' value='#{usermanage.email}')
+                                                            input.form-control(name='usermanageAccess[email]' type='text' value='#{usermanageAccess.email}')
                                                     .form-group
                                                         label.col-sm-2.control-label 비밀번호
                                                         .col-sm-9
-                                                            input.form-control(name='usermanage[password]' type='password' value='#{usermanage.password}')
+                                                            input.form-control(name='usermanageAccess[password]' type='password' value='#{usermanageAccess.password}')
                                                     .form-group
                                                         label.col-sm-2.control-label 사원명
                                                         .col-sm-9
-                                                            input.form-control(name='usermanage[employee_nm]' type='text' value='#{usermanage.employee_nm}')
+                                                            input.form-control(name='usermanageAccess[employee_nm]' type='text' value='#{usermanageAccess.employee_nm}')
                                                     .form-group
                                                         label.col-sm-2.control-label 부서명
                                                         .col-sm-9
-                                                            input.form-control(name='usermanage[dept_nm]' type='text' value='#{usermanage.dept_nm}')
+                                                            input.form-control(name='usermanageAccess[dept_nm]' type='text' value='#{usermanageAccess.dept_nm}')
                                                     .form-group
                                                         label.col-sm-2.control-label 직위
                                                         .col-sm-9
-                                                            input.form-control(name='usermanage[position_nm]' type='text' value='#{usermanage.position_nm}')
+                                                            input.form-control(name='usermanageAccess[position_nm]' type='text' value='#{usermanageAccess.position_nm}')
                                                     .form-group
                                                         label.col-sm-2.control-label 직책
                                                         .col-sm-9
-                                                            input.form-control(name='usermanage[jikchk_nm]' type='text' value='#{usermanage.jikchk_nm}')
+                                                            input.form-control(name='usermanageAccess[jikchk_nm]' type='text' value='#{usermanageAccess.jikchk_nm}')
                                                     .form-group
                                                             label.col-sm-2.control-label 메일 발송여부
                                                             .col-sm-9
-                                                                select.form-control(id='email_send_yn' name='usermanage[email_send_yn]' type='text' value='#{usermanage.email_send_yn}')
+                                                                select.form-control(id='email_send_yn' name='usermanageAccess[email_send_yn]' type='text' value='#{usermanageAccess.email_send_yn}')
                                                                     option(value='Y') 사용 
                                                                     option(value='N') 사용안함
                                                     .form-group
                                                         label.col-sm-2.control-label 핸드폰번호
                                                         .col-sm-9
-                                                            input.form-control(name='usermanage[hp_telno]' type='text' value='#{usermanage.hp_telno}')
+                                                            input.form-control(name='usermanageAccess[hp_telno]' type='text' value='#{usermanageAccess.hp_telno}')
                                                     .form-group
                                                         label.col-sm-2.control-label 회사주소1
                                                         .col-sm-2
-                                                            input.form-control(name='usermanage[dom_post_cd1]', type='text', value='#{usermanage.dom_post_cd1}')
+                                                            input.form-control(name='usermanageAccess[dom_post_cd1]', type='text', value='#{usermanageAccess.dom_post_cd1}')
                                                         .col-sm-5
-                                                            input.form-control(name='usermanage[dom_addr]', type='text', value='#{usermanage.dom_addr}')
+                                                            input.form-control(name='usermanageAccess[dom_addr]', type='text', value='#{usermanageAccess.dom_addr}')
                                                         .col-sm-2
                                                             span.btn.btn-sm.btn-primary(id='postcode') 우편번호 찾기
                                                     .form-group
                                                         label.col-sm-2.control-label 회사주소2
                                                         .col-sm-9
-                                                            input.form-control(name='usermanage[dom_addr2]', type='text', value='#{usermanage.dom_addr2}')
+                                                            input.form-control(name='usermanageAccess[dom_addr2]', type='text', value='#{usermanageAccess.dom_addr2}')
                                                     .form-group
                                                         label.col-sm-2.control-label 회사전화번호
                                                         .col-sm-9
-                                                            input.form-control(name='usermanage[office_tel_no]' type='text' value='#{usermanage.office_tel_no}')
+                                                            input.form-control(name='usermanageAccess[office_tel_no]' type='text' value='#{usermanageAccess.office_tel_no}')
                                                     .form-group
                                                         label.col-sm-2.control-label 사용자권한구분
                                                         .col-sm-9
-                                                            select.form-control(id='user_flag' name='usermanage[user_flag]' type='text' value='#{usermanage.user_flag}')
+                                                            select.form-control(id='user_flag' name='usermanageAccess[user_flag]' type='text' value='#{usermanageAccess.user_flag}')
                                                                 option(value='1') 그룹관리자 
                                                                 option(value='2') 회사관리자
                                                                 option(value='3') 업무관리자
@@ -125,18 +125,18 @@ block content
                                                     .form-group
                                                         label.col-sm-2.control-label 그룹사권한구분
                                                         .col-sm-9
-                                                            select.form-control(id='group_flag' name='usermanage[group_flag]' type='text' value='#{usermanage.group_flag}')
+                                                            select.form-control(id='group_flag' name='usermanageAccess[group_flag]' type='text' value='#{usermanageAccess.group_flag}')
                                                                 option(value='out') 외부사용자 
                                                                 option(value='in') 내부사용자
                                                     .form-group
                                                         label.col-sm-2.control-label 승인여부
                                                         .col-sm-9
-                                                            select.form-control(id='access_yn' name='usermanage[access_yn]' type='text' value='#{usermanage.access_yn}')
+                                                            select.form-control(id='access_yn' name='usermanageAccess[access_yn]' type='text' value='#{usermanageAccess.access_yn}')
                                                                 option(value='Y') 승인 
                                                                 option(value='N') 미승인
                                                     .form-group
                                                         label.col-sm-2.control-label 사용여부
                                                         .col-sm-9
-                                                            select.form-control(id='using_yn' name='usermanage[using_yn]' type='text' value='#{usermanage.using_yn}')
+                                                            select.form-control(id='using_yn' name='usermanageAccess[using_yn]' type='text' value='#{usermanageAccess.using_yn}')
                                                                 option(value='Y') 사용 
                                                                 option(value='N') 사용안함
