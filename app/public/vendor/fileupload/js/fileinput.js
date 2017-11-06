@@ -539,9 +539,9 @@
             tActionDelete = '<button type="button" class="kv-file-remove {removeClass}" ' +
                 'title="{removeTitle}" {dataUrl}{dataKey}>{removeIcon}</button>\n';
             //2017.09.14 LHI
-            //tActionUpload = '<button type="button" class="kv-file-upload {uploadClass}" title="{uploadTitle}">' +
-            //    '{uploadIcon}</button>';
-            tActionUpload = '';
+            tActionUpload = '<button type="button" class="kv-file-upload {uploadClass}" title="{uploadTitle}">' +
+                '{uploadIcon}</button>';
+            //tActionUpload = '';
             tActionZoom = '<button type="button" class="kv-file-zoom {zoomClass}" ' +
                 'title="{zoomTitle}">{zoomIcon}</button>';
             tActionDrag = '<span class="file-drag-handle {dragClass}" title="{dragTitle}">{dragIcon}</span>';
@@ -3231,13 +3231,12 @@
                 });
             }
             if (showUpload) {
-            	/*
+            	
                 btnUpload = self._getLayoutTemplate('actionUpload').setTokens({
                     'uploadClass': config.uploadClass,
                     'uploadIcon': config.uploadIcon,
                     'uploadTitle': config.uploadTitle
                 });
-                */
                 
             }
             if (showZoom) {
