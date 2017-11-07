@@ -99,6 +99,7 @@ function checkValue(){
 }
 
 //summernote 이미지 업로드
+/*
 function sendFile(file, el) {
     var form_data = new FormData();
       form_data.append('insertedImage', file);
@@ -115,6 +116,7 @@ function sendFile(file, el) {
         }
       });
 }
+*/
 
 
 
