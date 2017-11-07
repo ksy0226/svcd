@@ -7,6 +7,7 @@ const Usermanage = require('../models/Usermanage');
 const service = require('../services/usermanage');
 const logger = require('log4js').getLogger('app');
 const Iconv = require('iconv-lite');
+const request = require("request");
 
 module.exports = {
 
@@ -195,7 +196,11 @@ module.exports = {
     },
 
     userInfo: (req, res, next) => {
-        Usermanage.find({ employee_nm: { $regex: new RegExp(req.query.request_info, "i") } }, function (err, usermanageData) {
+        Usermanage.find({
+            employee_nm: {
+                $regex: new RegExp(req.query.request_info, "i")
+            }
+        }, function (err, usermanageData) {
             if (err) {
                 return res.json({
                     success: false,
@@ -203,7 +208,7 @@ module.exports = {
                 });
             }
 
-            //console.log(usermanageData);
+            //logger.debug(usermanageData);
             //res.json(companyJsonData);
             //res.send({usermanageData : usermanageData});
 
@@ -219,7 +224,7 @@ module.exports = {
         var search = service.createSearch(req);
 
         //logger.debug("=====================> " + JSON.stringify(search));
-        console.log("=====================> " + JSON.stringify(search));
+        logger.debug("=====================> " + JSON.stringify(search));
 
         try {
             async.waterfall([function (callback) {
@@ -249,23 +254,55 @@ module.exports = {
     },
 
     userJSON: (req, res, next) => {
-        Usermanage.find({
-                employee_nm: {
-                    $regex: new RegExp(req.query.searchText, "i")
-                }
-            })
-            .limit(10)
-            .exec(function (err, usermanageData) {
-                    if (err) {
-                        return res.json({
-                            success: false,
-                            message: err
-                        });
-            res.json(usermanageData);
-                    } else {
-                        res.json(usermanageData);
-
-                }
-            });
-        },
+        try{
+            request({
+                //uri: "http://gw.isu.co.kr/CoviWeb/api/UserList.aspx?searchName="+encodeURIComponent(req.query.searchText),
+                uri: "http://gw.isudev.com/CoviWeb/api/UserList.aspx?searchName="+encodeURIComponent(req.query.searchText),
+                //uri: "http://gw.isu.co.kr/CoviWeb/api/UserInfo.aspx?email=hilee@isu.co.kr&password=nimda3",
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                method: "GET",
+            }, function (err, response, usermanage) {
+                //logger.debug("=====>userJSON group ", usermanage);
+                Usermanage.find({
+                        employee_nm: {
+                            $regex: new RegExp(req.query.searchText, "i")
+                        }
+                    })
+                    .limit(10)
+                    .exec(function (err, usermanageData) {
+                        if (err) {
+                            return res.json({
+                                success: false,
+                                message: err
+                            });
+                        } else {
+                            if(usermanage != null){
+                                usermanage = JSON.parse(usermanage);
+                            }
+                            res.json(mergeUser(usermanage, usermanageData));
+                        }
+                    }); //usermanage.find End
+            }); //request End
+        }catch(e){
+            logger.error("===control usermanager.js userJSON : ",e);
+        }
+    },//userJSON End
 };
+
+
+function mergeUser(trg1, trg2){
+    var rtnJSON = [];
+    try{
+        for(var i = 0 ; i < trg1.length ; i++){
+            rtnJSON.push(trg1[i]);
+        }
+        for(var i = 0 ; i < trg2.length ; i++){
+            rtnJSON.push(trg2[i]);
+        }
+    }catch(e){
+        logger.error("control useremanage mergeUser : ",e);
+    }
+    return rtnJSON;
+}
