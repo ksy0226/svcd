@@ -101,7 +101,7 @@ function checkValue(){
 
 
 //요청자
-$(function() {      
+$(function() {
     $('#request_info').autocomplete({
         source: function( request, response ) {
             $.ajax({  
@@ -179,7 +179,6 @@ function setUserInfo(item){
 
 //요청자 회사에 상위업무를 조회
 function setHighProcess(company_cd){
-    alert(company_cd);
     $.ajax({          
         type: "GET",
         async: true,
