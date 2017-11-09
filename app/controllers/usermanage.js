@@ -269,6 +269,7 @@ module.exports = {
                         employee_nm: {
                             $regex: new RegExp(req.query.searchText, "i")
                         }
+                        , group_flag : "out"
                     })
                     .limit(10)
                     .exec(function (err, usermanageData) {
