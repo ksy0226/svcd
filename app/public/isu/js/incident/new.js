@@ -33,9 +33,9 @@ $(document).ready(function () {
         $('input[name=files]').remove();
     });
 
-    function sendFile(file, editor, welEditable) {
+    function sendFile(files, editor, welEditable) {
         data = new FormData();
-        data.append("incident[attach-file]", file);
+        data.append("incident[attach-file]", files);
         $.ajax({
             data: data,
             type: "POST",

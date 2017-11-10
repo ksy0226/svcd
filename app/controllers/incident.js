@@ -85,8 +85,9 @@ module.exports = {
      * incident 등록 화면(담당자)
      */
     new_mng: (req, res, next) => {
+        res.render("incident/new_mng");
         //res.render("incident/new_mng");
-
+        /*
         async.waterfall([function (callback) {
             CompanyProcess.find({ "company_cd": req.session.company_cd }, function (err, companyProcess) {
                 if (err) {
@@ -116,7 +117,7 @@ module.exports = {
                 real_contact: real_contact
             });
         });
-
+        */
 
     },
 

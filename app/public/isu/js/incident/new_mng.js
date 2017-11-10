@@ -179,17 +179,22 @@ function setUserInfo(item){
 
 //요청자 회사에 상위업무를 조회
 function setHighProcess(company_cd){
+
+    var reqParam = 'company_cd=' + company_cd ;
+    
     $.ajax({          
         type: "GET",
         async: true,
         url: "/higherProcess/getHigherProcess/",
         contentType: "application/json",
-        data: 'company_cd='+company_cd,
+        //data: 'company_cd='+company_cd,
+        data : reqParam,
         dataType: "json", 
         error: function (request, status, error) {
             alert("set higherProcess error : " + error+ " "+request.responseText);
         },         
         success: function( data ) { 
+
             addOption(data);
         }             
     }); 
@@ -197,9 +202,10 @@ function setHighProcess(company_cd){
 
 //상위업무 세팅
 function addOption(data){
+
     $('#higher_cd').empty();
     //$('#higher_cd').append("<option value=''> 전체</option>");
-    
+
     for(var i=0; i<data.length; i++){
         $('#higher_cd').append("<option value='"+data[i]["higher_cd"]+"'>"+data[i]["higher_nm"]+"</option>");
     }
