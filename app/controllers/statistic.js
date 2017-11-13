@@ -92,22 +92,14 @@ module.exports = {
                     ,count: {
                         $sum: 1
                     }
-                    //,total: {
-                    //    $sum: "$amount"
-                    //}
                 }
             } 
               
         ]
-        console.log('aggregatorOpts'+aggregatorOpts);
-
+        //logger.debug('aggregatorOpts'+aggregatorOpts);
         IncidentModel.aggregate(aggregatorOpts)
             .exec(function (err, incident) {
-                console.log("incident"+JSON.stringify(incident));
-                //incident=JSON.parse(incident);
-                console.log("incident count "+incident.count);
-                console.log("incident higher_cd "+incident[0].higher_cd);
-                console.log("incident higher_nm "+incident[0].higher_nm);
+                logger.debug("incident"+JSON.stringify(incident));
                 if (err) {
                     res.render("http/500", {
                         err: err
@@ -117,18 +109,49 @@ module.exports = {
                     //res.json(result);
                     incident: incident
                 }
-                console.log("1 :"+incident);
-                console.log("2 : "+JSON.stringify(incident));
-
+    
                 res.render("statistic/high_lower", {
                     incident: incident
                 });
             });
-
-            
-
-
-
+    },
+    cntload : (req, res, next) => {
+        var aggregatorOpts = 
+        [
+            { 
+                $match : { //조건
+                            manager_company_cd : "ISU_ST"
+                            //,manager_sabun : "12001"   //req.session.sabun 넣을 예정
+                            ,$or: [ { status_cd : "1" },{ status_cd : "2" }, { status_cd : "3" }, { status_cd : "4" }]
+                         }
+            }
+            ,{ 
+                $group : { //그룹칼럼
+                    _id: {
+                        status_cd : "$status_cd"
+                    }
+                    ,count: {
+                        $sum: 1
+                    }
+                }
+            } 
+        ]
+        
+        IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
+        //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
+            console.log("incident"+JSON.stringify(incident));
+            console.log("length"+incident.length); 
+                
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            } else {
+                logger.debug("===========", incident);
+                incident: incident
+            }
+            res.json(incident);
+        });
     },
 
     /**

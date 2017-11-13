@@ -7,11 +7,42 @@ var inCnt = 10; //한번에 화면에 조회되는 리스트 수
 $(document).ready(function () {
     //최초 조회
     getDataList();
+    //메인 카운트 로드
+    cntLoad();
 });
+
+
+function cntLoad(){
+    $.ajax({
+        type: "GET",
+        async: true,
+        url: "/statistic/cntload",
+        dataType: "json", // xml, html, script, json 미지정시 자동판단
+        timeout: 30000,
+        cache: false,
+        data: {},
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        error: function (request, status, error) {
+            alert("error : " + error);
+        },
+        beforeSend: function (dataObj) {
+        },
+        success: function (dataObj) {
+            setCntList(dataObj);
+        }
+    });
+}
+
+function setCntList(dataObj){
+    for (var i = 0; i < dataObj.length; i++) { 
+        if(dataObj[i]._id.status_cd != null){
+            $('#status'+ dataObj[i]._id.status_cd).html(dataObj[i].count);
+        }
+    }
+}
 
 function getDataList() {
     var reqParam = '';
-
     $.ajax({
         type: "GET",
         async: true,
