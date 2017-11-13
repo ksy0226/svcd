@@ -83,8 +83,11 @@ module.exports = {
                 $group : { //그룹칼럼
                     _id: {
                         //request_company_cd: "$request_company_cd"
-                        higher_cd: "$higher_cd"
-                        ,lower_cd: "$lower_cd"
+                        higher_cd : "$higher_cd"
+                        ,higher_nm : "$higher_nm"
+                        ,lower_cd : "$lower_cd"
+                        ,lower_nm : "$lower_nm"
+                        
                     }
                     ,count: {
                         $sum: 1
@@ -93,9 +96,7 @@ module.exports = {
                     //    $sum: "$amount"
                     //}
                 }
-            }
-              
-              
+            } 
               
         ]
         console.log('aggregatorOpts'+aggregatorOpts);
@@ -104,7 +105,7 @@ module.exports = {
             .exec(function (err, incident) {
                 console.log("incident"+JSON.stringify(incident));
                 //incident=JSON.parse(incident);
-                console.log("incident count "+incident);
+                console.log("incident count "+incident.count);
                 console.log("incident higher_cd "+incident[0].higher_cd);
                 console.log("incident higher_nm "+incident[0].higher_nm);
                 if (err) {
@@ -117,7 +118,7 @@ module.exports = {
                     incident: incident
                 }
                 console.log("1 :"+incident);
-                console.log("2 : "+JSON.stringify(incident[0].higher_nm));
+                console.log("2 : "+JSON.stringify(incident));
 
                 res.render("statistic/high_lower", {
                     incident: incident
