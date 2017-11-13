@@ -4,6 +4,7 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var Usermanage = require('../models/Usermanage');
 var CompanyModel = require('../models/Company');
+var Incident = require('../models/Incident');
 var request = require("request");
 var bcrypt = require("bcrypt-nodejs");
 var logger = require('log4js').getLogger('app');
@@ -202,6 +203,37 @@ module.exports = {
             });
         } catch (e) {
             logger.debug('usermanage controllers error ====================> ', e)
+        }
+    },
+
+    main_list: (req, res, next) => {
+        try {
+            //logger.debug('main_list controllers start!');
+            if (req.session.user_flag == '9') {
+                Incident.find({ request_id: req.session.email }, function (err, incident) {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+                        res.json(incident);
+                    }
+                }).sort('-created_at');
+            } else {
+                Incident.find({ manager_email: req.session.email }, function (err, incident) {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+                        res.json(incident);
+                    }
+                }).sort('-created_at');
+            }
+        } catch (e) {
+            logger.debug('main_list controllers error ====================> ', e)
         }
     },
 };
