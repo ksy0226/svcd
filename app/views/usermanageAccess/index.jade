@@ -16,8 +16,8 @@ block content
                                     a(href='#') Home
                                 li
                                     a(href='#') SD 기본정보
-                                li.active 사원정보관리(내외)
-                            h4.page-title 사원정보관리(내외)
+                                li.active 미승인 사원관리
+                            h4.page-title 미승인 사원관리
                 .row
                     .col-lg-12
                         .card-box
@@ -32,12 +32,6 @@ block content
                                                     option(value ='#{company[i].company_cd}') #{company[i].company_nm}
                                                 - }
                                             - }
-                                    label.col-sm-2.control-label 사용유무
-                                    .col-sm-2
-                                        select.form-control(id='using_yn' name='using_yn')
-                                            option(value ='*') 전체
-                                            option(value ='Y') 사용
-                                            option(value ='N') 미사용
                                 .form-group.m-b-0
                                     label.col-sm-2.control-label 검색어
                                     .col-sm-2

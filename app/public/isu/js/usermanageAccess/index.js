@@ -51,8 +51,8 @@ function research(selectedPage) {
 
 function getDataList(selectedPage) {
     var reqParam = 'searchType=' + $('#searchType').val() + '&company_cd=' + $('#company_cd').val()
-        + '&searchText=' + encodeURIComponent($('#searchText').val())
-        + '&using_yn=' + $('#using_yn').val();
+        + '&searchText=' + encodeURIComponent($('#searchText').val());
+        //+ '&using_yn=' + $('#using_yn').val('N');
 
     $.ajax({
         type: "GET",

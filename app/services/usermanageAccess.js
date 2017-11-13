@@ -11,7 +11,7 @@ module.exports = {
         var AndQueries = [];
         var OrQueries = [];
         var company_cd = req.query.company_cd == null ? "*" : req.query.company_cd;
-        var using_yn = req.query.using_yn == null ? "Y" : req.query.using_yn;
+        var using_yn = "";
 
         try {
             if (req.query.searchType && req.query.searchText) {
@@ -43,7 +43,7 @@ module.exports = {
 
             if (using_yn != '*') {
                 AndQueries.push({
-                    using_yn: req.query.using_yn
+                    using_yn: "N"
                 });
             }
 
@@ -54,7 +54,7 @@ module.exports = {
 
             /*
             console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-            console.log('using_yn            ' + req.query.using_yn);
+            console.log('using_yn            ' + JSON.stringify(req.query.using_yn));
             console.log('searchType          ' + req.query.searchType);
             console.log('searchText          ' + req.query.searchText);
             console.log('company_cd          ' + req.query.company_cd);
@@ -63,7 +63,7 @@ module.exports = {
             */
 
             return {
-                using_yn: req.query.using_yn,
+                using_yn: using_yn,
                 searchType: req.query.searchType,
                 searchText: req.query.searchText,
                 company_cd: req.query.company_cd,

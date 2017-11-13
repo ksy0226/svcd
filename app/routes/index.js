@@ -15,5 +15,6 @@ router.route('/new').post(controller.new);
 router.route('/index1').get(controller.index1);  
 router.route('/index2').get(controller.index2);
 router.route('/logout').get(controller.logout);
+router.route('/login/main_list').get(ssc.sessionCheck, controller.main_list);
 
 module.exports = router;
