@@ -115,11 +115,11 @@ block content
                                             input#higher_nm.form-control(type='hidden' name='incident[higher_nm]')
                                             select#higher_cd.form-control(name='incident[higher_cd]')
                                                 option(value ='') 선택하세요
-                                                - if (companyProcess.length > 0) {
+                                                //- if (companyProcess.length > 0) {
                                                     - for( var i = 0 ; length = companyProcess.length > i ; i++ ){ //속도가 느리다고 알고 있음.
                                                         option(value ='#{companyProcess[i].higher_cd}') #{companyProcess[i].higher_nm}
                                                     - }
-                                                - }
+                                                //- }
                                         label.col-sm-2.control-label 요청완료일
                                         .col-sm-4
                                             .input-group
