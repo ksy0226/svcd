@@ -121,6 +121,7 @@ html
                 ul.list-unstyled
                   li
                     a(href='/search/mng_list') 전체내용검색
+                - /*
                   li
                     a(href='/statistic/com_higher') 회사별 상위업무통계
                   li
@@ -131,7 +132,10 @@ html
                     a(href='/statistic/mng_month') 담당자별 월별 처리내역
                   li
                     a(href='/statistic/status_list') 처리구분별 처리내역
+                - */
               - }
+
+              - /*
               - if(session.user_flag ==1 || session.user_flag ==4){
               li.has_sub
                 a.waves-effect.waves-primary(href='javascript:void(0);')
@@ -169,6 +173,7 @@ html
                   i.md.md-poll
                   span  SD  Dashboard 
               - }
+              - */
             .clearfix
           .clearfix
       // Left Sidebar End
