@@ -120,8 +120,8 @@ module.exports = {
         [
             { 
                 $match : { //조건
-                            manager_company_cd : "ISU_ST"
-                            //,manager_sabun : "12001"   //req.session.sabun 넣을 예정
+                            manager_company_cd : "ISU_ST"  //각 사별 관리담당자는?
+                            //,manager_sabun : "12001"     //req.session.sabun 넣을 예정
                             ,$or: [ { status_cd : "1" },{ status_cd : "2" }, { status_cd : "3" }, { status_cd : "4" }]
                          }
             }

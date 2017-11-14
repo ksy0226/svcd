@@ -28,12 +28,12 @@ function cntLoad(){
         beforeSend: function (dataObj) {
         },
         success: function (dataObj) {
-            setCntList(dataObj);
+            setCntLoad(dataObj);
         }
     });
 }
 
-function setCntList(dataObj){
+function setCntLoad(dataObj){
     for (var i = 0; i < dataObj.length; i++) { 
         if(dataObj[i]._id.status_cd != null){
             $('#status'+ dataObj[i]._id.status_cd).html(dataObj[i].count);
