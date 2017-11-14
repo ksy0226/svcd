@@ -36,13 +36,30 @@ function cntLoad(){
 function setCntLoad(dataObj){
     for (var i = 0; i < dataObj.length; i++) { 
         if(dataObj[i]._id.status_cd != null){
-            $('#status'+ dataObj[i]._id.status_cd).html(dataObj[i].count);
-            if(dataObj[i]._id.status_cd == "3"){
-                alert("미평가");
-                alert(dataObj[i].count);
-            }
-        }
+            $('#status'+ dataObj[i]._id.status_cd).html(dataObj[i].count); 
+
+            if(dataObj[i]._id.status_cd == "3"){      //'미평가'일 경우
+                //alert("count"+ dataObj[i].count);            //129
+                //alert(dataObj[3].count);
+                var totalCnt = dataObj[i].count + dataObj[3].count;
+                var percentVal = Math.round((dataObj[i].count / totalCnt)*100); // (129/129+160)*100 반올림 처리
+                
+                $("#chart3").removeAttr('data-text');
+                $('#chart3').attr('data-text', percentVal+"%");
+                $('#chart3').attr('data-percent', percentVal);
+                
+
+            }else if(dataObj[i]._id.status_cd == "4"){  //'처리완료'일 경우
+                var totalCnt = dataObj[i].count + dataObj[0].count;
+                var percentVal = Math.round((dataObj[i].count / totalCnt)*100); // (160/129+160)*100 반올림 처리
+                
+                $("#chart4").removeAttr('data-text');
+                $('#chart4').attr('data-text', percentVal+"%");
+                $('#chart4').attr('data-percent', percentVal); 
+            } 
+        }  
     }
+    $('.circliful-chart').circliful();
 }
 
 function getDataList() {

@@ -134,7 +134,12 @@ module.exports = {
                         $sum: 1
                     }
                 }
-            } 
+            }
+            , {
+                $sort : {
+                    status_cd: -1
+                }
+            }
         ]
         
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
