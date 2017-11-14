@@ -28,21 +28,14 @@ function getDataList() {
         },
         success: function (dataObj) {
             setDataList(dataObj);
-            alert(dataObj);
         }
     });
 }
 
 //내용 매핑
 function setDataList(dataObj) {
-    /**
-     * 등록내용 세팅
-     */
-    if (dataObj.status_nm != "접수대기") {
-        $('#_status_nm').html(dataObj.status_nm);
-    } else {
-        $('#_status_nm').html("접수중");
-    }
+    //기존 데이터 삭제
+    $("#more_list tr").remove();
 
     //조회 내용 추가
     if (rowIdx < dataObj.length) {
@@ -56,30 +49,37 @@ function setDataList(dataObj) {
         for (var i = rowIdx; i < dataCnt; i++) {
             var creat_dateVal = dataObj[i].created_at;
             creat_dateVal = creat_dateVal.substring(0, 10);
-            var idValue = dataObj[i]._id;
+            var complete_dateVal = dataObj[i].complete_date;
+            complete_dateVal = complete_dateVal.substring(0, 10);
+
             var addList = "";
-            addList += "							<tr id='dataTR' onclick=window.location='/incident/edit/" + dataObj[i]._id + "'>";
-            addList += "								<td>" + dataObj[i].title + "</td>";
-            addList += "								<td class='text-center'>" + dataObj[i].created_at + "</td>";
-            addList += "								<td class='text-center'>" + dataObj[i].app_menu + "</td>";
-            if (dataObj[i].status_cd == '1') {
-                addList += "										<span class='label label-inverse'>" + dataObj[i].status_nm + "</span>";
-            } else if (dataObj[i].status_cd == '2') {
-                addList += "										<span class='label label-primary'>" + dataObj[i].status_nm + "</span>";
-            } else if (dataObj[i].status_cd == '3') {
-                addList += "										<span class='label label-success'>" + dataObj[i].status_nm + "</span>";
-            } else if (dataObj[i].status_cd == '4') {
-                addList += "										<span class='label label-purple'>" + dataObj[i].status_nm + "</span>";
-            } else if (dataObj[i].status_cd == '5') {
-                addList += "										<span class='label label-info'>" + dataObj[i].status_nm + "</span>";
-            }
-            addList += "								<td class='text-center'>" + dataObj[i].manager_nm + "</td>";
-            addList += "								<td class='text-center'>" + dataObj[i].complete_date + "</td>";
-            addList += "							</tr>";
+            addList += "<tr onclick=window.location='/search/user_list/' style='cursor:pointer'>";
+            addList += "	<td>" + dataObj[i].title + "</td>";
+            addList += "	<td class='text-center'>" + creat_dateVal + "</td>";
+            addList += "	<td class='text-center'>" + dataObj[i].app_menu + "</td>";
+            addList += "	<td class='text-center'>" + dataObj[i].status_nm + "</td>";
+            addList += "	<td class='text-center'>" + dataObj[i].manager_nm + "</td>";
+            addList += "	<td class='text-center'>" + complete_dateVal + "</td>";
+            addList += "</tr>";
 
             $("#more_list").append(addList);
 
             rowIdx++;
         }
+
+        // 진행상태
+        $('#more_list > tr').each(function () {
+            if ($(this).find('td:eq(3)').html() == "접수" || $(this).find('td:eq(3)').html() == "접수대기") {
+                $(this).find('td:eq(3)').html('<span class="label label-inverse">접수중</span>');
+            } if ($(this).find('td:eq(3)').html() == "처리중") {
+                $(this).find('td:eq(3)').html('<span class="label label-primary">처리중</span>');
+            } if ($(this).find('td:eq(3)').html() == "미평가") {
+                $(this).find('td:eq(3)').html('<span class="label label-success">미평가</span>');
+            } if ($(this).find('td:eq(3)').html() == "완료") {
+                $(this).find('td:eq(3)').html('<span class="label label-purple">완료</span>');
+            } if ($(this).find('td:eq(3)').html() == "보류") {
+                $(this).find('td:eq(3)').html('<span class="label label-info">보류</span>');
+            }
+        })
     }
 }
