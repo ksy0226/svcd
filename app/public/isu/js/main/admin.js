@@ -37,6 +37,10 @@ function setCntLoad(dataObj){
     for (var i = 0; i < dataObj.length; i++) { 
         if(dataObj[i]._id.status_cd != null){
             $('#status'+ dataObj[i]._id.status_cd).html(dataObj[i].count);
+            if(dataObj[i]._id.status_cd == "3"){
+                alert("미평가");
+                alert(dataObj[i].count);
+            }
         }
     }
 }
