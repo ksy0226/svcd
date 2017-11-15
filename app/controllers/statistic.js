@@ -116,8 +116,8 @@ module.exports = {
             });
     },
     cntload : (req, res, next) => {
-        //var start = new Date(new Date().setDate(new Date().getDate()-180));
-        //var end = new Date();
+        var startDate = new Date(new Date().setDate(new Date().getDate()-60)).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        var endDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
         
         var aggregatorOpts = 
         [
@@ -126,18 +126,14 @@ module.exports = {
                     manager_company_cd : "ISU_ST"  //각 사별 관리담당자는?
                     //,manager_sabun : "12001"     //req.session.sabun 넣을 예정
                     ,$or: [ { status_cd : "1" }, { status_cd : "2" }, { status_cd : "3" }, { status_cd : "4" }]
-
-                    //,register_date : {$gte: "2017-09-01T00:00:00.0Z", $lte: "2017-11-31T00:00:00.0Z"}
-                    //,register_date : {$gte: "2017-10-01T00:00:00.0Z", $lte: "2017-11-31T00:00:00.0Z"}
-                    //,register_date : {$gte: start, $lte:end}
-                    ,$and : [ { register_date : {$gte: "2017-05-19T04:49:38.881Z"}}
+                    /*,$and : [ { register_date : {$gte: "2017-05-19T04:49:38.881Z"}}
                              ,{ register_date : {$lte:"2017-11-15T04:49:38.881Z"}} ]
-                        
-                    //,register_date : {$gte: "2017-05-19T04:49:38.881Z", $lte:"2017-11-15T04:49:38.881Z"}
+                    */    
+                    //,register_date : {$gte: "2017-10-19T04:49:38.881Z", $lte:"2017-11-15T04:49:38.881Z"}
                     //,register_date : {$gte: new Date(new Date().setDate(new Date().getDate()-180)), $lte: new Date()}
-
                     
-                    //$ifNull: [ "$person.age", "null" ]  
+                    ,register_date : { $gte : startDate, $lte : endDate }
+
                 }
             }
             ,{ 
@@ -167,7 +163,6 @@ module.exports = {
                 }
             }
         ]
-        console.log("aggregatorOpts"+JSON.stringify(aggregatorOpts));
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
         //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
             console.log("incident"+JSON.stringify(incident));
