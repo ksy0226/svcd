@@ -7,7 +7,7 @@
 $( document ).ready(function() {
 
     var DrawSparkline = function() {
-        $('#sparkline1').sparkline([0, 23, 43, 35, 44, 45, 56, 37, 40], {
+        $('#sparkline1').sparkline([60, 23, 43, 35, 44, 45, 56, 37, 40], {
             type: 'line',
             width: $('#sparkline1').width(),
             height: '165',
