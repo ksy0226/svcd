@@ -11,7 +11,9 @@ $(document).ready(function () {
     cntLoad();
 });
 
-
+/**
+ * 메인화면 접수대기/처리중/미평가 등 조회
+ */
 function cntLoad(){
     $.ajax({
         type: "GET",
@@ -34,54 +36,48 @@ function cntLoad(){
 }
 
 function setCntLoad(dataObj){
-    //alert(JSON.stringify(dataObj));
     for (var i = 0; i < dataObj.length; i++) { 
         
-        $('#status'+ dataObj[i]._id.status_cd).html(dataObj[i].count);  //3개
+        $('#status'+ dataObj[i]._id.status_cd).html(dataObj[i].count);  
         
-        if($('#status'+ (i)).text() ==""){ //없으면 0
+        if($('#status'+ (i)).text() ==""){        //없으면 0
             $('#status'+ (i)).text("0"); 
-            //alert(dataObj[i]._id.status_cd-1); //3
+            //alert(dataObj[i]._id.status_cd-1);  //3
 
-            $('#chart'+ (dataObj[i]._id.status_cd-1)).removeAttr('data-text');
             $('#chart'+ (dataObj[i]._id.status_cd-1)).attr('data-text', 0+"%");
             $('#chart'+ (dataObj[i]._id.status_cd-1)).attr('data-percent', 0);
         }
     }
     
     for (var i = 0; i < dataObj.length; i++) { 
-        var total;
+        var total; //전체카운트
         total = Number($('#status1').text()) + Number($('#status2').text()) + Number($('#status3').text()) + Number($('#status4').text());
         
-        if(dataObj[i]._id.status_cd == "1"){                     //'접수대기'일 경우           
+        if(dataObj[i]._id.status_cd == "1"){                      //'접수대기'일 경우
             var totalCnt = total;
             var percent = Math.round((dataObj[i].count / totalCnt)*100); 
             
-            $("#chart1").removeAttr('data-text');
             $('#chart1').attr('data-text', percent+"%");
             $('#chart1').attr('data-percent', percent);
         }
-        else if(dataObj[i]._id.status_cd == "2"){                     //'처리중'일 경우           
+        else if(dataObj[i]._id.status_cd == "2"){                 //'처리중'일 경우
             var totalCnt = total;
             var percent = Math.round((dataObj[i].count / totalCnt)*100); 
 
-            $("#chart2").removeAttr('data-text');
             $('#chart2').attr('data-text', percent+"%");
             $('#chart2').attr('data-percent', percent);
         }
         else if(dataObj[i]._id.status_cd == "3"){                 //'미평가'일 경우
             var totalCnt = dataObj[i].count + Number($('#status4').text());
             var percent = Math.round((dataObj[i].count / totalCnt)*100); // (129/129+160)*100 반올림 처리
-            
-            $("#chart3").removeAttr('data-text');
+
             $('#chart3').attr('data-text', percent+"%");
             $('#chart3').attr('data-percent', percent);
             
-        }else if(dataObj[i]._id.status_cd == "4"){               //'처리완료'일 경우
+        }else if(dataObj[i]._id.status_cd == "4"){                //'처리완료'일 경우
             var totalCnt = dataObj[i].count + Number($('#status3').text());
             var percent = Math.round((dataObj[i].count / totalCnt)*100); // (160/129+160)*100 반올림 처리
             
-            $("#chart4").removeAttr('data-text');
             $('#chart4').attr('data-text', percent+"%");
             $('#chart4').attr('data-percent', percent); 
         }
