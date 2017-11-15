@@ -165,9 +165,7 @@ module.exports = {
         ]
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
         //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
-            console.log("incident"+JSON.stringify(incident));
-            console.log("incident.length"+incident.length);
-
+           
             if (err) {
                 res.render("http/500", {
                     err: err
