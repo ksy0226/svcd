@@ -122,16 +122,22 @@ module.exports = {
                 $match : { //조건
                             manager_company_cd : "ISU_ST"  //각 사별 관리담당자는?
                             //,manager_sabun : "12001"     //req.session.sabun 넣을 예정
-                            ,$or: [ { status_cd : "1" },{ status_cd : "2" }, { status_cd : "3" }, { status_cd : "4" }]
+                            ,$or: [ { status_cd : "1" }, { status_cd : "2" }, { status_cd : "3" }, { status_cd : "4" }]
+
+                            ,register_date : {$gte: "2017-10-01T00:00:00.0Z", $lt: "2017-11-31T00:00:00.0Z"}
+                            //$ifNull: [ "$person.age", "null" ]
                          }
             }
             ,{ 
                 $group : { //그룹칼럼
                     _id: {
                         status_cd : "$status_cd"
+                        //status_cd: { $ifNull: [ '$status_cd', [{ count: 0 }] ] }
                     }
                     ,count: {
-                        $sum: 1
+                        $sum : 1
+                        //$sum : { $ifNull: [ $sum, 0 ] }
+                        //$sum :{ $ifNull: [ "$count", 1] }
                     }
                 }
             }
