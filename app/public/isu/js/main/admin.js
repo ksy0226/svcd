@@ -40,19 +40,19 @@ function setCntLoad(dataObj){
         $('#status'+ dataObj[i]._id.status_cd).html(dataObj[i].count);  //3개
         
         if($('#status'+ (i)).text() ==""){ //없으면 0
-            $('#status'+ (i)).text("0");
+            $('#status'+ (i)).text("0"); 
+            //alert(dataObj[i]._id.status_cd-1); //3
+
+            $('#chart'+ (dataObj[i]._id.status_cd-1)).removeAttr('data-text');
+            $('#chart'+ (dataObj[i]._id.status_cd-1)).attr('data-text', 0+"%");
+            $('#chart'+ (dataObj[i]._id.status_cd-1)).attr('data-percent', 0);
         }
     }
-    //alert("1>>"+$('#status1').text());
-    //alert("2>>"+$('#status2').text());
-    //alert("3>>"+$('#status3').text());
-    //alert("4>>"+$('#status4').text());
-    //alert("total>> "+total);
-
-
+    
     for (var i = 0; i < dataObj.length; i++) { 
         var total;
         total = Number($('#status1').text()) + Number($('#status2').text()) + Number($('#status3').text()) + Number($('#status4').text());
+        
         if(dataObj[i]._id.status_cd == "1"){                     //'접수대기'일 경우           
             var totalCnt = total;
             var percent = Math.round((dataObj[i].count / totalCnt)*100); 
@@ -62,13 +62,13 @@ function setCntLoad(dataObj){
             $('#chart1').attr('data-percent', percent);
         }
         else if(dataObj[i]._id.status_cd == "2"){                     //'처리중'일 경우           
-        var totalCnt = total;
-        var percent = Math.round((dataObj[i].count / totalCnt)*100); 
-        
+            var totalCnt = total;
+            var percent = Math.round((dataObj[i].count / totalCnt)*100); 
+
             $("#chart2").removeAttr('data-text');
             $('#chart2').attr('data-text', percent+"%");
             $('#chart2').attr('data-percent', percent);
-    }
+        }
         else if(dataObj[i]._id.status_cd == "3"){                 //'미평가'일 경우
             var totalCnt = dataObj[i].count + Number($('#status4').text());
             var percent = Math.round((dataObj[i].count / totalCnt)*100); // (129/129+160)*100 반올림 처리
@@ -84,7 +84,7 @@ function setCntLoad(dataObj){
             $("#chart4").removeAttr('data-text');
             $('#chart4').attr('data-text', percent+"%");
             $('#chart4').attr('data-percent', percent); 
-        } 
+        }
     }
     $('.circliful-chart').circliful();
 }
