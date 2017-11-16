@@ -147,7 +147,7 @@ module.exports = {
                         //$sum : { $ifNull: [ $sum, 0 ] }
                         //$sum :{ $ifNull: [ "$count", 1] }
                     }
-                    ,
+                    
                 }
             }
             /*
@@ -163,17 +163,17 @@ module.exports = {
                 }
             }
         ]
+        
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
         //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
-           
-            if (err) {
-                res.render("http/500", {
-                    err: err
+            console.log("incident"+JSON.stringify(incident));    
+        if (err) {
+                return res.json({
+                    success: false,
+                    message: err
                 });
-            } else {
-                logger.debug("===========", incident);
-                incident: incident
-            }
+            } 
+
             res.json(incident);
         });
     },
