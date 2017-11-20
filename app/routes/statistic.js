@@ -10,5 +10,6 @@ router.route('/high_lower').get(controller.high_lower);
 router.route('/mng_month').get(controller.mng_month);
 router.route('/status_list').get(controller.status_list);
 router.route('/cntload').get(controller.cntload);
+router.route('/chartLoad').get(controller.chartLoad);
 
 module.exports = router;

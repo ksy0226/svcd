@@ -15,7 +15,7 @@ function chartLoad() {
         data: {},
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         error: function (request, status, error) {
-            alert("error : " + error);
+            alert("chartLoad error : " + error);
         },
         beforeSend: function (dataObj) {
         },

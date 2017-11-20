@@ -115,6 +115,7 @@ module.exports = {
                 });
             });
     },
+
     cntload : (req, res, next) => {
         var startDate = new Date(new Date().setDate(new Date().getDate()-60)).toISOString().replace(/T/, ' ').replace(/\..+/, '');
         var endDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
@@ -166,7 +167,7 @@ module.exports = {
         
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
         //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
-            console.log("incident"+JSON.stringify(incident));    
+        //console.log("incident"+JSON.stringify(incident));    
         if (err) {
                 return res.json({
                     success: false,
@@ -177,6 +178,64 @@ module.exports = {
             res.json(incident);
         });
     },
+
+    chartLoad : (req, res, next) => {
+        var startDate = new Date(new Date().setDate(new Date().getDate()-60)).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        var endDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+
+        var start = new Date();
+        var year = new Date(start.getFullYear(),start.getMonth()+1);
+        
+        console.log('>>>>>>>>>>>>>>>>>>>>>>');
+        console.log('startDate  >>>>>>>>>>> ',startDate);
+        console.log('endDate    >>>>>>>>>>> ',endDate);
+
+        console.log('start      >>>>>>>>>>> ',start);
+        console.log('year       >>>>>>>>>>> ',year);
+        console.log('>>>>>>>>>>>>>>>>>>>>>>');
+        
+        
+        var aggregatorOpts = 
+        [
+            { 
+                $match : { //조건
+                    manager_company_cd : "ISU_ST"
+                    ,$or: [ { status_cd : "1" }, { status_cd : "2" }, { status_cd : "3" }, { status_cd : "4" }]
+                    ,register_date : { $gte : startDate, $lte : endDate }
+
+                }
+            }
+            ,{ 
+                $group : { //그룹칼럼
+                    _id: {
+                        status_cd : "$status_cd"
+                    }
+                    ,count: {
+                        $sum : 1
+                    }
+                    
+                }
+            }
+            , {
+                $sort : {
+                    status_cd: -1
+                }
+            }
+        ]
+        
+        IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
+        //console.log("incident"+JSON.stringify(incident));    
+        if (err) {
+                return res.json({
+                    success: false,
+                    message: err
+                });
+            } 
+
+            res.json(incident);
+        });
+    },
+
 
     /**
      * 담당자별 월별처리 내역
