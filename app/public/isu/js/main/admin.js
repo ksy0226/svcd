@@ -49,7 +49,8 @@ function setCntLoad(dataObj){
     
     for (var i = 0; i < dataObj.length; i++) { 
         var total; //전체카운트
-        total = Number($('#status1').text()) + Number($('#status2').text()) + Number($('#status3').text()) + Number($('#status4').text());
+        //total = Number($('#status1').text()) + Number($('#status2').text()) + Number($('#status3').text()) + Number($('#status4').text());
+        total = Number($('#status1').text()) + Number($('#status2').text());
         
         if(dataObj[i]._id.status_cd == "1"){                      //'접수대기'일 경우
             var totalCnt = total;
