@@ -7,11 +7,17 @@ var inCnt = 10; //한번에 화면에 조회되는 리스트 수
 $(document).ready(function () {
     //최초 조회
     getDataList();
-    //메인 카운트 로드
+
+    //메인 카운트 로드(접수대기,처리중,미평가,완료)
     cntLoad();
+    //당월 처리현황 조회
+    monthlyLoad();
 });
 
-//메인 카운트 로드
+/**
+ * 메인 카운트 로드
+ */
+
 function cntLoad() {
     $.ajax({
         type: "GET",
@@ -83,6 +89,88 @@ function setCntLoad(dataObj){
     }
     $('.circliful-chart').circliful();
 }
+
+
+/**
+ * 당월 처리현황 조회
+ */
+function monthlyLoad() {
+    $.ajax({
+        type: "GET",
+        async: true,
+        url: "/statistic/monthlyload",
+        dataType: "json", // xml, html, script, json 미지정시 자동판단
+        timeout: 30000,
+        cache: false,
+        data: {},
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        error: function (request, status, error) {
+            alert("error : " + error);
+        },
+        beforeSend: function (dataObj) {
+        },
+        success: function (dataObj) {
+            //alert(dataObj);
+            setMonthlyLoad(dataObj);
+        }
+    });
+}
+
+function setMonthlyLoad(dataObj){
+    alert("dataObj>>>>"+ JSON.stringify(dataObj));
+
+
+    for (var i = 0; i < dataObj.length; i++) { 
+        alert("dataObj.length : "+dataObj.length);
+        alert("dataObj.register_yyyy : "+dataObj[i]._id.register_yyyy);
+        alert("dataObj.register_mm : "+dataObj[i]._id.register_mm);
+        alert("dataObj.count : "+dataObj[i].count);
+        alert("dataObj.avgValue : "+dataObj[i].avgValue);
+        var arr = "["+dataObj[i]._id.register_yyyy+","+dataObj[i]._id.register_mm+","+dataObj[i].avgValue+"]";
+        
+        alert("arr>>>>>>>>>>>>>"+arr);
+        /*
+        $('#status'+ dataObj[i]._id.status_cd).html(dataObj[i].count);  
+        
+        if($('#status'+ (i)).text() ==""){        //없으면 0
+            $('#status'+ (i)).text("0"); 
+            //alert(dataObj[i]._id.status_cd-1);  //3
+
+            $('#chart'+ (dataObj[i]._id.status_cd-1)).attr('data-text', 0+"%");
+            $('#chart'+ (dataObj[i]._id.status_cd-1)).attr('data-percent', 0);
+        }
+        */
+    }
+
+
+    /*
+    var DrawSparkline = function () {
+        $('#sparkline1').sparkline([60, 23, 43, 35, 44, 45, 56, 37, 40], {
+            type: 'line',
+            width: $('#sparkline1').width(),
+            height: '165',
+            chartRangeMax: 50,
+            lineColor: '#3bafda',
+            fillColor: 'rgba(59,175,218,0.3)',
+            highlightLineColor: 'rgba(0,0,0,.1)',
+            highlightSpotColor: 'rgba(0,0,0,.2)',
+        });
+
+        $('#sparkline1').sparkline([25, 23, 26, 24, 25, 32, 30, 24, 19], {
+            type: 'line',
+            width: $('#sparkline1').width(),
+            height: '165',
+            chartRangeMax: 40,
+            lineColor: '#00b19d',
+            fillColor: 'rgba(0, 177, 157, 0.3)',
+            composite: true,
+            highlightLineColor: 'rgba(0,0,0,.1)',
+            highlightSpotColor: 'rgba(0,0,0,.2)',
+        });
+    };
+    */
+}
+
 
 function getDataList() {
     var reqParam = '';
