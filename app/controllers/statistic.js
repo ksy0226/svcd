@@ -116,40 +116,64 @@ module.exports = {
             });
     },
     cntload : (req, res, next) => {
+        var startDate = new Date(new Date().setDate(new Date().getDate()-60)).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        var endDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        
         var aggregatorOpts = 
         [
             { 
                 $match : { //조건
-                            manager_company_cd : "ISU_ST"  //각 사별 관리담당자는?
-                            //,manager_sabun : "12001"     //req.session.sabun 넣을 예정
-                            ,$or: [ { status_cd : "1" },{ status_cd : "2" }, { status_cd : "3" }, { status_cd : "4" }]
-                         }
+                    manager_company_cd : "ISU_ST"  //각 사별 관리담당자는?
+                    //,manager_sabun : "12001"     //req.session.sabun 넣을 예정
+                    ,$or: [ { status_cd : "1" }, { status_cd : "2" }, { status_cd : "3" }, { status_cd : "4" }]
+                    /*,$and : [ { register_date : {$gte: "2017-05-19T04:49:38.881Z"}}
+                             ,{ register_date : {$lte:"2017-11-15T04:49:38.881Z"}} ]
+                    */    
+                    //,register_date : {$gte: "2017-10-19T04:49:38.881Z", $lte:"2017-11-15T04:49:38.881Z"}
+                    //,register_date : {$gte: new Date(new Date().setDate(new Date().getDate()-180)), $lte: new Date()}
+                    
+                    ,register_date : { $gte : startDate, $lte : endDate }
+
+                }
             }
             ,{ 
                 $group : { //그룹칼럼
                     _id: {
                         status_cd : "$status_cd"
+                        //status_cd: { $ifNull: [ '$status_cd', [{ count: 0 }] ] }
                     }
                     ,count: {
-                        $sum: 1
+                        $sum : 1
+                        //$sum : { $ifNull: [ $sum, 0 ] }
+                        //$sum :{ $ifNull: [ "$count", 1] }
                     }
+                    
                 }
-            } 
+            }
+            /*
+            , {
+                total: { 
+                    $sum: "$count"
+                } 
+            }
+            */
+            , {
+                $sort : {
+                    status_cd: -1
+                }
+            }
         ]
         
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
         //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
-            console.log("incident"+JSON.stringify(incident));
-            console.log("length"+incident.length); 
-                
-            if (err) {
-                res.render("http/500", {
-                    err: err
+            console.log("incident"+JSON.stringify(incident));    
+        if (err) {
+                return res.json({
+                    success: false,
+                    message: err
                 });
-            } else {
-                logger.debug("===========", incident);
-                incident: incident
-            }
+            } 
+
             res.json(incident);
         });
     },
