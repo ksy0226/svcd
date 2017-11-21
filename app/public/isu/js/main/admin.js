@@ -130,11 +130,11 @@ function setMonthlyLoad(dataObj){
 
     
     var DrawSparkline = function () {
-        $('#sparkline2').sparkline([8, 6, 7, 8, 6, 4, 7, 10, 12, 7, 4, 9], {
+        $('#sparkline2').sparkline([6, 6, 7, 8, 6, 4, 7, 10, 12, 7, 4, 9], {
             type: 'bar',
             height: '165',
-            barWidth: '10',
-            barSpacing: '4', //3
+            barWidth: '12',
+            barSpacing: '5', //3
             barColor: '#3bafda'
         });
     };
