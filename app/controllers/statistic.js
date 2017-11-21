@@ -189,15 +189,6 @@ module.exports = {
         var start = new Date();
         var year = new Date(start.getFullYear(),start.getMonth()+1);
         
-        console.log('>>>>>>>>>>>>>>>>>>>>>>');
-        console.log('startDate  >>>>>>>>>>> ',startDate);
-        console.log('endDate    >>>>>>>>>>> ',endDate);
-
-        console.log('start      >>>>>>>>>>> ',start);
-        console.log('year       >>>>>>>>>>> ',year);
-        console.log('>>>>>>>>>>>>>>>>>>>>>>');
-        
-        
         var aggregatorOpts = 
         [
             { 
@@ -255,9 +246,9 @@ module.exports = {
         [
             { 
                 $match : { //조건
-                    manager_company_cd : "ISU_ST"  //각 사별 관리담당자는?
+                    //manager_company_cd : "ISU_ST"  //각 사별 관리담당자는?
                     //,manager_sabun : "12001"     //req.session.sabun 넣을 예정
-                    ,status_cd : "4"
+                    status_cd : "4"
                     //,$or: [ { status_cd : "1" }, { status_cd : "2" }, { status_cd : "3" }, { status_cd : "4" }]
                     /*,$and : [ { register_date : {$gte: "2017-05-19T04:49:38.881Z"}}
                              ,{ register_date : {$lte:"2017-11-15T04:49:38.881Z"}} ]
@@ -265,7 +256,8 @@ module.exports = {
                     //,register_date : {$gte: "2017-10-19T04:49:38.881Z", $lte:"2017-11-15T04:49:38.881Z"}
                     //,register_date : {$gte: new Date(new Date().setDate(new Date().getDate()-180)), $lte: new Date()}
                     
-                    ,register_yyyy : thisYear
+                    //,
+                    ,register_yyyy : "2017"
 
                 }
             }
@@ -279,6 +271,7 @@ module.exports = {
                         $sum : 1
                     }
                     ,avgValue: { $avg: "$valuation" }
+                    //ROUND(avg(downloads),2)
                     
                 }
             }
@@ -291,8 +284,7 @@ module.exports = {
             */
             , {
                 $sort : {
-                    register_yyyy : -1
-                    ,register_mm : 1 
+                    register_mm : -1 
                 }
             }
         ]
@@ -300,7 +292,7 @@ module.exports = {
         console.log("monthlyload aggregatorOpts >> "+JSON.stringify(aggregatorOpts)+thisYear); 
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
         //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
-            console.log("monthlyload incident >> "+JSON.stringify(incident));    
+        console.log("monthlyload incident >> "+JSON.stringify(incident));    
         if (err) {
                 return res.json({
                     success: false,

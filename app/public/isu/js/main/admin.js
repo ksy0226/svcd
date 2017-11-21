@@ -121,14 +121,20 @@ function setMonthlyLoad(dataObj){
 
 
     for (var i = 0; i < dataObj.length; i++) { 
-        alert("dataObj.length : "+dataObj.length);
-        alert("dataObj.register_yyyy : "+dataObj[i]._id.register_yyyy);
-        alert("dataObj.register_mm : "+dataObj[i]._id.register_mm);
-        alert("dataObj.count : "+dataObj[i].count);
-        alert("dataObj.avgValue : "+dataObj[i].avgValue);
-        var arr = "["+dataObj[i]._id.register_yyyy+","+dataObj[i]._id.register_mm+","+dataObj[i].avgValue+"]";
+        //alert("dataObj.length : "+dataObj.length);
+        //alert("dataObj.register_yyyy : "+dataObj[i]._id.register_yyyy);
+        //alert("dataObj.register_mm : "+dataObj[i]._id.register_mm);
+        //alert("dataObj.count : "+dataObj[i].count);
+        //alert("dataObj.avgValue : "+dataObj[i].avgValue);
+        var arr = "["+dataObj[i]._id.register_mm+","+dataObj[i].avgValue+"]";
         
         alert("arr>>>>>>>>>>>>>"+arr);
+        var month = dataObj[i]._id.register_mm;
+        if (month  != "10" || month  != "11" || month  != "12") {
+            month = month.substring(1);
+            alert("month>>>> "+month);
+            // alert(cMonthRVal);
+        } 
     }
 
 
