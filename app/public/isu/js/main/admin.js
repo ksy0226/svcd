@@ -129,17 +129,6 @@ function setMonthlyLoad(dataObj){
         var arr = "["+dataObj[i]._id.register_yyyy+","+dataObj[i]._id.register_mm+","+dataObj[i].avgValue+"]";
         
         alert("arr>>>>>>>>>>>>>"+arr);
-        /*
-        $('#status'+ dataObj[i]._id.status_cd).html(dataObj[i].count);  
-        
-        if($('#status'+ (i)).text() ==""){        //없으면 0
-            $('#status'+ (i)).text("0"); 
-            //alert(dataObj[i]._id.status_cd-1);  //3
-
-            $('#chart'+ (dataObj[i]._id.status_cd-1)).attr('data-text', 0+"%");
-            $('#chart'+ (dataObj[i]._id.status_cd-1)).attr('data-percent', 0);
-        }
-        */
     }
 
 
