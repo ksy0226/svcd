@@ -8,7 +8,7 @@ var IncidentSchema = new Schema({
     status_nm               : {type : String, default : '접수대기'},  //진행상태명            
     process_speed           : {type : String},  //긴급구분                                                                   
     course_flag             : {type : String},                                                                           
-    title                   : {type : String, required:true, validate : [isEmpty, "제목은 꼭 입력해주세요."] }, //제목                                                             ."] }},
+    title                   : {type : String, required : true, validate : [isEmpty, "제목은 꼭 입력해주세요."] }, //제목                                                             ."] }},
     content                 : {type : String},  //내용                                                                       
     request_company_cd      : {type : String},  //요청자 회사코드
     request_company_nm      : {type : String},  //요청자 회사명                                                              
@@ -46,7 +46,7 @@ var IncidentSchema = new Schema({
     add_complete_content    : {type : String},  //추가 완료 코멘트                                                                         
     program_id              : {type : String},                                                                           
     delay_reason            : {type : String},  //지연사유                                                                           
-    work_time             : {type : Number},  //작업시간                                                                         
+    work_time               : {type : Number},  //작업시간                                                                         
     complete_date           : {type : String, default : ''},  //완료일                                                                       
     reading_cnt             : {type : Number},                                                                           
     complete_open_flag      : {type : String, default : 'N'},  //완료후공개여부                                                                     
@@ -56,25 +56,26 @@ var IncidentSchema = new Schema({
     lower_nm                : {type : String},  //하위업무 이름
     customer_flag           : {type : String},                                                                           
     add_solution_content    : {type : String},                                                                           
-    process_cd           : {type : String},  //처리구분 (processGubun Model)
-    process_nm           : {type : String},  //처리구분내용                                                                        
+    process_cd              : {type : String},  //처리구분 (processGubun Model)
+    process_nm              : {type : String},  //처리구분내용                                                                        
     valuation               : {type : Number, default : 0},  //평가점수                                                                         
     valuation_content       : {type : String}, //평가내용                                                                           
     approval_gbn            : {type : String},                                                                           
     modify_yn               : {type : String, default : 'N'},                                                                           
     sharing_content         : {type : String},  //내부공유사항                                                              
-    delete_flag : { type : String, default : 'N' }, //삭제여부
-    attach_file : [{    fieldname: {type : String},
-                            originalname: {type : String},
-                            encoding: {type : String},
-                            mimetype: {type : String},
-                            destination: {type : String},
-                            filename: {type : String},
-                            path: {type : String},
-                            size: {type : Number}  }], //첨부이미지
-    created_at : { type : Date, default : Date.now() },
-    updated_at : { type : Date },
-    deleted_att : { type : Date }
+    delete_flag             : {type : String, default : 'N' }, //삭제여부
+    attach_file             : [{    fieldname       : {type : String},
+                                    originalname    : {type : String},
+                                    encoding        : {type : String},
+                                    mimetype        : {type : String},
+                                    destination     : {type : String},
+                                    filename        : {type : String},
+                                    path            : {type : String},
+                                    size            : {type : Number}
+                                }], //첨부이미지
+    created_at              : {type : Date, default : Date.now()},
+    updated_at              : {type : Date},
+    deleted_att             : {type : Date}
 });
 
 function isEmpty(value){
@@ -92,6 +93,20 @@ IncidentSchema.virtual('getDate').get(function(){
         month : date.getMonth()+1,
         day : date.getDate()
     };
+});
+
+IncidentSchema.pre("save", function setDateFormat(next){
+    var incidentDate = this;
+    var new_date = new Date();
+
+    var new_year = new_date.getFullYear();
+    var new_month = new_date.getMonth()+1;
+    var new_day = new_date.getDate();
+
+    incidentDate.register_yyyy = new_year;
+    incidentDate.register_mm = new_month;
+    incidentDate.register_dd = new_day;
+    return next();
 });
 
 autoIncrement.initialize(mongoose.connection);
