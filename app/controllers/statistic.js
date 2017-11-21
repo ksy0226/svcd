@@ -235,12 +235,8 @@ module.exports = {
      * 당월 처리현황 조회
     */
     monthlyload : (req, res, next) => {
-        //var startDate = new Date(new Date().setDate(new Date().getDate()-60)).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-        //var endDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
         var today = new Date();
         var thisYear = today.getFullYear();
-
-
 
         var aggregatorOpts = 
         [
@@ -249,16 +245,7 @@ module.exports = {
                     //manager_company_cd : "ISU_ST"  //각 사별 관리담당자는?
                     //,manager_sabun : "12001"     //req.session.sabun 넣을 예정
                     status_cd : "4"
-                    //,$or: [ { status_cd : "1" }, { status_cd : "2" }, { status_cd : "3" }, { status_cd : "4" }]
-                    /*,$and : [ { register_date : {$gte: "2017-05-19T04:49:38.881Z"}}
-                             ,{ register_date : {$lte:"2017-11-15T04:49:38.881Z"}} ]
-                    */    
-                    //,register_date : {$gte: "2017-10-19T04:49:38.881Z", $lte:"2017-11-15T04:49:38.881Z"}
-                    //,register_date : {$gte: new Date(new Date().setDate(new Date().getDate()-180)), $lte: new Date()}
-                    
-                    //,
                     ,register_yyyy : "2017"
-
                 }
             }
             ,{ 
@@ -275,13 +262,6 @@ module.exports = {
                     
                 }
             }
-            /*
-            , {
-                total: { 
-                    $sum: "$count"
-                } 
-            }
-            */
             , {
                 $sort : {
                     register_mm : -1 
@@ -289,10 +269,10 @@ module.exports = {
             }
         ]
 
-        console.log("monthlyload aggregatorOpts >> "+JSON.stringify(aggregatorOpts)+thisYear); 
+        //console.log("monthlyload aggregatorOpts >> "+JSON.stringify(aggregatorOpts)+thisYear); 
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
         //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
-        console.log("monthlyload incident >> "+JSON.stringify(incident));    
+        //console.log("monthlyload incident >> "+JSON.stringify(incident));    
         if (err) {
                 return res.json({
                     success: false,
