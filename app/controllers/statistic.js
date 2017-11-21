@@ -183,56 +183,44 @@ module.exports = {
     },
 
     chartLoad : (req, res, next) => {
-        var startDate = new Date(new Date().setDate(new Date().getDate()-60)).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-        var endDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        var today = new Date();
+        var thisYear = today.getFullYear();
+        var preYear = thisYear-1;
 
-        var start = new Date();
-        var year = new Date(start.getFullYear(),start.getMonth()+1);
-        
-        console.log('>>>>>>>>>>>>>>>>>>>>>>');
-        console.log('startDate  >>>>>>>>>>> ',startDate);
-        console.log('endDate    >>>>>>>>>>> ',endDate);
-
-        console.log('start      >>>>>>>>>>> ',start);
-        console.log('year       >>>>>>>>>>> ',year);
-        console.log('>>>>>>>>>>>>>>>>>>>>>>');
-        
-        
-
-
-
-
+        console.log("thisYear   >>>>>>>",thisYear);
+        console.log("preYear    >>>>>>>",preYear);
+        //var startDate = new Date(new Date().setDate(new Date().getDate()-60)).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        //var endDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
 
         var aggregatorOpts = 
         [
             { 
                 $match : { //조건
-                    manager_company_cd : "ISU_ST"
-                    ,$or: [ { status_cd : "1" }, { status_cd : "2" }, { status_cd : "3" }, { status_cd : "4" }]
-                    ,register_date : { $gte : startDate, $lte : endDate }
-
+                    register_yyyy : "2017"
+                    //register_yyyy : { $gte : preYear, $lte : thisYear }
+                    //register_date : { $gte : startDate, $lte : endDate }
                 }
-            }
-            ,{ 
+            },{ 
                 $group : { //그룹칼럼
                     _id: {
-                        status_cd : "$status_cd"
+                        //register_yyyy : "$register_yyyy",
+                        register_mm : "$register_mm"
                     }
                     ,count: {
                         $sum : 1
                     }
                     
                 }
-            }
-            , {
+            },{
                 $sort : {
-                    status_cd: -1
+                    //register_yyyy : -1,
+                    register_mm : -1
                 }
             }
         ]
         
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
-        //console.log("incident"+JSON.stringify(incident));    
+        console.log("chartLoad >>>>>> "+JSON.stringify(incident));    
         if (err) {
                 return res.json({
                     success: false,
