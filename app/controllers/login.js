@@ -236,4 +236,34 @@ module.exports = {
             logger.debug('main_list controllers error ====================> ', e)
         }
     },
+
+    main_list_nocomplete: (req, res, next) => {
+        try {
+            if (req.session.user_flag == '9') {
+                Incident.find({ request_id: req.session.email, status_cd: "3" }, function (err, incident) {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+                        res.json(incident);
+                    }
+                }).sort('-created_at');
+            } else {
+                Incident.find({ manager_email: req.session.email, status_cd: "3" }, function (err, incident) {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+                        res.json(incident);
+                    }
+                }).sort('-created_at');
+            }
+        } catch (e) {
+            logger.debug('main_list_nocomplete controllers error ====================> ', e)
+        }
+    },
 };
