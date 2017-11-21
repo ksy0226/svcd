@@ -7,11 +7,17 @@ var inCnt = 10; //한번에 화면에 조회되는 리스트 수
 $(document).ready(function () {
     //최초 조회
     getDataList();
-    //메인 카운트 로드
+
+    //메인 카운트 로드(접수대기,처리중,미평가,완료)
     cntLoad();
+    //당월 처리현황 조회
+    monthlyLoad();
 });
 
-//메인 카운트 로드
+/**
+ * 메인 카운트 로드
+ */
+
 function cntLoad() {
     $.ajax({
         type: "GET",
@@ -83,6 +89,69 @@ function setCntLoad(dataObj){
     }
     $('.circliful-chart').circliful();
 }
+
+
+/**
+ * 당월 처리현황 조회
+ */
+function monthlyLoad() {
+    $.ajax({
+        type: "GET",
+        async: true,
+        url: "/statistic/monthlyload",
+        dataType: "json", // xml, html, script, json 미지정시 자동판단
+        timeout: 30000,
+        cache: false,
+        data: {},
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        error: function (request, status, error) {
+            alert("error : " + error);
+        },
+        beforeSend: function (dataObj) {
+        },
+        success: function (dataObj) {
+            setMonthlyLoad(dataObj);
+        }
+    });
+}
+
+function setMonthlyLoad(dataObj){
+    //alert("dataObj>>>>"+ JSON.stringify(dataObj));
+
+    for (var i = 0; i < dataObj.length; i++) { 
+        //var arr = "["+dataObj[i]._id.register_mm+","+dataObj[i].avgValue+"]";
+        //alert("arr>>>>>>>>>>>>>"+arr);
+        var month = dataObj[i]._id.register_mm;
+        if (month  != "10" || month  != "11" || month  != "12") {
+            month = month.substring(1);
+        } 
+    }
+
+
+    
+    var DrawSparkline = function () {
+        $('#sparkline2').sparkline([8, 6, 7, 8, 6, 4, 7, 10, 12, 7, 4, 9], {
+            type: 'bar',
+            height: '165',
+            barWidth: '10',
+            barSpacing: '4', //3
+            barColor: '#3bafda'
+        });
+    };
+
+    DrawSparkline();
+    
+    var resizeChart;
+
+    $(window).resize(function(e) {
+        clearTimeout(resizeChart);
+        resizeChart = setTimeout(function() {
+            DrawSparkline();
+        }, 300);
+    });
+    
+}
+
 
 function getDataList() {
     var reqParam = '';
