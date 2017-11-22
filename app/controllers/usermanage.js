@@ -251,8 +251,7 @@ module.exports = {
         } catch (e) {
             logger.debug('usermanage controllers error ====================> ', e)
         }
-    },
-    userJSON: (req, res, next) => {
+    },    userJSON: (req, res, next) => {
         try{
             request({
                 //uri: "http://gw.isu.co.kr/CoviWeb/api/UserList.aspx?searchName="+encodeURIComponent(req.query.searchText),
