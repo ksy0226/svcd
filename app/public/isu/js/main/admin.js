@@ -122,11 +122,11 @@ function setMonthlyLoad(dataObj){
         $('#sparkline2').sparkline(dataObj.avg, {
             
             type: 'bar',
-            height: '160',
+            height: '180',
             barWidth: '12',
             barSpacing: '10', //3
             barColor: '#3bafda',
-            //chartRangeMax : '5',
+            chartRangeMax: 5,     //평점 5점만점
             //tooltipFormatFieldlist: ['x','y'],
             ///xaxis: {ticks: [[1,'One'], [2,'Two'], [3,'Three'], [4,'Four'], [5,'Five']]},
             
