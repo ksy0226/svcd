@@ -185,47 +185,123 @@ module.exports = {
         var thisYear = today.getFullYear();
         var preYear = thisYear - 1;
 
-        var aggregatorOpts =
-            [
-                {
-                    $match: { //조건
-                        register_yyyy: { $gte: preYear.toString(), $lte: thisYear.toString() }
-                    }
-                }, {
-                    $group: { //그룹
-                        _id: {
-                            register_yyyy: "$register_yyyy",
-                            register_mm: "$register_mm"
+        async.waterfall([function (callback) {
+            var aggregatorOpts =
+                [
+                    {
+                        $match: { //조건
+                            register_yyyy: { $gte: preYear.toString(), $lte: thisYear.toString() }
                         }
-                        , count: {
-                            $sum: 1
-                        }
+                    }, {
+                        $group: { //그룹
+                            _id: {
+                                register_yyyy: "$register_yyyy",
+                                register_mm: "$register_mm"
+                            }
+                            , count: {
+                                $sum: 1
+                            }
 
+                        }
+                    }, {
+                        $sort: {
+                            register_yyyy: -1,
+                            register_mm: -1
+                        }
                     }
-                }, {
-                    $sort: {
-                        register_yyyy: -1,
-                        register_mm: -1
-                    }
+                ]
+
+            IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
+                //console.log("incident >>>>>> " + JSON.stringify(incident));
+                if (err) {
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
+                    callback(null, incident)
                 }
-            ]
+            });
+        }, function (incident, callback) {
+            var aggregatorOpts =
+                [
+                    {
+                        $match: { //조건
+                            register_yyyy: { $gte: preYear.toString(), $lte: thisYear.toString() },
+                            status_cd: { $gte: '3', $lte: '4' }
+                        }
+                    }, {
+                        $group: { //그룹
+                            _id: {
+                                register_yyyy: "$register_yyyy",
+                                register_mm: "$register_mm",
+                            }
+                            , count: {
+                                $sum: 1
+                            }
 
-        IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
-            //console.log("chartLoad >>>>>> " + JSON.stringify(incident));
-            if (err) {
-                return res.json({
-                    success: false,
-                    message: err
-                });
-            }
+                        }
+                    }, {
+                        $sort: {
+                            register_yyyy: -1,
+                            register_mm: -1,
+                            status_cd: -1
+                        }
+                    }
+                ]
 
-            res.json(incident);
+            IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident2) {
+                //console.log("incident2 >>>>>> " + JSON.stringify(incident2));
+                if (err) {
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
+                    callback(null, incident, incident2)
+                }
+            });
+        }], function (err, incident, incident2) {
+            var aggregatorOpts =
+                [
+                    {
+                        $match: { //조건
+                            register_yyyy: { $gte: preYear.toString(), $lte: thisYear.toString() }
+                        }
+                    }, {
+                        $group: { //그룹
+                            _id: {
+                                register_yyyy: "$register_yyyy",
+                            }
+                            , count: {
+                                $sum: 1
+                            }
+
+                        }
+                    }, {
+                        $sort: {
+                            register_yyyy: -1,
+                        }
+                    }
+                ]
+
+            IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident3) {
+                //console.log("incident2 >>>>>> " + JSON.stringify(incident2));
+                if (err) {
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
+                    res.json(mergeChart(setChartData(incident), setChartCompleteData(incident2), incident3));
+                }
+            });
         });
     },
 
 
     /**
-     * 만족도 현황 
+     * 당월 처리현황 조회
     */
     monthlyload: (req, res, next) => {
         var today = new Date();
@@ -251,6 +327,7 @@ module.exports = {
                             $sum: 1
                         }
                         , avgValue: { $avg: "$valuation" }
+                        //ROUND(avg(downloads),2)
 
                     }
                 }
@@ -270,7 +347,7 @@ module.exports = {
                     success: false,
                     message: err
                 });
-            }else{
+            } else {
                 res.json(setMonthData(incident));
             }
         });
@@ -314,33 +391,114 @@ module.exports = {
 
 };
 
-function setMonthData(srcData){
+function setMonthData(srcData) {
     var rtnJSON = {};
-    var cnt = [0,0,0,0,0,0,0,0,0,0,0,0];
-    var avg = [0,0,0,0,0,0,0,0,0,0,0,0];
+    var cnt = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    var avg = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     //var rtnJSON = new Array(12);
-    try{
+    try {
 
         //[{"_id":{"register_mm":"11"},"count":5,"avgValue":4.6},{"_id":{"register_mm":"05"},"
 
-        for(var i = 0 ; i < srcData.length ; i++){
-            console.log(Number(srcData[i]._id.register_mm));
+        for (var i = 0; i < srcData.length; i++) {
+            //console.log(Number(srcData[i]._id.register_mm));
             var idx = Number(srcData[i]._id.register_mm);
-            cnt.splice( idx , 1 , srcData[i].count);
+            cnt.splice(idx, 1, srcData[i].count);
             //avg.splice( idx , 1 , Math.round(srcData[i].avgValue,-2) );
-            avg.splice( idx, 1, srcData[i].avgValue.toFixed(2));
+            avg.splice(idx, 1, srcData[i].avgValue.toFixed(2));
         }
 
         rtnJSON = {
-            cnt : cnt
-            ,avg : avg
+            cnt: cnt
+            , avg: avg
         };
 
-        console.log(JSON.stringify(rtnJSON));
+        //console.log(JSON.stringify(rtnJSON));
 
-    }catch(e){
-        logger.error("control useremanage mergeUser : ",e);
-    }finally{
+    } catch (e) {
+        logger.error("control useremanage mergeUser : ", e);
+    } finally {
     }
+    return rtnJSON;
+}
+
+//KSY 등록일별 카운트
+function setChartData(srcData) {
+    var rtnJSON = {};
+    var cnt1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    var cnt2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    var today = new Date();
+    var thisYear = today.getFullYear();
+    var lastYear = thisYear - 1;
+
+    try {
+        for (var i = 0; i < srcData.length; i++) {
+            if (Number(srcData[i]._id.register_yyyy) == thisYear) {
+                var idx = Number(srcData[i]._id.register_mm);
+                cnt1.splice(idx, 1, srcData[i].count);
+            } else if (Number(srcData[i]._id.register_yyyy) == lastYear) {
+                var idx = Number(srcData[i]._id.register_mm);
+                cnt2.splice(idx, 1, srcData[i].count);
+            }
+        }
+        rtnJSON = {
+            cnt: cnt2.concat(cnt1)
+        };
+    } catch (e) {
+        logger.error("controller statistic setChartData : ", e);
+    } finally {
+    }
+    return rtnJSON;
+}
+
+//KSY 등록일별 미평가 및 완료 카운트
+function setChartCompleteData(srcData) {
+    var rtnJSON = {};
+    var cnt1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    var cnt2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    var today = new Date();
+    var thisYear = today.getFullYear();
+    var lastYear = thisYear - 1;
+
+    try {
+        for (var i = 0; i < srcData.length; i++) {
+            if (Number(srcData[i]._id.register_yyyy) == thisYear) {
+                var idx = Number(srcData[i]._id.register_mm);
+                cnt1.splice(idx, 1, srcData[i].count);
+            } else if (Number(srcData[i]._id.register_yyyy) == lastYear) {
+                var idx = Number(srcData[i]._id.register_mm);
+                cnt2.splice(idx, 1, srcData[i].count);
+            }
+        }
+        rtnJSON = {
+            cntCom: cnt2.concat(cnt1)
+        };
+    } catch (e) {
+        logger.error("controller statistic setChartCompleteData : ", e);
+    } finally {
+    }
+    return rtnJSON;
+}
+
+function mergeChart(trg1, trg2, trg3) {
+    var rtnJSON = [];
+    try {
+        /*
+        for (var i = 0; i < trg1.length; i++) {
+            rtnJSON.push(trg1[i]);
+        }
+        for (var i = 0; i < trg2.length; i++) {
+            rtnJSON.push(trg2[i]);
+        }
+        */
+        rtnJSON.push(trg1);
+        rtnJSON.push(trg2);
+        for (var i = 0; i < trg3.length; i++) {
+            rtnJSON.push(trg3[i]);
+        }
+    } catch (e) {
+        logger.error("control statistic mergeChart : ", e);
+    }
+    //console.log('rtnJSON >>> ', rtnJSON);
     return rtnJSON;
 }

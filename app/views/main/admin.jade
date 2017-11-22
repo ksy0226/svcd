@@ -80,14 +80,10 @@ block content
                         .card-box
                             h4.text-dark.header-title.m-t-0.m-b-30 만족도 현황
                             .widget-chart.text-center
-                                br
                                 #sparkline2
-                                h5.text-muted  &nbsp;1 &nbsp;&nbsp;&nbsp;2 &nbsp;&nbsp;&nbsp;3 &nbsp;&nbsp;&nbsp;4 &nbsp;&nbsp;&nbsp;5 &nbsp;&nbsp;&nbsp;6 &nbsp;&nbsp;&nbsp;7 &nbsp;&nbsp;&nbsp;8 &nbsp;&nbsp;9 &nbsp;&nbsp;10 &nbsp;&nbsp;11 &nbsp;12
-                                h4.m-b-0 Month
-                                
-                                //ul.list-inline.m-t-15
+                                ul.list-inline.m-t-15
                                     li
-                                        h5.text-muted.m-t-20 1
+                                        h5.text-muted.m-t-20 요청처리
                                         h4.m-b-0 75%
                                     li
                                         h5.text-muted.m-t-20 응답율
@@ -97,19 +93,16 @@ block content
                                         h4.m-b-0 90%
                     .col-lg-6
                         .card-box
-                            h4.text-dark.header-title.m-t-0.m-b-30 증감표
+                            h4.text-dark.header-title.m-t-0.m-b-30 월별 증감표
                             .widget-chart.text-center
                                 #sparkline1
                                 ul.list-inline.m-t-15
                                     li
-                                        h5.text-muted.m-t-20 2015
-                                        h4.m-b-0 523
+                                        h5.text-muted.m-t-20#chartPreYear
+                                        h4.m-b-0#chartPreYearCnt
                                     li
-                                        h5.text-muted.m-t-20 2016
-                                        h4.m-b-0 615
-                                    li
-                                        h5.text-muted.m-t-20 2017
-                                        h4.m-b-0 455
+                                        h5.text-muted.m-t-20#chartYear
+                                        h4.m-b-0#chartYearCnt
                 // end Chart
                 // start 접수현황
                 .row

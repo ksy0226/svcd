@@ -116,20 +116,27 @@ function monthlyLoad() {
 }
 
 function setMonthlyLoad(dataObj){
-    ///alert("setMonthlyLoad>>"+JSON.stringify(dataObj));
-    
+    //alert("dataObj>>>>"+ JSON.stringify(dataObj));
+    /*
+    for (var i = 0; i < dataObj.length; i++) { 
+        //var arr = "["+dataObj[i]._id.register_mm+","+dataObj[i].avgValue+"]";
+        //alert("arr>>>>>>>>>>>>>"+arr);
+        var month = dataObj[i]._id.register_mm;
+        if (month  != "10" || month  != "11" || month  != "12") {
+            month = month.substring(1);
+        } 
+    }
+    */
+
+
+    //alert(JSON.stringify(dataObj));
     var DrawSparkline = function () {
         $('#sparkline2').sparkline(dataObj.avg, {
-            
             type: 'bar',
-            height: '180',
+            height: '165',
             barWidth: '12',
-            barSpacing: '10', //3
+            barSpacing: '5', //3
             barColor: '#3bafda',
-            chartRangeMax: 5,     //평점 5점만점
-            //tooltipFormatFieldlist: ['x','y'],
-            ///xaxis: {ticks: [[1,'One'], [2,'Two'], [3,'Three'], [4,'Four'], [5,'Five']]},
-            
             tooltipFormat: '{{offset:offset}} {{value}}',
             tooltipValueLookups: {
                 'offset': {
@@ -146,9 +153,8 @@ function setMonthlyLoad(dataObj){
                     10: '11월 :',
                     11: '12월 :'
                 }
-            },
+            }
         });
-
     };
 
     DrawSparkline();
