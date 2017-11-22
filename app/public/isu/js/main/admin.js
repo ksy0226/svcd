@@ -116,14 +116,20 @@ function monthlyLoad() {
 }
 
 function setMonthlyLoad(dataObj){
-    //alert(JSON.stringify(dataObj));
+    ///alert("setMonthlyLoad>>"+JSON.stringify(dataObj));
+    
     var DrawSparkline = function () {
         $('#sparkline2').sparkline(dataObj.avg, {
+            
             type: 'bar',
-            height: '165',
+            height: '160',
             barWidth: '12',
-            barSpacing: '5', //3
+            barSpacing: '10', //3
             barColor: '#3bafda',
+            //chartRangeMax : '5',
+            //tooltipFormatFieldlist: ['x','y'],
+            ///xaxis: {ticks: [[1,'One'], [2,'Two'], [3,'Three'], [4,'Four'], [5,'Five']]},
+            
             tooltipFormat: '{{offset:offset}} {{value}}',
             tooltipValueLookups: {
                 'offset': {
@@ -140,8 +146,9 @@ function setMonthlyLoad(dataObj){
                     10: '11월 :',
                     11: '12월 :'
                 }
-            }
+            },
         });
+
     };
 
     DrawSparkline();

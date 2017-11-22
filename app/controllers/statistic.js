@@ -333,7 +333,7 @@ function setMonthData(srcData){
         }
 
         rtnJSON = {
-             cnt : cnt
+            cnt : cnt
             ,avg : avg
         };
 
