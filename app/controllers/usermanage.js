@@ -252,7 +252,7 @@ module.exports = {
             logger.debug('usermanage controllers error ====================> ', e)
         }
     },
-
+aaaaaa
     userJSON: (req, res, next) => {
         try{
             request({
