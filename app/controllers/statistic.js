@@ -230,7 +230,6 @@ module.exports = {
     monthlyload: (req, res, next) => {
         var today = new Date();
         var thisYear = today.getFullYear();
-        console.log(thisYear);
 
         var aggregatorOpts =
             [
@@ -239,7 +238,7 @@ module.exports = {
                         //manager_company_cd : "ISU_ST"  //각 사별 관리담당자는?
                         //,manager_sabun : "12001"     //req.session.sabun 넣을 예정
                         status_cd: "4"
-                        , register_yyyy: "2017"
+                        , register_yyyy: thisYear.toString()
                     }
                 }
                 , {
