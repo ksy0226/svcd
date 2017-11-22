@@ -299,13 +299,13 @@ module.exports = {
         });
     },
 
-
     /**
-     * 당월 처리현황 조회
+     * 만족도 현황 
     */
     monthlyload: (req, res, next) => {
         var today = new Date();
         var thisYear = today.getFullYear();
+        
 
         var aggregatorOpts =
             [
@@ -327,7 +327,6 @@ module.exports = {
                             $sum: 1
                         }
                         , avgValue: { $avg: "$valuation" }
-                        //ROUND(avg(downloads),2)
 
                     }
                 }
@@ -347,7 +346,7 @@ module.exports = {
                     success: false,
                     message: err
                 });
-            } else {
+            }else{
                 res.json(setMonthData(incident));
             }
         });
