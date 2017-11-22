@@ -135,7 +135,24 @@ function setMonthlyLoad(dataObj){
             height: '165',
             barWidth: '12',
             barSpacing: '5', //3
-            barColor: '#3bafda'
+            barColor: '#3bafda',
+            tooltipFormat: '{{offset:offset}} {{value}}',
+            tooltipValueLookups: {
+                'offset': {
+                    0: '1월 : ',
+                    1: '2월 :',
+                    2: '3월 :',
+                    3: '4월 :',
+                    4: '5월 :',
+                    5: '6월 :',
+                    6: '7월 :',
+                    7: '8월 :',
+                    8: '9월 :',
+                    9: '10월 :',
+                    10: '11월 :',
+                    11: '12월 :'
+                }
+            }
         });
     };
 
