@@ -130,12 +130,10 @@ module.exports = {
                         manager_company_cd: "ISU_ST"  //각 사별 관리담당자는?
                         //,manager_sabun : "12001"     //req.session.sabun 넣을 예정
                         , $or: [{ status_cd: "1" }, { status_cd: "2" }, { status_cd: "3" }, { status_cd: "4" }]
-                        /*,$and : [ { register_date : {$gte: "2017-05-19T04:49:38.881Z"}}
-                                 ,{ register_date : {$lte:"2017-11-15T04:49:38.881Z"}} ]
-                        */
+                        //,$and : [ { register_date : {$gte: "2017-05-19T04:49:38.881Z"}}
+                        //         ,{ register_date : {$lte:"2017-11-15T04:49:38.881Z"}} ]
                         //,register_date : {$gte: "2017-10-19T04:49:38.881Z", $lte:"2017-11-15T04:49:38.881Z"}
                         //,register_date : {$gte: new Date(new Date().setDate(new Date().getDate()-180)), $lte: new Date()}
-
                         , register_date: { $gte: startDate, $lte: endDate }
 
                     }
@@ -213,7 +211,7 @@ module.exports = {
             ]
 
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
-            console.log("chartLoad >>>>>> " + JSON.stringify(incident));
+            //console.log("chartLoad >>>>>> " + JSON.stringify(incident));
             if (err) {
                 return res.json({
                     success: false,
@@ -273,9 +271,9 @@ module.exports = {
                     success: false,
                     message: err
                 });
+            }else{
+                res.json(setMonthData(incident));
             }
-
-            res.json(incident);
         });
     },
 
@@ -316,3 +314,34 @@ module.exports = {
     }
 
 };
+
+function setMonthData(srcData){
+    var rtnJSON = {};
+    var cnt = [0,0,0,0,0,0,0,0,0,0,0,0];
+    var avg = [0,0,0,0,0,0,0,0,0,0,0,0];
+    //var rtnJSON = new Array(12);
+    try{
+
+        //[{"_id":{"register_mm":"11"},"count":5,"avgValue":4.6},{"_id":{"register_mm":"05"},"
+
+        for(var i = 0 ; i < srcData.length ; i++){
+            console.log(Number(srcData[i]._id.register_mm));
+            var idx = Number(srcData[i]._id.register_mm);
+            cnt.splice( idx , 1 , srcData[i].count);
+            //avg.splice( idx , 1 , Math.round(srcData[i].avgValue,-2) );
+            avg.splice( idx, 1, srcData[i].avgValue.toFixed(2));
+        }
+
+        rtnJSON = {
+             cnt : cnt
+            ,avg : avg
+        };
+
+        console.log(JSON.stringify(rtnJSON));
+
+    }catch(e){
+        logger.error("control useremanage mergeUser : ",e);
+    }finally{
+    }
+    return rtnJSON;
+}

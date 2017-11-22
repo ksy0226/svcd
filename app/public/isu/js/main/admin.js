@@ -117,7 +117,7 @@ function monthlyLoad() {
 
 function setMonthlyLoad(dataObj){
     //alert("dataObj>>>>"+ JSON.stringify(dataObj));
-
+    /*
     for (var i = 0; i < dataObj.length; i++) { 
         //var arr = "["+dataObj[i]._id.register_mm+","+dataObj[i].avgValue+"]";
         //alert("arr>>>>>>>>>>>>>"+arr);
@@ -126,11 +126,12 @@ function setMonthlyLoad(dataObj){
             month = month.substring(1);
         } 
     }
+    */
 
 
-    
+    alert(JSON.stringify(dataObj));
     var DrawSparkline = function () {
-        $('#sparkline2').sparkline([6, 6, 7, 8, 6, 4, 7, 10, 12, 7, 4, 9], {
+        $('#sparkline2').sparkline(dataObj.avg, {
             type: 'bar',
             height: '165',
             barWidth: '12',
