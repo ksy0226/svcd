@@ -120,8 +120,10 @@ module.exports = {
      * 메인 카운트 로드
     */
     cntload: (req, res, next) => {
-        var startDate = new Date(new Date().setDate(new Date().getDate() - 60)).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-        var endDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        //var startDate = new Date(new Date().setDate(new Date().getDate() - 60)).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        //var endDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        var today = new Date();
+        var thisYear = today.getFullYear();
 
         var aggregatorOpts =
             [
@@ -135,7 +137,8 @@ module.exports = {
                         //         ,{ register_date : {$lte:"2017-11-15T04:49:38.881Z"}} ]
                         //,register_date : {$gte: "2017-10-19T04:49:38.881Z", $lte:"2017-11-15T04:49:38.881Z"}
                         //,register_date : {$gte: new Date(new Date().setDate(new Date().getDate()-180)), $lte: new Date()}
-                        , register_date: { $gte: startDate, $lte: endDate }
+                        //, register_date: { $gte: startDate, $lte: endDate }
+                        ,register_yyyy: thisYear.toString()
 
                     }
                 }
@@ -184,8 +187,12 @@ module.exports = {
      * 팀장 메인 카운트 로드
     */
     deptcntload: (req, res, next) => {
-        var startDate = new Date(new Date().setDate(new Date().getDate() - 60)).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-        var endDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        //var startDate = new Date(new Date().setDate(new Date().getDate() - 360)).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        //var endDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        var today = new Date();
+        var thisYear = today.getFullYear();
+
+
 
         var aggregatorOpts =
             [
@@ -201,7 +208,8 @@ module.exports = {
                         //         ,{ register_date : {$lte:"2017-11-15T04:49:38.881Z"}} ]
                         //,register_date : {$gte: "2017-10-19T04:49:38.881Z", $lte:"2017-11-15T04:49:38.881Z"}
                         //,register_date : {$gte: new Date(new Date().setDate(new Date().getDate()-180)), $lte: new Date()}
-                        , register_date: { $gte: startDate, $lte: endDate }
+                        //, register_date: { $gte: startDate, $lte: endDate }
+                       ,register_yyyy: thisYear.toString()
 
                     }
                 }
@@ -462,7 +470,7 @@ module.exports = {
         //console.log("deptmonthlyload aggregatorOpts >> "+JSON.stringify(aggregatorOpts)+thisYear); 
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
             //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
-            //console.log("deptmonthlyload incident >> "+JSON.stringify(incident));    
+            console.log("deptmonthlyload incident >> "+JSON.stringify(incident));    
             if (err) {
                 return res.json({
                     success: false,
