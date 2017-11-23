@@ -26,7 +26,7 @@ function chartLoad() {
 }
 
 function setChartLoad(dataObj) {
-    alert(JSON.stringify(dataObj));
+    //alert(JSON.stringify(dataObj));
     //alert(JSON.stringify(dataObj[0].cnt));
     //alert(JSON.stringify(dataObj[1].cntCom));
     //alert(JSON.stringify(dataObj[2]));
