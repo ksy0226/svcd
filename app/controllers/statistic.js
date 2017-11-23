@@ -441,7 +441,9 @@ function setChartData(srcData) {
             }
         }
         rtnJSON = {
-            cnt: cnt2.concat(cnt1)
+            //cnt: cnt2.concat(cnt1)
+            cnt1: cnt1,
+            cnt2: cnt2
         };
     } catch (e) {
         logger.error("controller statistic setChartData : ", e);

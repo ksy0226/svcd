@@ -26,19 +26,19 @@ function chartLoad() {
 }
 
 function setChartLoad(dataObj) {
-    //alert(JSON.stringify(dataObj));
+    alert(JSON.stringify(dataObj));
     //alert(JSON.stringify(dataObj[0].cnt));
     //alert(JSON.stringify(dataObj[1].cntCom));
     //alert(JSON.stringify(dataObj[2]));
     //alert(JSON.stringify(dataObj[3]));
 
-    $('#chartPreYear').html(dataObj[2]._id.register_yyyy);
-    $('#chartPreYearCnt').html(dataObj[2].count);
-    $('#chartYear').html(dataObj[3]._id.register_yyyy);
-    $('#chartYearCnt').html(dataObj[3].count);
+    $('#chartPreYear').html(dataObj[2]._id.register_yyyy + '년');
+    $('#chartPreYearCnt').html(dataObj[2].count + '건');
+    $('#chartYear').html(dataObj[3]._id.register_yyyy + '년');
+    $('#chartYearCnt').html(dataObj[3].count + '건');
 
     var DrawSparkline = function () {
-        $('#sparkline1').sparkline(dataObj[0].cnt, {
+        $('#sparkline1').sparkline(dataObj[0].cnt1, {
             type: 'line',
             width: $('#sparkline1').width(),
             height: '165',
@@ -49,7 +49,7 @@ function setChartLoad(dataObj) {
             highlightSpotColor: 'rgba(0,0,0,.2)',
         });
 
-        $('#sparkline1').sparkline(dataObj[1].cntCom, {
+        $('#sparkline1').sparkline(dataObj[0].cnt2, {
             type: 'line',
             width: $('#sparkline1').width(),
             height: '165',
