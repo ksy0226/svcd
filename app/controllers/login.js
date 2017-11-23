@@ -54,6 +54,7 @@ module.exports = {
                     req.session.save(function () {
                         req.session.email = usermanage.email;
                         req.session.user_id = usermanage.user_id;
+                        req.session.sabun = usermanage.sabun;
                         req.session.password = usermanage.password;
                         req.session.user_flag = usermanage.user_flag;
                         req.session.group_flag = usermanage.group_flag;
@@ -96,6 +97,7 @@ module.exports = {
                         if (JSON.parse(usermanage).status == "OK") {
                             req.session.email = usermanage.email;
                             req.session.user_id = usermanage.user_id;
+                            req.session.sabun = usermanage.sabun;
                             req.session.password = usermanage.password;
                             req.session.user_flag = "9";
                             req.session.group_flag = "in";

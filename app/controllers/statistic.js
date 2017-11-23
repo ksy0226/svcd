@@ -120,21 +120,25 @@ module.exports = {
      * 메인 카운트 로드
     */
     cntload: (req, res, next) => {
-        var startDate = new Date(new Date().setDate(new Date().getDate() - 60)).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-        var endDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        //var startDate = new Date(new Date().setDate(new Date().getDate() - 60)).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        //var endDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        var today = new Date();
+        var thisYear = today.getFullYear();
 
         var aggregatorOpts =
             [
                 {
                     $match: { //조건
-                        manager_company_cd: "ISU_ST"  //각 사별 관리담당자는?
-                        //,manager_sabun : "12001"     //req.session.sabun 넣을 예정
-                        , $or: [{ status_cd: "1" }, { status_cd: "2" }, { status_cd: "3" }, { status_cd: "4" }]
+                        //manager_company_cd: req.session.company_cd  //각 사별 관리담당자는?
+                        //,user_id : req.session.email     //req.session.sabun 넣을 예정
+                        
+                        $or: [{ status_cd: "1" }, { status_cd: "2" }, { status_cd: "3" }, { status_cd: "4" }]
                         //,$and : [ { register_date : {$gte: "2017-05-19T04:49:38.881Z"}}
                         //         ,{ register_date : {$lte:"2017-11-15T04:49:38.881Z"}} ]
                         //,register_date : {$gte: "2017-10-19T04:49:38.881Z", $lte:"2017-11-15T04:49:38.881Z"}
                         //,register_date : {$gte: new Date(new Date().setDate(new Date().getDate()-180)), $lte: new Date()}
-                        , register_date: { $gte: startDate, $lte: endDate }
+                        //, register_date: { $gte: startDate, $lte: endDate }
+                        ,register_yyyy: thisYear.toString()
 
                     }
                 }
@@ -165,10 +169,9 @@ module.exports = {
                     }
                 }
             ]
-
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
             //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
-            //console.log("incident"+JSON.stringify(incident));    
+            //console.log("cntload incident"+JSON.stringify(incident));    
             if (err) {
                 return res.json({
                     success: false,
@@ -184,23 +187,29 @@ module.exports = {
      * 팀장 메인 카운트 로드
     */
     deptcntload: (req, res, next) => {
-        console.log("deptcntload..................");
-        var startDate = new Date(new Date().setDate(new Date().getDate() - 60)).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-        var endDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        //var startDate = new Date(new Date().setDate(new Date().getDate() - 360)).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        //var endDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        var today = new Date();
+        var thisYear = today.getFullYear();
+
+
 
         var aggregatorOpts =
             [
                 {
                     $match: { //조건
-                        manager_company_cd: "ISU_ST"  //각 사별 관리담당자는?
-                        //,manager_sabun : "12001"     //req.session.sabun 넣을 예정
-                        ,manager_dept_cd : req.session.dept_cd
+                        //manager_company_cd : req.session.company_cd  //각 사별 관리담당자는?
+                        //,manager_sabun : req.session.sabun
+                        //,manager_email : req.session.email      //req.session.sabun 넣을 예정 ??
+                        //,
+                        manager_dept_cd : req.session.dept_cd
                         , $or: [{ status_cd: "1" }, { status_cd: "2" }, { status_cd: "3" }, { status_cd: "4" }]
                         //,$and : [ { register_date : {$gte: "2017-05-19T04:49:38.881Z"}}
                         //         ,{ register_date : {$lte:"2017-11-15T04:49:38.881Z"}} ]
                         //,register_date : {$gte: "2017-10-19T04:49:38.881Z", $lte:"2017-11-15T04:49:38.881Z"}
                         //,register_date : {$gte: new Date(new Date().setDate(new Date().getDate()-180)), $lte: new Date()}
-                        , register_date: { $gte: startDate, $lte: endDate }
+                        //, register_date: { $gte: startDate, $lte: endDate }
+                       ,register_yyyy: thisYear.toString()
 
                     }
                 }
@@ -231,10 +240,10 @@ module.exports = {
                     }
                 }
             ]
-
+        //console.log("deptcntload aggregatorOpts >> "+JSON.stringify(aggregatorOpts));         
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
             //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
-            console.log("incident"+JSON.stringify(incident));    
+            //console.log("dept incident"+JSON.stringify(incident));    
             if (err) {
                 return res.json({
                     success: false,
@@ -377,8 +386,9 @@ module.exports = {
             [
                 {
                     $match: { //조건
-                        //manager_company_cd : "ISU_ST"  //각 사별 관리담당자는?
-                        //,manager_sabun : "12001"     //req.session.sabun 넣을 예정
+                        //manager_company_cd : req.session.company_cd  //각 사별 관리담당자는?
+                        //,manager_email : req.session.email      //req.session.sabun 넣을 예정
+                        //,
                         status_cd: "4"
                         , register_yyyy: thisYear.toString()
                     }
@@ -403,10 +413,64 @@ module.exports = {
                 }
             ]
 
-        //console.log("monthlyload aggregatorOpts >> "+JSON.stringify(aggregatorOpts)+thisYear); 
+        //console.log("monthlyload aggregatorOpts >> "+JSON.stringify(aggregatorOpts)); 
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
             //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
             //console.log("monthlyload incident >> "+JSON.stringify(incident));    
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: err
+                });
+            }else{
+                res.json(setMonthData(incident));
+            }
+        });
+    },
+
+    /**
+     * 팀장 만족도 현황 
+    */
+    deptmonthlyLoad: (req, res, next) => {
+        var today = new Date();
+        var thisYear = today.getFullYear();
+        
+
+        var aggregatorOpts =
+            [
+                {
+                    $match: { //조건
+                        //manager_company_cd : "ISU_ST"  //각 사별 관리담당자는?
+                        //,manager_sabun : "12001"     //req.session.sabun 넣을 예정
+                        manager_dept_cd : req.session.dept_cd
+                        ,status_cd: "4"
+                        , register_yyyy: thisYear.toString()
+                    }
+                }
+                , {
+                    $group: { //그룹칼럼
+                        _id: {
+                            //register_yyyy : "$register_yyyy"
+                            register_mm: "$register_mm"
+                        }
+                        , count: {
+                            $sum: 1
+                        }
+                        , avgValue: { $avg: "$valuation" }
+
+                    }
+                }
+                , {
+                    $sort: {
+                        register_mm: -1
+                    }
+                }
+            ]
+
+        //console.log("deptmonthlyload aggregatorOpts >> "+JSON.stringify(aggregatorOpts)+thisYear); 
+        IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
+            //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
+            console.log("deptmonthlyload incident >> "+JSON.stringify(incident));    
             if (err) {
                 return res.json({
                     success: false,
@@ -466,11 +530,13 @@ function setMonthData(srcData) {
         //[{"_id":{"register_mm":"11"},"count":5,"avgValue":4.6},{"_id":{"register_mm":"05"},"
 
         for (var i = 0; i < srcData.length; i++) {
+            
             //console.log(Number(srcData[i]._id.register_mm));
             var idx = Number(srcData[i]._id.register_mm);
-            cnt.splice(idx, 1, srcData[i].count);
+            //console.log("idx : "+ idx + Number(srcData[i]._id.register_mm));
+            cnt.splice(idx-1, 1, srcData[i].count);
             //avg.splice( idx , 1 , Math.round(srcData[i].avgValue,-2) );
-            avg.splice(idx, 1, srcData[i].avgValue.toFixed(2));
+            avg.splice(idx-1, 1, srcData[i].avgValue.toFixed(2));
         }
 
         rtnJSON = {
@@ -501,10 +567,10 @@ function setChartData(srcData) {
         for (var i = 0; i < srcData.length; i++) {
             if (Number(srcData[i]._id.register_yyyy) == thisYear) {
                 var idx = Number(srcData[i]._id.register_mm);
-                cnt1.splice(idx, 1, srcData[i].count);
+                cnt1.splice(idx-1, 1, srcData[i].count);
             } else if (Number(srcData[i]._id.register_yyyy) == lastYear) {
                 var idx = Number(srcData[i]._id.register_mm);
-                cnt2.splice(idx, 1, srcData[i].count);
+                cnt2.splice(idx-1, 1, srcData[i].count);
             }
 
             if (i == 0) {
@@ -542,10 +608,10 @@ function setChartCompleteData(srcData) {
         for (var i = 0; i < srcData.length; i++) {
             if (Number(srcData[i]._id.register_yyyy) == thisYear) {
                 var idx = Number(srcData[i]._id.register_mm);
-                cnt1.splice(idx, 1, srcData[i].count);
+                cnt1.splice(idx-1, 1, srcData[i].count);
             } else if (Number(srcData[i]._id.register_yyyy) == lastYear) {
                 var idx = Number(srcData[i]._id.register_mm);
-                cnt2.splice(idx, 1, srcData[i].count);
+                cnt2.splice(idx-1, 1, srcData[i].count);
             }
         }
         rtnJSON = {
