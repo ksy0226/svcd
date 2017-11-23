@@ -492,6 +492,7 @@ function setChartData(srcData) {
     var rtnJSON = {};
     var cnt1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     var cnt2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    var cnt3 = 0;
     var today = new Date();
     var thisYear = today.getFullYear();
     var lastYear = thisYear - 1;
@@ -505,11 +506,21 @@ function setChartData(srcData) {
                 var idx = Number(srcData[i]._id.register_mm);
                 cnt2.splice(idx, 1, srcData[i].count);
             }
+
+            if (i == 0) {
+                cnt3 = srcData[i].count;
+            } else {
+                if(cnt3 < srcData[i].count) {
+                    cnt3 = srcData[i].count;
+                }
+            }
         }
+
         rtnJSON = {
             //cnt: cnt2.concat(cnt1)
             cnt1: cnt1,
-            cnt2: cnt2
+            cnt2: cnt2,
+            cnt3: cnt3
         };
     } catch (e) {
         logger.error("controller statistic setChartData : ", e);

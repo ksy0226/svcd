@@ -27,7 +27,7 @@ function chartLoad() {
 
 function setChartLoad(dataObj) {
     //alert(JSON.stringify(dataObj));
-    //alert(JSON.stringify(dataObj[0].cnt));
+    //alert(JSON.stringify(dataObj[0].cnt3));
     //alert(JSON.stringify(dataObj[1].cntCom));
     //alert(JSON.stringify(dataObj[2]));
     //alert(JSON.stringify(dataObj[3]));
@@ -42,7 +42,7 @@ function setChartLoad(dataObj) {
             type: 'line',
             width: $('#sparkline1').width(),
             height: '165',
-            chartRangeMax: 70,
+            chartRangeMax: dataObj[0].cnt3,
             lineColor: '#3bafda',
             fillColor: 'rgba(59,175,218,0.3)',
             highlightLineColor: 'rgba(0,0,0,.1)',
@@ -70,7 +70,7 @@ function setChartLoad(dataObj) {
             type: 'line',
             width: $('#sparkline1').width(),
             height: '165',
-            chartRangeMax: 70,
+            chartRangeMax: dataObj[0].cnt3,
             lineColor: '#00b19d',
             fillColor: 'rgba(0, 177, 157, 0.3)',
             composite: true,
