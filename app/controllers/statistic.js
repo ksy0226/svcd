@@ -373,6 +373,127 @@ module.exports = {
             });
         });
     },
+    
+    deptchartLoad: (req, res, next) => {
+        var today = new Date();
+        var thisYear = today.getFullYear();
+        var preYear = thisYear - 1;
+
+        async.waterfall([function (callback) {
+            var aggregatorOpts =
+                [
+                    {
+                        $match: { //조건
+                            manager_dept_cd : req.session.dept_cd
+                            ,register_yyyy: { $gte: preYear.toString(), $lte: thisYear.toString() }
+                        }
+                    }, {
+                        $group: { //그룹
+                            _id: {
+                                register_yyyy: "$register_yyyy",
+                                register_mm: "$register_mm"
+                            }
+                            , count: {
+                                $sum: 1
+                            }
+
+                        }
+                    }, {
+                        $sort: {
+                            register_yyyy: -1,
+                            register_mm: -1
+                        }
+                    }
+                ]
+
+            IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
+                //console.log("incident >>>>>> " + JSON.stringify(incident));
+                if (err) {
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
+                    callback(null, incident)
+                }
+            });
+        }, function (incident, callback) {
+            var aggregatorOpts =
+                [
+                    {
+                        $match: { //조건
+                            manager_dept_cd : req.session.dept_cd
+                            ,register_yyyy: { $gte: preYear.toString(), $lte: thisYear.toString() }
+                            ,status_cd: { $gte: '3', $lte: '4' }
+                        }
+                    }, {
+                        $group: { //그룹
+                            _id: {
+                                register_yyyy: "$register_yyyy",
+                                register_mm: "$register_mm",
+                            }
+                            , count: {
+                                $sum: 1
+                            }
+
+                        }
+                    }, {
+                        $sort: {
+                            register_yyyy: -1,
+                            register_mm: -1,
+                            status_cd: -1
+                        }
+                    }
+                ]
+
+            IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident2) {
+                //console.log("incident2 >>>>>> " + JSON.stringify(incident2));
+                if (err) {
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
+                    callback(null, incident, incident2)
+                }
+            });
+        }], function (err, incident, incident2) {
+            var aggregatorOpts =
+                [
+                    {
+                        $match: { //조건
+                            register_yyyy: { $gte: preYear.toString(), $lte: thisYear.toString() }
+                        }
+                    }, {
+                        $group: { //그룹
+                            _id: {
+                                register_yyyy: "$register_yyyy",
+                            }
+                            , count: {
+                                $sum: 1
+                            }
+
+                        }
+                    }, {
+                        $sort: {
+                            register_yyyy: -1,
+                        }
+                    }
+                ]
+
+            IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident3) {
+                //console.log("incident2 >>>>>> " + JSON.stringify(incident2));
+                if (err) {
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
+                    res.json(mergeChart(setChartData(incident), setChartCompleteData(incident2), incident3));
+                }
+            });
+        });
+    },
 
     /**
      * 만족도 현황 

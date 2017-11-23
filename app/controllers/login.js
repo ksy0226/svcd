@@ -226,6 +226,18 @@ module.exports = {
                         res.json(incident);
                     }
                 }).sort('-created_at');
+            } else if (req.session.user_flag == '5') {
+                console.log("req.session.user_flag is 5 >> " + req.session.dept_cd);
+                Incident.find({ manager_dept_cd : req.session.dept_cd }, function (err, incident) {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+                        res.json(incident);
+                    }
+                }).sort('-created_at');
             } else {
                 Incident.find({ manager_email: req.session.email }, function (err, incident) {
                     if (err) {
