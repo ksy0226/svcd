@@ -126,7 +126,7 @@ function setMonthlyLoad(dataObj){
             barWidth: '12',
             barSpacing: '10', //3
             barColor: '#3bafda',
-            chartRangeMax: 5,     //평점 5점만점
+            chartRangeMax: 8,     //평점 5점만점
             //tooltipFormatFieldlist: ['x','y'],
             ///xaxis: {ticks: [[1,'One'], [2,'Two'], [3,'Three'], [4,'Four'], [5,'Five']]},
             
