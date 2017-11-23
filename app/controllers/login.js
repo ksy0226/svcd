@@ -60,6 +60,7 @@ module.exports = {
                         req.session.user_nm = usermanage.employee_nm;
                         req.session.company_cd = usermanage.company_cd;
                         req.session.company_nm = usermanage.company_nm;
+                        req.session.dept_cd = usermanage.dept_cd;
                         req.session.dept_nm = usermanage.dept_nm;
                         req.session.position_nm = usermanage.position_nm;
                         req.session.jikchk_nm = usermanage.jikchk_nm;
@@ -68,6 +69,8 @@ module.exports = {
 
                         if (req.session.user_flag == '1') {
                             res.render("main/admin");
+                        } else if (req.session.user_flag == '5') {
+                            res.render("main/deptadmin");
                         } else {
                             res.render("main/user");
                         }
@@ -99,6 +102,7 @@ module.exports = {
                             req.session.user_nm = usermanage.employee_nm;
                             req.session.company_cd = usermanage.company_cd;
                             req.session.company_nm = usermanage.company_nm;
+                            req.session.dept_cd = usermanage.dept_cd;
                             req.session.dept_nm = usermanage.dept_nm;
                             req.session.position_nm = usermanage.position_nm;
                             req.session.jikchk_nm = usermanage.jikchk_nm;

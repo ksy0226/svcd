@@ -9,6 +9,7 @@ var usermanageSchema = mongoose.Schema({
     user_id          : { type : String },
     password         : { type : String, required: true },
     employee_nm      : { type : String },
+    dept_cd          : { type : String },
     dept_nm          : { type : String },
     jikchk_nm        : { type : String },
     position_nm      : { type : String },
