@@ -102,7 +102,8 @@ IncidentSchema.pre("save", function setDateFormat(next){
     var new_year = new_date.getFullYear();
     var new_month = new_date.getMonth()+1;
     var new_day = new_date.getDate();
-
+    var created_at = new_date.toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    console.log("created_at>>>>>>>>>>>>>"+created_at );
     incidentDate.register_yyyy = new_year;
     incidentDate.register_mm = new_month;
     incidentDate.register_dd = new_day;

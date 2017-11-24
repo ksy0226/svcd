@@ -27,7 +27,7 @@ module.exports = {
                     });
                 }
                 callback(null, ProcessStatus)
-            });
+            }).sort('-created_at');
         }], function (err, ProcessStatus) {
             if (err) {
                 res.render("http/500", {
