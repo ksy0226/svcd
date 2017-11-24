@@ -39,6 +39,7 @@
     "jade": "^1.11.0",
     "log4js": "^1.1.1",
     "method-override": "^2.3.7",
+    "moment": "^2.19.2",
     "mongoose": "^4.9.1",
     "mongoose-auto-increment": "^5.0.1",
     "mongoose-unique-validator": "^1.0.5",

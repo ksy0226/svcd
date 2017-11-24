@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var autoIncrement = require('mongoose-auto-increment');
+var moment = require('moment');
+
 
 var IncidentSchema = new Schema({
     register_num            : {type : Number, require : true},                                                                                                                      
@@ -98,12 +100,20 @@ IncidentSchema.virtual('getDate').get(function(){
 IncidentSchema.pre("save", function setDateFormat(next){
     var incidentDate = this;
     var new_date = new Date();
+    // moment를 초기화 한다
+    var m = moment();
 
     var new_year = new_date.getFullYear();
     var new_month = new_date.getMonth()+1;
     var new_day = new_date.getDate();
    
-    var created_at = new_date.toISOString().replace(/T/, ' ').replace(/\..+/, '');
+
+    // format으로 출력한다
+    var created_at = m.format("YYYY-MM-DD hh:mm:ss a");
+    console.log("created_at<<<<"+created_at);  // => 2016년07월12일 12:34:56 Wednesday     
+
+
+    //var created_at = new_date.toISOString().replace(/T/, ' ').replace(/\..+/, '');
     //created_at = new_date.toISOString().format('YYYY-MM-DD hh:mm:ss a');
     //console.log("created_at 2 >>>>>>>>>>>"+created_at);
     incidentDate.register_yyyy = new_year;
