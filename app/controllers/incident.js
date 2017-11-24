@@ -171,6 +171,7 @@ module.exports = {
                 } else {
                     res.render("incident/index", {
                         ProcessStatus: ProcessStatus
+                        ///,moment
                     });
                 }
             });

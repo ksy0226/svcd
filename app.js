@@ -12,6 +12,7 @@ const compression = require('compression');
 const log4js = require('log4js');
 const mongoose = require('mongoose');
 
+
 const CONFIG = require('./config/config.json');
 
 const app = express();

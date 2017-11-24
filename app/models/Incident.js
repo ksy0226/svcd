@@ -73,7 +73,7 @@ var IncidentSchema = new Schema({
                                     path            : {type : String},
                                     size            : {type : Number}
                                 }], //첨부이미지
-    created_at              : {type : Date, default : Date.now()},
+    created_at              : {type : Date, default : Date.now},
     updated_at              : {type : Date},
     deleted_att             : {type : Date}
 });
@@ -102,8 +102,10 @@ IncidentSchema.pre("save", function setDateFormat(next){
     var new_year = new_date.getFullYear();
     var new_month = new_date.getMonth()+1;
     var new_day = new_date.getDate();
+   
     var created_at = new_date.toISOString().replace(/T/, ' ').replace(/\..+/, '');
-    console.log("created_at>>>>>>>>>>>>>"+created_at );
+    //created_at = new_date.toISOString().format('YYYY-MM-DD hh:mm:ss a');
+    //console.log("created_at 2 >>>>>>>>>>>"+created_at);
     incidentDate.register_yyyy = new_year;
     incidentDate.register_mm = new_month;
     incidentDate.register_dd = new_day;
