@@ -251,11 +251,13 @@ module.exports = {
         } catch (e) {
             logger.debug('usermanage controllers error ====================> ', e)
         }
-    },    userJSON: (req, res, next) => {
-        try{
+    },
+
+    userJSON: (req, res, next) => {
+        try {
             request({
                 //uri: "http://gw.isu.co.kr/CoviWeb/api/UserList.aspx?searchName="+encodeURIComponent(req.query.searchText),
-                uri: "http://gw.isudev.com/CoviWeb/api/UserList.aspx?searchName="+encodeURIComponent(req.query.searchText),
+                uri: "http://gw.isudev.com/CoviWeb/api/UserList.aspx?searchName=" + encodeURIComponent(req.query.searchText),
                 //uri: "http://gw.isu.co.kr/CoviWeb/api/UserInfo.aspx?email=hilee@isu.co.kr&password=nimda3",
                 headers: {
                     'Content-type': 'application/json'
@@ -264,11 +266,11 @@ module.exports = {
             }, function (err, response, usermanage) {
                 //logger.debug("=====>userJSON group ", usermanage);
                 Usermanage.find({
-                        employee_nm: {
-                            $regex: new RegExp(req.query.searchText, "i")
-                        }
-                        , group_flag : "out"
-                    })
+                    employee_nm: {
+                        $regex: new RegExp(req.query.searchText, "i")
+                    }
+                    , group_flag: "out"
+                })
                     .limit(10)
                     .exec(function (err, usermanageData) {
                         if (err) {
@@ -277,31 +279,31 @@ module.exports = {
                                 message: err
                             });
                         } else {
-                            if(usermanage != null){
+                            if (usermanage != null) {
                                 usermanage = JSON.parse(usermanage);
                             }
                             res.json(mergeUser(usermanage, usermanageData));
                         }
                     }); //usermanage.find End
             }); //request End
-        }catch(e){
-            logger.error("===control usermanager.js userJSON : ",e);
+        } catch (e) {
+            logger.error("===control usermanager.js userJSON : ", e);
         }
     },//userJSON End
 };
 
 
-function mergeUser(trg1, trg2){
+function mergeUser(trg1, trg2) {
     var rtnJSON = [];
-    try{
-        for(var i = 0 ; i < trg1.length ; i++){
+    try {
+        for (var i = 0; i < trg1.length; i++) {
             rtnJSON.push(trg1[i]);
         }
-        for(var i = 0 ; i < trg2.length ; i++){
+        for (var i = 0; i < trg2.length; i++) {
             rtnJSON.push(trg2[i]);
         }
-    }catch(e){
-        logger.error("control useremanage mergeUser : ",e);
+    } catch (e) {
+        logger.error("control useremanage mergeUser : ", e);
     }
     return rtnJSON;
 }

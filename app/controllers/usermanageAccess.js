@@ -147,7 +147,53 @@ module.exports = {
                 }
             });
         } catch (e) {
-            logger.debug('usermanageAccess controllers error ====================> ', e)
+            logger.debug('list controllers error ===> ', e)
+        }
+    },
+
+    //ajax list 데이타 처리
+    allAccess: (req, res, next) => {
+        var search = service.createSearch(req);
+
+        //logger.debug("=====================> " + JSON.stringify(search));
+        //console.log("=====================> " + JSON.stringify(search));
+
+        try {
+            async.waterfall([function (callback) {
+                Usermanage.find(search.findUsermanage, function (err, usermanageAccess) {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    }
+                    callback(null, usermanageAccess);
+                });
+            }], function (err, usermanageAccess) {
+                if (err) {
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
+                    if (usermanageAccess.length > 0) {
+                        for (var i = 0; i < usermanageAccess.length; i++) {
+                            var newId = usermanageAccess[i]._id;
+                            Usermanage.findOneAndUpdate({ _id: newId }, { access_yn: "Y" }, function (err, usermanageAccess) {
+                                if (err) {
+                                    return res.json({
+                                        success: false,
+                                        message: err
+                                    });
+                                }
+                            });
+                        }
+                    }
+                    res.send(usermanageAccess);
+                }
+            });
+        } catch (e) {
+            logger.debug('allAccess controllers error ===> ', e)
         }
     }
 };

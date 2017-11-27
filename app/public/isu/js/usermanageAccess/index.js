@@ -52,7 +52,7 @@ function research(selectedPage) {
 function getDataList(selectedPage) {
     var reqParam = 'searchType=' + $('#searchType').val() + '&company_cd=' + $('#company_cd').val()
         + '&searchText=' + encodeURIComponent($('#searchText').val());
-        //+ '&using_yn=' + $('#using_yn').val('N');
+    //+ '&using_yn=' + $('#using_yn').val('N');
 
     $.ajax({
         type: "GET",
@@ -99,13 +99,13 @@ function setDataList(dataObj, selectedPage) {
     if (endIdx > 0) {
         for (var i = startIdx; i < endIdx + 1; i++) {
             var addList = "";
-            addList += "							<tr onclick=location='/usermanageAccess/edit/" + dataObj[i-1]._id + "'>";
-            addList += "								<td>" + dataObj[i-1].company_nm + "</td>";
-            addList += "								<td>" + dataObj[i-1].email + "</td>";
-            addList += "								<td class='text-center'>" + dataObj[i-1].employee_nm + "</td>";
-            addList += "								<td>" + dataObj[i-1].dept_nm + "</td>";
-            addList += "								<td class='text-center'>" + dataObj[i-1].position_nm + "</td>";
-            addList += "								<td class='text-center'>" + dataObj[i-1].hp_telno + "</td>";
+            addList += "							<tr onclick=location='/usermanageAccess/edit/" + dataObj[i - 1]._id + "'>";
+            addList += "								<td>" + dataObj[i - 1].company_nm + "</td>";
+            addList += "								<td>" + dataObj[i - 1].email + "</td>";
+            addList += "								<td class='text-center'>" + dataObj[i - 1].employee_nm + "</td>";
+            addList += "								<td>" + dataObj[i - 1].dept_nm + "</td>";
+            addList += "								<td class='text-center'>" + dataObj[i - 1].position_nm + "</td>";
+            addList += "								<td class='text-center'>" + dataObj[i - 1].hp_telno + "</td>";
             addList += "							</tr>";
 
             $("#more_list").append(addList);
@@ -177,3 +177,31 @@ function paging(totalData, dataPerPage, pageCount, currentPage) {
 
     });
 }
+
+//전체 승인
+function allAccess() {
+    if (confirm("전체 승인을 하시겠습니까?")) {
+        var reqParam = 'searchType=' + $('#searchType').val() + '&company_cd=' + $('#company_cd').val()
+        + '&searchText=' + encodeURIComponent($('#searchText').val());
+
+        $.ajax({
+            type: "GET",
+            async: true,
+            url: "/usermanageAccess/allAccess",
+            dataType: "json", // xml, html, script, json 미지정시 자동판단
+            timeout: 30000,
+            cache: false,
+            data: reqParam,
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            error: function (request, status, error) {
+                alert("allAccess error : " + error);
+            },
+            beforeSend: function () {
+            },
+            success: function (dataObj) {
+                alert("전체 승인이 완료되었습니다.");
+                research(1);
+            }
+        });
+    }
+};
