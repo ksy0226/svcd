@@ -218,7 +218,6 @@ module.exports = {
         try {
             //logger.debug('main_list controllers start!');
             if (req.session.user_flag == '9') {
-                console.log("req.session.email >>>>>>> " + req.session.email);
                 Incident.find({ request_id: req.session.email }, function (err, incident) {
                     if (err) {
                         return res.json({
@@ -230,8 +229,18 @@ module.exports = {
                     }
                 }).sort('-created_at');
             } else if (req.session.user_flag == '5') {
-                console.log("req.session.dept_cd    >>>>>>> " + req.session.dept_cd);
                 Incident.find({ manager_dept_cd: req.session.dept_cd }, function (err, incident) {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+                        res.json(incident);
+                    }
+                }).sort('-created_at');
+            } else if (req.session.user_flag == '1') {
+                Incident.find({}, function (err, incident) {
                     if (err) {
                         return res.json({
                             success: false,
@@ -254,8 +263,8 @@ module.exports = {
                 }).sort('-created_at');
             }
         } catch (e) {
-            //logger.debug('main_list controllers error ====================> ', e)
-            console.log('main_list controllers error ====================> ', e);
+            logger.debug('main_list controllers error ====================> ', e)
+            //console.log('main_list controllers error ====================> ', e);
         }
     },
 
@@ -285,8 +294,8 @@ module.exports = {
                 }).sort('-created_at');
             }
         } catch (e) {
-            //logger.debug('main_list_nocomplete controllers error ====================> ', e)
-            console.log('main_list_nocomplete controllers error ====================> ', e);
+            logger.debug('main_list_nocomplete controllers error ====================> ', e)
+            //console.log('main_list_nocomplete controllers error ====================> ', e);
         }
     },
 };

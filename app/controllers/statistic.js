@@ -591,7 +591,7 @@ module.exports = {
         //console.log("deptmonthlyload aggregatorOpts >> "+JSON.stringify(aggregatorOpts)+thisYear); 
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
             //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
-            console.log("deptmonthlyload incident >> "+JSON.stringify(incident));    
+            //console.log("deptmonthlyload incident >> "+JSON.stringify(incident));    
             if (err) {
                 return res.json({
                     success: false,
