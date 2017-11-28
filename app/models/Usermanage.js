@@ -5,7 +5,7 @@ const logger = require('log4js').getLogger('app');
 var usermanageSchema = mongoose.Schema({
     userCompany_nm   : { type : String, required: true },
     company_cd       : { type : String },
-    company_nm       : { type : String },    
+    company_nm       : { type : String , default : '미승인'},
     email            : { type : String, required: true },
     user_id          : { type : String },
     password         : { type : String, required: true },
@@ -30,8 +30,8 @@ var usermanageSchema = mongoose.Schema({
     sabun            : { type : String },
     access_yn        : { type : String , default : 'N'},
     using_yn         : { type : String , default : 'Y'},
-    user_flag        : { type : String, default : 9 },
-    group_flag       : { type : String, default : 'out' },
+    user_flag        : { type : String , default : 9 },
+    group_flag       : { type : String , default : 'out' },
     created_at       : { type : Date },
     updated_at       : { type : Date }
 });
