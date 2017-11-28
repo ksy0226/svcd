@@ -109,10 +109,9 @@ IncidentSchema.pre("save", function setDateFormat(next){
    
 
     // format으로 출력한다
-    var new_created_at = m.format("YYYY-MM-DD HH:mm:ss");
-    var new_register_date = m.format("YYYY-MM-DD HH:mm:ss");
-    console.log("created_at<<<<"+new_created_at);  // => 2016년07월12일 12:34:56 Wednesday     
-    console.log("register_date<<<<"+register_date);  // => 2016년07월12일 12:34:56 Wednesday   
+    var created_at = m.format("YYYY-MM-DD HH:mm:ss");
+    console.log("created_at<<<<"+created_at);  // => 2016년07월12일 12:34:56 Wednesday     
+
 
     //var created_at = new_date.toISOString().replace(/T/, ' ').replace(/\..+/, '');
     //created_at = new_date.toISOString().format('YYYY-MM-DD hh:mm:ss a');
@@ -120,8 +119,6 @@ IncidentSchema.pre("save", function setDateFormat(next){
     incidentDate.register_yyyy = new_year;
     incidentDate.register_mm = new_month;
     incidentDate.register_dd = new_day;
-    incidentDate.register_date = new_register_date;
-    incidentDate.created_at = new_created_at;
     return next();
 });
 
