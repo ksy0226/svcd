@@ -311,17 +311,5 @@ function mergeUser(trg1, trg2){
         }
     }catch(e){
         logger.error("control useremanage mergeUser : ",e);
-function mergeUser(trg1, trg2) {
-    var rtnJSON = [];
-    try {
-        for (var i = 0; i < trg1.length; i++) {
-            rtnJSON.push(trg1[i]);
-        }
-        for (var i = 0; i < trg2.length; i++) {
-            rtnJSON.push(trg2[i]);
-        }
-    } catch (e) {
-        logger.error("control useremanage mergeUser : ", e);
     }
-    return rtnJSON;
 }
