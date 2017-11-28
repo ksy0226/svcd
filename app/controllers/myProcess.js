@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 const async = require('async');
-const MyBusinessModel = require('../models/MyBusiness');
+const MyProcessModel = require('../models/MyProcess');
 const HigherProcessModel = require('../models/HigherProcess');
 const CompanyModel = require('../models/Company');
 const logger = require('log4js').getLogger('app');
@@ -21,7 +21,7 @@ module.exports = {
                 callback(null, higherprocess)
             });
         }, function (higherprocess, callback) {
-            MyBusinessModel.find(req.body.myBusiness, function (err, company) {
+            MyProcessModel.find(req.body.myProcess, function (err, company) {
                 if (err) {
                     res.render("http/500", {
                         err: err
@@ -35,7 +35,7 @@ module.exports = {
                     err: err
                 });
             } else {
-                res.render("myBusiness/index", {
+                res.render("myProcess/index", {
                     higherprocess: higherprocess,
                     company : company
                 });
@@ -68,7 +68,7 @@ module.exports = {
                     err: err
                 });
             } else {
-                res.render("myBusiness/new", {
+                res.render("myProcess/new", {
                     higher: higher,
                     company : company
                 });
@@ -77,59 +77,59 @@ module.exports = {
     },
 
     save: (req, res, next) => {
-        var myBusiness = req.body.myBusiness;
-        MyBusinessModel.create(req.body.myBusiness, function (err, myBusiness) {
+        var myProcess = req.body.myProcess;
+        MyProcessModel.create(req.body.myProcess, function (err, myProcess) {
             if (err) {
                 res.render("http/500", {
                     err: err
                 });
             } else {
-                res.redirect('/myBusiness');
+                res.redirect('/myProcess');
             }
         });
     },
 
     edit: (req, res, next) => {
-        MyBusinessModel.findById(req.params.id, function (err, myBusiness) {
+        MyProcessModel.findById(req.params.id, function (err, myProcess) {
             if (err) return res.json({
                 success: false,
                 message: err
             });
-            res.render("myBusiness/edit", {
-                myBusiness: myBusiness
+            res.render("myProcess/edit", {
+                myProcess: myProcess
             });
         });
     },
 
     update: (req, res, next) => {
-        MyBusinessModel.findOneAndUpdate({
+        MyProcessModel.findOneAndUpdate({
             _id: req.params.id
-        }, req.body.myBusiness, function (err, myBusiness) {
+        }, req.body.myProcess, function (err, myProcess) {
             if (err) return res.json({
                 success: false,
                 message: err
             });
-            if (!myBusiness) return res.json({
+            if (!myProcess) return res.json({
                 success: false,
                 message: "No data found to update"
             });
-            res.redirect('/myBusiness/edit/' + req.params.id);
+            res.redirect('/myProcess/edit/' + req.params.id);
         });
     },
 
     delete: (req, res, next) => {
-        MyBusinessModel.findOneAndRemove({
+        MyProcessModel.findOneAndRemove({
             _id: req.params.id
-        }, function (err, myBusiness) {
+        }, function (err, myProcess) {
             if (err) return res.json({
                 success: false,
                 message: err
             });
-            if (!myBusiness) return res.json({
+            if (!myProcess) return res.json({
                 success: false,
                 message: "No data found to delete"
             });
-            res.redirect('/myBusiness');
+            res.redirect('/myProcess');
         });
     }
 };

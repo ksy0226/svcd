@@ -5,6 +5,8 @@ block head
     link(type='text/css', href='/plugins/multiselect/css/multi-select.css', rel='stylesheet')
     link(type='text/css', href='/assets/css/pages.css', rel='stylesheet')
 
+    script(src='/isu/js/myProcess/index.js')
+
 block content
     body.widescreen.fixed-left-void
         #wrapper.forced
@@ -76,7 +78,7 @@ block content
                                                                 button.btn.btn-xs.btn-default(type='button')
                                                                     i.fa.fa-square-o.m-r-5
                                                                     |  선택취소
-                                            select#my_multi_select2.multi-select(name='my_multi_select2[]', data-plugin='multiselect', data-selectable-optgroup='true', multiple='multiple')
+                                            select#my_multi_select2.multi-select(name='my_multi_select2', data-plugin='multiselect', data-selectable-optgroup='true', multiple='multiple')
                                                 optgroup(label='그룹웨어')
                                                     option.p-l-80 게시판
                                                     option.p-l-80 공통기능

@@ -173,7 +173,6 @@ function setUserInfo(item){
     $('input[name="incident[request_hp_telno]"]').val(item.hp_telno);
     $('input[name="incident[request_office_tel_no]"]').val(item.office_tel_no);
     $('input[name="incident[request_nm]"]').val(item.value);
-
     setHighProcess(item.company_cd);
 }
 

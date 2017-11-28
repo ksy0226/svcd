@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const ssc = require('../util/session');
-const controller = require('../controllers/myBusiness');
+const controller = require('../controllers/myProcess');
 
 router.route('/').get(ssc.sessionCheck, controller.index);
 router.route('/new').get(ssc.sessionCheck, controller.new)

@@ -1,5 +1,5 @@
 'use strict';
 
 $(document).ready(function() { 
-    $('#user_flag').val(myBusinessObj.user_flag);
+    $('#user_flag').val(myProcessObj.user_flag);
 });

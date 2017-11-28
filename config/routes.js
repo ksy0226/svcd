@@ -19,7 +19,7 @@ module.exports = () => {
     router.use('/higherProcess', require('../app/routes/higherProcess'));
     router.use('/lowerProcess', require('../app/routes/lowerProcess'));
     router.use('/oftenqna', require('../app/routes/oftenqna'));
-    router.use('/myBusiness', require('../app/routes/myBusiness'));
+    router.use('/myProcess', require('../app/routes/myProcess'));
     router.use('/processGubun', require('../app/routes/processGubun'));
     router.use('/statistic', require('../app/routes/statistic'));
     router.use('/usermanageAccess', require('../app/routes/usermanageAccess'));

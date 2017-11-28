@@ -36,5 +36,8 @@
     },
     "summernoteUpload":{
         "directory":"upload-file-summernote"
+    },
+    "groupware":{
+        "uri":"http://gw.isudev.com"
     }
 }

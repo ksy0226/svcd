@@ -5,6 +5,7 @@ const async = require('async');
 const CompanyModel = require('../models/Company');
 const Usermanage = require('../models/Usermanage');
 const service = require('../services/usermanage');
+const CONFIG = require('../../config/config.json');
 const logger = require('log4js').getLogger('app');
 const Iconv = require('iconv-lite');
 const request = require("request");
@@ -255,7 +256,7 @@ module.exports = {
         try{
             request({
                 //uri: "http://gw.isu.co.kr/CoviWeb/api/UserList.aspx?searchName="+encodeURIComponent(req.query.searchText),
-                uri: "http://gw.isudev.com/CoviWeb/api/UserList.aspx?searchName="+encodeURIComponent(req.query.searchText),
+                uri: CONFIG.groupware.uri+"/CoviWeb/api/UserList.aspx?searchName="+encodeURIComponent(req.query.searchText),
                 //uri: "http://gw.isu.co.kr/CoviWeb/api/UserInfo.aspx?email=hilee@isu.co.kr&password=nimda3",
                 headers: {
                     'Content-type': 'application/json'
@@ -294,11 +295,17 @@ module.exports = {
 function mergeUser(trg1, trg2){
     var rtnJSON = [];
     try{
-        for(var i = 0 ; i < trg1.length ; i++){
-            rtnJSON.push(trg1[i]);
+        if(trg1 != null){
+            for(var i = 0 ; i < trg1.length ; i++){
+                console.log("trace1 "+i, trg1[i]);
+                rtnJSON.push(trg1[i]);
+            }
         }
-        for(var i = 0 ; i < trg2.length ; i++){
-            rtnJSON.push(trg2[i]);
+        if(trg2 != null){
+            for(var i = 0 ; i < trg2.length ; i++){
+                console.log("trace2 "+i, trg2[i]);
+                rtnJSON.push(trg2[i]);
+            }
         }
     }catch(e){
         logger.error("control useremanage mergeUser : ",e);
