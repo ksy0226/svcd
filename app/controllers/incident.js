@@ -135,13 +135,13 @@ module.exports = {
             newincident.request_company_nm = req.session.company_nm;
             newincident.request_dept_nm = req.session.dept_nm;
             newincident.request_nm = req.session.user_nm;
-            newincident.request_id = req.session.user_id;
+            newincident.request_id = req.session.email;
 
             //추가수정
             newincident.register_company_cd = req.session.company_cd;
             newincident.register_company_nm = req.session.company_nm;
             newincident.register_nm = req.session.user_nm;
-            newincident.register_id = req.session.user_id;
+            newincident.register_id = req.session.email;
 
 
             if (req.files) {
