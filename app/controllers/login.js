@@ -94,6 +94,8 @@ module.exports = {
                         },
                         method: "GET",
                     }, function (err, response, usermanage) {
+                            console.log("usermanage : "+usermanage);
+                            console.log("function log" + usermanage.dept_cd);
                         if (JSON.parse(usermanage).status == "OK") {
                             req.session.email = usermanage.email;
                             req.session.user_id = usermanage.user_id;
