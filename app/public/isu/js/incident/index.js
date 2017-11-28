@@ -303,8 +303,13 @@ function setDetail(dataObj) {
     $('#_request_complete_date').html(dataObj.request_complete_date);
     $('#_app_menu').html(dataObj.app_menu);
     //등록일 양식 변경
-    var register_dateVal = new Date(dataObj.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-    $('#_register_nm-register_date').html(dataObj.register_nm + "/" + register_dateVal);
+    //var register_dateVal = new Date(dataObj.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    //$('#_register_nm-register_date').html(dataObj.register_nm + "/" + register_dateVal);
+    //var m = moment();
+    // format으로 출력한다
+    //var register_dateVal = m.format("YYYY-MM-DD HH:mm:ss");
+    $('#_register_nm-register_date').html(dataObj.register_nm + "/" + dataObj.register_date);
+
     $('#_title').html(dataObj.title);
     $('#_content').html(dataObj.content);
 
@@ -508,8 +513,10 @@ function setDetail(dataObj) {
         $('#_').addClass('label label-purple');
     }
     //등록일
-    var register_dateVal = new Date(dataObj.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-    $('#_register_date').html(register_dateVal);
+    //var register_dateVal = new Date(dataObj.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    //var register_dateVal = m.format("YYYY-MM-DD HH:mm:ss");
+    
+    $('#_register_date').html(dataObj.register_date);
 
 }
 
