@@ -3,8 +3,9 @@ var bcrypt   = require("bcrypt-nodejs");
 const logger = require('log4js').getLogger('app');
 
 var usermanageSchema = mongoose.Schema({
-    company_cd       : { type : String, required: true },
-    company_nm       : { type : String, required: true },    
+    userCompany_nm   : { type : String, required: true },
+    company_cd       : { type : String },
+    company_nm       : { type : String },    
     email            : { type : String, required: true },
     user_id          : { type : String },
     password         : { type : String, required: true },
@@ -21,7 +22,7 @@ var usermanageSchema = mongoose.Schema({
     img_path         : { type : String },
     alarm_minute     : { type : Number },
     register_id      : { type : String },
-    register_date    : { type : Date, default: Date.now },
+    register_date    : { type : Date },
     modify_id        : { type : String },
     modify_date      : { type : Date },
     email_ref        : { type : String },
@@ -31,13 +32,18 @@ var usermanageSchema = mongoose.Schema({
     using_yn         : { type : String , default : 'Y'},
     user_flag        : { type : String, default : 9 },
     group_flag       : { type : String, default : 'out' },
-    created_at       : { type : Date, default: Date.now },
+    created_at       : { type : Date },
     updated_at       : { type : Date }
 });
 
 usermanageSchema.pre("save", hashPassword);
 usermanageSchema.pre("findOneAndUpdate", function hashPassword(next){
     var user = this._update;
+    var now = this;
+    var m = moment();
+    var new_created_at = m.format("YYYY-MM-DD HH:mm:ss");
+    var new_register_date = m.format("YYYY-MM-DD HH:mm:ss");
+
     if(!user.newPassword){ //새 비밀번호가 없을 시 비밀번호는 변경하지 않음.
         var user = this._update;
         delete user.password;
@@ -45,6 +51,8 @@ usermanageSchema.pre("findOneAndUpdate", function hashPassword(next){
     } else {
         var user = this._update;
         user.password = bcrypt.hashSync(user.newPassword);
+        now.created_at = new_created_at;
+        now.register_date = new_register_date;
         return next();
     }
 });
