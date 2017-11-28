@@ -252,8 +252,10 @@ module.exports = {
         } catch (e) {
             logger.debug('usermanage controllers error ====================> ', e)
         }
-    },    userJSON: (req, res, next) => {
-        try{
+    },
+
+    userJSON: (req, res, next) => {
+        try {
             request({
                 //uri: "http://gw.isu.co.kr/CoviWeb/api/UserList.aspx?searchName="+encodeURIComponent(req.query.searchText),
                 uri: CONFIG.groupware.uri+"/CoviWeb/api/UserList.aspx?searchName="+encodeURIComponent(req.query.searchText),
@@ -268,7 +270,7 @@ module.exports = {
                         employee_nm: {
                             $regex: new RegExp(req.query.searchText, "i")
                         }
-                        , group_flag : "out"
+                    , group_flag: "out"
                     })
                     .limit(10)
                     .exec(function (err, usermanageData) {
@@ -278,15 +280,15 @@ module.exports = {
                                 message: err
                             });
                         } else {
-                            if(usermanage != null){
+                            if (usermanage != null) {
                                 usermanage = JSON.parse(usermanage);
                             }
                             res.json(mergeUser(usermanage, usermanageData));
                         }
                     }); //usermanage.find End
             }); //request End
-        }catch(e){
-            logger.error("===control usermanager.js userJSON : ",e);
+        } catch (e) {
+            logger.error("===control usermanager.js userJSON : ", e);
         }
     },//userJSON End
 };
@@ -309,6 +311,17 @@ function mergeUser(trg1, trg2){
         }
     }catch(e){
         logger.error("control useremanage mergeUser : ",e);
+function mergeUser(trg1, trg2) {
+    var rtnJSON = [];
+    try {
+        for (var i = 0; i < trg1.length; i++) {
+            rtnJSON.push(trg1[i]);
+        }
+        for (var i = 0; i < trg2.length; i++) {
+            rtnJSON.push(trg2[i]);
+        }
+    } catch (e) {
+        logger.error("control useremanage mergeUser : ", e);
     }
     return rtnJSON;
 }

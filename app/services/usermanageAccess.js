@@ -11,7 +11,7 @@ module.exports = {
         var AndQueries = [];
         var OrQueries = [];
         var company_cd = req.query.company_cd == null ? "*" : req.query.company_cd;
-        var using_yn = "";
+        var access_yn = "";
 
         try {
             if (req.query.searchType && req.query.searchText) {
@@ -41,9 +41,9 @@ module.exports = {
                 });
             }
 
-            if (using_yn != '*') {
+            if (access_yn != '*') {
                 AndQueries.push({
-                    using_yn: "N"
+                    access_yn: "N"
                 });
             }
 
@@ -54,16 +54,17 @@ module.exports = {
 
             /*
             console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-            console.log('using_yn            ' + JSON.stringify(req.query.using_yn));
+            console.log('access_yn           ' + access_yn);
             console.log('searchType          ' + req.query.searchType);
             console.log('searchText          ' + req.query.searchText);
             console.log('company_cd          ' + req.query.company_cd);
             console.log('findUsermanage      ' + JSON.stringify(findUsermanage));
             console.log('highlight           ' + JSON.stringify(highlight));
+            console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
             */
-
+            
             return {
-                using_yn: using_yn,
+                access_yn: access_yn,
                 searchType: req.query.searchType,
                 searchText: req.query.searchText,
                 company_cd: req.query.company_cd,
