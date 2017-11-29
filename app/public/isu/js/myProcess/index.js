@@ -1,6 +1,19 @@
 'use strict';
 
 $(document).ready(function() { 
+
+    $('#saveBtn').on('click',function(){
+        if(confirm("등록하시겠습니까?")){
+            var myProcess = $("#myProcessSelect").val().toString();
+            alert(myProcess);
+            var filedata = {"myProcess" : myProcess};
+            alert(filedata);
+            
+            
+            //$('#form').submit();
+        }
+    })
+
 });
 
 
