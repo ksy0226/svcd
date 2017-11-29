@@ -255,8 +255,18 @@ module.exports = {
                     }
                 }).sort('-created_at');
             } else if (req.session.user_flag == '5') {
-                console.log("req.session.user_flag is 5 >> " + req.session.dept_cd);
-                Incident.find({ manager_dept_cd : req.session.dept_cd }, function (err, incident) {
+                Incident.find({ manager_dept_cd: req.session.dept_cd }, function (err, incident) {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+                        res.json(incident);
+                    }
+                }).sort('-created_at');
+            } else if (req.session.user_flag == '1') {
+                Incident.find({}, function (err, incident) {
                     if (err) {
                         return res.json({
                             success: false,
@@ -280,6 +290,7 @@ module.exports = {
             }
         } catch (e) {
             logger.debug('main_list controllers error ====================> ', e)
+            //console.log('main_list controllers error ====================> ', e);
         }
     },
 
@@ -310,6 +321,7 @@ module.exports = {
             }
         } catch (e) {
             logger.debug('main_list_nocomplete controllers error ====================> ', e)
+            //console.log('main_list_nocomplete controllers error ====================> ', e);
         }
     },
 };

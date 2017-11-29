@@ -1,5 +1,5 @@
 //일반사용자
-- if(session.user_flag ==1 || session.user_flag ==3 || session.user_flag ==4){ 
+- if(session.user_flag ==2 || session.user_flag ==3 || session.user_flag ==4 || session.user_flag ==9){ 
     extends ../layouts/user
 - }
 
@@ -8,8 +8,8 @@
     extends ../layouts/deptadmin
 - }
 
-//업무담당자
-- if(session.user_flag !=9){
+//전체관리자
+- if(session.user_flag ==1){
     extends ../layouts/admin
 -}
 

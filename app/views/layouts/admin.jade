@@ -95,7 +95,7 @@ html
                       | 처리된 내용검색 
                       //i.fa.fa-circle-o.text-pink.m-l-5
               //그룹관리자, 업무관리자,업무담당자 오픈
-              - if(session.user_flag ==1 || session.user_flag ==3 || session.user_flag ==4){ 
+              - if(session.user_flag ==1 || session.user_flag ==3 || session.user_flag ==4 || session.user_flag ==5){ 
               li.has_sub
                 a.waves-effect.waves-primary(href='javascript:void(0);')
                   i.md.md-person
@@ -159,7 +159,7 @@ html
                     a(href='/usermanageAccess/')
                       | 미승인 사원관리
                   li
-                    a(href='/companyBusiness/') 회사별 상위업무지정
+                    a(href='/companyProcess/') 회사별 상위업무지정
                   li
                     a(href='/processGubun/') 처리구분 코드조회
                   //li

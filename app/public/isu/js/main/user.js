@@ -25,7 +25,7 @@ function cntLoad() {
         data: {},
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         error: function (request, status, error) {
-            alert("error : " + error);
+            alert("cntLoad error : " + error);
         },
         beforeSend: function (dataObj) {
         },
@@ -98,7 +98,7 @@ function getDataList() {
         data: reqParam,
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         error: function (request, status, error) {
-            alert("error : " + error);
+            alert("getDataList error : " + error);
         },
         beforeSend: function () {
         },
@@ -172,7 +172,7 @@ function getDataList2() {
         data: reqParam,
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         error: function (request, status, error) {
-            alert("error : " + error);
+            alert("getDataList2 error : " + error);
         },
         beforeSend: function () {
         },
