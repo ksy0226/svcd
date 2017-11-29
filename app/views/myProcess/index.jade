@@ -46,7 +46,7 @@ block content
                                 .card-box
                                     .row
                                         .col-sm-12
-                                            button.btn.btn-primary.waves-effect.waves-light.pull-right(type='button')
+                                            button#saveBtn.btn.btn-primary.waves-effect.waves-light.pull-right(type='button')
                                                 i.fa.fa-paper-plane.m-r-5
                                                 | 저장
                                     hr.m-t-10.m-b-10
@@ -78,9 +78,9 @@ block content
                                                                 button.btn.btn-xs.btn-default(type='button')
                                                                     i.fa.fa-square-o.m-r-5
                                                                     |  선택취소
-                                            select#my_multi_select2.multi-select(name='my_multi_select2', data-plugin='multiselect', data-selectable-optgroup='true', multiple='multiple')
+                                            select#myProcessSelect.multi-select(name='myProcessSelect', data-plugin='multiselect', data-selectable-optgroup='true', multiple='multiple')
                                                 optgroup(label='그룹웨어')
-                                                    option.p-l-80 게시판
+                                                    option.p-l-80(value='aaa') 게시판
                                                     option.p-l-80 공통기능
                                                     option.p-l-80 기타
                                                     option.p-l-80 메신저
