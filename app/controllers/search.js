@@ -289,7 +289,7 @@ module.exports = {
         async.waterfall([function (callback) {
             IncidentModel.find(search.findIncident, function (err, incident) {
 
-                console.log(incident);
+                //console.log(incident);
                 
                 if (err) {
                     res.render("http/500", {
