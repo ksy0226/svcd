@@ -135,13 +135,23 @@ module.exports = {
             newincident.request_company_nm = req.session.company_nm;
             newincident.request_dept_nm = req.session.dept_nm;
             newincident.request_nm = req.session.user_nm;
-            newincident.request_id = req.session.email;
+            console.log("req.session.email >>> ",req.session.email);
+            console.log("req.session.user_id >>> ",req.session.user_id);
+            if(req.session.email != null) {
+                newincident.request_id = req.session.email;
+            } else {
+                newincident.request_id = req.session.user_id;
+            }
 
             //추가수정
             newincident.register_company_cd = req.session.company_cd;
             newincident.register_company_nm = req.session.company_nm;
             newincident.register_nm = req.session.user_nm;
-            newincident.register_id = req.session.email;
+            if(req.session.email != null) {
+                newincident.register_id = req.session.email;
+            } else {
+                newincident.register_id = req.session.user_id;
+            }
 
 
             if (req.files) {
@@ -190,7 +200,9 @@ module.exports = {
             newincident.register_company_cd = req.session.company_cd;
             newincident.register_company_nm = req.session.company_nm;
             newincident.register_nm = req.session.user_nm;
-            newincident.register_id = req.session.user_id;
+            newincident.register_id = req.session.email;
+            //ksy
+            newincident.request_id = req.session.email;
 
             if (req.files) {
                 newincident.attach_file = req.files;
