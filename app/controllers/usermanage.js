@@ -259,6 +259,7 @@ module.exports = {
             request({
                 //uri: "http://gw.isu.co.kr/CoviWeb/api/UserList.aspx?searchName="+encodeURIComponent(req.query.searchText),
                 uri: CONFIG.groupware.uri+"/CoviWeb/api/UserList.aspx?searchName="+encodeURIComponent(req.query.searchText),
+                //uri: "http://gw.isudev.com/CoviWeb/api/UserList.aspx?searchName="+encodeURIComponent(req.query.searchText),
                 //uri: "http://gw.isu.co.kr/CoviWeb/api/UserInfo.aspx?email=hilee@isu.co.kr&password=nimda3",
                 headers: {
                     'Content-type': 'application/json'

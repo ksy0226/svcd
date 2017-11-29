@@ -3,6 +3,7 @@ var express = require('express');
 var session = require('express-session');
 var async = require('async');
 var bodyParser = require('body-parser');
+var CONFIG = require('../../config/config.json');
 var Usermanage = require('../models/Usermanage');
 var CompanyModel = require('../models/Company');
 var Incident = require('../models/Incident');
@@ -72,7 +73,7 @@ module.exports = {
                             callback(null, usermanage);
                         }else{ //비밀번호 일치하지 않으면 그룹사 권한별
                             request({
-                                uri: "http://gw.isu.co.kr/CoviWeb/api/UserInfo.aspx?email=" + req.body.email + "&password=" + req.body.password,
+                                uri: CONFIG.groupware.uri+"/CoviWeb/api/UserInfo.aspx?email=" + req.body.email + "&password=" + req.body.password,
                                 headers: {
                                     'Content-type': 'application/json'
                                 },
@@ -86,14 +87,16 @@ module.exports = {
                         }
                     } else { //usermanage테이블에 계정이 존재하지 않으면 그룹사 일반계정
                         request({
-                            uri: "http://gw.isu.co.kr/CoviWeb/api/UserInfo.aspx?email=" + req.body.email + "&password=" + req.body.password,
+                            uri: CONFIG.groupware.uri+"/CoviWeb/api/UserInfo.aspx?email=" + req.body.email + "&password=" + req.body.password,
                             headers: {
                                 'Content-type': 'application/json'
                             },
                             method: "GET",
                         }, function (err, response, gwUser) {
                             var userInfo = JSON.parse(gwUser);
-                            userInfo.user_flag = '9';
+                            //운영 시 9로 수정
+                            //userInfo.user_flag = '9';
+                            userInfo.user_flag = '5';
                             userInfo.group_flag = 'in';
                             callback(null, userInfo);
                         });

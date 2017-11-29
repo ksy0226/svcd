@@ -10,7 +10,6 @@ module.exports = {
      * 회사별 상위업무 통계
      */
     com_higher: (req, res, next) => {
-
         var aggregatorOpts = [
             /*
             { 
@@ -43,7 +42,10 @@ module.exports = {
                 } else {
                     logger.debug("===========", incident);
                     //res.json(result);
-                    incident: incident
+                    //incident: incident
+                    res.render("statistic/com_higher", {
+                        incident: incident
+                    });
                 }
             });
 
@@ -107,7 +109,7 @@ module.exports = {
                 } else {
                     logger.debug("===========", incident);
                     //res.json(result);
-                    incident: incident
+                    //incident: incident
                 }
 
                 res.render("statistic/high_lower", {
