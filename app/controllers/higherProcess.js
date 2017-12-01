@@ -3,9 +3,7 @@
 const mongoose = require('mongoose');
 const async = require('async');
 const HigherProcessModel = require('../models/HigherProcess');
-const CompanyProcessModel = require('../models/CompanyProcess');
 const logger = require('log4js').getLogger('app');
-const Iconv  = require('iconv-lite');
 
 module.exports = {
 
@@ -123,12 +121,17 @@ module.exports = {
 
     getHigherProcess :  (req, res, next) => {   
         try{
-            CompanyProcessModel.find({"company_cd":req.query.company_cd}, function(err, companyProcess) {
+            var condition = {};
+            if(req.query.company_cd != null){
+                condition.company_cd = req.query.company_cd;
+            }
+
+            HigherProcessModel.find(condition, function(err, higherProcess) {
                 if (err) return res.json({
                     success: false,
                     message: err
                     });     
-                res.json(companyProcess);
+                res.json(higherProcess);
             }).sort('higher_cd');
         }catch(e){
             logger.debug(e);
