@@ -39,52 +39,52 @@ function cntLoad() {
     });
 }
 
-function setCntLoad(dataObj){
-    for (var i = 0; i < dataObj.length; i++) { 
-        
-        $('#status'+ dataObj[i]._id.status_cd).html(dataObj[i].count);  
-        
-        if($('#status'+ (i)).text() ==""){        //없으면 0
-            $('#status'+ (i)).text("0"); 
+function setCntLoad(dataObj) {
+    for (var i = 0; i < dataObj.length; i++) {
+
+        $('#status' + dataObj[i]._id.status_cd).html(dataObj[i].count);
+
+        if ($('#status' + (i)).text() == "") {        //없으면 0
+            $('#status' + (i)).text("0");
             //alert(dataObj[i]._id.status_cd-1);  //3
 
-            $('#chart'+ (dataObj[i]._id.status_cd-1)).attr('data-text', 0+"%");
-            $('#chart'+ (dataObj[i]._id.status_cd-1)).attr('data-percent', 0);
+            $('#chart' + (dataObj[i]._id.status_cd - 1)).attr('data-text', 0 + "%");
+            $('#chart' + (dataObj[i]._id.status_cd - 1)).attr('data-percent', 0);
         }
     }
-    
-    for (var i = 0; i < dataObj.length; i++) { 
+
+    for (var i = 0; i < dataObj.length; i++) {
         var total; //전체카운트
         //total = Number($('#status1').text()) + Number($('#status2').text()) + Number($('#status3').text()) + Number($('#status4').text());
         total = Number($('#status1').text()) + Number($('#status2').text());
-        
-        if(dataObj[i]._id.status_cd == "1"){                      //'접수대기'일 경우
+
+        if (dataObj[i]._id.status_cd == "1") {                      //'접수대기'일 경우
             var totalCnt = total;
-            var percent = Math.round((dataObj[i].count / totalCnt)*100); 
-            
-            $('#chart1').attr('data-text', percent+"%");
+            var percent = Math.round((dataObj[i].count / totalCnt) * 100);
+
+            $('#chart1').attr('data-text', percent + "%");
             $('#chart1').attr('data-percent', percent);
         }
-        else if(dataObj[i]._id.status_cd == "2"){                 //'처리중'일 경우
+        else if (dataObj[i]._id.status_cd == "2") {                 //'처리중'일 경우
             var totalCnt = total;
-            var percent = Math.round((dataObj[i].count / totalCnt)*100); 
+            var percent = Math.round((dataObj[i].count / totalCnt) * 100);
 
-            $('#chart2').attr('data-text', percent+"%");
+            $('#chart2').attr('data-text', percent + "%");
             $('#chart2').attr('data-percent', percent);
         }
-        else if(dataObj[i]._id.status_cd == "3"){                 //'미평가'일 경우
+        else if (dataObj[i]._id.status_cd == "3") {                 //'미평가'일 경우
             var totalCnt = dataObj[i].count + Number($('#status4').text());
-            var percent = Math.round((dataObj[i].count / totalCnt)*100); // (129/129+160)*100 반올림 처리
+            var percent = Math.round((dataObj[i].count / totalCnt) * 100); // (129/129+160)*100 반올림 처리
 
-            $('#chart3').attr('data-text', percent+"%");
+            $('#chart3').attr('data-text', percent + "%");
             $('#chart3').attr('data-percent', percent);
-            
-        }else if(dataObj[i]._id.status_cd == "4"){                //'처리완료'일 경우
+
+        } else if (dataObj[i]._id.status_cd == "4") {                //'처리완료'일 경우
             var totalCnt = dataObj[i].count + Number($('#status3').text());
-            var percent = Math.round((dataObj[i].count / totalCnt)*100); // (160/129+160)*100 반올림 처리
-            
-            $('#chart4').attr('data-text', percent+"%");
-            $('#chart4').attr('data-percent', percent); 
+            var percent = Math.round((dataObj[i].count / totalCnt) * 100); // (160/129+160)*100 반올림 처리
+
+            $('#chart4').attr('data-text', percent + "%");
+            $('#chart4').attr('data-percent', percent);
         }
     }
     $('.circliful-chart').circliful();
@@ -115,12 +115,12 @@ function monthlyLoad() {
     });
 }
 
-function setMonthlyLoad(dataObj){
+function setMonthlyLoad(dataObj) {
     ///alert("setMonthlyLoad>>"+JSON.stringify(dataObj));
-    
+
     var DrawSparkline = function () {
         $('#sparkline2').sparkline(dataObj.avg, {
-            
+
             type: 'bar',
             height: '180',
             barWidth: '12',
@@ -129,7 +129,7 @@ function setMonthlyLoad(dataObj){
             chartRangeMax: 5,     //평점 5점만점
             //tooltipFormatFieldlist: ['x','y'],
             ///xaxis: {ticks: [[1,'One'], [2,'Two'], [3,'Three'], [4,'Four'], [5,'Five']]},
-            
+
             tooltipFormat: '{{offset:offset}} {{value}}점',
             tooltipValueLookups: {
                 'offset': {
@@ -152,16 +152,16 @@ function setMonthlyLoad(dataObj){
     };
 
     DrawSparkline();
-    
+
     var resizeChart;
 
-    $(window).resize(function(e) {
+    $(window).resize(function (e) {
         clearTimeout(resizeChart);
-        resizeChart = setTimeout(function() {
+        resizeChart = setTimeout(function () {
             DrawSparkline();
         }, 300);
     });
-    
+
 }
 
 
@@ -209,6 +209,7 @@ function setDataList(dataObj) {
 
             var addList = "";
             addList += "<tr onclick=window.location='/search/user_list/' style='cursor:pointer'>";
+            addList += "	<td class='text-center'>" + dataObj[i].process_speed + "</td>";
             addList += "	<td>" + dataObj[i].title + "</td>";
             addList += "	<td class='text-center'>" + creat_dateVal + "</td>";
             addList += "	<td class='text-center'>" + dataObj[i].app_menu + "</td>";
@@ -222,18 +223,25 @@ function setDataList(dataObj) {
             rowIdx++;
         }
 
-        // 진행상태
         $('#more_list > tr').each(function () {
-            if ($(this).find('td:eq(3)').html() == "접수" || $(this).find('td:eq(3)').html() == "접수대기") {
-                $(this).find('td:eq(3)').html('<span class="label label-inverse">접수중</span>');
-            } if ($(this).find('td:eq(3)').html() == "처리중") {
-                $(this).find('td:eq(3)').html('<span class="label label-primary">처리중</span>');
-            } if ($(this).find('td:eq(3)').html() == "미평가") {
-                $(this).find('td:eq(3)').html('<span class="label label-success">미평가</span>');
-            } if ($(this).find('td:eq(3)').html() == "완료") {
-                $(this).find('td:eq(3)').html('<span class="label label-purple">완료</span>');
-            } if ($(this).find('td:eq(3)').html() == "보류") {
-                $(this).find('td:eq(3)').html('<span class="label label-info">보류</span>');
+            // 긴급구분
+            if ($(this).find('td:eq(0)').html() == "N") {
+                $(this).find('td:eq(0)').html('');
+            } if ($(this).find('td:eq(0)').html() == "Y") {
+                $(this).find('td:eq(0)').html('<span class="label label-warning">✔</span>');
+            }
+
+            // 진행상태
+            if ($(this).find('td:eq(4)').html() == "접수" || $(this).find('td:eq(3)').html() == "접수대기") {
+                $(this).find('td:eq(4)').html('<span class="label label-inverse">접수중</span>');
+            } if ($(this).find('td:eq(4)').html() == "처리중") {
+                $(this).find('td:eq(4)').html('<span class="label label-primary">처리중</span>');
+            } if ($(this).find('td:eq(4)').html() == "미평가") {
+                $(this).find('td:eq(4)').html('<span class="label label-success">미평가</span>');
+            } if ($(this).find('td:eq(4)').html() == "완료") {
+                $(this).find('td:eq(4)').html('<span class="label label-purple">완료</span>');
+            } if ($(this).find('td:eq(4)').html() == "보류") {
+                $(this).find('td:eq(4)').html('<span class="label label-info">보류</span>');
             }
         })
     }
