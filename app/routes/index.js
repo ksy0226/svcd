@@ -18,4 +18,9 @@ router.route('/logout').get(controller.logout);
 router.route('/login/main_list').get(ssc.sessionCheck, controller.main_list);
 router.route('/login/main_list_nocomplete').get(ssc.sessionCheck, controller.main_list_nocomplete);
 
+/**
+ * 그룹시스템 인터페이스 용
+ */
+router.route('/login').get(controller.login);
+
 module.exports = router;
