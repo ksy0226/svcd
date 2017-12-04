@@ -259,7 +259,6 @@ module.exports = {
             request({
                 //uri: "http://gw.isu.co.kr/CoviWeb/api/UserList.aspx?searchName="+encodeURIComponent(req.query.searchText),
                 uri: CONFIG.groupware.uri+"/CoviWeb/api/UserList.aspx?searchName="+encodeURIComponent(req.query.searchText),
-                //uri: "http://gw.isudev.com/CoviWeb/api/UserList.aspx?searchName="+encodeURIComponent(req.query.searchText),
                 //uri: "http://gw.isu.co.kr/CoviWeb/api/UserInfo.aspx?email=hilee@isu.co.kr&password=nimda3",
                 headers: {
                     'Content-type': 'application/json'
@@ -300,15 +299,16 @@ function mergeUser(trg1, trg2){
     try{
         if(trg1 != null){
             for(var i = 0 ; i < trg1.length ; i++){
+                console.log("trace1 "+i, trg1[i]);
                 rtnJSON.push(trg1[i]);
             }
         }
         if(trg2 != null){
             for(var i = 0 ; i < trg2.length ; i++){
+                console.log("trace2 "+i, trg2[i]);
                 rtnJSON.push(trg2[i]);
             }
         }
-        return rtnJSON;
     }catch(e){
         logger.error("control useremanage mergeUser : ",e);
     }

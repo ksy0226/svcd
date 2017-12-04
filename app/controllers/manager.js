@@ -256,7 +256,6 @@ module.exports = {
                                         message: err
                                     });
                                 } else {
-                                    console.log("usermanage.email_send_yn >>> ",usermanage);
                                     if (usermanage.email_send_yn == 'Y') {
                                         mailer.receiveSend(Incident, upIncident);
                                     }

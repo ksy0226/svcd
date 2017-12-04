@@ -38,6 +38,6 @@
         "directory":"upload-file-summernote"
     },
     "groupware":{
-        "uri":"http://gw.isu.co.kr"
+        "uri":"http://gw.isudev.com"
     }
 }

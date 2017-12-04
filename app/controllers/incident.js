@@ -135,23 +135,13 @@ module.exports = {
             newincident.request_company_nm = req.session.company_nm;
             newincident.request_dept_nm = req.session.dept_nm;
             newincident.request_nm = req.session.user_nm;
-            logger.debug("req.session.email >>> ",req.session.email);
-            logger.debug("req.session.user_id >>> ",req.session.user_id);
-            if(req.session.email != null) {
-                newincident.request_id = req.session.email;
-            } else {
-                newincident.request_id = req.session.user_id;
-            }
+            newincident.request_id = req.session.email;
 
             //추가수정
             newincident.register_company_cd = req.session.company_cd;
             newincident.register_company_nm = req.session.company_nm;
             newincident.register_nm = req.session.user_nm;
-            if(req.session.email != null) {
-                newincident.register_id = req.session.email;
-            } else {
-                newincident.register_id = req.session.user_id;
-            }
+            newincident.register_id = req.session.email;
 
 
             if (req.files) {
@@ -200,9 +190,7 @@ module.exports = {
             newincident.register_company_cd = req.session.company_cd;
             newincident.register_company_nm = req.session.company_nm;
             newincident.register_nm = req.session.user_nm;
-            newincident.register_id = req.session.email;
-            //ksy
-            newincident.request_id = req.session.email;
+            newincident.register_id = req.session.user_id;
 
             if (req.files) {
                 newincident.attach_file = req.files;
@@ -359,7 +347,7 @@ module.exports = {
     getIncident: (req, res, next) => {
 
         var search = service.createSearch(req);
-        //logger.debug("search" + search);
+        //console.log("search" + search);
 
         async.waterfall([function (callback) {
             //if (search.findIncident) return callback(null, []);
@@ -423,7 +411,7 @@ module.exports = {
      * summernote 이미지링크 처리
      */
     insertedImage: (req, res, next) => {
-        logger.debug("image upload .....");
+        console.log("image upload .....");
         //res.send( '/uploads/' + req.file.filename);
         //logger.debug("=====================>incident controllers insertedImage");
         res.send('/uploads/' + req.file.filename);
@@ -504,13 +492,13 @@ module.exports = {
             .select('status_nm higher_nm lower_nm request_nm request_company_nm request_dept_nm register_date receipt_date complete_date title content complete_content work_time')
             .exec(function (err, incidentJsonData) {
                 if (err) {
-                    //logger.debug("excel 2>>>>>>>>>>>>>>>", err);
+                    //console.log("excel 2>>>>>>>>>>>>>>>", err);
                     return res.json({
                         success: false,
                         message: err
                     });
                 }
-                //logger.debug("excel 2>>>>>>>>>>>>>>>",incidentJsonData);
+                //console.log("excel 2>>>>>>>>>>>>>>>",incidentJsonData);
 
                 res.json(incidentJsonData);
             });
@@ -519,7 +507,7 @@ module.exports = {
         var search = service.createSearch(req);
         async.waterfall([function (callback) {
             Incident.find(search.findIncident, function (err, incident) {
-            //우선 주석처리 (psw)
+            //우선 주석처리
             //Incident.find(search.findIncident)
             //.select ('status_nm higher_nm lower_nm title content')
             //.exec(function (err, incident) {
@@ -529,7 +517,7 @@ module.exports = {
                         message: err
                     });
                 }
-                logger.debug(search.findIncident);
+                console.log(search.findIncident);
                 callback(null, incident)
             })
         }], function (err, incident) {
@@ -539,7 +527,7 @@ module.exports = {
                     message: err
                 });
             }
-            logger.debug(incident);
+            console.log(incident);
             res.json(incident);
         });
         
