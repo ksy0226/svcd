@@ -135,8 +135,8 @@ module.exports = {
             newincident.request_company_nm = req.session.company_nm;
             newincident.request_dept_nm = req.session.dept_nm;
             newincident.request_nm = req.session.user_nm;
-            console.log("req.session.email >>> ",req.session.email);
-            console.log("req.session.user_id >>> ",req.session.user_id);
+            logger.debug("req.session.email >>> ",req.session.email);
+            logger.debug("req.session.user_id >>> ",req.session.user_id);
             if(req.session.email != null) {
                 newincident.request_id = req.session.email;
             } else {
@@ -359,7 +359,7 @@ module.exports = {
     getIncident: (req, res, next) => {
 
         var search = service.createSearch(req);
-        //console.log("search" + search);
+        //logger.debug("search" + search);
 
         async.waterfall([function (callback) {
             //if (search.findIncident) return callback(null, []);
@@ -423,7 +423,7 @@ module.exports = {
      * summernote 이미지링크 처리
      */
     insertedImage: (req, res, next) => {
-        console.log("image upload .....");
+        logger.debug("image upload .....");
         //res.send( '/uploads/' + req.file.filename);
         //logger.debug("=====================>incident controllers insertedImage");
         res.send('/uploads/' + req.file.filename);
@@ -504,13 +504,13 @@ module.exports = {
             .select('status_nm higher_nm lower_nm request_nm request_company_nm request_dept_nm register_date receipt_date complete_date title content complete_content work_time')
             .exec(function (err, incidentJsonData) {
                 if (err) {
-                    //console.log("excel 2>>>>>>>>>>>>>>>", err);
+                    //logger.debug("excel 2>>>>>>>>>>>>>>>", err);
                     return res.json({
                         success: false,
                         message: err
                     });
                 }
-                //console.log("excel 2>>>>>>>>>>>>>>>",incidentJsonData);
+                //logger.debug("excel 2>>>>>>>>>>>>>>>",incidentJsonData);
 
                 res.json(incidentJsonData);
             });
@@ -519,7 +519,7 @@ module.exports = {
         var search = service.createSearch(req);
         async.waterfall([function (callback) {
             Incident.find(search.findIncident, function (err, incident) {
-            //우선 주석처리
+            //우선 주석처리 (psw)
             //Incident.find(search.findIncident)
             //.select ('status_nm higher_nm lower_nm title content')
             //.exec(function (err, incident) {
@@ -529,7 +529,7 @@ module.exports = {
                         message: err
                     });
                 }
-                console.log(search.findIncident);
+                logger.debug(search.findIncident);
                 callback(null, incident)
             })
         }], function (err, incident) {
@@ -539,7 +539,7 @@ module.exports = {
                     message: err
                 });
             }
-            console.log(incident);
+            logger.debug(incident);
             res.json(incident);
         });
         

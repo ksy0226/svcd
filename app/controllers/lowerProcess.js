@@ -153,5 +153,38 @@ module.exports = {
                 message: err
             });
         }
-    }
+    },
+
+    /**
+     * 하위업무 조회
+     */
+    getLowerProcess :  (req, res, next) => {   
+        try{
+            var condition = {};
+            if(req.query.higher_cd != null && req.query.higher_cd != "*"){
+                condition.higher_cd = req.query.higher_cd;
+            }
+
+            logger.debug("==========================================getLowerProcess=======================================");
+            logger.debug("condition : ",condition);
+            logger.debug("================================================================================================");
+            
+            LowerProcessModel.find(condition, function(err, lowerProcess) {
+                if (err){ return res.json({
+                    success: false,
+                    message: err
+                    });     
+                }else{
+                    
+                    logger.debug("==========================================getLowerProcess=======================================");
+                    logger.debug("lowerProcess : ",JSON.stringify(lowerProcess));
+                    logger.debug("==================================================+++===========================================");
+                    
+                    res.json(lowerProcess);
+                }
+            }).sort('higher_cd').sort('lower_cd');
+        }catch(e){
+            logger.debug(e);
+        }
+    },
 };

@@ -184,7 +184,7 @@ function setHighProcess(company_cd){
     $.ajax({          
         type: "GET",
         async: true,
-        url: "/higherProcess/getHigherProcess/",
+        url: "/companyProcess/getCompanyProcess/",
         contentType: "application/json",
         //data: 'company_cd='+company_cd,
         data : reqParam,

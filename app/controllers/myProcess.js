@@ -10,126 +10,157 @@ const Iconv = require('iconv-lite');
 
 module.exports = {
 
-    index: (req, res, next) => {
-        async.waterfall([function (callback) {
+    edit: (req, res, next) => {
+        try{
             HigherProcessModel.find({}, function (err, higherprocess) {
                 if (err) {
                     res.render("http/500", {
                         err: err
                     });
+                }else{
+                    res.render("myProcess/edit");
                 }
-                callback(null, higherprocess)
             });
-        }, function (higherprocess, callback) {
-            MyProcessModel.find(req.body.myProcess, function (err, company) {
-                if (err) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                }
-                callback(null, higherprocess, company)
-            });
-        }], function (err, higherprocess, company) {
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            } else {
-                res.render("myProcess/index", {
-                    higherprocess: higherprocess,
-                    company : company
-                });
-            }
-        });
-    },
-
-    new: (req, res, next) => {
-        async.waterfall([function (callback) {
-            HigherProcessModel.find({}, function (err, higher) {
-                if (err) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                }
-                callback(null, higher)
-            });
-        }, function (higher, callback) {
-            CompanyModel.find({}, function (err, company) {
-                if (err) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                }
-                callback(null, higher, company)
-            });
-        }], function (err, higher, company) {
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            } else {
-                res.render("myProcess/new", {
-                    higher: higher,
-                    company : company
-                });
-            }
-        });
-    },
-
-    save: (req, res, next) => {
-        var myProcess = req.body.myProcess;
-        MyProcessModel.create(req.body.myProcess, function (err, myProcess) {
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            } else {
-                res.redirect('/myProcess');
-            }
-        });
-    },
-
-    edit: (req, res, next) => {
-        MyProcessModel.findById(req.params.id, function (err, myProcess) {
-            if (err) return res.json({
-                success: false,
-                message: err
-            });
-            res.render("myProcess/edit", {
-                myProcess: myProcess
-            });
-        });
+        }catch(e){
+            logger.error("myProcess controllers edit : ", e);
+        }finally{}
     },
 
     update: (req, res, next) => {
-        MyProcessModel.findOneAndUpdate({
-            _id: req.params.id
-        }, req.body.myProcess, function (err, myProcess) {
-            if (err) return res.json({
-                success: false,
-                message: err
+        try{
+            logger.debug("==========================================myProcess update=======================================");
+            logger.debug("req.body.higher_cd : ",req.body.higher_cd);
+            logger.debug("req.body.myProcess : ",req.body.myProcess);
+            logger.debug("=================================================================================================");
+
+            var condition = {}; //조건
+            condition.company_cd    = req.session.company_cd; //회사코드
+            condition.email         = req.session.email; //이메일
+            if(req.body.higher_cd != null && req.body.higher_cd != "*"){
+                condition.higher_cd = req.body.higher_cd;
+            }
+
+            logger.debug("==========================================myProcess update=======================================");
+            logger.debug("condition : ",condition);
+            logger.debug("=================================================================================================");
+
+            MyProcessModel.deleteMany(condition, function( err, writeOpResult ){
+                if (err){ 
+                    res.json({
+                        success: false,
+                        message: err
+                    });
+                }else{
+
+                    //logger.debug("==================================MyProcessModel.deleteMany======================================");
+                    //logger.debug("writeOpResult : ", writeOpResult); //처리결과
+                    //logger.debug("=================================================================================================");
+                    
+                    if(req.body.myProcess != ""){
+                        var newMyProcessModel = setNewMyProcess(req);
+                        
+                        logger.debug("======================================MyProcessModel.create======================================");
+                        logger.debug("newMyProcessModel : ", newMyProcessModel); 
+                        logger.debug("=================================================================================================");
+        
+                        MyProcessModel.create(newMyProcessModel, function (err, writeOpResult) {
+                            if (err) {
+                                res.json({
+                                    success: false,
+                                    message: err
+                                }); 
+                            } else {
+
+                                logger.debug("======================================MyProcessModel.create======================================");
+                                logger.debug("writeOpResult : ", writeOpResult); //처리결과
+                                logger.debug("=================================================================================================");
+                        
+                                res.json({
+                                    success: true,
+                                    message: "저장되었습니다."
+                                }); 
+                            }
+                        });
+                    }else{
+                        res.json({
+                            success: true,
+                            message: "저장되었습니다."
+                        }); 
+                    }
+                    
+                }
             });
-            if (!myProcess) return res.json({
-                success: false,
-                message: "No data found to update"
-            });
-            res.redirect('/myProcess/edit/' + req.params.id);
-        });
+        }catch(e){
+            logger.error("myProcess controllers update : ", e);
+        }finally{}
     },
 
-    delete: (req, res, next) => {
-        MyProcessModel.findOneAndRemove({
-            _id: req.params.id
-        }, function (err, myProcess) {
-            if (err) return res.json({
-                success: false,
-                message: err
+    /**
+     * 담당자 업무를 조회
+     */
+    getMyProcess : (req, res, next) => {
+        try{
+
+            var condition = {}; //조건
+            condition.company_cd    = req.session.company_cd; //회사코드
+            condition.email         = req.session.email; //이메일
+
+            logger.debug("==========================================getMyProcess=======================================");
+            logger.debug("condition : ",condition);
+            logger.debug("=============================================================================================");
+            
+            MyProcessModel.find(condition, function (err, myProcess) {
+                if (err){ 
+                    res.json({
+                        success: false,
+                        message: err
+                    });
+                }else{
+
+                    logger.debug("==========================================getMyProcess=======================================");
+                    logger.debug("myProcess : ",JSON.stringify(myProcess));
+                    logger.debug("=============================================================================================");
+
+                    res.json(myProcess);
+                }
             });
-            if (!myProcess) return res.json({
-                success: false,
-                message: "No data found to delete"
-            });
-            res.redirect('/myProcess');
-        });
-    }
+
+        }catch(e){
+            logger.error("myProcess controllers getMyProcess : ", e);
+        }finally{}
+    },
 };
+
+/**
+ * 문자열을 객체 배열로 치환
+ * @param {*} myProcess : 나의 업무 문자열
+ */
+function setNewMyProcess(req){
+
+    var lowerList = req.body.myProcess.split(',');
+    var myProcessArr = new Array(lowerList.length); //반환 객체
+
+    for(var i = 0 ; i < lowerList.length ; i++){
+        
+        var tmpValue = lowerList[i].split('^');
+        var tmpMP = {};
+        
+        tmpMP.company_cd    = req.session.company_cd;
+        tmpMP.company_nm    = req.session.company_nm;
+        tmpMP.email         = req.session.email;
+        tmpMP.employee_nm   = req.session.employee_nm;
+        tmpMP.higher_cd     = tmpValue[0];
+        tmpMP.higher_nm     = tmpValue[1];
+        tmpMP.lower_cd      = tmpValue[2];
+        tmpMP.lower_nm      = tmpValue[3];
+
+        myProcessArr[i]     = tmpMP;
+
+        logger.debug("==========================================setNewMyProcess=======================================");
+        logger.debug("tmpMP["+i+"]", tmpMP);
+        logger.debug("================================================================================================");
+
+    }
+    
+    return myProcessArr;
+}
