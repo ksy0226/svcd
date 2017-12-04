@@ -3,7 +3,10 @@
 
 $(document).ready(function () {
 
+    
     //$('input[name="incident[app_menu]"]').val();
+    
+
 
     $('#higher_cd').on('change',function(){
         selectedHighProcess(this);
@@ -11,7 +14,7 @@ $(document).ready(function () {
     });
 
     $('.summernote').summernote({
-        height: 230, // set editor height;
+        height: 450, // set editor height;
         minHeight: null, // set minimum height of editor
         maxHeight: null, // set maximum height of editor
         focus: false // set focus to editable area after initializing summernote
@@ -48,7 +51,7 @@ $(document).ready(function () {
             }
         });
     }
-
+    //$('.file-drop-zone').hide();
 
     $('#datepicker-rcd').datepicker({
         autoclose: true,
