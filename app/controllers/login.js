@@ -73,7 +73,7 @@ module.exports = {
                             callback(null, usermanage);
                         }else{ //비밀번호 일치하지 않으면 그룹사 권한별
                             request({
-                                uri: CONFIG.groupware.uri+"/CoviWeb/api/UserInfo.aspx?email=" + req.body.email + "&password=" + req.body.password,
+                                uri: CONFIG.groupware.uri+"/CoviWeb/api/UserInfo.aspx?type=sso&email=" + req.body.email + "&password=" + req.body.password,
                                 headers: {
                                     'Content-type': 'application/json'
                                 },
@@ -87,7 +87,7 @@ module.exports = {
                         }
                     } else { //usermanage테이블에 계정이 존재하지 않으면 그룹사 일반계정
                         request({
-                            uri: CONFIG.groupware.uri+"/CoviWeb/api/UserInfo.aspx?email=" + req.body.email + "&password=" + req.body.password,
+                            uri: CONFIG.groupware.uri+"/CoviWeb/api/UserInfo.aspx?type=sso&email=" + req.body.email + "&password=" + req.body.password,
                             headers: {
                                 'Content-type': 'application/json'
                             },
