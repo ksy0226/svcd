@@ -5,8 +5,6 @@ $(document).ready(function () {
 
     
     //$('input[name="incident[app_menu]"]').val();
-    
-
 
     $('#higher_cd').on('change',function(){
         selectedHighProcess(this);
