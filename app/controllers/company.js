@@ -4,14 +4,14 @@ const mongoose = require('mongoose');
 const async = require('async');
 const CompanyModel = require('../models/Company');
 const logger = require('log4js').getLogger('app');
-const Iconv  = require('iconv-lite');
+const Iconv = require('iconv-lite');
 
 module.exports = {
 
 
     list: (req, res, next) => {
-        
-        CompanyModel.find(req.body.company, function(err, company) {
+
+        CompanyModel.find(req.body.company, function (err, company) {
             //logger.debug('err', err, '\n');
             logger.debug('list 호출');
             if (err) {
@@ -24,7 +24,7 @@ module.exports = {
                 company: company
             });
         });
-       
+
     },
 
     new: (req, res, next) => {
@@ -35,9 +35,9 @@ module.exports = {
         var company = req.body.company;
         logger.debug('body', req.body);
 
-        CompanyModel.create(req.body.company, function(err, company) {
+        CompanyModel.create(req.body.company, function (err, company) {
             //logger.debug('err', err, '\n');
-            logger.debug('save 호출');    
+            logger.debug('save 호출');
             if (err) {
                 res.render("http/500", {
                     err: err
@@ -52,26 +52,26 @@ module.exports = {
     },
 
     show: (req, res, next) => {
-       
+
         logger.debug("Trace Show");
-        CompanyModel.findById(req.params.id).exec(function(err, company) {
+        CompanyModel.findById(req.params.id).exec(function (err, company) {
             if (err) return res.json({
                 success: false,
                 message: err
             });
-            logger.debug('aaa : %s',req._parsedUrl.query);
+            logger.debug('aaa : %s', req._parsedUrl.query);
             res.render("company/show", {
                 company: company,
                 urlQuery: req._parsedUrl.query
                 //user: req.user,
                 //search: service.createSearch(req)
             });
-        }); 
+        });
     },
 
     edit: (req, res, next) => {
         //req.body.company.updatedAt = Date.now();
-        CompanyModel.findById(req.params.id, function(err, company) {
+        CompanyModel.findById(req.params.id, function (err, company) {
             if (err) return res.json({
                 success: false,
                 message: err
@@ -91,12 +91,12 @@ module.exports = {
         logger.debug(req.body);
         //req.body.company.updatedAt = Date.now();
         //console.log(req.params.id);
-        
+
         CompanyModel.findOneAndUpdate({
-            
+
             _id: req.params.id
             //,author: req.user._id
-        }, req.body.company, function(err, company) {
+        }, req.body.company, function (err, company) {
             if (err) return res.json({
                 success: false,
                 message: err
@@ -108,13 +108,14 @@ module.exports = {
             res.redirect('/company/' + req.params.id + '/show');
         });
     },
+
     delete: (req, res, next) => {
         logger.debug("Trace delete", req.params.id);
 
         CompanyModel.findOneAndRemove({
             _id: req.params.id
             //,author: req.user._id
-        }, function(err, company) {
+        }, function (err, company) {
             if (err) return res.json({
                 success: false,
                 message: err
@@ -127,9 +128,10 @@ module.exports = {
             res.redirect('/company/list');
         });
     },
+
     exceldownload: (req, res, next) => {
         logger.debug(1);
-        CompanyModel.find(req.body.company, function(err, companyJsonData) {
+        CompanyModel.find(req.body.company, function (err, companyJsonData) {
             if (err) return res.json({
                 success: false,
                 message: err
@@ -142,5 +144,36 @@ module.exports = {
         });*/
             res.json(companyJsonData);
         });
-    }
+    },
+
+    /**
+     * 회사 정보 조회
+     */
+    getCompany: (req, res, next) => {
+        try {
+
+            logger.debug("==========================================company getCompany========================================");
+            logger.debug("====================================================================================================");
+
+            CompanyModel.find({}, function (err, companyJsonData) {
+                if (err) {
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
+                    
+                    //logger.debug("==========================================CompanyModel.find({}========================================");
+                    //logger.debug("companyJsonData : ",companyJsonData);
+                    //logger.debug("====================================================================================================");
+                    
+                    res.json(companyJsonData);
+                };
+
+            }).sort('company_nm');
+        } catch (e) {
+            logger.error("CompanyModel error : ",e);
+        } finally {}
+    },
+
 };
