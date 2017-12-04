@@ -327,4 +327,63 @@ module.exports = {
             //console.log('main_list_nocomplete controllers error ====================> ', e);
         }
     },
+
+    /**
+     * 그룹 인터페이스용 login
+     */
+    login: (req, res) => {
+        try {
+            
+            logger.debug("======================================");
+            logger.debug("req.query.email",req.query.email);
+            logger.debug("======================================");
+
+            /**
+             * 로그인 정보 매핑
+             */ 
+            request({
+                uri: CONFIG.groupware.uri+"/CoviWeb/api/UserInfo.aspx?email=" + req.query.email + "&password=" + req.query.password,
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                method: "GET",
+            }, function (err, response, gwUser) {
+                var userInfo = JSON.parse(gwUser);
+                userInfo.user_flag = '9';
+                userInfo.group_flag = 'in';
+               
+                if(userInfo.status == 'OK'){
+                    req.session.email = userInfo.email;
+                    req.session.user_id = userInfo.user_id;
+                    req.session.sabun = userInfo.sabun;
+                    req.session.password = userInfo.password;
+                    req.session.user_flag = userInfo.user_flag;
+                    req.session.group_flag = userInfo.group_flag;
+                    req.session.user_nm = userInfo.employee_nm;
+                    req.session.company_cd = userInfo.company_cd;
+                    req.session.company_nm = userInfo.company_nm;
+                    req.session.dept_cd = userInfo.dept_cd;
+                    req.session.dept_nm = userInfo.dept_nm;
+                    req.session.position_nm = userInfo.position_nm;
+                    req.session.jikchk_nm = userInfo.jikchk_nm;
+                    req.session.office_tel_no = userInfo.office_tel_no;
+                    req.session.hp_telno = userInfo.hp_telno;
+
+                    logger.debug("====================index login ==================");
+                    logger.debug("req.session.user_flag",req.session.user_flag);
+                    logger.debug("req.session.group_flag",req.session.group_flag);
+                    logger.debug("req.session.dept_cd",req.session.dept_cd);
+                    logger.debug("req.session.access_yn",req.session.access_yn);
+                    logger.debug("===================================================");
+
+                    //>>>>>==================================================
+                    res.render("main/user");
+                    //<<<<<==================================================
+                }
+
+            });
+        } catch (e) {
+            logger.debug(e);
+        }
+    },
 };
