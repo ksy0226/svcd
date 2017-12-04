@@ -335,14 +335,14 @@ module.exports = {
         try {
             
             logger.debug("======================================");
-            logger.debug("req.body.email",req.body.email);
+            logger.debug("req.query.email",req.query.email);
             logger.debug("======================================");
 
             /**
              * 로그인 정보 매핑
              */ 
             request({
-                uri: CONFIG.groupware.uri+"/CoviWeb/api/UserInfo.aspx?email=" + req.body.email + "&password=" + req.body.password,
+                uri: CONFIG.groupware.uri+"/CoviWeb/api/UserInfo.aspx?email=" + req.query.email + "&password=" + req.query.password,
                 headers: {
                     'Content-type': 'application/json'
                 },
@@ -369,12 +369,12 @@ module.exports = {
                     req.session.office_tel_no = userInfo.office_tel_no;
                     req.session.hp_telno = userInfo.hp_telno;
 
-                    logger.debug("======================================");
+                    logger.debug("====================index login ==================");
                     logger.debug("req.session.user_flag",req.session.user_flag);
                     logger.debug("req.session.group_flag",req.session.group_flag);
                     logger.debug("req.session.dept_cd",req.session.dept_cd);
                     logger.debug("req.session.access_yn",req.session.access_yn);
-                    logger.debug("======================================");
+                    logger.debug("===================================================");
 
                     //>>>>>==================================================
                     res.render("main/user");
