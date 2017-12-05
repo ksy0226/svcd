@@ -101,7 +101,7 @@ function setDataList(dataObj, selectedPage) {
     }
 
     for (var i = startIdx; i < endIdx + 1; i++) {
-        var register_dateVal = dataObj[i - 1].register_date;
+        var register_dateVal = dataObj[i - 1].created_at;
 
         if (register_dateVal) {
             register_dateVal = register_dateVal.substring(0, 10);

@@ -64,7 +64,11 @@ module.exports = {
 
     save: (req, res, next) => {
         var lowerProcess = req.body.lowerProcess;
-        LowerProcessModel.create(req.body.lowerProcess, function (err, lowerProcess) {
+        lowerProcess.sabun = req.session.email;
+        lowerProcess.user_nm = req.session.user_nm;
+        lowerProcess.company_nm = req.session.company_nm;
+
+        LowerProcessModel.create(lowerProcess, function (err, lowerProcess) {
             if (err) {
                 res.render("http/500", {
                     err: err
@@ -99,7 +103,8 @@ module.exports = {
                 success: false,
                 message: "No data found to update"
             });
-            res.redirect('/lowerProcess/edit/' + req.params.id);
+            //res.redirect('/lowerProcess/edit/' + req.params.id);
+            res.redirect('/lowerProcess/');
         });
     },
 
@@ -208,7 +213,7 @@ module.exports = {
 
                     callback(null, lowerProcess);
                 }
-            });
+            }).sort('higher_cd').sort('lower_cd');;
         }], function (err, lowerProcess) {
             if (err) {
                 return res.json({

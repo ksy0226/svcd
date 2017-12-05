@@ -14,7 +14,7 @@ var lowerProcessSchema = mongoose.Schema({
     use_yn: { type: String, default: "사용" },          //사용여부
     company_cd: { type: String },                       //회사코드
     company_nm: { type: String },                       //회사명
-    user_nm: { type: String },                          //이름
+    user_nm: { type: String, default: "관리자" },       //이름
 });
 
 var LowerProcess = mongoose.model('lowerProcess', lowerProcessSchema);
