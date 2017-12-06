@@ -90,7 +90,7 @@ module.exports = {
         logger.debug('req.query.reg_date_from : ' + req.query.reg_date_from);
         logger.debug('req.query.reg_date_to : ' + req.query.reg_date_to);
 
-        console.log('findIncident : ' + JSON.stringify(findIncident));
+        //console.log('findIncident : ' + JSON.stringify(findIncident));
 
         return {
             searchType: req.query.searchType,
