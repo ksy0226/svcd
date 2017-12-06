@@ -166,7 +166,6 @@ function setDataList(dataObj, selectedPage) {
     }
     var endIdx = dataPerPage*selectedPage+1;
     
-
     //endIdx 가 실제 데이터 수보다 클 경우,
     if(dataObj.length < endIdx){ // 7<16
         endIdx = dataObj.length;
@@ -174,7 +173,9 @@ function setDataList(dataObj, selectedPage) {
 
     if(startIdx == 1){
         startIdx = 0;
+        endIdx = 15;
     }
+
     for(var i = startIdx ; i <endIdx ; i++){ 
         var register_dateVal = dataObj[i].register_date; 
 
