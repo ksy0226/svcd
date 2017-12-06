@@ -165,10 +165,10 @@ function setDataList(dataObj, selectedPage) {
         startIdx = startIdx+1;
     }
     var endIdx = dataPerPage*selectedPage+1;
-
+   
     //endIdx 가 실제 데이터 수보다 클 경우,
-    if(dataObj.length < endIdx){ // 7<16
-        endIdx = dataObj.length;
+    if(dataObj.length < endIdx){ // 28 < 31   
+        endIdx = dataObj.length+1 ;
     } 
    
 
