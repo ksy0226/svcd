@@ -159,17 +159,24 @@ function setDataList(dataObj, selectedPage) {
         //기존 데이터 삭제
         $("#more_list tr").remove();
     //}
-
+    
     var startIdx = dataPerPage*(selectedPage-1)+1;
+    if(startIdx == 0){
+        startIdx = startIdx+1;
+    }
     var endIdx = dataPerPage*selectedPage+1;
     
+
     //endIdx 가 실제 데이터 수보다 클 경우,
     if(dataObj.length < endIdx){ // 7<16
         endIdx = dataObj.length;
     } 
 
-    for(var i = startIdx ; i <endIdx+1 ; i++){ 
-        var register_dateVal = dataObj[i-1].register_date; 
+    if(startIdx == 1){
+        startIdx = 0;
+    }
+    for(var i = startIdx ; i <endIdx ; i++){ 
+        var register_dateVal = dataObj[i].register_date; 
 
         if(register_dateVal){
             register_dateVal = register_dateVal.substring(0,10);
@@ -177,23 +184,23 @@ function setDataList(dataObj, selectedPage) {
             register_dateVal = ""; 
         }
 
-        var idValue = dataObj[i-1]._id ;
+        var idValue = dataObj[i]._id ;
         var addList = "";
         //addList += "							<tr onclick=window.location='/search/mng_detail/" + dataObj[i-1]._id + "'>";
-        addList += "							<tr onclick=detailShow('" + dataObj[i-1]._id + "') style='cursor:pointer'>";
-        if(dataObj[i-1].status_cd == "1"){
-            addList += "								<td>" + dataObj[i-1].higher_nm + " / " + " " + "</td>";
+        addList += "							<tr onclick=detailShow('" + dataObj[i]._id + "') style='cursor:pointer'>";
+        if(dataObj[i].status_cd == "1"){
+            addList += "								<td>" + dataObj[i].higher_nm + " / " + " " + "</td>";
         }else{
-            addList += "								<td>" + dataObj[i-1].higher_nm + " / " + dataObj[i-1].lower_nm + "</td>";
+            addList += "								<td>" + dataObj[i].higher_nm + " / " + dataObj[i].lower_nm + "</td>";
         }
-        if(dataObj[i-1].complete_open_flag == "Y"){
-            addList += "								<td>" + dataObj[i-1].title + "</td>";
+        if(dataObj[i].complete_open_flag == "Y"){
+            addList += "								<td>" + dataObj[i].title + "</td>";
         }else{
-            addList += "								<td><i class='fa fa-lock m-r-5' style='color:darkblue'/>&nbsp;&nbsp;" + dataObj[i-1].title + "</td>";
+            addList += "								<td><i class='fa fa-lock m-r-5' style='color:darkblue'/>&nbsp;&nbsp;" + dataObj[i].title + "</td>";
         }
-        addList += "								<td class='text-center'>" + dataObj[i-1].request_nm + "</td>";
+        addList += "								<td class='text-center'>" + dataObj[i].request_nm + "</td>";
         addList += "								<td class='text-center'>" + register_dateVal + "</td>";
-        addList += "								<td class='text-center'>" + dataObj[i-1].status_nm + "</td>";
+        addList += "								<td class='text-center'>" + dataObj[i].status_nm + "</td>";
         //addList += "								<td>" + dataObj[i-1].manager_nm + "</td>";
         //addList += "								<td>" + dataObj[i-1].receipt_date + "</td>";
         addList += "							</tr>";
