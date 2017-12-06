@@ -411,7 +411,7 @@ module.exports = {
      * summernote 이미지링크 처리
      */
     insertedImage: (req, res, next) => {
-        console.log("image upload .....");
+        //console.log("image upload .....");
         //res.send( '/uploads/' + req.file.filename);
         //logger.debug("=====================>incident controllers insertedImage");
         res.send('/uploads/' + req.file.filename);
@@ -517,7 +517,7 @@ module.exports = {
                         message: err
                     });
                 }
-                console.log(search.findIncident);
+                //console.log(search.findIncident);
                 callback(null, incident)
             })
         }], function (err, incident) {
@@ -527,7 +527,7 @@ module.exports = {
                     message: err
                 });
             }
-            console.log(incident);
+            //console.log(incident);
             res.json(incident);
         });
         
