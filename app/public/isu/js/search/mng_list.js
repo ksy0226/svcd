@@ -141,6 +141,8 @@ function getDataList(selectedPage){
             totalData = dataObj.length;
             totalPage = Math.ceil(totalData/dataPerPage);
             $('#totalPage').text(totalPage);
+            $('#totalCnt').text(totalData);
+            $('#totalCnt2').text(totalData);
             paging(totalData, dataPerPage, pageCount, selectedPage);
             
         }
