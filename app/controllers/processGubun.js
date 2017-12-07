@@ -128,7 +128,7 @@ module.exports = {
                     success: false,
                     message: "No data found to update"
                 });
-                res.redirect('/processGubun/' + req.params.id + '/show');
+                res.redirect('/processGubun/');
             });
         } catch (e) {
             logger.error(e);
