@@ -213,7 +213,7 @@ module.exports = {
 
                     callback(null, lowerProcess);
                 }
-            }).sort('higher_cd').sort('lower_cd');;
+            }).sort('higher_cd').sort('lower_cd');
         }], function (err, lowerProcess) {
             if (err) {
                 return res.json({
