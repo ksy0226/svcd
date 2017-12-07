@@ -141,6 +141,8 @@ function getDataList(selectedPage){
             totalData = dataObj.length;
             totalPage = Math.ceil(totalData/dataPerPage);
             $('#totalPage').text(totalPage);
+            $('#totalCnt').text(totalData);
+            $('#totalCnt2').text(totalData);
             paging(totalData, dataPerPage, pageCount, selectedPage);
             
         }
@@ -157,16 +159,20 @@ function setDataList(dataObj, selectedPage) {
         //기존 데이터 삭제
         $("#more_list tr").remove();
     //}
-
-    var startIdx = dataPerPage*(selectedPage-1)+1;
-    var endIdx = dataPerPage*selectedPage+1;
     
+    var startIdx = dataPerPage*(selectedPage-1)+1;
+    if(startIdx == 0){
+        startIdx = startIdx+1;
+    }
+    var endIdx = dataPerPage*selectedPage+1;
+   
     //endIdx 가 실제 데이터 수보다 클 경우,
-    if(dataObj.length < endIdx){ // 7<16
-        endIdx = dataObj.length;
+    if(dataObj.length < endIdx){ // 28 < 31   
+        endIdx = dataObj.length+1 ;
     } 
+   
 
-    for(var i = startIdx ; i <endIdx+1 ; i++){ 
+    for(var i = startIdx ; i <endIdx ; i++){ 
         var register_dateVal = dataObj[i-1].register_date; 
 
         if(register_dateVal){

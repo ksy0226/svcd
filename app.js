@@ -55,7 +55,7 @@ app.use(compression());
 app.use(favicon(path.join(__dirname, 'app/public/favicon.ico')));
 app.use(require('serve-static')(path.join(__dirname, 'app/public')));
 app.use(require('serve-static')(path.join(__dirname, 'upload-file')));
-console.log("===>",__dirname);
+//console.log("===>",__dirname);
 //app.use(require('serve-static')(path.join(__dirname, 'app/util')));
 
 /**

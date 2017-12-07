@@ -128,7 +128,7 @@ block content
                                 |  현재페이지 다운로드
                             button.btn.btn-success.waves-effect.waves-light.m-l-5(onclick="getJsonData();") 
                                 i.fa.fa-arrow-circle-o-down
-                                |  전체 다운로드        
+                                |  전체 다운로드   
                 .row
                     .col-lg-12
                         .card-box
@@ -147,9 +147,15 @@ block content
                                 iframe#txtArea1(style='display:none')
                         .row
                             .col-sm-4
-                                .dataTables_info Showing 1 to 15 of 
+                                .dataTables_info.pull Showing 1 to 15 of 
                                     span(id='totalPage')
                                     |  pages
+                                    |  /
+                                    |  총
+                                    &nbsp;
+                                    span(id='totalCnt2')
+                                    |  건 
+                               
                             .col-sm-8
                                 .dataTables_paginate.paging_simple_numbers.pull-right
                                     ul#paging.pagination

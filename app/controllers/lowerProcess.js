@@ -5,6 +5,7 @@ const async = require('async');
 const LowerProcessModel = require('../models/LowerProcess');
 const HigherProcessModel = require('../models/HigherProcess');
 const CompanyModel = require('../models/Company');
+const service = require('../services/lowerProcess');
 const logger = require('log4js').getLogger('app');
 const Iconv = require('iconv-lite');
 
@@ -20,7 +21,7 @@ module.exports = {
             } else {
                 //if(lowerProcess.created_at != '') lowerProcess.created_at = lowerProcess.created_at.substring(0,10);
                 //if(lowerProcess.register_date != '') lowerProcess.register_date = lowerProcess.register_date.substring(0,10);
-                
+
                 res.render("lowerProcess/index", {
                     lowerProcess: lowerProcess
                 });
@@ -55,7 +56,7 @@ module.exports = {
             } else {
                 res.render("lowerProcess/new", {
                     higher: higher,
-                    company : company
+                    company: company
                 });
             }
         });
@@ -63,7 +64,11 @@ module.exports = {
 
     save: (req, res, next) => {
         var lowerProcess = req.body.lowerProcess;
-        LowerProcessModel.create(req.body.lowerProcess, function (err, lowerProcess) {
+        lowerProcess.sabun = req.session.email;
+        lowerProcess.user_nm = req.session.user_nm;
+        lowerProcess.company_nm = req.session.company_nm;
+
+        LowerProcessModel.create(lowerProcess, function (err, lowerProcess) {
             if (err) {
                 res.render("http/500", {
                     err: err
@@ -98,7 +103,8 @@ module.exports = {
                 success: false,
                 message: "No data found to update"
             });
-            res.redirect('/lowerProcess/edit/' + req.params.id);
+            //res.redirect('/lowerProcess/edit/' + req.params.id);
+            res.redirect('/lowerProcess/');
         });
     },
 
@@ -158,33 +164,71 @@ module.exports = {
     /**
      * 하위업무 조회
      */
-    getLowerProcess :  (req, res, next) => {   
-        try{
+    getLowerProcess: (req, res, next) => {
+        try {
             var condition = {};
-            if(req.query.higher_cd != null && req.query.higher_cd != "*"){
+            if (req.query.higher_cd != null && req.query.higher_cd != "*") {
                 condition.higher_cd = req.query.higher_cd;
             }
 
             logger.debug("==========================================getLowerProcess=======================================");
-            logger.debug("condition : ",condition);
+            logger.debug("condition : ", condition);
             logger.debug("================================================================================================");
-            
-            LowerProcessModel.find(condition, function(err, lowerProcess) {
-                if (err){ return res.json({
-                    success: false,
-                    message: err
-                    });     
-                }else{
-                    
+
+            LowerProcessModel.find(condition, function (err, lowerProcess) {
+                if (err) {
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
                     logger.debug("==========================================getLowerProcess=======================================");
-                    logger.debug("lowerProcess : ",JSON.stringify(lowerProcess));
+                    logger.debug("lowerProcess : ", JSON.stringify(lowerProcess));
                     logger.debug("==================================================+++===========================================");
-                    
+
                     res.json(lowerProcess);
                 }
             }).sort('higher_cd').sort('lower_cd');
-        }catch(e){
+        } catch (e) {
             logger.debug(e);
         }
     },
+
+    list: (req, res, next) => {
+        var search = service.createSearch(req);
+
+        async.waterfall([function (callback) {
+            LowerProcessModel.find(search.findLowerProcess, function (err, lowerProcess) {
+                if (err) {
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
+                    /*
+                    logger.debug("==========================================getLowerProcess=======================================");
+                    logger.debug("lowerProcess : ", lowerProcess);
+                    logger.debug("================================================================================================");
+                    */
+
+                    callback(null, lowerProcess);
+                }
+            }).sort('higher_cd').sort('lower_cd');
+        }], function (err, lowerProcess) {
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: err
+                });
+            } else {
+                /*
+                logger.debug("==========================================getLowerProcess=======================================");
+                logger.debug("lowerProcess list : ", JSON.stringify(lowerProcess));
+                logger.debug("==================================================+++===========================================");
+                */
+                
+                res.send(lowerProcess);
+            }
+        });
+    }
 };
