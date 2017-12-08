@@ -145,7 +145,7 @@ function setDataList(dataObj) {
 
         // 진행상태
         $('#more_list > tr').each(function () {
-            if ($(this).find('td:eq(3)').html() == "접수" || $(this).find('td:eq(3)').html() == "접수대기") {
+            if ($(this).find('td:eq(3)').html() == "접수" || $(this).find('td:eq(3)').html() == "접수대기" || $(this).find('td:eq(4)').html() == "접수중") {
                 $(this).find('td:eq(3)').html('<span class="label label-inverse">접수중</span>');
             } if ($(this).find('td:eq(3)').html() == "처리중") {
                 $(this).find('td:eq(3)').html('<span class="label label-primary">처리중</span>');
