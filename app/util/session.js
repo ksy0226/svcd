@@ -9,7 +9,10 @@ module.exports = {
         logger.debug('sessionCheck email' + req.session.email);
         logger.debug('req.session.user_flag : ' + req.session.user_flag);
         logger.debug('req.session.group_flag : ' + req.session.group_flag);
-        console.log('req.session.dept_cd : ' + req.session.dept_cd);
+
+        logger.debug('=====================session=================');
+        logger.debug('req.session.dept_cd : ' + req.session.dept_cd);
+        logger.debug('=============================================\n');
         
         if (req.session.email) {
             logger.debug('sessionCheck succeed');
