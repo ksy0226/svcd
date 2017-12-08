@@ -208,7 +208,7 @@ function setDataList(dataObj) {
             complete_dateVal = complete_dateVal.substring(0, 10);
 
             var addList = "";
-            addList += "<tr onclick=window.location='/search/user_list/' style='cursor:pointer'>";
+            addList += "<tr onclick=window.location='/manager/work_list/' style='cursor:pointer'>";
             addList += "	<td class='text-center'>" + dataObj[i].process_speed + "</td>";
             addList += "	<td>" + dataObj[i].title + "</td>";
             addList += "	<td class='text-center'>" + creat_dateVal + "</td>";
