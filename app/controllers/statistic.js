@@ -43,9 +43,11 @@ module.exports = {
                 } else {
                     logger.debug("===========", incident);
                     //res.json(result);
-                    incident: incident
+                    //incident: incident
                 }
             });
+
+            res.render("statistic/com_higher");
 
     },
 
