@@ -198,15 +198,33 @@ function setDataList(dataObj, selectedPage) {
         addList += "								<td class='text-center'>" + dataObj[i-1].request_nm + "</td>";
         addList += "								<td class='text-center'>" + register_dateVal + "</td>";
         addList += "								<td class='text-center'>" + dataObj[i-1].status_nm + "</td>";
-        //addList += "								<td>" + dataObj[i-1].manager_nm + "</td>";
-        //addList += "								<td>" + dataObj[i-1].receipt_date + "</td>";
+        if(dataObj[i-1].status_cd == 4){
+            addList += "								<td class='text-center'>";
+            addList += "                                    <p><span id='" + dataObj[i-1].valuation + "' name='" + dataObj[i-1].valuation + "' class='m-l-15'>";
+            addList += "									    <i class='md md-star text-muted'></i>";
+            addList += "										<i class='md md-star text-muted'></i>";
+            addList += "										<i class='md md-star text-muted'></i>";
+            addList += "										<i class='md md-star text-muted'></i>";
+            addList += "										<i class='md md-star text-muted'></i>";
+            addList += "									</span></p>";
+            addList += "                                </td>";
+        }
         addList += "							</tr>";
 
         $("#more_list").append(addList);
+        /*
+        var cnt = parseInt(dataObj[i-1].valuation, 10);
+        alert("cnt >>"+ cnt);
+        for (var j = 0; j < cnt; j++) {
+            $('.m-l-15:eq(' + (i-1) + ') i:eq(' + j + ')').attr('class', 'md md-star text-warning');
+        }
+        */
+        
 
         startIdx++;
     }
 
+    
     $('#more_list > tr').each(function(){
         
         /**
