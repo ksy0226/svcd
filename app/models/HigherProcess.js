@@ -9,7 +9,7 @@ var higherProcessSchema = mongoose.Schema({
     company_cd: { type: String },                        //회사코드
     sabun: { type: String },                         //사번
     created_at: { type: Date, default: Date.now() },  //생성일자 
-    user_flag: { type: String }                      //사용여부(1:사용, 0:미사용)
+    user_flag: { type: String , default : '사용'}                      //사용여부
 
 });
 
