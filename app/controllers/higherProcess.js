@@ -29,11 +29,18 @@ module.exports = {
 
     save: (req, res, next) => {
         var higherProcess = req.body.higherProcess;
-        logger.debug('body', req.body);
+        higherProcess.sabun = req.session.email;
+        higherProcess.user_nm = req.session.user_nm;
+        higherProcess.company_cd = req.session.company_cd;
+        higherProcess.company_nm = req.session.company_nm;
 
-        HigherProcessModel.create(req.body.higherProcess, function(err, higherProcess) {
-            //logger.debug('err', err, '\n');
-            logger.debug('save 호출');    
+        /*
+        logger.debug('>>>>>>>>>>>>>>>>>>>> higherProcess save >>>>>>>>>>>>>>>>>>>> ');
+        logger.debug('higherProcess >>> ', higherProcess);
+        logger.debug('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ');
+        */
+
+        HigherProcessModel.create(higherProcess, function (err, higherProcess) {
             if (err) {
                 res.render("http/500", {
                     err: err
@@ -45,26 +52,24 @@ module.exports = {
 
 
     edit: (req, res, next) => {
-        HigherProcessModel.findById(req.params.id, function(err, higherProcess) {
-            if (err) return res.json({
-                success: false,
-                message: err
-            });
-            //if (!req.user._id.equals(question.author)) return res.json({
-            //    success: false,
-            //    message: "Unauthrized Attempt"
-            //});
-            res.render("higherProcess/edit", {
-                higherProcess: higherProcess
-                //,user: req.user
-            });
+        HigherProcessModel.findById(req.params.id, function (err, higherProcess) {
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: err
+                });
+            } else {
+                res.render("higherProcess/edit", {
+                    higherProcess: higherProcess
+                });
+            }
         });
     },
 
     update: (req, res, next) => {
         HigherProcessModel.findOneAndUpdate({
             _id: req.params.id
-        }, req.body.higherProcess, function(err, higherProcess) {
+        }, req.body.higherProcess, function (err, higherProcess) {
             if (err) return res.json({
                 success: false,
                 message: err
@@ -80,7 +85,7 @@ module.exports = {
     delete: (req, res, next) => {
         HigherProcessModel.findOneAndRemove({
             _id: req.params.id
-        }, function(err, higherProcess) {
+        }, function (err, higherProcess) {
             if (err) return res.json({
                 success: false,
                 message: err
