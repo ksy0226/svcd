@@ -208,7 +208,7 @@ function setDataList(dataObj) {
             complete_dateVal = complete_dateVal.substring(0, 10);
 
             var addList = "";
-            addList += "<tr onclick=window.location='/search/user_list/' style='cursor:pointer'>";
+            addList += "<tr onclick=window.location='/manager/work_list/' style='cursor:pointer'>";
             addList += "	<td class='text-center'>" + dataObj[i].process_speed + "</td>";
             addList += "	<td>" + dataObj[i].title + "</td>";
             addList += "	<td class='text-center'>" + creat_dateVal + "</td>";
@@ -232,7 +232,7 @@ function setDataList(dataObj) {
             }
 
             // 진행상태
-            if ($(this).find('td:eq(4)').html() == "접수" || $(this).find('td:eq(3)').html() == "접수대기") {
+            if ($(this).find('td:eq(4)').html() == "접수" || $(this).find('td:eq(4)').html() == "접수대기" || $(this).find('td:eq(4)').html() == "접수중") {
                 $(this).find('td:eq(4)').html('<span class="label label-inverse">접수중</span>');
             } if ($(this).find('td:eq(4)').html() == "처리중") {
                 $(this).find('td:eq(4)').html('<span class="label label-primary">처리중</span>');

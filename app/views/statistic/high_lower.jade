@@ -52,43 +52,37 @@ block content
                                 .form-group
                                     label.col-sm-2.control-label 검색년도
                                     .col-sm-2
-                                        select.form-control
-                                            option 2012
-                                            option 2013
-                                            option 2014
-                                            option 2015
-                                            option 2016
-                                            option(selected='') 2017
-                                            option 2018
-                                            option 2019
-                                            option 2020
-                                            option 2021
+                                        select#yyyy.form-control
+                                            option(value='2012') 2012
+                                            option(value='2013') 2013
+                                            option(value='2014') 2014
+                                            option(value='2015') 2015
+                                            option(value='2016') 2016
+                                            option(selected='2017') 2017
+                                            option(value='2018') 2018
+                                            option(value='2019') 2019
+                                            option(value='2020') 2020
+                                            option(value='2021') 2021
                                     .col-sm-2
-                                        select.form-control
-                                            option 전체
-                                            option 1월
-                                            option 2월
-                                            option 3월
-                                            option 4월
-                                            option 5월
-                                            option 6월
-                                            option 7월
-                                            option 8월
-                                            option 9월
-                                            option 10월
-                                            option 11월
-                                            option 12월
+                                        select#mm.form-control
+                                            option(value='*') 전체
+                                            option(value='01') 1월
+                                            option(value='02') 2월
+                                            option(value='03') 3월
+                                            option(value='04') 4월
+                                            option(value='05') 5월
+                                            option(value='06') 6월
+                                            option(value='07') 7월
+                                            option(value='08') 8월
+                                            option(value='09') 9월
+                                            option(value='10') 10월
+                                            option(value='11') 11월
+                                            option(value='12') 12월
                                     label.col-sm-2.control-label 회사명
+                                    .col-sm-4
+                                        select#company_cd.form-control
                                     .col-sm-2
-                                        select.form-control
-                                            option 전체
-                                            option 항목1
-                                            option 항목2
-                                            option 항목3
-                                            option 항목4
-                                            option 항목5
-                                    .col-sm-2
-                                        button.btn.btn-primary(type='button')
+                                        button#searchBtn.btn.btn-primary(type='button')
                                             i.fa.fa-search.m-r-5
                                             | 조회
                 .row
@@ -105,23 +99,16 @@ block content
                                         th.font-12(class='text-center' width='10%') 미해결건수
                                         th.font-12(class='text-center' width='10%') 해결률(%)
                                         th.font-12(class='text-center' width='10%') 평점
-                                tbody
+                                tbody#more_list
                                     //tr
-                                    - if (incident.length > 0) {
-                                        - for( var i = 0 ; length = incident.length > i ; i++ ){ //속도가 느리다고 알고 있음.
-                                            //option(value ='#{companyProcess[i].higher_cd}') #{companyProcess[i].higher_nm}
-                                            tr
-                                                th.valign-middle(id='higher_cd' scope='row') #{incident[i]._id.higher_nm}
-                                                td #{incident[i]._id.lower_nm}
-                                                td #{incident[i].count}
-                                                td 
-                                                td 
-                                                td 
-                                                td 
-                                                td 
-
-                                        - }
-                                    - }
+                                        th.valign-middle(id='higher_cd' scope='row') 
+                                        td 
+                                        td 
+                                        td 
+                                        td 
+                                        td 
+                                        td 
+                                        td 
                                     //th.valign-middle(id='higher_cd' scope='row', rowspan='2')
                                         td OPTI-HR
                                         td 83
@@ -139,7 +126,7 @@ block content
                                         td 95.2
                                         td 4.7
                                    
-                                    tr.bg-primary10.border-top
+                                    //tr.bg-primary10.border-top
                                         td.text-center.text-primary(colspan='2')
                                             b 합 계
                                         td.text-primary
