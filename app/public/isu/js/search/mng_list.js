@@ -129,7 +129,7 @@ function getDataList(selectedPage){
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         error: function (request, status, error) {
             $('#ajax_indicator').css("display", "none");
-            alert("error : " + error);
+            alert("error getDataList : " + error);
         },
         beforeSend: function () {
             $('#ajax_indicator').css("display", "");
@@ -142,7 +142,6 @@ function getDataList(selectedPage){
             totalPage = Math.ceil(totalData/dataPerPage);
             $('#totalPage').text(totalPage);
             $('#totalCnt').text(totalData);
-            $('#totalCnt2').text(totalData);
             paging(totalData, dataPerPage, pageCount, selectedPage);
             
         }
@@ -198,9 +197,9 @@ function setDataList(dataObj, selectedPage) {
         addList += "								<td class='text-center'>" + dataObj[i-1].request_nm + "</td>";
         addList += "								<td class='text-center'>" + register_dateVal + "</td>";
         addList += "								<td class='text-center'>" + dataObj[i-1].status_nm + "</td>";
-        if(dataObj[i-1].status_cd == 4){
+        //if(dataObj[i-1].status_cd == 4){
             addList += "								<td class='text-center'>";
-            addList += "                                    <p><span id='" + dataObj[i-1].valuation + "' name='" + dataObj[i-1].valuation + "' class='m-l-15'>";
+            addList += "                                    <p><span name='" + dataObj[i-1]._id + "' class='m-l-15'>";
             addList += "									    <i class='md md-star text-muted'></i>";
             addList += "										<i class='md md-star text-muted'></i>";
             addList += "										<i class='md md-star text-muted'></i>";
@@ -208,19 +207,19 @@ function setDataList(dataObj, selectedPage) {
             addList += "										<i class='md md-star text-muted'></i>";
             addList += "									</span></p>";
             addList += "                                </td>";
-        }
+        //}
         addList += "							</tr>";
 
         $("#more_list").append(addList);
-        /*
-        var cnt = parseInt(dataObj[i-1].valuation, 10);
-        alert("cnt >>"+ cnt);
-        for (var j = 0; j < cnt; j++) {
-            $('.m-l-15:eq(' + (i-1) + ') i:eq(' + j + ')').attr('class', 'md md-star text-warning');
-        }
-        */
         
 
+        //if(dataObj[i-1].status_cd == 4){
+            var cnt = parseInt(dataObj[i-1].valuation, 10);
+            for (var j = 0; j < cnt; j++) {
+                $('.m-l-15:eq(' + (i-1) + ') i:eq(' + j + ')').attr('class', 'md md-star text-warning');
+            }
+        //}
+        
         startIdx++;
     }
 
@@ -252,6 +251,11 @@ function setDataList(dataObj, selectedPage) {
         }if($(this).find('td:eq(4)').html() == "보류"){
             $(this).find('td:eq(4)').html('<span class="label label-info">보류</span>');
         }
+
+       
+        
+
+
 
     })
 }
@@ -404,6 +408,9 @@ function setDetail(dataObj){
     }else if(dataObj.status_cd == '5'){
         $('#_status_nm').addClass('label label-info');
     }
+
+
+
 
     /**
      * 처리내용 세팅
