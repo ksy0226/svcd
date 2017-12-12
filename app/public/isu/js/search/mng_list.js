@@ -212,6 +212,7 @@ function setDataList(dataObj, selectedPage) {
             addList += "										<i class='md md-star text-muted'></i>";
             addList += "									</span></p>";
             addList += "                                </td>";
+        }
         addList += "							</tr>";
 
         $("#more_list").append(addList);
