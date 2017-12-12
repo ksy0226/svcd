@@ -135,4 +135,26 @@ module.exports = {
             }
         });
     },
+
+    /**
+     * 상위업무조회
+     */
+    getHigherProcess :  (req, res, next) => {   
+        try{
+            var condition = {};
+            if(req.query.company_cd != null){
+                condition.company_cd = req.query.company_cd;
+            }
+
+            HigherProcessModel.find(condition, function(err, higherProcess) {
+                if (err) return res.json({
+                    success: false,
+                    message: err
+                    });     
+                res.json(higherProcess);
+            }).sort('higher_cd');
+        }catch(e){
+            logger.debug(e);
+        }
+    }
 };

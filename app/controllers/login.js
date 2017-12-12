@@ -256,7 +256,8 @@ module.exports = {
                     } else {
                         res.json(incident);
                     }
-                }).sort('-created_at');
+                }).sort('-created_at')
+                .limit(10);
             } else if (req.session.user_flag == '5') {
                 Incident.find({ manager_dept_cd: req.session.dept_cd }, function (err, incident) {
                     if (err) {
@@ -267,7 +268,8 @@ module.exports = {
                     } else {
                         res.json(incident);
                     }
-                }).sort('-created_at');
+                }).sort('-created_at')
+                .limit(10);
             } else if (req.session.user_flag == '1') {
                 Incident.find({}, function (err, incident) {
                     if (err) {
@@ -278,7 +280,8 @@ module.exports = {
                     } else {
                         res.json(incident);
                     }
-                }).sort('-created_at');
+                }).sort('-created_at')
+                .limit(10);
             } else {
                 Incident.find({ manager_email: req.session.email }, function (err, incident) {
                     if (err) {
@@ -289,7 +292,8 @@ module.exports = {
                     } else {
                         res.json(incident);
                     }
-                }).sort('-created_at');
+                }).sort('-created_at')
+                .limit(10);
             }
         } catch (e) {
             logger.debug('main_list controllers error ====================> ', e)

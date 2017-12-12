@@ -116,29 +116,27 @@ function getDataList(selectedPage){
     if($('#lower_cd').val() =="" || $('#lower_cd').val() == null){
         $('#lower_cd').val("*");
     }
-    var reqParam = 'searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&lower_cd=' + $('#lower_cd').val() + '&reg_date_from=' + $('#reg_date_from').val()+ '&reg_date_to=' + $('#reg_date_to').val()+ '&searchText=' + encodeURIComponent($('#searchText').val());
+     var reqParam = 'page=' + selectedPage + '&perPage=' + dataPerPage + '&searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&lower_cd=' + $('#lower_cd').val() + '&reg_date_from=' + $('#reg_date_from').val()+ '&reg_date_to=' + $('#reg_date_to').val()+ '&searchText=' + encodeURIComponent($('#searchText').val());
     
     $.ajax({
         type: "GET",
         async: true,
         url: "/search/list",
         dataType: "json", // xml, html, script, json 미지정시 자동판단
-        timeout: 30000, //제한 시간
         cache: false,
         data: reqParam, // $($('form')).serialize()
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         error: function (request, status, error) {
             $('#ajax_indicator').css("display", "none");
-            alert("error getDataList : " + error);
-        },
+       },
         beforeSend: function () {
             $('#ajax_indicator').css("display", "");
         },
         success: function (dataObj) {
             $('#ajax_indicator').css("display", "none");
             //리스트에 내용 매핑
-            setDataList(dataObj, selectedPage);
-            totalData = dataObj.length;
+            setDataList(dataObj.incident, selectedPage);
+            totalData = Number(dataObj.totalCnt);
             totalPage = Math.ceil(totalData/dataPerPage);
             $('#totalPage').text(totalPage);
             $('#totalCnt').text(totalData);
@@ -171,8 +169,9 @@ function setDataList(dataObj, selectedPage) {
     } 
    
 
-    for(var i = startIdx ; i <endIdx ; i++){ 
-        var register_dateVal = dataObj[i-1].register_date; 
+
+    for(var i = 0 ; i < dataPerPage ; i++){ 
+        var register_dateVal = dataObj[i].register_date; 
 
         if(register_dateVal){
             register_dateVal = register_dateVal.substring(0,10);
@@ -180,26 +179,32 @@ function setDataList(dataObj, selectedPage) {
             register_dateVal = ""; 
         }
 
-        var idValue = dataObj[i-1]._id ;
+
+        var idValue = dataObj[i]._id ;
         var addList = "";
-        //addList += "							<tr onclick=window.location='/search/mng_detail/" + dataObj[i-1]._id + "'>";
-        addList += "							<tr onclick=detailShow('" + dataObj[i-1]._id + "') style='cursor:pointer'>";
-        if(dataObj[i-1].status_cd == "1"){
-            addList += "								<td>" + dataObj[i-1].higher_nm + " / " + " " + "</td>";
+
+        //addList += "							<tr onclick=window.location='/search/mng_detail/" + dataObj[i]._id + "'>";
+        addList += "							<tr onclick=detailShow('" + dataObj[i]._id + "') style='cursor:pointer'>";
+        if(dataObj[i].status_cd == "1"){
+            addList += "								<td>" + dataObj[i].higher_nm + " / " + " " + "</td>";
         }else{
-            addList += "								<td>" + dataObj[i-1].higher_nm + " / " + dataObj[i-1].lower_nm + "</td>";
+
+            addList += "								<td>" + dataObj[i].higher_nm + " / " + dataObj[i].lower_nm + "</td>";
         }
-        if(dataObj[i-1].complete_open_flag == "Y"){
-            addList += "								<td>" + dataObj[i-1].title + "</td>";
+
+        if(dataObj[i].complete_open_flag == "Y"){
+            addList += "								<td>" + dataObj[i].title + "</td>";
         }else{
-            addList += "								<td><i class='fa fa-lock m-r-5' style='color:darkblue'/>&nbsp;&nbsp;" + dataObj[i-1].title + "</td>";
+
+            addList += "								<td><i class='fa fa-lock m-r-5' style='color:darkblue'/>&nbsp;&nbsp;" + dataObj[i].title + "</td>";
         }
-        addList += "								<td class='text-center'>" + dataObj[i-1].request_nm + "</td>";
+
+        addList += "								<td class='text-center'>" + dataObj[i].request_nm + "</td>";
         addList += "								<td class='text-center'>" + register_dateVal + "</td>";
-        addList += "								<td class='text-center'>" + dataObj[i-1].status_nm + "</td>";
-        //if(dataObj[i-1].status_cd == 4){
+        addList += "								<td class='text-center'>" + dataObj[i].status_nm + "</td>";
+        if(dataObj[i].status_cd == 4){
             addList += "								<td class='text-center'>";
-            addList += "                                    <p><span name='" + dataObj[i-1]._id + "' class='m-l-15'>";
+            addList += "                                    <p><span id='" + dataObj[i].valuation + "' name='" + dataObj[i].valuation + "' class='m-l-15'>";
             addList += "									    <i class='md md-star text-muted'></i>";
             addList += "										<i class='md md-star text-muted'></i>";
             addList += "										<i class='md md-star text-muted'></i>";
@@ -207,18 +212,9 @@ function setDataList(dataObj, selectedPage) {
             addList += "										<i class='md md-star text-muted'></i>";
             addList += "									</span></p>";
             addList += "                                </td>";
-        //}
         addList += "							</tr>";
 
         $("#more_list").append(addList);
-        
-
-        //if(dataObj[i-1].status_cd == 4){
-            var cnt = parseInt(dataObj[i-1].valuation, 10);
-            for (var j = 0; j < cnt; j++) {
-                $('.m-l-15:eq(' + (i-1) + ') i:eq(' + j + ')').attr('class', 'md md-star text-warning');
-            }
-        //}
         
         startIdx++;
     }
