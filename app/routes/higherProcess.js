@@ -14,6 +14,8 @@ router.route('/:id/edit').get(ssc.sessionCheck,controller.edit)
 router.route('/:id/save').post(ssc.sessionCheck,controller.update);
 router.route('/:id/delete').get(ssc.sessionCheck,controller.delete);
 
+router.route('/getHigherProcess').get(ssc.sessionCheck,controller.getHigherProcess);
 //router.route('/exceldownload').get(controller.exceldownload);
+
 
 module.exports = router;
