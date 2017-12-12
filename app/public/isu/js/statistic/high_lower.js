@@ -1,7 +1,7 @@
 'use strict';
 
-
 $(document).ready(function () {
+
     getCompany();
 
     //조회 버튼 클릭 시
@@ -54,7 +54,6 @@ function getHighLowerSt(){
  * 상위업무별 하위업무 통계 display
  */
 function setHighLower(dataObj){
-
     if (dataObj.length > 0) {
         for (var i = 0; i < dataObj.length; i++) {
             var addList = "";
