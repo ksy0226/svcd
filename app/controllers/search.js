@@ -10,7 +10,7 @@ const OftenQnaModel = require('../models/OftenQna');
 const service = require('../services/incident');
 const service2 = require('../services/oftenqna');
 const logger = require('log4js').getLogger('app');
-const Iconv  = require('iconv-lite');
+const Iconv = require('iconv-lite');
 
 var path = require('path');
 var CONFIG = require('../../config/config.json');
@@ -22,7 +22,7 @@ module.exports = {
      */
     user_list: (req, res, next) => {
         async.waterfall([function (callback) {
-            HigherProcessModel.find({},function (err, higherprocess) {
+            HigherProcessModel.find({}, function (err, higherprocess) {
                 if (err) {
                     res.render("http/500", {
                         err: err
@@ -35,20 +35,20 @@ module.exports = {
                 res.render("http/500", {
                     err: err
                 });
-            }else{
+            } else {
                 res.render("search/user_list", {
                     higherprocess: higherprocess
                 });
             }
         });
     },
-    
+
     /**
      * 사용자별 상세조회 > Incident 가져오기
      */
     user_detail: (req, res, next) => {
         logger.debug("Trace user_detail : ", req.params.id);
-        try{
+        try {
             IncidentModel.findById({
                 _id: req.params.id
             }, function (err, incident) {
@@ -56,23 +56,23 @@ module.exports = {
                     res.render("http/500", {
                         err: err
                     });
-                } else {          
+                } else {
                     //완료요청일, 등록일, 접수일, 완료예정일, 완료일
-                    if(incident.request_complete_date != '') incident.request_complete_date = incident.request_complete_date.substring(0,10);
-                    if(incident.register_date != '') incident.register_date = incident.register_date.substring(0,10);
-                    if(incident.receipt_date != '') incident.receipt_date = incident.receipt_date.substring(0,10);
-                    if(incident.complete_reserve_date != '') incident.complete_reserve_date = incident.complete_reserve_date.substring(0,10);
-                    if(incident.complete_date != '') incident.complete_date = incident.complete_date.substring(0,10);
+                    if (incident.request_complete_date != '') incident.request_complete_date = incident.request_complete_date.substring(0, 10);
+                    if (incident.register_date != '') incident.register_date = incident.register_date.substring(0, 10);
+                    if (incident.receipt_date != '') incident.receipt_date = incident.receipt_date.substring(0, 10);
+                    if (incident.complete_reserve_date != '') incident.complete_reserve_date = incident.complete_reserve_date.substring(0, 10);
+                    if (incident.complete_date != '') incident.complete_date = incident.complete_date.substring(0, 10);
                     //incident.complete_date = new Date(incident.complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
 
 
-                    
+
                     res.render("search/user_detail", {
                         incident: incident
                     });
                 }
             });
-        }catch(e){
+        } catch (e) {
             logger.debug(e);
             res.render("http/500", {
                 err: err
@@ -85,7 +85,7 @@ module.exports = {
      */
     user_qna: (req, res, next) => {
         async.waterfall([function (callback) {
-            HigherProcessModel.find({},function (err, higherprocess) {
+            HigherProcessModel.find({}, function (err, higherprocess) {
                 if (err) {
                     res.render("http/500", {
                         err: err
@@ -98,7 +98,7 @@ module.exports = {
                 res.render("http/500", {
                     err: err
                 });
-            }else{
+            } else {
                 res.render("search/user_qna", {
                     higherprocess: higherprocess
                 });
@@ -110,7 +110,7 @@ module.exports = {
      * 자주묻는 질문과 답 상세조회 > OfteQna 가져오기
      */
     qna_detail: (req, res, next) => {
-        
+
         logger.debug("Trace qna_detail : ", req.params.id);
 
         try {
@@ -146,7 +146,7 @@ module.exports = {
      */
     mng_list: (req, res, next) => {
         async.waterfall([function (callback) {
-            HigherProcessModel.find({},function (err, higherprocess) {
+            HigherProcessModel.find({}, function (err, higherprocess) {
                 if (err) {
                     res.render("http/500", {
                         err: err
@@ -159,7 +159,7 @@ module.exports = {
                 res.render("http/500", {
                     err: err
                 });
-            }else{
+            } else {
                 res.render("search/mng_list", {
                     higherprocess: higherprocess
                 });
@@ -181,7 +181,7 @@ module.exports = {
                     message: err
                 });
             } else {
-                
+
                 //path 길이 잘라내기
                 if (incident.attach_file.length > 0) {
                     for (var i = 0; i < incident.attach_file.length; i++) {
@@ -192,7 +192,7 @@ module.exports = {
                         }
                     }
                 }
-                
+
 
 
                 //완료요청일, 등록일, 접수일, 완료예정일, 완료일
@@ -204,14 +204,14 @@ module.exports = {
                 //incident.complete_date = new Date(incident.complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
 
 
-                
+
                 res.render("search/mng_detail", {
                     incident: incident
                 });
             }
         });
     },
-    
+
     /** 
      * incident 첨부파일 다운로드
      */
@@ -223,9 +223,9 @@ module.exports = {
     /**
      * 연도별 미처리 리스트
      */
-    remain_list : (req, res, next) => {
+    remain_list: (req, res, next) => {
         async.waterfall([function (callback) {
-            HigherProcessModel.find({},function (err, higherprocess) {
+            HigherProcessModel.find({}, function (err, higherprocess) {
                 if (err) {
                     res.render("http/500", {
                         err: err
@@ -238,7 +238,7 @@ module.exports = {
                 res.render("http/500", {
                     err: err
                 });
-            }else{
+            } else {
                 res.render("search/remain_list", {
                     higherprocess: higherprocess
                 });
@@ -249,9 +249,9 @@ module.exports = {
     /**
      * 진행 상태별 인시던트 조회
      */
-    status_list : (req, res, next) => {
-        
-        IncidentModel.find(req.body.incident, function(err, incident) {
+    status_list: (req, res, next) => {
+
+        IncidentModel.find(req.body.incident, function (err, incident) {
             //logger.debug('err', err, '\n');
             logger.debug('list 호출');
             if (err) {
@@ -268,10 +268,10 @@ module.exports = {
     /**
      * 하위업무 리스트 조회
      */
-    getlowerprocess :  (req, res, next) => {   
+    getlowerprocess: (req, res, next) => {
         logger.debug(1);
-        LowerProcessModel.find(req.body.lowerprocess, function(err, lowerprocess) {
-            logger.debug('lowerprocess.lower_nm',req.body.lowerprocess);
+        LowerProcessModel.find(req.body.lowerprocess, function (err, lowerprocess) {
+            logger.debug('lowerprocess.lower_nm', req.body.lowerprocess);
             if (err) return res.json({
                 success: false,
                 message: err
@@ -284,33 +284,88 @@ module.exports = {
      * user_list 데이터 조회
      */
     list: (req, res, next) => {
+
         var search = service.createSearch(req);
 
-        async.waterfall([function (callback) {
-            IncidentModel.find(search.findIncident, function (err, incident) {
+        var page = 1;
+        var perPage = 15;
 
-                //console.log(incident);
-                
-                if (err) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                }
-                callback(null, incident)
-            });
-        }], function (err, incident) {
-            if (err) {
-                res.render("http/500", {
-                    err: err
+        if (req.query.page != null && req.query.page != '') page = Number(req.query.page);
+        if (req.query.perPage != null && req.query.perPage != '') perPage = Number(req.query.perPage);
+
+        logger.debug("===============search control================");
+        logger.debug("page : ", page);
+        logger.debug("perPage : ", perPage);
+        logger.debug("search.findIncident : ", JSON.stringify(search.findIncident));
+        logger.debug("=============================================");
+
+        try {
+
+            async.waterfall([function (callback) {
+                IncidentModel.count(search.findIncident, function (err, totalCnt) {
+                    if (err) {
+
+                        logger.debug("=============================================");
+                        logger.debug("incident : ", err);
+                        logger.debug("=============================================");
+
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+
+                        logger.debug("=============================================");
+                        logger.debug("incidentCnt : ", totalCnt);
+                        logger.debug("=============================================");
+
+                        callback(null, totalCnt)
+                    }
                 });
-            }
-            res.send(incident);
-        });
+            }], function (err, totalCnt) {
+
+                IncidentModel.find(search.findIncident, function (err, incident) {
+                    if (err) {
+
+                        logger.debug("=============================================");
+                        logger.debug("incident : ", err);
+                        logger.debug("=============================================");
+
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+
+                        //incident에 페이징 처리를 위한 전체 갯수전달
+                        var rtnData = {};
+                        rtnData.incident = incident;
+                        rtnData.totalCnt = totalCnt
+
+                        logger.debug("=============================================");
+                        logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
+                        logger.debug("rtnData : ", JSON.stringify(rtnData));
+                        logger.debug("=============================================");
+
+                        res.json(rtnData);
+
+                    }
+                })
+                .skip((page-1)*perPage)
+                .limit(perPage);
+            });
+        } catch (err) {
+
+            logger.debug("===============search control================");
+            logger.debug("search list error : ", err);
+            logger.debug("=============================================");
+
+        } finally {}
     },
     /**
      * user_qna 데이터 조회
      */
-    getqnalist : (req, res, next) => {
+    getqnalist: (req, res, next) => {
         var search2 = service2.createSearch(req);
 
         logger.debug("=====================> " + JSON.stringify(search2));

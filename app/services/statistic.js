@@ -45,7 +45,8 @@ module.exports = {
                         $sum: "$valuation"
                     }
                 }
-            }, {
+            }
+            , {
                 $group: { //상태별 집계
                     _id: {
                         higher_cd: "$_id.higher_cd",
