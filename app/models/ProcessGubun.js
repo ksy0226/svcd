@@ -9,10 +9,10 @@ var processGubunSchema = mongoose.Schema({
     higher_nm: { type: String },                      //상위코드명
     description: { type: String },                    //설명
     user_id: { type: String },
-    user_nm: { type: String },
+    user_nm: { type: String, default: "관리자" },
     question_type: { type: String },                  //문의유형
     created_at: { type: Date, default: Date.now },    //생성일자 
-    use_yn: { type: String, default: "사용" }         //사용여부(1:사용, 0:미사용)
+    use_yn: { type: String, default: "사용" }         //사용여부
 
 });
 
