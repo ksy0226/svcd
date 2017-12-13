@@ -35,7 +35,7 @@ $(document).ready(function () {
     });
 
     //최초 페이징
-    paging(totalData, dataPerPage, pageCount, 1);
+    //paging(totalData, dataPerPage, pageCount, 1);
     
     //최초 조회
     getDataList(1);
@@ -133,13 +133,21 @@ function getDataList(selectedPage){
             $('#ajax_indicator').css("display", "");
         },
         success: function (dataObj) {
-            $('#ajax_indicator').css("display", "none");
-            //리스트에 내용 매핑
-            setDataList(dataObj.incident, selectedPage);
+ 
             totalData = Number(dataObj.totalCnt);
-            totalPage = Math.ceil(totalData/dataPerPage);
+            if(totalData < dataPerPage){
+                totalPage = 1;
+            }else{
+                totalPage = Math.ceil(totalData/dataPerPage);    // 총 페이지 수
+            }
+ 
             $('#totalPage').text(totalPage);
             $('#totalCnt').text(totalData);
+
+            //리스트에 내용 매핑
+            setDataList(dataObj.incident, selectedPage);
+
+
             paging(totalData, dataPerPage, pageCount, selectedPage);
             
         }
@@ -156,29 +164,22 @@ function setDataList(dataObj, selectedPage) {
         //기존 데이터 삭제
         $("#more_list tr").remove();
     //}
-    
-    var startIdx = dataPerPage*(selectedPage-1)+1;
-    if(startIdx == 0){
-        startIdx = startIdx+1;
+    var loopCnt = dataPerPage;
+    if (dataObj.totalCnt < dataPerPage){
+        loopCnt = dataObj.totalCnt;
     }
-    var endIdx = dataPerPage*selectedPage+1;
-   
-    //endIdx 가 실제 데이터 수보다 클 경우,
-    if(dataObj.length < endIdx){ // 28 < 31   
-        endIdx = dataObj.length+1 ;
-    } 
-   
 
+    for(var i = 0 ; i < loopCnt ; i++){ 
 
-    for(var i = 0 ; i < dataPerPage ; i++){ 
         var register_dateVal = dataObj[i].register_date; 
 
-        if(register_dateVal){
+        if(register_dateVal.length > 10){
             register_dateVal = register_dateVal.substring(0,10);
         }else{
             register_dateVal = ""; 
         }
 
+      
 
         var idValue = dataObj[i]._id ;
         var addList = "";
@@ -217,10 +218,11 @@ function setDataList(dataObj, selectedPage) {
 
         $("#more_list").append(addList);
         
-        startIdx++;
     }
-
     
+    alert("trace 1");
+
+   
     $('#more_list > tr').each(function(){
         
         /**
@@ -249,12 +251,13 @@ function setDataList(dataObj, selectedPage) {
             $(this).find('td:eq(4)').html('<span class="label label-info">보류</span>');
         }
 
-       
         
 
 
 
     })
+    alert("trace end");
+    
 }
 
 
@@ -262,10 +265,16 @@ function setDataList(dataObj, selectedPage) {
  * 페이징 처리
  */
 function paging(totalData, dataPerPage, pageCount, currentPage){
-    
-    var totalPage = Math.ceil(totalData/dataPerPage);    // 총 페이지 수
-    var pageGroup = Math.ceil(currentPage/pageCount);    // 페이지 그룹
+    alert("paging");
+    var pageGroup = currentPage/pageCount ;
 
+    var pageGroup2 = Math.ceil(currentPage/pageCount);    // 페이지 그룹
+
+    if(pageGroup == 0){
+        pageGroup =1;
+    }else{
+        pageGroup = Math.ceil(currentPage/pageCount);    // 페이지 그룹
+    }
     //검색 시, 총 페이지 수가 화면에 뿌려질 페이지(10개Page)보다 작을 경우 처리
     if(totalPage <= pageCount){
         last = totalPage;

@@ -56,9 +56,10 @@ function getHighLowerSt(){
 function setHighLower(dataObj){
     if (dataObj.length > 0) {
         for (var i = 0; i < dataObj.length; i++) {
+           
             var addList = "";
             addList += "<tr>";
-            addList += "    <th class='text-left'>" + dataObj[i]._id.higher_nm + "</td>";
+            addList += "    <td class='text-left'>" + dataObj[i]._id.higher_nm + "</td>";
             addList += "    <td class='text-left'>" + dataObj[i]._id.lower_nm + "</td>";
             addList += "    <td class='text-center'>" + dataObj[i].totalCnt + "</td>";
             addList += "    <td class='text-center'>" + dataObj[i].stCnt2+ "</td>";
@@ -67,6 +68,7 @@ function setHighLower(dataObj){
             addList += "    <td class='text-center'>" + dataObj[i].solRatio + "</td>";
             addList += "    <td class='text-center'>" + dataObj[i].valAvg + "</td>";
             addList += "</tr>";
+
 
             $("#more_list").append(addList);
         }
