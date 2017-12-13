@@ -10,6 +10,8 @@ module.exports = {
     high_lower: (req) => {
 
         var condition = {};
+        var OrQueries = [];
+
         if (req.query.company_cd != null && req.query.company_cd != '*') {
             condition.request_company_cd = req.query.company_cd;
         }
@@ -19,7 +21,19 @@ module.exports = {
         if (req.query.mm != null && req.query.mm != '*') {
             condition.register_mm = req.query.mm;
         }
+        //[접수대기] 건 제외
+        OrQueries.push({
+            $or: [{
+                status_cd: "2"
+            }, {
+                status_cd: "3"
+            }, {
+                status_cd: "4"
+            }]
+        });
 
+        condition.$or = OrQueries;
+        
         logger.debug("==========================================statistic service=========================================");
         logger.debug("condifion : ", condition);
         logger.debug("====================================================================================================");
