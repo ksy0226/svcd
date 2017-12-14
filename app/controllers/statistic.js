@@ -97,7 +97,8 @@ module.exports = {
                         var stCnt4 = 0; //완료
                         var stCnt5 = 0; //보류 개수
                         var stCnt3_4 = 0; //미평가+완료 개수
-                                                                                                                                                                                                                                               
+
+
                         for (var i = 0; i < data.grp.length; i++) {
                             //전체 개수
                             totalCnt = totalCnt + data.grp[i].count;
