@@ -116,7 +116,7 @@ function monthlyLoad() {
 }
 
 function setMonthlyLoad(dataObj) {
-    ///alert("setMonthlyLoad>>"+JSON.stringify(dataObj));
+    //alert("setMonthlyLoad >> " + JSON.stringify(dataObj));
 
     var DrawSparkline = function () {
         $('#sparkline2').sparkline(dataObj.avg, {
