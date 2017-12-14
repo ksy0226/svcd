@@ -59,36 +59,10 @@ function setHighLower(dataObj){
     //alert(JSON.stringify(dataObj));
     if (dataObj.length > 0) {
         for (var i = 0; i < dataObj.length; i++) {
-            
-            if(dataObj[i]._id.higher_cd != dataObj[i+1]._id.higher_cd){
-
-                var idxCnt = i++ ;
-                //alert("idxCnt : " + idxCnt); //10,13,15,26,32,46,63,67,84,88,92,94
-               
-
-                /*
-                var idx = dataObj[i]._id.lower_nm
-                
-
-                if(dataObj[i]._id.lower_nm){
-                   
-                    idx = i++;
-                    //alert("idx : " + idx); 
-                    
-                    var rowspanArray = []; 
-                    rowspanArray.push(idx);
-               }
-               */
-
-            }
-       
+    
             var addList = "";
-            //addList += "<table id='target-table'>";
             addList += "<tr>";
-            //if(i == idxCnt){
-            //if(dataObj[i]._id.higher_cd != dataObj[i+1]._id.higher_cd){
-            //}
-            addList += "    <td class='text-left' id='gubun'>" + dataObj[i]._id.higher_nm + "</td>";
+            addList += "    <td class='text-left'>" + dataObj[i]._id.higher_nm + "</td>";
             addList += "    <td class='text-left'>" + dataObj[i]._id.lower_nm + "</td>";
             addList += "    <td class='text-center'>" + dataObj[i].totalCnt + "</td>";
             addList += "    <td class='text-center'>" + dataObj[i].stCnt2+ "</td>";
@@ -96,26 +70,9 @@ function setHighLower(dataObj){
             addList += "    <td class='text-center'>" + dataObj[i].stCnt5 + "</td>";
             addList += "    <td class='text-center'>" + dataObj[i].solRatio + "</td>";
             addList += "    <td class='text-center'>" + dataObj[i].valAvg + "</td>";
-
             addList += "</tr>";
-            //addList += "</table>";
-            /*
-            $('#gubun').each(function (){
-                //alert("gubun test");
-                alert($("#gubun:contains('"+ $(this).text() +"')"));
-                var rows = $("#gubun:contains('"+ $(this).text() +"')");
-                if(rows.length){
-                    alert("length 1이상");
-                    rows.eq(0).attr("rowspan",rows.length);
-                    rows.not(":eq(0)").remove();
-                }
-            });
-            */
+          
             $("#more_list").append(addList);
-
-           
-
-
         }
     } else {
         var addList = "";
@@ -169,5 +126,7 @@ function setCompany(data) {
     }
     //회사 세팅이 끝나면 조회한다.
     getHighLowerSt();
+
+
 }
 
