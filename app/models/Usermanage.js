@@ -3,12 +3,12 @@ var bcrypt   = require("bcrypt-nodejs");
 const logger = require('log4js').getLogger('app');
 
 var usermanageSchema = mongoose.Schema({
-    userCompany_nm   : { type : String, required: true },
+    userCompany_nm   : { type : String , default : ''},
     company_cd       : { type : String },
     company_nm       : { type : String , default : '미승인'},
-    email            : { type : String, required: true },
+    email            : { type : String , required: true },
     user_id          : { type : String },
-    password         : { type : String, required: true },
+    password         : { type : String , required: true },
     employee_nm      : { type : String },
     dept_cd          : { type : String },
     dept_nm          : { type : String },

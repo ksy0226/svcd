@@ -33,10 +33,14 @@ block content
                             .p-20
                                 form.form-horizontal.group-border-dashed(name='form' action='/usermanage/new' method='post')
                                     .form-group
-                                        .row
-                                            .col-xs-12.col-sm-12.col-md-12
-                                                .btn.btn-primary.btn-signup(onclick="location.href='/usermanage'") 목록
-                                                button.btn.btn-success.btn-md(type='submit') 저장
+                                        .pull-left
+                                            .btn.btn-primary.waves-effect.waves-light.m-l-5(onclick="location.href='/usermanage'")
+                                                i.fa.fa-list-ul
+                                                |  목록
+                                        .pull-right
+                                            button.btn.btn-primary(type='submit')
+                                                i.fa.fa-send-o
+                                                |  저장
                                     hr
                                     .form-group
                                         .row
@@ -44,6 +48,10 @@ block content
                                                 // Your awesome content goes here
                                                 .m-b-30
                                                     form.form.center-block(name='form' action='/usermanage/new' method='post')
+                                                        .form-group(style='display:none')
+                                                            label.col-sm-2.control-label 입력한 회사명
+                                                            .col-sm-9
+                                                                input.form-control(name='usermanage[userCompany_nm]', type='text', value='')
                                                         .form-group(style='display:none')
                                                             label.col-sm-2.control-label 회사코드
                                                             .col-sm-9
@@ -64,10 +72,6 @@ block content
                                                                 input.form-control(name='usermanage[email]' type='email' placeholder='isusystem@isu.co.kr' required value='')
                                                         .form-group
                                                             label.col-sm-2.control-label 비밀번호
-                                                            .col-sm-9
-                                                                input.form-control(name='usermanage[password]' type='password' required value='')
-                                                        .form-group
-                                                            label.col-sm-2.control-label 새비밀번호
                                                             .col-sm-9
                                                                 input.form-control(name='usermanage[password]' type='password' required value='')
                                                         .form-group
