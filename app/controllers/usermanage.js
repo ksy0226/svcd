@@ -168,14 +168,16 @@ module.exports = {
         Usermanage.findOneAndUpdate({
             _id: req.params.id
         }, req.body.usermanage, function (err, usermanage) {
-            if (err) return res.json({
-                success: false,
-                message: err
-            });
-            if (!usermanage) return res.json({
-                success: false,
-                message: "No data found to update"
-            });
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            }
+            if (!usermanage) {
+                res.render("http/500", {
+                    err: err
+                });
+            }
             res.redirect('/usermanage/');
         });
     },
@@ -184,15 +186,75 @@ module.exports = {
         Usermanage.findOneAndRemove({
             _id: req.params.id
         }, function (err, usermanage) {
-            if (err) return res.json({
-                success: false,
-                message: err
-            });
-            if (!usermanage) return res.json({
-                success: false,
-                message: "No data found to delete"
-            });
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            }
+            if (!usermanage) {
+                res.render("http/500", {
+                    err: err
+                });
+            }
             res.redirect('/usermanage');
+        });
+    },
+
+    myPage: (req, res, next) => {
+        async.waterfall([function (callback) {
+            CompanyModel.find({}, function (err, company) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null, company)
+            });
+        }], function (err, company) {
+            Usermanage.findOne({ email: req.session.email }, function (err, usermanage) {
+                /*
+                logger.debug(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                logger.debug("usermanage : ", usermanage);
+                logger.debug(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                */
+
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                } else {
+                    res.render("myPage/edit", {
+                        usermanage: usermanage,
+                        user: req.user,
+                        company: company
+                    });
+                }
+            });
+        });
+    },
+
+    myPageUpdate: (req, res, next) => {
+        req.body.usermanage.updatedAt = Date.now();
+        Usermanage.findOneAndUpdate({
+            email: req.session.email 
+        }, req.body.usermanage, function (err, usermanage) {
+            /*
+            logger.debug(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+            logger.debug("usermanage : ", usermanage);
+            logger.debug(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+            */
+
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            }
+            if (!usermanage) {
+                res.render("http/500", {
+                    err: err
+                });
+            }
+            res.redirect('/usermanage/myPage');
         });
     },
 
@@ -259,7 +321,7 @@ module.exports = {
         try {
             request({
                 //uri: "http://gw.isu.co.kr/CoviWeb/api/UserList.aspx?searchName="+encodeURIComponent(req.query.searchText),
-                uri: CONFIG.groupware.uri+"/CoviWeb/api/UserList.aspx?searchName="+encodeURIComponent(req.query.searchText),
+                uri: CONFIG.groupware.uri + "/CoviWeb/api/UserList.aspx?searchName=" + encodeURIComponent(req.query.searchText),
                 //uri: "http://gw.isu.co.kr/CoviWeb/api/UserInfo.aspx?email=hilee@isu.co.kr&password=nimda3",
                 headers: {
                     'Content-type': 'application/json'
@@ -272,11 +334,11 @@ module.exports = {
                 //logger.debug("=====================================");
 
                 Usermanage.find({
-                        employee_nm: {
-                            $regex: new RegExp(req.query.searchText, "i")
-                        }
+                    employee_nm: {
+                        $regex: new RegExp(req.query.searchText, "i")
+                    }
                     , group_flag: "out"
-                    })
+                })
                     .limit(10)
                     .exec(function (err, usermanageData) {
                         if (err) {
@@ -299,21 +361,21 @@ module.exports = {
 };
 
 
-function mergeUser(trg1, trg2){
+function mergeUser(trg1, trg2) {
     var rtnJSON = [];
-    try{
-        if(trg1 != null){
-            for(var i = 0 ; i < trg1.length ; i++){
+    try {
+        if (trg1 != null) {
+            for (var i = 0; i < trg1.length; i++) {
                 rtnJSON.push(trg1[i]);
             }
         }
-        if(trg2 != null){
-            for(var i = 0 ; i < trg2.length ; i++){
+        if (trg2 != null) {
+            for (var i = 0; i < trg2.length; i++) {
                 rtnJSON.push(trg2[i]);
             }
         }
         return rtnJSON;
-    }catch(e){
-        logger.error("control useremanage mergeUser : ",e);
+    } catch (e) {
+        logger.error("control useremanage mergeUser : ", e);
     }
 }

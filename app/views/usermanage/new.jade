@@ -6,8 +6,10 @@ block head
 
     // postcode
     script(src='/isu/js/postcode.js')
-    // http
+    
+    //http용
     script(src='http://dmaps.daum.net/map_js_init/postcode.v2.js')
+    script(src='https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js')
 
 block content
     .content-page
@@ -97,15 +99,15 @@ block content
                                                         .form-group
                                                             label.col-sm-2.control-label 회사주소1
                                                             .col-sm-2
-                                                                input.form-control(name='usermanage[dom_post_cd1]', type='text', value='')
+                                                                input.form-control(id='zip_cd', name='usermanage[dom_post_cd1]', type='text', value='')
                                                             .col-sm-5
-                                                                input.form-control(name='usermanage[dom_addr]', type='text', value='')
+                                                                input.form-control(id='addr', name='usermanage[dom_addr]', type='text', value='')
                                                             .col-sm-2
                                                                 span.btn.btn-sm.btn-primary(id='postcode') 우편번호 찾기
                                                         .form-group
                                                             label.col-sm-2.control-label 회사주소2
                                                             .col-sm-9
-                                                                input.form-control(name='usermanage[dom_addr2]', type='text', value='')
+                                                                input.form-control(id='addr2', name='usermanage[dom_addr2]', type='text', value='')
                                                         .form-group
                                                             label.col-sm-2.control-label 회사전화번호
                                                             .col-sm-9
