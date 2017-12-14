@@ -182,7 +182,6 @@ function setDataList(dataObj, selectedPage, totalDataCnt) {
         }
 
       
-
         var idValue = dataObj[i]._id ;
         var addList = "";
 
@@ -276,7 +275,6 @@ function paging(totalDataCnt, dataPerPage, pageCnt, currentPage){
     var next = last+1;
     var prev = first-1;
     
-
     var html = "";
     
     if(prev > 0)
