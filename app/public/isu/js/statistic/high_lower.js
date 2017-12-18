@@ -24,6 +24,8 @@ $(document).ready(function () {
         getHighLowerSt();
     });
 
+     
+
 });
 
 /**
@@ -46,6 +48,7 @@ function getHighLowerSt(){
         },         
         success: function( data ) { 
             setHighLower(data);
+            
         }             
     }); 
 }
@@ -54,9 +57,12 @@ function getHighLowerSt(){
  * 상위업무별 하위업무 통계 display
  */
 function setHighLower(dataObj){
+    //alert(JSON.stringify(dataObj));
+   
+
     if (dataObj.length > 0) {
         for (var i = 0; i < dataObj.length; i++) {
-           
+    
             var addList = "";
             addList += "<tr>";
             addList += "    <td class='text-left'>" + dataObj[i]._id.higher_nm + "</td>";
@@ -68,8 +74,7 @@ function setHighLower(dataObj){
             addList += "    <td class='text-center'>" + dataObj[i].solRatio + "</td>";
             addList += "    <td class='text-center'>" + dataObj[i].valAvg + "</td>";
             addList += "</tr>";
-
-
+          
             $("#more_list").append(addList);
         }
     } else {
@@ -80,11 +85,23 @@ function setHighLower(dataObj){
 
         $("#more_list").append(addList);
     }
-
     
-
+    rowSpan();
 }
 
+/**
+ * rowSpan 합치기
+ */
+function rowSpan(){
+    
+
+    $("#target-table").rowspanizer({
+        //합치고자 하는 row 지정
+        //cols : [0, 1, 4], 
+        cols : [0],
+        vertical_align: "middle"
+    });
+}
 
 /**
  * 회사 정보 조회
@@ -116,7 +133,11 @@ function setCompany(data) {
     for (var i = 0; i < data.length; i++) {
         $('#company_cd').append("<option value='" + data[i]["company_cd"] + "'>" + data[i]["company_nm"] + "</option>");
     }
+
+    
     //회사 세팅이 끝나면 조회한다.
     getHighLowerSt();
+
+
 }
 
