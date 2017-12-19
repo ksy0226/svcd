@@ -24,9 +24,25 @@ $(document).ready(function () {
         getHighLowerSt();
     });
 
-     
-
+    
 });
+
+/*
+var rs = new rowSpan();
+rs.init();
+*/
+
+/**
+ * rowSpan 합치기
+ */
+function rowSpan(){
+    $(".target-table").rowspanizer({
+        //합치고자 하는 row 지정
+        //cols : [0, 1, 4], 
+        cols : [0],
+        vertical_align: "middle"
+    });
+}
 
 /**
  * 상위업무별 하위업무 통계 가져오기
@@ -85,23 +101,12 @@ function setHighLower(dataObj){
 
         $("#more_list").append(addList);
     }
-    
+    //var rs = new rowSpan();
+    //rs.init();
     rowSpan();
 }
 
-/**
- * rowSpan 합치기
- */
-function rowSpan(){
-    
 
-    $("#target-table").rowspanizer({
-        //합치고자 하는 row 지정
-        //cols : [0, 1, 4], 
-        cols : [0],
-        vertical_align: "middle"
-    });
-}
 
 /**
  * 회사 정보 조회

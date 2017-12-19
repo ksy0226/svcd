@@ -8,6 +8,7 @@ block head
     script(src='/vendor/jquery/jquery-ui.1.11.0.js')
     script(src='/vendor/jquery/jquery.min.js')
 
+
     script(src='/isu/js/statistic/jquery.rowspanizer.js', type='text/javascript')
     script(src='/isu/js/statistic/high_lower.js', type='text/javascript')
 
@@ -71,7 +72,7 @@ block content
                 .row
                     .col-lg-12
                         .card-box
-                            table#target-table.table.table-bordered
+                            table#target-table.table.table-bordered(class='target-table')
                                 thead
                                     tr
                                         th.font-12(class='text-center' width='') 상위업무명

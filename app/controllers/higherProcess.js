@@ -156,5 +156,37 @@ module.exports = {
         }catch(e){
             logger.debug(e);
         }
+    },
+
+    /**
+     * 회사별 상위업무 조회 페이지 - 상위업무조회
+     */
+    
+    getHigher: (req, res, next) => {
+        try {
+
+            logger.debug("==========================================higherProcess getHigher============================");
+            logger.debug("====================================================================================================");
+
+            HigherProcessModel.find({}, function (err, higherJsonData) {
+                if (err) {
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
+
+                    //logger.debug("==========================================CompanyModel.find({}========================================");
+                    //logger.debug("companyJsonData : ",companyJsonData);
+                    //logger.debug("====================================================================================================");
+
+                    res.json(higherJsonData);
+                };
+
+            }).sort('higher_cd');
+        } catch (e) {
+            logger.error("HigherProcessModel error : ", e);
+        } finally { }
     }
+    
 };
