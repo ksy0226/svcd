@@ -92,6 +92,9 @@ function setHighLower(dataObj){
             addList += "    <td class='text-center' id='valAvg'>" + dataObj[i].valAvg + "</td>";
             addList += "</tr>";
             
+            //var table = $('#target-table').DataTable();
+            //alert("table"+table);
+            //var avg = table.column( 7 ).data().average();
 
             if(dataObj[i]._id.higher_nm == "그룹웨어"){
                 totalCntSum = Number(totalCntSum + dataObj[i].totalCnt);
