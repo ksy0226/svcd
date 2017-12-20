@@ -20,17 +20,12 @@ $(document).ready(function () {
     });
 
     //월 선택 시
-    $('#deselect-all').on('click', function () {
+    $('#mm').on('click', function () {
         getHighLowerSt();
     });
-
     
 });
 
-/*
-var rs = new rowSpan();
-rs.init();
-*/
 
 /**
  * rowSpan 합치기
@@ -74,7 +69,13 @@ function getHighLowerSt(){
  */
 function setHighLower(dataObj){
     //alert(JSON.stringify(dataObj));
-   
+    var totalCntSum = 0;
+    var stCnt2Sum = 0;
+    var stCnt3_4Sum = 0;
+    var stCnt5Sum = 0;
+    var solRatioAvg = 0;
+    var valAvg = 0;
+
 
     if (dataObj.length > 0) {
         for (var i = 0; i < dataObj.length; i++) {
@@ -88,11 +89,38 @@ function setHighLower(dataObj){
             addList += "    <td class='text-center'>" + dataObj[i].stCnt3_4 + "</td>";
             addList += "    <td class='text-center'>" + dataObj[i].stCnt5 + "</td>";
             addList += "    <td class='text-center'>" + dataObj[i].solRatio + "</td>";
-            addList += "    <td class='text-center'>" + dataObj[i].valAvg + "</td>";
+            addList += "    <td class='text-center' id='valAvg'>" + dataObj[i].valAvg + "</td>";
             addList += "</tr>";
-          
+            
+
+            if(dataObj[i]._id.higher_nm == "그룹웨어"){
+                totalCntSum = Number(totalCntSum + dataObj[i].totalCnt);
+                stCnt2Sum = Number(stCnt2Sum + dataObj[i].stCnt2);
+                stCnt3_4Sum = Number(stCnt3_4Sum + dataObj[i].stCnt3_4);
+                stCnt5Sum = Number(stCnt5Sum + dataObj[i].stCnt5);
+                solRatioAvg = (stCnt3_4Sum / totalCntSum * 100).toFixed(2);
+        
+
+                if(dataObj[i]._id.higher_nm != dataObj[i+1]._id.higher_nm){
+
+                    addList += "<tr bgcolor='#D4F4FA'>";
+                    addList += "    <td class='text-left'>" + dataObj[i]._id.higher_nm + "</td>";
+                    addList += "    <td class='text-center'>소 계</td>";
+                    addList += "    <td class='text-center' id='totalCntSum'>" + totalCntSum + "</td>";
+                    addList += "    <td class='text-center'>" + stCnt2Sum + "</td>";
+                    addList += "    <td class='text-center' id='stCnt3_4Sum'>" + stCnt3_4Sum + "</td>";
+                    addList += "    <td class='text-center'>" + stCnt5Sum + "</td>";
+                    addList += "    <td class='text-center'>" + solRatioAvg + "</td>";
+                    addList += "    <td class='text-center' id='average'></td>";
+                    addList += "</tr>";
+                }
+            }
+
             $("#more_list").append(addList);
         }
+
+        
+
     } else {
         var addList = "";
         addList += "<tr>";
@@ -101,8 +129,6 @@ function setHighLower(dataObj){
 
         $("#more_list").append(addList);
     }
-    //var rs = new rowSpan();
-    //rs.init();
     rowSpan();
 }
 
