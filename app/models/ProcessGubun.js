@@ -3,7 +3,7 @@
 var mongoose = require('mongoose');
 
 var processGubunSchema = mongoose.Schema({
-    process_cd: { type: String, required: true },     //처리코드
+    process_cd: { type: String, required: true, unique:true },     //처리코드
     process_nm: { type: String },                     //처리코드명
     higher_cd: { type: String },                      //상위코드
     higher_nm: { type: String },                      //상위코드명

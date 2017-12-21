@@ -3,9 +3,9 @@
 var mongoose = require('mongoose');
 
 var lowerProcessSchema = mongoose.Schema({
-    lower_cd: { type: String, required: true },         //하위업무코드
+    lower_cd: { type: String, required: true, unique:true },         //하위업무코드
     lower_nm: { type: String },                         //하위업무명
-    higher_cd: { type: String, required: true },        //상위업무코드
+    higher_cd: { type: String, required: true, unique:true },        //상위업무코드
     higher_nm: { type: String },                        //상위업무명
     description: { type: String },                      //설명
     need_hour: { type: String },                        //hour

@@ -3,8 +3,8 @@
 var mongoose = require('mongoose');
 
 var IncidentGubunSchema = mongoose.Schema({
-    higher_cd : {type: String, required:true},        //상위코드
-    gbn_cd: { type: String, required: true },     //인시던트구분코드
+    higher_cd : {type: String, required:true, unique:true},        //상위코드
+    gbn_cd: { type: String, required: true, unique:true },     //인시던트구분코드
     gbn_nm: { type: String },     //인시던트구분명
     gbn_desc: { type: String },     //인시던트구분명
     company_cd: { type: String },                        //회사코드

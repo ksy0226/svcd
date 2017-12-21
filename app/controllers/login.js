@@ -50,12 +50,12 @@ module.exports = {
              * 로그인 정보 매핑
              * usermanage 테이블에서 사용자 1차 검색 (비밀번호 틀릴 시 그룹웨어 검색)
              * usermanage 테이블에 존재않을 시 그룹웨어 검색  
-             */ 
+             */
             async.waterfall([function (callback) {
                 Usermanage.findOne({
                     email: req.body.email
                 }).exec(function (err, usermanage) {
-                    if (err){ 
+                    if (err) {
                         res.render('index', {
                             email: email,
                             remember_me: remember_me,
@@ -63,17 +63,24 @@ module.exports = {
                         });
                     }
 
-                    if(usermanage != null){
-                        if (usermanage.authenticate(req.body.password))  { //비밀번호가 일치하면 - 고객사
-                            if(usermanage.access_yn == 'Y'){
+                    if (usermanage != null) {
+
+                        logger.debug("=================================================================");
+                        logger.debug("usermanage is not null : ", usermanage);
+                        logger.debug("usermanage.authenticate(req.body.password) : ",usermanage.authenticate(req.body.password));
+                        logger.debug("=================================================================");
+
+                        if (usermanage.authenticate(req.body.password)) { //비밀번호가 일치하면 - 고객사
+
+                            if (usermanage.access_yn == 'Y') {
                                 usermanage.status = 'OK';
-                            }else{
+                            } else {
                                 usermanage.status = 'FAIL';
                             }
                             callback(null, usermanage);
-                        }else{ //비밀번호 일치하지 않으면 그룹사 권한별
+                        } else { //비밀번호 일치하지 않으면 그룹사 권한별
                             request({
-                                uri: CONFIG.groupware.uri+"/CoviWeb/api/UserInfo.aspx?type=sso&email=" + req.body.email + "&password=" + req.body.password,
+                                uri: CONFIG.groupware.uri + "/CoviWeb/api/UserInfo.aspx?type=sso&email=" + req.body.email + "&password=" + encodeURIComponent(req.body.password),
                                 headers: {
                                     'Content-type': 'application/json'
                                 },
@@ -86,8 +93,13 @@ module.exports = {
                             });
                         }
                     } else { //usermanage테이블에 계정이 존재하지 않으면 그룹사 일반계정
+
+                        logger.debug("=================================================================");
+                        logger.debug("usermanage is null : ", usermanage, req.body.email);
+                        logger.debug("=================================================================");
+
                         request({
-                            uri: CONFIG.groupware.uri+"/CoviWeb/api/UserInfo.aspx?type=sso&email=" + req.body.email + "&password=" + req.body.password,
+                            uri: CONFIG.groupware.uri + "/CoviWeb/api/UserInfo.aspx?type=sso&email=" + req.body.email + "&password=" + encodeURIComponent(req.body.password),
                             headers: {
                                 'Content-type': 'application/json'
                             },
@@ -109,7 +121,7 @@ module.exports = {
                     });
                 } else {
 
-                    if(userInfo.status == 'OK'){
+                    if (userInfo.status == 'OK') {
                         req.session.email = userInfo.email;
                         req.session.user_id = userInfo.user_id;
                         req.session.sabun = userInfo.sabun;
@@ -127,13 +139,13 @@ module.exports = {
                         req.session.hp_telno = userInfo.hp_telno;
 
                         logger.debug("======================================");
-                        logger.debug("req.session.user_flag",req.session.user_flag);
-                        logger.debug("req.session.group_flag",req.session.group_flag);
-                        logger.debug("req.session.dept_cd",req.session.dept_cd);
-                        logger.debug("req.session.access_yn",req.session.access_yn);
+                        logger.debug("req.session.user_flag", req.session.user_flag);
+                        logger.debug("req.session.group_flag", req.session.group_flag);
+                        logger.debug("req.session.dept_cd", req.session.dept_cd);
+                        logger.debug("req.session.access_yn", req.session.access_yn);
                         logger.debug("======================================");
 
-                        
+
                         //>>>>>==================================================
                         //권한에 따른 분기
                         if (req.session.user_flag == '1') {
@@ -144,9 +156,9 @@ module.exports = {
                             res.render("main/user");
                         }
                         //<<<<<==================================================
-                    
-                    }else{
-                        if(userInfo.group_flag != 'in'){
+
+                    } else {
+                        if (userInfo.group_flag != 'in') {
                             //승인여부에 따른 메세지 변경
                             if (userInfo.access_yn == 'N') {
                                 res.render('index', {
@@ -161,7 +173,7 @@ module.exports = {
                                     message: "등록된 계정이 없습니다.<br>다시 시도해주세요."
                                 });
                             }
-                        }else{
+                        } else {
                             res.render('index', {
                                 email: email,
                                 remember_me: remember_me,
@@ -169,7 +181,7 @@ module.exports = {
                             });
                         }
                     }
-                    
+
                 }
             });
         } catch (e) {
@@ -178,26 +190,18 @@ module.exports = {
     },
 
     logout: (req, res) => {
-        //logger.debug('logout is called ');
-        //세션삭제
-        CompanyModel.find({}, function (err, company) {
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            } else {
-                delete req.session.email;
-                email = req.cookies.email;
-                remember_me = req.cookies.remember_me;
 
-                if (email == null) email = "";
-                res.render('index', {
-                    email: email,
-                    remember_me: remember_me,
-                    company: company
-                });
-            }
+        delete req.session.email;
+        email = req.cookies.email;
+        remember_me = req.cookies.remember_me;
+
+        if (email == null) email = "";
+
+        res.render('index', {
+            email: email,
+            remember_me: remember_me
         });
+
     },
 
     retry: (req, res) => {
@@ -247,53 +251,59 @@ module.exports = {
         try {
             //logger.debug('main_list controllers start!');
             if (req.session.user_flag == '9') {
-                Incident.find({ request_id: req.session.email }, function (err, incident) {
-                    if (err) {
-                        return res.json({
-                            success: false,
-                            message: err
-                        });
-                    } else {
-                        res.json(incident);
-                    }
-                }).sort('-created_at')
-                .limit(10);
+                Incident.find({
+                        request_id: req.session.email
+                    }, function (err, incident) {
+                        if (err) {
+                            return res.json({
+                                success: false,
+                                message: err
+                            });
+                        } else {
+                            res.json(incident);
+                        }
+                    }).sort('-created_at')
+                    .limit(10);
             } else if (req.session.user_flag == '5') {
-                Incident.find({ manager_dept_cd: req.session.dept_cd }, function (err, incident) {
-                    if (err) {
-                        return res.json({
-                            success: false,
-                            message: err
-                        });
-                    } else {
-                        res.json(incident);
-                    }
-                }).sort('-created_at')
-                .limit(10);
+                Incident.find({
+                        manager_dept_cd: req.session.dept_cd
+                    }, function (err, incident) {
+                        if (err) {
+                            return res.json({
+                                success: false,
+                                message: err
+                            });
+                        } else {
+                            res.json(incident);
+                        }
+                    }).sort('-created_at')
+                    .limit(10);
             } else if (req.session.user_flag == '1') {
                 Incident.find({}, function (err, incident) {
-                    if (err) {
-                        return res.json({
-                            success: false,
-                            message: err
-                        });
-                    } else {
-                        res.json(incident);
-                    }
-                }).sort('-created_at')
-                .limit(10);
+                        if (err) {
+                            return res.json({
+                                success: false,
+                                message: err
+                            });
+                        } else {
+                            res.json(incident);
+                        }
+                    }).sort('-created_at')
+                    .limit(10);
             } else {
-                Incident.find({ manager_email: req.session.email }, function (err, incident) {
-                    if (err) {
-                        return res.json({
-                            success: false,
-                            message: err
-                        });
-                    } else {
-                        res.json(incident);
-                    }
-                }).sort('-created_at')
-                .limit(10);
+                Incident.find({
+                        manager_email: req.session.email
+                    }, function (err, incident) {
+                        if (err) {
+                            return res.json({
+                                success: false,
+                                message: err
+                            });
+                        } else {
+                            res.json(incident);
+                        }
+                    }).sort('-created_at')
+                    .limit(10);
             }
         } catch (e) {
             logger.debug('main_list controllers error ====================> ', e)
@@ -304,7 +314,10 @@ module.exports = {
     main_list_nocomplete: (req, res, next) => {
         try {
             if (req.session.user_flag == '9') {
-                Incident.find({ request_id: req.session.email, status_cd: "3" }, function (err, incident) {
+                Incident.find({
+                    request_id: req.session.email,
+                    status_cd: "3"
+                }, function (err, incident) {
                     if (err) {
                         return res.json({
                             success: false,
@@ -315,7 +328,10 @@ module.exports = {
                     }
                 }).sort('-created_at');
             } else {
-                Incident.find({ manager_email: req.session.email, status_cd: "3" }, function (err, incident) {
+                Incident.find({
+                    manager_email: req.session.email,
+                    status_cd: "3"
+                }, function (err, incident) {
                     if (err) {
                         return res.json({
                             success: false,
@@ -337,16 +353,16 @@ module.exports = {
      */
     login: (req, res) => {
         try {
-            
+
             logger.debug("======================================");
-            logger.debug("req.query.email",req.query.email);
+            logger.debug("req.query.email", req.query.email);
             logger.debug("======================================");
 
             /**
              * 로그인 정보 매핑
-             */ 
+             */
             request({
-                uri: CONFIG.groupware.uri+"/CoviWeb/api/UserInfo.aspx?email=" + req.query.email + "&password=" + req.query.password,
+                uri: CONFIG.groupware.uri + "/CoviWeb/api/UserInfo.aspx?email=" + req.query.email + "&password=" + req.query.password,
                 headers: {
                     'Content-type': 'application/json'
                 },
@@ -355,8 +371,8 @@ module.exports = {
                 var userInfo = JSON.parse(gwUser);
                 userInfo.user_flag = '9';
                 userInfo.group_flag = 'in';
-               
-                if(userInfo.status == 'OK'){
+
+                if (userInfo.status == 'OK') {
                     req.session.email = userInfo.email;
                     req.session.user_id = userInfo.user_id;
                     req.session.sabun = userInfo.sabun;
@@ -374,10 +390,10 @@ module.exports = {
                     req.session.hp_telno = userInfo.hp_telno;
 
                     logger.debug("====================index login ==================");
-                    logger.debug("req.session.user_flag",req.session.user_flag);
-                    logger.debug("req.session.group_flag",req.session.group_flag);
-                    logger.debug("req.session.dept_cd",req.session.dept_cd);
-                    logger.debug("req.session.access_yn",req.session.access_yn);
+                    logger.debug("req.session.user_flag", req.session.user_flag);
+                    logger.debug("req.session.group_flag", req.session.group_flag);
+                    logger.debug("req.session.dept_cd", req.session.dept_cd);
+                    logger.debug("req.session.access_yn", req.session.access_yn);
                     logger.debug("===================================================");
 
                     //>>>>>==================================================
@@ -385,7 +401,7 @@ module.exports = {
                     //<<<<<==================================================
                 }
 
-            }); 
+            });
         } catch (e) {
             logger.debug(e);
         }
