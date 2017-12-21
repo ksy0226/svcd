@@ -11,9 +11,16 @@ var higherProcessSchema = mongoose.Schema({
     company_nm: { type: String },                   //회사코드
     sabun: { type: String },                        //사번
     user_nm: { type: String , default : '관리자'},     //등록자
-    created_at: { type: Date, default: Date.now() },  //생성일자 
+    created_at: { type: String },  //생성일자 
     use_yn: { type: String , default : '사용'}        //사용여부
 });
+
+function setCreateAt(next){
+    var schema = this;
+    var date = new Date();
+    schema.created_at = date.toLocaleString();
+    return next();
+}
 
 var HigherProcess = mongoose.model('higherProcess', higherProcessSchema);
 module.exports = HigherProcess;

@@ -11,10 +11,16 @@ var myProcessSchema = mongoose.Schema({
     lower_nm: { type: String },                         //하위업무명    
     email: { type: String, unique:true },                            //이메일
     employee_nm: { type: String },                      //이름
-    created_at: { type: Date, default: Date.now },      //생성일자 
+    created_at: { type: String },      //생성일자 
     user_flag: { type: String }                         //사용여부(1:사용, 0:미사용)
 });
 
+function setCreateAt(next){
+    var schema = this;
+    var date = new Date();
+    schema.created_at = date.toLocaleString();
+    return next();
+}
 
 var MyProcess = mongoose.model('myProcess', myProcessSchema);
 module.exports = MyProcess;

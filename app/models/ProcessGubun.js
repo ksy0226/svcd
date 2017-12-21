@@ -11,10 +11,17 @@ var processGubunSchema = mongoose.Schema({
     user_id: { type: String },
     user_nm: { type: String, default: "관리자" },
     question_type: { type: String },                  //문의유형
-    created_at: { type: Date, default: Date.now },    //생성일자 
+    created_at: { type: String },    //생성일자 
     use_yn: { type: String, default: "사용" }         //사용여부
 
 });
+
+function setCreateAt(next){
+    var schema = this;
+    var date = new Date();
+    schema.created_at = date.toLocaleString();
+    return next();
+}
 
 var ProcessGubunSchema = mongoose.model('processGubun', processGubunSchema);
 module.exports = ProcessGubunSchema;

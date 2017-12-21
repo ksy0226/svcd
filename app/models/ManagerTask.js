@@ -16,4 +16,11 @@ var ManagerTaskSchema = mongoose.Schema({
     deletedAt : { type : Date }  
 });
 
+function setCreateAt(next){
+    var schema = this;
+    var date = new Date();
+    schema.createdAt = date.toLocaleString();
+    return next();
+}
+
 module.exports = mongoose.model('managerTask', ManagerTaskSchema);

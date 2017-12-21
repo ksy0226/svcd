@@ -10,12 +10,19 @@ var lowerProcessSchema = mongoose.Schema({
     description: { type: String },                      //설명
     need_hour: { type: String },                        //hour
     sabun: { type: String },                            //사번
-    created_at: { type: Date, default: Date.now },      //생성일자 
     use_yn: { type: String, default: "사용" },          //사용여부
     company_cd: { type: String },                       //회사코드
     company_nm: { type: String },                       //회사명
     user_nm: { type: String, default: "관리자" },       //이름
+    created_at: { type: String }      //생성일자 
 });
+
+function setCreateAt(next){
+    var schema = this;
+    var date = new Date();
+    schema.created_at = date.toLocaleString();
+    return next();
+}
 
 var LowerProcess = mongoose.model('lowerProcess', lowerProcessSchema);
 module.exports = LowerProcess;
