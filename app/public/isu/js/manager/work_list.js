@@ -131,7 +131,6 @@ function getDataList(selectedPage) {
         + '&lower_cd=' + $('#lower_cd').val()  + '&reg_date_from='
         + $('#reg_date_from').val() + '&reg_date_to=' + $('#reg_date_to').val()
         + '&searchText=' + encodeURIComponent($('#searchText').val());
-    alert(reqParam);
 
     $.ajax({
         type: "GET",
