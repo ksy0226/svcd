@@ -95,7 +95,7 @@ function setHighLower(dataObj){
                 solRatioAvg = (stCnt3_4Sum / totalCntSum * 100).toFixed(2);
         
 
-                if(dataObj[i]._id.higher_nm != dataObj[i+1]._id.higher_nm){
+                if(dataObj[i]._id.higher_nm != dataObj[i+1]._id.higher_nm  || dataObj[i+1]._id.higher_nm == null){
 
                     addList += "<tr bgcolor='#D4F4FA'>";
                     addList += "    <td class='text-left'>" + dataObj[i]._id.higher_nm + "</td>";
