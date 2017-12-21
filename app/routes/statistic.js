@@ -17,7 +17,6 @@ router.route('/deptmonthlyLoad').get(controller.deptmonthlyLoad);
 router.route('/deptchartLoad').get(controller.deptchartLoad);
 router.route('/getHighLower').get(controller.getHighLower);
 router.route('/getComHigher').get(controller.getComHigher);
-
-
+router.route('/userCntLoad').get(controller.userCntLoad);
 
 module.exports = router;
