@@ -23,7 +23,7 @@ var IncidentSchema = new Schema({
     register_company_nm     : {type : String},  //등록자 회사명                                                              
     register_sabun          : {type : String},  //등록자 사번 
     register_nm             : {type : String},  //등록자 명                                                                
-    register_date           : {type : Date , default : Date.now()},  //등록일                                                                     
+    register_date           : {type : String},  //등록일                                                                     
     register_yyyy           : {type : String},  //등록년                                                                     
     register_mm             : {type : String},  //등록월
     real_register_mm        : {type : String},  //실제요청자
@@ -75,10 +75,24 @@ var IncidentSchema = new Schema({
                                     path            : {type : String},
                                     size            : {type : Number}
                                 }], //첨부이미지
-    created_at              : {type : Date, default : Date.now},
+    created_at              : {type : String},
     updated_at              : {type : Date},
     deleted_att             : {type : Date}
 });
+
+IncidentSchema.pre("save", setCreateAt);
+
+function setCreateAt(next){
+    var schema = this;
+    var date = new Date();
+    schema.created_at = date.toLocaleString();
+    schema.register_date = date.toLocaleString();
+    return next();
+}
+
+autoIncrement.initialize(mongoose.connection);
+IncidentSchema.plugin( autoIncrement.plugin , { model : "incident", field : "register_num" , startAt : 1 } );
+module.exports = mongoose.model('incident' , IncidentSchema);
 
 function isEmpty(value){
     var isValid = false;
@@ -97,6 +111,22 @@ IncidentSchema.virtual('getDate').get(function(){
     };
 });
 
+IncidentSchema.pre("save", setCreateAt);
+
+function setCreateAt(next){
+    var schema = this;
+    var date = new Date();
+    schema.created_at = date.toLocaleString();
+    schema.register_date = date.toLocaleString();
+    return next();
+}
+
+autoIncrement.initialize(mongoose.connection);
+IncidentSchema.plugin( autoIncrement.plugin , { model : "incident", field : "register_num" , startAt : 1 } );
+module.exports = mongoose.model('incident' , IncidentSchema);
+
+
+/*
 IncidentSchema.pre("save", function setDateFormat(next){
     var incidentDate = this;
     var new_date = new Date();
@@ -121,7 +151,4 @@ IncidentSchema.pre("save", function setDateFormat(next){
     incidentDate.register_dd = new_day;
     return next();
 });
-
-autoIncrement.initialize(mongoose.connection);
-IncidentSchema.plugin( autoIncrement.plugin , { model : "incident", field : "register_num" , startAt : 1 } );
-module.exports = mongoose.model('incident' , IncidentSchema);
+*/

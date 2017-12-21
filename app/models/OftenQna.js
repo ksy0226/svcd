@@ -21,9 +21,16 @@ var oftenqnaSchema = mongoose.Schema({
         filename:       {type : String},
         path:           {type : String},
         size:           {type : Number} }], 
-    created_at:     { type: Date, default: Date.now },
+    created_at:     {type : String},
     updated_at:     { type: Date }
 });
+
+function setCreateAt(next){
+    var schema = this;
+    var date = new Date();
+    schema.created_at = date.toLocaleString();
+    return next();
+}
 
 var Oftenqna = mongoose.model('oftenqna', oftenqnaSchema);
 module.exports = Oftenqna;

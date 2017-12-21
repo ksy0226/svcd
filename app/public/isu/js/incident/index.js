@@ -81,7 +81,7 @@ function research() {
 //데이타 가져오기
 function getDataList() {
 
-    var reqParam = 'searchType=' + $('#searchType').val() + '&status_cd=' + $('#status_cd').val() + '&reg_date_from=' + $('#reg_date_from').val() + '&reg_date_to=' + $('#reg_date_to').val() + '&searchText=' + encodeURIComponent($('#searchText').val());
+    var reqParam = 'gbn=own&searchType=' + $('#searchType').val() + '&status_cd=' + $('#status_cd').val() + '&reg_date_from=' + $('#reg_date_from').val() + '&reg_date_to=' + $('#reg_date_to').val() + '&searchText=' + encodeURIComponent($('#searchText').val());
     $.ajax({
         type: "GET",
         async: true,

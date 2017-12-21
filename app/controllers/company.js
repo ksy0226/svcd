@@ -124,6 +124,50 @@ module.exports = {
             logger.debug("==========================================company getCompany========================================");
             logger.debug("====================================================================================================");
 
+
+
+
+            try {
+                request({
+                    //uri: "http://gw.isu.co.kr/CoviWeb/api/UserList.aspx?searchName="+encodeURIComponent(req.query.searchText),
+                    uri: CONFIG.groupware.uri + "/CoviWeb/api/UserList.aspx?searchName=" + encodeURIComponent(req.query.searchText),
+                    //uri: "http://gw.isu.co.kr/CoviWeb/api/UserInfo.aspx?email=hilee@isu.co.kr&password=nimda3",
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    method: "GET",
+                }, function (err, response, usermanage) {
+    
+                    //logger.debug("=====================================");
+                    //logger.debug("=====>userJSON group ", usermanage);
+                    //logger.debug("=====================================");
+    
+                    Usermanage.find({
+                        employee_nm: {
+                            $regex: new RegExp(req.query.searchText, "i")
+                        }
+                        , group_flag: "out"
+                    })
+                        .limit(10)
+                        .exec(function (err, usermanageData) {
+                            if (err) {
+                                return res.json({
+                                    success: false,
+                                    message: err
+                                });
+                            } else {
+                                if (usermanage != null) {
+                                    usermanage = JSON.parse(usermanage);
+                                }
+                                res.json(mergeUser(usermanage, usermanageData));
+                            }
+                        }); //usermanage.find End
+                }); //request End
+            } catch (e) {
+                logger.error("===control usermanager.js userJSON : ", e);
+            }
+
+
             CompanyModel.find({}, function (err, companyJsonData) {
                 if (err) {
                     return res.json({
