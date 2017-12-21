@@ -185,7 +185,7 @@ function setDataList(dataObj, selectedPage, totalDataCnt) {
         var idValue = dataObj[i]._id ;
         var addList = "";
 
-        //addList += "							<tr onclick=window.location='/search/mng_detail/" + dataObj[i]._id + "'>";
+
         addList += "							<tr onclick=detailShow('" + dataObj[i]._id + "') style='cursor:pointer'>";
         if(dataObj[i].status_cd == "1"){
             addList += "								<td>" + dataObj[i].higher_nm + " / " + " " + "</td>";
