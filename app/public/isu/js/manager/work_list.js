@@ -443,7 +443,8 @@ function setDetail(dataObj) {
     $('#_request_complete_date').html(dataObj.request_complete_date);
     $('#_app_menu').html(dataObj.app_menu);
     //$('#_register_nm-register_date').html(dataObj.register_nm+"/"+dataObj.register_date);
-    var register_dateVal = new Date(dataObj.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    //var register_dateVal = new Date(dataObj.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    var register_dateVal = new Date(dataObj.register_date).toUTCString() ;//.toISOString().replace(/T/, ' ').replace(/\..+/, '') + (840 * 60 * 1000);
     $('#_register_nm-register_date').html(dataObj.register_nm + "/" + register_dateVal);
 
 
