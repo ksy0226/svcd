@@ -109,7 +109,7 @@ IncidentSchema.pre("save", function setDateFormat(next){
    
 
     // format으로 출력한다
-    var created_at = m.format("YYYY-MM-DD HH:mm:ss");
+    var created_at = new_date.toLocaleString();//m.format("YYYY-MM-DD HH:mm:ss");
     //console.log("created_at<<<<"+created_at);  // => 2016년07월12일 12:34:56 Wednesday     
 
 

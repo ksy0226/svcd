@@ -28,18 +28,6 @@ $(document).ready(function () {
 
 
 /**
- * rowSpan 합치기
- */
-function rowSpan(){
-    $(".target-table").rowspanizer({
-        //합치고자 하는 row 지정
-        //cols : [0, 1, 4], 
-        cols : [0],
-        vertical_align: "middle"
-    });
-}
-
-/**
  * 상위업무별 하위업무 통계 가져오기
  */
 function getHighLowerSt(){
@@ -96,7 +84,10 @@ function setHighLower(dataObj){
             //alert("table"+table);
             //var avg = table.column( 7 ).data().average();
 
-            if(dataObj[i]._id.higher_nm == "그룹웨어"){
+           
+
+
+            //if(dataObj[i]._id.higher_nm == "그룹웨어"){
                 totalCntSum = Number(totalCntSum + dataObj[i].totalCnt);
                 stCnt2Sum = Number(stCnt2Sum + dataObj[i].stCnt2);
                 stCnt3_4Sum = Number(stCnt3_4Sum + dataObj[i].stCnt3_4);
@@ -116,10 +107,19 @@ function setHighLower(dataObj){
                     addList += "    <td class='text-center'>" + solRatioAvg + "</td>";
                     addList += "    <td class='text-center' id='average'></td>";
                     addList += "</tr>";
+
+                    totalCntSum = 0;
+                    stCnt2Sum = 0;
+                    stCnt3_4Sum = 0;
+                    stCnt5Sum = 0;
+                    solRatioAvg = 0;
+
                 }
-            }
+            //}
+           
 
             $("#more_list").append(addList);
+            rowSpan();
         }
 
         
@@ -132,7 +132,7 @@ function setHighLower(dataObj){
 
         $("#more_list").append(addList);
     }
-    rowSpan();
+    
 }
 
 
@@ -174,4 +174,19 @@ function setCompany(data) {
 
 
 }
+
+
+
+/**
+ * rowSpan 합치기
+ */
+function rowSpan(){
+    $(".target-table").rowspanizer({
+        //합치고자 하는 row 지정
+        //cols : [0, 1, 4], 
+        cols : [0],
+        vertical_align: "middle"
+    });
+}
+
 
