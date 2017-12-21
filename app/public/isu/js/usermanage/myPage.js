@@ -8,7 +8,6 @@ $(document).ready(function () {
     $('#using_yn').val(usermanageObj.using_yn);
     //$('#company_cd').val(usermanageObj.company_nm);
     $('#company_cd').val(usermanageObj.company_cd);
-    
 });
 
 function companyCd() {

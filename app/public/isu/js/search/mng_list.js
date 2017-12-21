@@ -5,10 +5,10 @@ var rowIdx = 0;         //출력 시작 인덱스
 var dataCnt = 0;        // 출력 종료 인덱스
 var inCnt = 15;         //한번에 화면에 조회되는 리스트 수
 
-var totalData = 0;      // 총 데이터 수 
+var totalDataCnt = 0;      // 총 데이터 수 
 
 var dataPerPage = 15;   // 한 페이지에 나타낼 데이터 수
-var pageCount = 10;      // 한 화면에 나타낼 페이지 수
+var pageCnt = 10;      // 한 화면에 나타낼 페이지 수
 var totalPage = 0;
 
 
@@ -35,7 +35,7 @@ $(document).ready(function () {
     });
 
     //최초 페이징
-    paging(totalData, dataPerPage, pageCount, 1);
+    //paging(totalData, dataPerPage, pageCnt, 1);
     
     //최초 조회
     getDataList(1);
@@ -133,14 +133,21 @@ function getDataList(selectedPage){
             $('#ajax_indicator').css("display", "");
         },
         success: function (dataObj) {
-            $('#ajax_indicator').css("display", "none");
-            //리스트에 내용 매핑
-            setDataList(dataObj.incident, selectedPage);
-            totalData = Number(dataObj.totalCnt);
-            totalPage = Math.ceil(totalData/dataPerPage);
+ 
+            totalDataCnt = Number(dataObj.totalCnt);
+            if(totalDataCnt < dataPerPage){
+                totalPage = 1;
+            }else{
+                totalPage = Math.ceil(totalDataCnt/dataPerPage);    // 총 페이지 수
+            }
+ 
             $('#totalPage').text(totalPage);
-            $('#totalCnt').text(totalData);
-            paging(totalData, dataPerPage, pageCount, selectedPage);
+            $('#totalCnt').text(totalDataCnt);
+
+            //리스트에 내용 매핑
+            setDataList(dataObj.incident, selectedPage, totalDataCnt);
+
+            paging(totalDataCnt, dataPerPage, pageCnt, selectedPage);
             
         }
     });
@@ -150,36 +157,31 @@ function getDataList(selectedPage){
 /**
  * 선택된 내용 매핑하기
  */
-function setDataList(dataObj, selectedPage) {
+function setDataList(dataObj, selectedPage, totalDataCnt) {
     //선택한 페이지가 1page 이상일 때,
+    
     //if(selectedPage>1){
         //기존 데이터 삭제
         $("#more_list tr").remove();
     //}
     
-    var startIdx = dataPerPage*(selectedPage-1)+1;
-    if(startIdx == 0){
-        startIdx = startIdx+1;
+    var loopCnt = dataPerPage;
+
+    if (totalDataCnt < dataPerPage){
+        loopCnt = totalDataCnt;
     }
-    var endIdx = dataPerPage*selectedPage+1;
-   
-    //endIdx 가 실제 데이터 수보다 클 경우,
-    if(dataObj.length < endIdx){ // 28 < 31   
-        endIdx = dataObj.length+1 ;
-    } 
-   
 
+    for(var i = 0 ; i < loopCnt ; i++){ 
 
-    for(var i = 0 ; i < dataPerPage ; i++){ 
         var register_dateVal = dataObj[i].register_date; 
 
-        if(register_dateVal){
+        if(register_dateVal.length > 10){
             register_dateVal = register_dateVal.substring(0,10);
         }else{
             register_dateVal = ""; 
         }
 
-
+      
         var idValue = dataObj[i]._id ;
         var addList = "";
 
@@ -217,10 +219,8 @@ function setDataList(dataObj, selectedPage) {
 
         $("#more_list").append(addList);
         
-        startIdx++;
     }
-
-    
+   
     $('#more_list > tr').each(function(){
         
         /**
@@ -248,39 +248,33 @@ function setDataList(dataObj, selectedPage) {
         }if($(this).find('td:eq(4)').html() == "보류"){
             $(this).find('td:eq(4)').html('<span class="label label-info">보류</span>');
         }
-
-       
-        
-
-
-
     })
+    
 }
 
 
 /**
  * 페이징 처리
  */
-function paging(totalData, dataPerPage, pageCount, currentPage){
+function paging(totalDataCnt, dataPerPage, pageCnt, currentPage){
     
-    var totalPage = Math.ceil(totalData/dataPerPage);    // 총 페이지 수
-    var pageGroup = Math.ceil(currentPage/pageCount);    // 페이지 그룹
+    var totalPage = Math.ceil(totalDataCnt/dataPerPage);    // 총 페이지 수
+    var pageGroup = Math.ceil(currentPage/pageCnt);    // 페이지 그룹
 
     //검색 시, 총 페이지 수가 화면에 뿌려질 페이지(10개Page)보다 작을 경우 처리
-    if(totalPage <= pageCount){
+    if(totalPage <= pageCnt){
         last = totalPage;
         first = 1;
     }else{
-        var last = pageGroup * pageCount;    // 화면에 보여질 마지막 페이지 번호
+        var last = pageGroup * pageCnt;    // 화면에 보여질 마지막 페이지 번호
         if(last > totalPage)
             last = totalPage;
-        var first = last - (pageCount-1);    // 화면에 보여질 첫번째 페이지 번호
+        var first = last - (pageCnt-1);    // 화면에 보여질 첫번째 페이지 번호
     }
     
     var next = last+1;
     var prev = first-1;
     
-
     var html = "";
     
     if(prev > 0)
@@ -315,7 +309,7 @@ function paging(totalData, dataPerPage, pageCount, currentPage){
         if($id == "next")    selectedPage = next;
         if($id == "prev")    selectedPage = prev;
 
-        paging(totalData, dataPerPage, pageCount, selectedPage);
+        paging(totalDataCnt, dataPerPage, pageCnt, selectedPage);
         getDataList(selectedPage);
         
     });

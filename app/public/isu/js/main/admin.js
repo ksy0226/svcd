@@ -116,7 +116,7 @@ function monthlyLoad() {
 }
 
 function setMonthlyLoad(dataObj) {
-    ///alert("setMonthlyLoad>>"+JSON.stringify(dataObj));
+    //alert("setMonthlyLoad >> " + JSON.stringify(dataObj));
 
     var DrawSparkline = function () {
         $('#sparkline2').sparkline(dataObj.avg, {
@@ -127,6 +127,7 @@ function setMonthlyLoad(dataObj) {
             barSpacing: '10', //3
             barColor: '#3bafda',
             chartRangeMax: 5,     //평점 5점만점
+            chartRangeMin: 0,
             //tooltipFormatFieldlist: ['x','y'],
             ///xaxis: {ticks: [[1,'One'], [2,'Two'], [3,'Three'], [4,'Four'], [5,'Five']]},
 

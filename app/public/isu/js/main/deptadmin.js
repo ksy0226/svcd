@@ -131,6 +131,7 @@ function setdeptMonthlyLoad(dataObj){
             barSpacing: '10', //3
             barColor: '#3bafda',
             chartRangeMax: 5,     //평점 5점만점
+            chartRangeMin: 0,
             //tooltipFormatFieldlist: ['x','y'],
             ///xaxis: {ticks: [[1,'One'], [2,'Two'], [3,'Three'], [4,'Four'], [5,'Five']]},
             
@@ -230,6 +231,7 @@ function setdeptChartLoad(dataObj) {
             width: $('#sparkline1').width(),
             height: '165',
             chartRangeMax: dataObj[0].cnt3,
+            chartRangeMin: 0,
             lineColor: '#3bafda',
             fillColor: 'rgba(59,175,218,0.3)',
             highlightLineColor: 'rgba(0,0,0,.1)',
@@ -258,6 +260,7 @@ function setdeptChartLoad(dataObj) {
             width: $('#sparkline1').width(),
             height: '165',
             chartRangeMax: dataObj[0].cnt3,
+            chartRangeMin: 0,
             lineColor: '#00b19d',
             fillColor: 'rgba(0, 177, 157, 0.3)',
             composite: true,

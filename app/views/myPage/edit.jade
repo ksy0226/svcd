@@ -2,7 +2,7 @@ extends ../layouts/default
 block head 
     script(type='text/javascript').
         var usermanageObj = !{JSON.stringify(usermanage).replace(/<\//g, '<\\/')};
-    script(src='/isu/js/usermanage/edit.js')
+    script(src='/isu/js/usermanage/myPage.js')
     
     // postcode
     script(src='/isu/js/postcode.js')
@@ -20,26 +20,15 @@ block content
                     .col-sm-12
                         .page-title-box
                             ol.breadcrumb.pull-right
-                                li
-                                    a(href='#') Home
-                                li
-                                    a(href='#') SD 기본정보
-                                li.active 사원정보관리(내외)
-                            h4.page-title 사원정보관리(내외)
+                                li.active 마이페이지
+                            h4.page-title 마이페이지
                  // Form TYPE 1
                 .row
                     .col-lg-12
                         .card-box
                             .p-20
-                                form.form-horizontal.group-border-dashed(id='usermanageForm' name='form' action='/usermanage/edit/#{usermanage._id}' method='post')
+                                form.form-horizontal.group-border-dashed(id='usermanageForm' name='form' action='/usermanage/myPage' method='post')
                                     .form-group
-                                        .pull-left
-                                            .btn.btn-primary.waves-effect.waves-light.m-l-5(onclick="location.href='/usermanage'")
-                                                i.fa.fa-list-ul
-                                                |  목록
-                                            .btn.btn-inverse.waves-effect.waves-light.m-l-5(onclick="location.href='/usermanage/delete/#{usermanage._id}'") 
-                                                i.fa.fa-remove
-                                                |  삭제
                                         .pull-right
                                             button.btn.btn-primary(type='submit')
                                                 i.fa.fa-send-o
@@ -78,7 +67,7 @@ block content
                                                     .form-group
                                                         label.col-sm-2.control-label 비밀번호
                                                         .col-sm-9
-                                                            input.form-control(name='usermanage[password]' type='password' value='' placeholder='********')
+                                                            input.form-control(name='usermanage[password]' type='password' value='#{usermanage.password}')
                                                     .form-group
                                                         label.col-sm-2.control-label 사원명
                                                         .col-sm-9
@@ -110,18 +99,18 @@ block content
                                                         .col-sm-2
                                                             input.form-control(id='zip_cd', name='usermanage[dom_post_cd1]', type='text', value='#{usermanage.dom_post_cd1}')
                                                         .col-sm-5
-                                                            input.form-control(id='addr', name='usermanage[dom_addr]', type='text', value='#{usermanage.dom_addr}')
+                                                            input.form-control(id='addr',name='usermanage[dom_addr]', type='text', value='#{usermanage.dom_addr}')
                                                         .col-sm-2
                                                             span.btn.btn-sm.btn-primary(id='postcode') 우편번호 찾기
                                                     .form-group
                                                         label.col-sm-2.control-label 회사주소2
                                                         .col-sm-9
-                                                            input.form-control(id='addr2', name='usermanage[dom_addr2]', type='text', value='#{usermanage.dom_addr2}')
+                                                            input.form-control(id='addr2',name='usermanage[dom_addr2]', type='text', value='#{usermanage.dom_addr2}')
                                                     .form-group
                                                         label.col-sm-2.control-label 회사전화번호
                                                         .col-sm-9
                                                             input.form-control(name='usermanage[office_tel_no]' type='text' value='#{usermanage.office_tel_no}')
-                                                    .form-group
+                                                    .form-group(style='display:none')
                                                         label.col-sm-2.control-label 사용자권한구분
                                                         .col-sm-9
                                                             select.form-control(id='user_flag' name='usermanage[user_flag]' type='text' value='#{usermanage.user_flag}')
@@ -130,19 +119,19 @@ block content
                                                                 option(value='3') 업무관리자
                                                                 option(value='4') 업무담당자
                                                                 option(value='9') 일반사용자
-                                                    .form-group
+                                                    .form-group(style='display:none')
                                                         label.col-sm-2.control-label 그룹사권한구분
                                                         .col-sm-9
                                                             select.form-control(id='group_flag' name='usermanage[group_flag]' type='text' value='#{usermanage.group_flag}')
                                                                 option(value='out') 외부사용자 
                                                                 option(value='in') 내부사용자
-                                                    .form-group
+                                                    .form-group(style='display:none')
                                                         label.col-sm-2.control-label 승인여부
                                                         .col-sm-9
                                                             select.form-control(id='access_yn' name='usermanage[access_yn]' type='text' value='#{usermanage.access_yn}')
                                                                 option(value='Y') 승인 
                                                                 option(value='N') 미승인
-                                                    .form-group
+                                                    .form-group(style='display:none')
                                                         label.col-sm-2.control-label 사용여부
                                                         .col-sm-9
                                                             select.form-control(id='using_yn' name='usermanage[using_yn]' type='text' value='#{usermanage.using_yn}')
