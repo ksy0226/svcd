@@ -132,6 +132,7 @@ function setMoreBtn(dataObj) {
 
             //더보기 클릭 시
             $('#moreBtn').on('click', function () {
+                
                 getDataList();
             });
         } else { //더보기할 내용이 없을 시 
@@ -233,8 +234,9 @@ function setContent(Obj) {
 
         //검색어하이라이트
         //$('#aaa').highlight('진행');
-        rowIdx++;
+        
     }
+    rowIdx++;
     
 }
 

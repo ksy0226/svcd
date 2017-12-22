@@ -286,7 +286,16 @@ module.exports = {
     list: (req, res, next) => {
 
         var search = service.createSearch(req);
+        search.request_id = req.session.email;
 
+        logger.debug("==========list search.request_id==========="+ search.request_id);
+        logger.debug("==========list search.status_cd============"+ JSON.stringify(search.status_cd) );
+
+        if(req.query.gbn =="complete"){
+            logger.debug("===============gbn================"+req.query.gbn);
+            search.gbn = "complete";
+            logger.debug("===============gbn================"+search.gbn);
+        }
         var page = 1;
         var perPage = 15;
 
@@ -351,6 +360,7 @@ module.exports = {
 
                     }
                 })
+                .sort('-register_date')
                 .skip((page-1)*perPage)
                 .limit(perPage);
             });

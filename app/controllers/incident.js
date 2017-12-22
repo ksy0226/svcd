@@ -504,6 +504,7 @@ module.exports = {
 
                     }
                 })
+                .sort('-register_date')
                 .skip((page-1)*perPage)
                 .limit(perPage);
             });
@@ -534,6 +535,7 @@ module.exports = {
                     });
                 } else {
                     //path 길이 잘라내기
+                    
                     if (incident.attach_file.length > 0) {
                         for (var i = 0; i < incident.attach_file.length; i++) {
                             var path = incident.attach_file[i].path
@@ -543,6 +545,7 @@ module.exports = {
                             }
                         }
                     }
+
                     res.send(incident);
                 }
             });
