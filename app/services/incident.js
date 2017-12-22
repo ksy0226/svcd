@@ -24,9 +24,15 @@ module.exports = {
                 });
                 logger.debug('OrQueries : ' + JSON.stringify(OrQueries));
                 highlight.title = req.query.searchText;
-            }
-            if (searchTypes.indexOf("content") >= 0) {
+            }else if (searchTypes.indexOf("content") >= 0) {
                 OrQueries.push({
+                    content:{ $regex : new RegExp(req.query.searchText, "i") }
+                });
+                logger.debug('OrQueries : ' + OrQueries);
+                highlight.content = req.query.searchText;
+            }else if (searchTypes.indexOf("title,content") >= 0) {
+                OrQueries.push({
+                    title: { $regex : new RegExp(req.query.searchText, "i") },
                     content:{ $regex : new RegExp(req.query.searchText, "i") }
                 });
                 logger.debug('OrQueries : ' + OrQueries);
