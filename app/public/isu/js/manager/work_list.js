@@ -5,12 +5,12 @@ var higher_cd = '000'//선택 상위코드
 var rowIdx = 0; //출력 시작 인덱스
 var dataCnt = 0; // 출력 종료 인덱스
 var inCnt = 15; //한번에 화면에 조회되는 리스트 수
-var totalData = 0;      // 총 데이터 수 
+
+var totalDataCnt = 0;      // 총 데이터 수 
 
 var dataPerPage = 15;   // 한 페이지에 나타낼 데이터 수
-var pageCount = 10;      // 한 화면에 나타낼 페이지 수
+var pageCnt = 10;      // 한 화면에 나타낼 페이지 수
 var totalPage = 0;
-var selectedPage = 1;
 
 
 $(document).ready(function () {
@@ -37,7 +37,7 @@ $(document).ready(function () {
 
 
     //최초 페이징
-    paging(totalData, dataPerPage, pageCount, 1);
+    //paging(totalData, dataPerPage, pageCount, 1);
 
     //최초 조회
     getDataList(1);
@@ -127,7 +127,7 @@ function getDataList(selectedPage) {
     if ($('#lower_cd').val() == "") {
         $('#lower_cd').val() = "*";
     }
-    var reqParam = 'searchType=' + $('#searchType').val() + '&status_cd=' + $('#status_cd').val()
+    var reqParam = 'page=' + selectedPage + '&perPage=' + dataPerPage + '&searchType=' + $('#searchType').val() + '&status_cd=' + $('#status_cd').val()
         + '&lower_cd=' + $('#lower_cd').val()  + '&reg_date_from='
         + $('#reg_date_from').val() + '&reg_date_to=' + $('#reg_date_to').val()
         + '&searchText=' + encodeURIComponent($('#searchText').val());
@@ -149,14 +149,24 @@ function getDataList(selectedPage) {
             $('#ajax_indicator').css("display", "");
         },
         success: function (dataObj) {
-            $('#ajax_indicator').css("display", "none");
-            //setDataList(dataObj);
-            setDataList(dataObj, selectedPage);
-            totalData = dataObj.length;
-            totalPage = Math.ceil(totalData / dataPerPage);
-            $('#totalPage').text(totalPage);
+        
+            totalDataCnt = Number(dataObj.totalCnt);
 
-            paging(totalData, dataPerPage, pageCount, selectedPage);
+            if(totalDataCnt < dataPerPage){
+                totalPage = 1;
+            }else{
+                totalPage = Math.ceil(totalDataCnt/dataPerPage);    // 총 페이지 수
+            }
+ 
+            $('#totalPage').text(totalPage);
+            $('#totalCnt').text(totalDataCnt);
+
+            //리스트에 내용 매핑
+            setDataList(dataObj.incident, selectedPage, totalDataCnt);
+
+            paging(totalDataCnt, dataPerPage, pageCnt, selectedPage);
+            
+
 
         }
     });
@@ -166,13 +176,13 @@ function getDataList(selectedPage) {
 /**
  * 조회된 incident 내용 매핑
  */
-function setDataList(dataObj, selectedPage) {
+function setDataList(dataObj, selectedPage, totalDataCnt) {
     //선택한 페이지가 1page 이상일 때,
     //if(selectedPage>1){
     //기존 데이터 삭제
     $("#more_list tr").remove();
     //}
-
+    /*
     var startIdx = dataPerPage * (selectedPage - 1) + 1;
     var endIdx = dataPerPage * selectedPage + 1;
 
@@ -180,11 +190,18 @@ function setDataList(dataObj, selectedPage) {
     if (dataObj.length < endIdx) { // 7<16
         endIdx = dataObj.length;
     }
-
-    if (dataObj.length > 0) {
-        for (var i = startIdx; i < endIdx + 1; i++) {
-            var register_dateVal = dataObj[i - 1].register_date;
-            var receipt_dateVal = dataObj[i - 1].receipt_date;
+    */
+    var loopCnt = dataPerPage;
+    
+        if (totalDataCnt < dataPerPage){
+            loopCnt = totalDataCnt;
+        }
+    
+    for(var i = 0 ; i < loopCnt ; i++){ 
+    //if (dataObj.length > 0) {
+        //for (var i = startIdx; i < endIdx + 1; i++) {
+            var register_dateVal = dataObj[i].register_date;
+            var receipt_dateVal = dataObj[i].receipt_date;
 
             if (register_dateVal) {
                 register_dateVal = register_dateVal.substring(0, 10);
@@ -201,11 +218,11 @@ function setDataList(dataObj, selectedPage) {
             var addList = "";
             //addList += "							<tr onclick=window.location='/manager/work_detail/" + dataObj[i]._id + "'>";
             //addList += "							<tr style='cursor:hand' onMouserOver='changeColor(this,red)' onMouseOut='changeColer(this,#yellow)' onclick=detailShow('" + dataObj[i]._id + "')>";
-            addList += "							<tr onclick=detailShow('" + dataObj[i - 1]._id + "')>";
-            addList += "								<td class='text-center'>" + dataObj[i - 1].process_speed + "</td>";
-            addList += "								<td class='text-center'>" + dataObj[i - 1].status_cd + "</td>";
-            addList += "								<td>" + dataObj[i - 1].title + "</td>";
-            addList += "								<td>" + dataObj[i - 1].request_company_nm + "/" + dataObj[i - 1].request_nm + "</td>";
+            addList += "							<tr onclick=detailShow('" + dataObj[i]._id + "')>";
+            addList += "								<td class='text-center'>" + dataObj[i].process_speed + "</td>";
+            addList += "								<td class='text-center'>" + dataObj[i].status_cd + "</td>";
+            addList += "								<td>" + dataObj[i].title + "</td>";
+            addList += "								<td>" + dataObj[i].request_company_nm + "/" + dataObj[i].request_nm + "</td>";
             addList += "								<td class='text-center'>" + register_dateVal + "</td>";
             addList += "								<td class='text-center'>" + receipt_dateVal + "</td>";
             //addList += "								<td>" + dataObj[i].lower_nm + "</td>";
@@ -213,16 +230,8 @@ function setDataList(dataObj, selectedPage) {
 
             $("#more_list").append(addList);
 
-            //rowIdx++;
-            startIdx++;
-        }
-    } else {
-        var addList = "";
-        addList += "							<tr onclick=detailShow('" + dataObj[i - 1]._id + "')>";
-        addList += "								<td colspan='6' class='text-center'>조회된 데이타가 없습니다.</td>";
-        addList += "							</tr>";
-        $("#more_list").append(addList);
-    }
+    } 
+ 
 
     $('#more_list > tr').each(function () {
 

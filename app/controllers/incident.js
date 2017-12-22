@@ -342,33 +342,179 @@ module.exports = {
     },
 
     /**
+     * 사용자별 Incident 조회
+     */
+    userlist: (req, res, next) => {
+        var search = service.createSearch(req);
+        search.request_id = req.session.email;
+
+        var page = 1;
+        var perPage = 3;
+
+        if (req.query.page != null && req.query.page != '') page = Number(req.query.page);
+        if (req.query.perPage != null && req.query.perPage != '') perPage = Number(req.query.perPage);
+        
+
+        logger.debug("=============================================");
+        logger.debug("page : ", page);
+        logger.debug("perPage : ", perPage);
+        logger.debug("req.query.perPage : ", req.query.perPage);
+        logger.debug("=============================================");
+
+        
+
+        try {
+            
+            async.waterfall([function (callback) {
+                Incident.count(search.findIncident, function (err, totalCnt) {
+                    
+                    
+                    logger.debug("search.request_id : "+search.request_id);
+                    logger.debug("search.findIncident : "+JSON.stringify(search.findIncident));
+
+                    if (err) {
+
+                        logger.debug("=============================================");
+                        logger.debug("incident : ", err);
+                        logger.debug("=============================================");
+
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+                        console.log("totalCnt>>>>>"+totalCnt);
+                        logger.debug("=============================================");
+                        logger.debug("incidentCnt : ", totalCnt);
+                        logger.debug("=============================================");
+
+                        callback(null, totalCnt)
+                    }
+                })
+            }], function (err, totalCnt) {
+
+                Incident.find(search.findIncident, function (err, incident) {
+                    if (err) {
+
+                        logger.debug("=============================================");
+                        logger.debug("incident : ", err);
+                        logger.debug("=============================================");
+
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+
+                        //incident에 페이징 처리를 위한 전체 갯수전달
+                        var rtnData = {};
+                        rtnData.incident = incident;
+                        rtnData.totalCnt = totalCnt
+
+                        logger.debug("=============================================");
+                        logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
+                        logger.debug("rtnData : ", JSON.stringify(rtnData));
+                        logger.debug("=============================================");
+
+                        res.json(rtnData);
+
+                    }
+                })
+                .sort('-register_date')
+                .skip((page-1)*perPage)
+                .limit(perPage);
+            });
+        } catch (err) {
+
+            logger.debug("===============search control================");
+            logger.debug("search list error : ", err);
+            logger.debug("=============================================");
+
+        } finally {}
+
+    },
+    /**
      * Incident 조회
      */
     getIncident: (req, res, next) => {
-
         var search = service.createSearch(req);
-        //console.log("search" + search);
 
-        async.waterfall([function (callback) {
-            //if (search.findIncident) return callback(null, []);
-            Incident.find(search.findIncident, function (err, incident) {
-                if (err) {
-                    return res.json({
-                        success: false,
-                        message: err
-                    });
-                }
-                callback(null, incident)
-            }).sort('-created_at');
-        }], function (err, incident) {
-            if (err) {
-                return res.json({
-                    success: false,
-                    message: err
+        var page = 1;
+        var perPage = 15;
+
+        if (req.query.page != null && req.query.page != '') page = Number(req.query.page);
+        if (req.query.perPage != null && req.query.perPage != '') perPage = Number(req.query.perPage);
+
+        logger.debug("=============================================");
+        logger.debug("page : ", page);
+        logger.debug("perPage : ", perPage);
+        logger.debug("req.query.perPage : ", req.query.perPage);
+        logger.debug("=============================================");
+
+
+        try {
+            
+            async.waterfall([function (callback) {
+                Incident.count(search.findIncident, function (err, totalCnt) {
+                    if (err) {
+
+                        logger.debug("=============================================");
+                        logger.debug("incident : ", err);
+                        logger.debug("=============================================");
+
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+                        console.log("totalCnt>>>>>"+totalCnt);
+                        logger.debug("=============================================");
+                        logger.debug("incidentCnt : ", totalCnt);
+                        logger.debug("=============================================");
+
+                        callback(null, totalCnt)
+                    }
                 });
-            }
-            res.json(incident);
-        });
+            }], function (err, totalCnt) {
+
+                Incident.find(search.findIncident, function (err, incident) {
+                    if (err) {
+
+                        logger.debug("=============================================");
+                        logger.debug("incident : ", err);
+                        logger.debug("=============================================");
+
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+
+                        //incident에 페이징 처리를 위한 전체 갯수전달
+                        var rtnData = {};
+                        rtnData.incident = incident;
+                        rtnData.totalCnt = totalCnt
+
+                        logger.debug("=============================================");
+                        logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
+                        logger.debug("rtnData : ", JSON.stringify(rtnData));
+                        logger.debug("=============================================");
+
+                        res.json(rtnData);
+
+                    }
+                })
+                .skip((page-1)*perPage)
+                .limit(perPage);
+            });
+        } catch (err) {
+
+            logger.debug("===============search control================");
+            logger.debug("search list error : ", err);
+            logger.debug("=============================================");
+
+        } finally {}
+
     },
 
     /**
