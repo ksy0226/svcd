@@ -16,6 +16,8 @@ var ManagerTaskSchema = mongoose.Schema({
     deletedAt : { type : Date }  
 });
 
+ManagerTaskSchema.pre("save", setCreateAt);
+
 function setCreateAt(next){
     var schema = this;
     var date = new Date();

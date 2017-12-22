@@ -15,6 +15,8 @@ var higherProcessSchema = mongoose.Schema({
     use_yn: { type: String , default : '사용'}        //사용여부
 });
 
+higherProcessSchema.pre("save", setCreateAt);
+
 function setCreateAt(next){
     var schema = this;
     var date = new Date();

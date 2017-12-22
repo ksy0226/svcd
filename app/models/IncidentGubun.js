@@ -15,6 +15,8 @@ var IncidentGubunSchema = mongoose.Schema({
     deletedAt : { type : Date }  
 });
 
+IncidentGubunSchema.pre("save", setCreateAt);
+
 function setCreateAt(next){
     var schema = this;
     var date = new Date();

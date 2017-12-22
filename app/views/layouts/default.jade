@@ -1,15 +1,15 @@
 //일반사용자
 - if(session.user_flag ==2 || session.user_flag ==3 || session.user_flag ==4 || session.user_flag ==9){ 
-    extends ../layouts/user
+    include ../layouts/user
 - }
 
 //팀장
 - if(session.user_flag ==5){ 
-    extends ../layouts/deptadmin
+    include ../layouts/deptadmin
 - }
 
 //전체관리자
 - if(session.user_flag ==1){
-    extends ../layouts/admin
+    include ../layouts/admin
 -}
 

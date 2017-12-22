@@ -16,6 +16,8 @@ var processGubunSchema = mongoose.Schema({
 
 });
 
+processGubunSchema.pre("save", setCreateAt);
+
 function setCreateAt(next){
     var schema = this;
     var date = new Date();

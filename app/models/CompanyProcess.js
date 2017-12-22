@@ -10,6 +10,8 @@ var CompanyProcessSchema = mongoose.Schema({
     user_flag: { type: String }                      //사용여부(1:사용, 0:미사용)
 });
 
+CompanyProcessSchema.pre("save", setCreateAt);
+
 function setCreateAt(next){
     var schema = this;
     var date = new Date();
