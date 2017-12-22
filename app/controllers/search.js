@@ -21,7 +21,7 @@ module.exports = {
     /**
      * 사용자별 리스트 > 상위업무 가져오기
      */
-    /*
+    
     user_list: (req, res, next) => {
         async.waterfall([function (callback) {
             HigherProcessModel.find({}, function (err, higherprocess) {
@@ -44,7 +44,8 @@ module.exports = {
             }
         });
     },
-    */
+    
+    /*
     user_list: (req, res, next) => {
         async.waterfall([function (callback) {
             MyProcessModel.find({}, function (err, myprocess) {
@@ -67,6 +68,7 @@ module.exports = {
             }
         });
     },
+    */
     /**
      * 사용자별 상세조회 > Incident 가져오기
      */
