@@ -18,7 +18,7 @@ function cntLoad() {
     $.ajax({
         type: "GET",
         async: true,
-        url: "/statistic/cntload",
+        url: "/statistic/userCntLoad",
         dataType: "json", // xml, html, script, json 미지정시 자동판단
         timeout: 30000,
         cache: false,
@@ -35,52 +35,52 @@ function cntLoad() {
     });
 }
 
-function setCntLoad(dataObj){
-    for (var i = 0; i < dataObj.length; i++) { 
-        
-        $('#status'+ dataObj[i]._id.status_cd).html(dataObj[i].count);  
-        
-        if($('#status'+ (i)).text() ==""){        //없으면 0
-            $('#status'+ (i)).text("0"); 
+function setCntLoad(dataObj) {
+    for (var i = 0; i < dataObj.length; i++) {
+
+        $('#status' + dataObj[i]._id.status_cd).html(dataObj[i].count);
+
+        if ($('#status' + (i)).text() == "") {        //없으면 0
+            $('#status' + (i)).text("0");
             //alert(dataObj[i]._id.status_cd-1);  //3
 
-            $('#chart'+ (dataObj[i]._id.status_cd-1)).attr('data-text', 0+"%");
-            $('#chart'+ (dataObj[i]._id.status_cd-1)).attr('data-percent', 0);
+            $('#chart' + (dataObj[i]._id.status_cd - 1)).attr('data-text', 0 + "%");
+            $('#chart' + (dataObj[i]._id.status_cd - 1)).attr('data-percent', 0);
         }
     }
-    
-    for (var i = 0; i < dataObj.length; i++) { 
+
+    for (var i = 0; i < dataObj.length; i++) {
         var total; //전체카운트
         //total = Number($('#status1').text()) + Number($('#status2').text()) + Number($('#status3').text()) + Number($('#status4').text());
         total = Number($('#status1').text()) + Number($('#status2').text());
-        
-        if(dataObj[i]._id.status_cd == "1"){                      //'접수대기'일 경우
+
+        if (dataObj[i]._id.status_cd == "1") {                      //'접수대기'일 경우
             var totalCnt = total;
-            var percent = Math.round((dataObj[i].count / totalCnt)*100); 
-            
-            $('#chart1').attr('data-text', percent+"%");
+            var percent = Math.round((dataObj[i].count / totalCnt) * 100);
+
+            $('#chart1').attr('data-text', percent + "%");
             $('#chart1').attr('data-percent', percent);
         }
-        else if(dataObj[i]._id.status_cd == "2"){                 //'처리중'일 경우
+        else if (dataObj[i]._id.status_cd == "2") {                 //'처리중'일 경우
             var totalCnt = total;
-            var percent = Math.round((dataObj[i].count / totalCnt)*100); 
+            var percent = Math.round((dataObj[i].count / totalCnt) * 100);
 
-            $('#chart2').attr('data-text', percent+"%");
+            $('#chart2').attr('data-text', percent + "%");
             $('#chart2').attr('data-percent', percent);
         }
-        else if(dataObj[i]._id.status_cd == "3"){                 //'미평가'일 경우
+        else if (dataObj[i]._id.status_cd == "3") {                 //'미평가'일 경우
             var totalCnt = dataObj[i].count + Number($('#status4').text());
-            var percent = Math.round((dataObj[i].count / totalCnt)*100); // (129/129+160)*100 반올림 처리
+            var percent = Math.round((dataObj[i].count / totalCnt) * 100); // (129/129+160)*100 반올림 처리
 
-            $('#chart3').attr('data-text', percent+"%");
+            $('#chart3').attr('data-text', percent + "%");
             $('#chart3').attr('data-percent', percent);
-            
-        }else if(dataObj[i]._id.status_cd == "4"){                //'처리완료'일 경우
+
+        } else if (dataObj[i]._id.status_cd == "4") {                //'처리완료'일 경우
             var totalCnt = dataObj[i].count + Number($('#status3').text());
-            var percent = Math.round((dataObj[i].count / totalCnt)*100); // (160/129+160)*100 반올림 처리
-            
-            $('#chart4').attr('data-text', percent+"%");
-            $('#chart4').attr('data-percent', percent); 
+            var percent = Math.round((dataObj[i].count / totalCnt) * 100); // (160/129+160)*100 반올림 처리
+
+            $('#chart4').attr('data-text', percent + "%");
+            $('#chart4').attr('data-percent', percent);
         }
     }
     $('.circliful-chart').circliful();
@@ -145,7 +145,8 @@ function setDataList(dataObj) {
 
         // 진행상태
         $('#more_list > tr').each(function () {
-            if ($(this).find('td:eq(3)').html() == "접수" || $(this).find('td:eq(3)').html() == "접수대기" || $(this).find('td:eq(4)').html() == "접수중") {
+            // 진행상태
+            if ($(this).find('td:eq(3)').html() == "접수" || $(this).find('td:eq(3)').html() == "접수대기" || $(this).find('td:eq(3)').html() == "접수중") {
                 $(this).find('td:eq(3)').html('<span class="label label-inverse">접수중</span>');
             } if ($(this).find('td:eq(3)').html() == "처리중") {
                 $(this).find('td:eq(3)').html('<span class="label label-primary">처리중</span>');
@@ -223,7 +224,7 @@ function setDataList2(dataObj2) {
         $('#more_list_nocomplete > tr').each(function () {
             if ($(this).find('td:eq(3)').html() == "미평가") {
                 $(this).find('td:eq(3)').html('<span class="label label-success">미평가</span>');
-            } 
+            }
         })
     }
 }
