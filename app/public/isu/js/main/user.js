@@ -36,12 +36,22 @@ function cntLoad() {
 }
 
 function setCntLoad(dataObj) {
+    $('#status' + "1").html(0);
+    $('#status' + "2").html(0);
+    $('#status' + "3").html(0);
+    $('#status' + "4").html(0);
     for (var i = 0; i < dataObj.length; i++) {
-
+        
         $('#status' + dataObj[i]._id.status_cd).html(dataObj[i].count);
+        
+        //if($('#status' + dataObj[i]._id.status_cd) == null){
+        //    dataObj[i].count =="0";
+        //}
 
         if ($('#status' + (i)).text() == "") {        //없으면 0
+
             $('#status' + (i)).text("0");
+            //$('#chart' + (i)).text("0");
             //alert(dataObj[i]._id.status_cd-1);  //3
 
             $('#chart' + (dataObj[i]._id.status_cd - 1)).attr('data-text', 0 + "%");
@@ -49,6 +59,15 @@ function setCntLoad(dataObj) {
         }
     }
 
+    $('#chart1').attr('data-text', "0" + "%");
+    $('#chart1').attr('data-percent', "0");
+    $('#chart2').attr('data-text', "0" + "%");
+    $('#chart2').attr('data-percent', "0");
+    $('#chart3').attr('data-text', "0" + "%");
+    $('#chart3').attr('data-percent', "0");
+    $('#chart4').attr('data-text', "0" + "%");
+    $('#chart4').attr('data-percent', "0");
+    
     for (var i = 0; i < dataObj.length; i++) {
         var total; //전체카운트
         //total = Number($('#status1').text()) + Number($('#status2').text()) + Number($('#status3').text()) + Number($('#status4').text());
@@ -78,7 +97,6 @@ function setCntLoad(dataObj) {
         } else if (dataObj[i]._id.status_cd == "4") {                //'처리완료'일 경우
             var totalCnt = dataObj[i].count + Number($('#status3').text());
             var percent = Math.round((dataObj[i].count / totalCnt) * 100); // (160/129+160)*100 반올림 처리
-
             $('#chart4').attr('data-text', percent + "%");
             $('#chart4').attr('data-percent', percent);
         }
