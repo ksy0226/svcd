@@ -44,8 +44,6 @@ module.exports = {
             }
         }
 
-        
-
         var higher_cd = req.query.higher_cd == null ? "*" : req.query.higher_cd ;
         var lower_cd = req.query.lower_cd == null ? "*" : req.query.lower_cd ;
         var status_cd = req.query.status_cd == null ? "*" : req.query.status_cd ;
