@@ -78,9 +78,9 @@ block content
                                     .col-sm-3
                                         select.form-control(id='higher_cd' name='higher_cd')
                                             option(value ='*') 전체
-                                            - if (higherprocess.length > 0) {
-                                                - for( var i = 0 ; length = higherprocess.length > i ; i++ ){ //속도가 느리다고 알고 있음.
-                                                    option(value ='#{higherprocess[i].higher_cd}') #{higherprocess[i].higher_nm}
+                                            - if (myprocess.length > 0) {
+                                                - for( var i = 0 ; length = myprocess.length > i ; i++ ){ //속도가 느리다고 알고 있음.
+                                                    option(value ='#{myprocess[i].higher_cd}') #{myprocess[i].higher_nm}
                                                 - }
                                             - } 
                                     label.col-sm-2.control-label 하위업무

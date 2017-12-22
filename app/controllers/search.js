@@ -6,6 +6,7 @@ const CompanyModel = require('../models/Company');
 const IncidentModel = require('../models/Incident');
 const HigherProcessModel = require('../models/HigherProcess');
 const LowerProcessModel = require('../models/LowerProcess');
+const MyProcessModel = require('../models/MyProcess');
 const OftenQnaModel = require('../models/OftenQna');
 const service = require('../services/incident');
 const service2 = require('../services/oftenqna');
@@ -20,6 +21,7 @@ module.exports = {
     /**
      * 사용자별 리스트 > 상위업무 가져오기
      */
+    /*
     user_list: (req, res, next) => {
         async.waterfall([function (callback) {
             HigherProcessModel.find({}, function (err, higherprocess) {
@@ -42,7 +44,29 @@ module.exports = {
             }
         });
     },
-
+    */
+    user_list: (req, res, next) => {
+        async.waterfall([function (callback) {
+            MyProcessModel.find({}, function (err, myprocess) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                }
+                callback(null, myprocess)
+            });
+        }], function (err, myprocess) {
+            if (err) {
+                res.render("http/500", {
+                    err: err
+                });
+            } else {
+                res.render("search/user_list", {
+                    myprocess: myprocess
+                });
+            }
+        });
+    },
     /**
      * 사용자별 상세조회 > Incident 가져오기
      */
