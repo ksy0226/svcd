@@ -346,12 +346,14 @@ module.exports = {
      */
     userlist: (req, res, next) => {
         var search = service.createSearch(req);
+        search.request_id = req.session.email;
 
         var page = 1;
         var perPage = 3;
 
         if (req.query.page != null && req.query.page != '') page = Number(req.query.page);
         if (req.query.perPage != null && req.query.perPage != '') perPage = Number(req.query.perPage);
+        
 
         logger.debug("=============================================");
         logger.debug("page : ", page);
@@ -359,11 +361,17 @@ module.exports = {
         logger.debug("req.query.perPage : ", req.query.perPage);
         logger.debug("=============================================");
 
+        
 
         try {
             
             async.waterfall([function (callback) {
                 Incident.count(search.findIncident, function (err, totalCnt) {
+                    
+                    
+                    logger.debug("search.request_id : "+search.request_id);
+                    logger.debug("search.findIncident : "+JSON.stringify(search.findIncident));
+
                     if (err) {
 
                         logger.debug("=============================================");
@@ -382,7 +390,7 @@ module.exports = {
 
                         callback(null, totalCnt)
                     }
-                });
+                })
             }], function (err, totalCnt) {
 
                 Incident.find(search.findIncident, function (err, incident) {
@@ -412,6 +420,7 @@ module.exports = {
 
                     }
                 })
+                .sort('-register_date')
                 .skip((page-1)*perPage)
                 .limit(perPage);
             });

@@ -71,9 +71,9 @@ $(document).ready(function () {
 
 //다시 조회
 function research() {
-    rowIdx = 0;
-    inCnt = 0;
-     
+    rowIdx = 1;
+    inCnt = 3;
+
     //내용삭제
     $("#more_list").empty();
     getDataList();
@@ -83,7 +83,7 @@ function research() {
 function getDataList() {
 
     var reqParam =  'page=' + rowIdx + '&perPage=' + inCnt + '&searchType=' + $('#searchType').val() + '&status_cd=' + $('#status_cd').val() + '&reg_date_from=' + $('#reg_date_from').val() + '&reg_date_to=' + $('#reg_date_to').val() + '&searchText=' + encodeURIComponent($('#searchText').val());
-    
+
     $.ajax({
         type: "GET",
         async: true,

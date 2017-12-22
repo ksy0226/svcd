@@ -31,17 +31,27 @@ module.exports = {
                 });
                 logger.debug('OrQueries : ' + OrQueries);
                 highlight.content = req.query.searchText;
-            }   
+            }
+            
             if (OrQueries.length > 0){
                 findIncident.$or = OrQueries
             }
         }
+
+        
 
         var higher_cd = req.query.higher_cd == null ? "*" : req.query.higher_cd ;
         var lower_cd = req.query.lower_cd == null ? "*" : req.query.lower_cd ;
         var status_cd = req.query.status_cd == null ? "*" : req.query.status_cd ;
         var reg_date_from = req.query.reg_date_from;
         var reg_date_to = req.query.reg_date_to;
+
+        
+        if(req.session.email){
+            AndQueries.push({
+                request_id : req.session.email
+            });
+        }
 
         //진행상태가 존재하면
         if(status_cd != '*'){
