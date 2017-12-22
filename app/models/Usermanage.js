@@ -10,21 +10,21 @@ var usermanageSchema = mongoose.Schema({
     user_id          : { type : String },
     password         : { type : String , required: true },
     employee_nm      : { type : String },
-    dept_cd          : { type : String },
-    dept_nm          : { type : String },
-    jikchk_nm        : { type : String },
-    position_nm      : { type : String },
-    dom_post_cd1     : { type : String },
-    dom_addr         : { type : String },
-    dom_addr2        : { type : String },
-    office_tel_no    : { type : String },
-    hp_telno         : { type : String },
-    img_path         : { type : String },
-    alarm_minute     : { type : Number },
+    dept_cd          : { type : String , default : ''},
+    dept_nm          : { type : String , default : ''},
+    jikchk_nm        : { type : String , default : ''},
+    position_nm      : { type : String , default : ''},
+    dom_post_cd1     : { type : String , default : ''},
+    dom_addr         : { type : String , default : ''},
+    dom_addr2        : { type : String , default : ''},
+    office_tel_no    : { type : String , default : ''},
+    hp_telno         : { type : String , default : ''},
+    img_path         : { type : String , default : ''},
+    alarm_minute     : { type : Number , default : ''},
     register_id      : { type : String },
-    register_date    : { type : Date , default : Date.now},
+    register_date    : { type : String , default : ''},
     modify_id        : { type : String },
-    modify_date      : { type : Date },
+    modify_date      : { type : String , default : ''},
     email_ref        : { type : String },
     email_send_yn    : { type : String , default : 'Y'},
     sabun            : { type : String },
@@ -32,8 +32,8 @@ var usermanageSchema = mongoose.Schema({
     using_yn         : { type : String , default : 'Y'},
     user_flag        : { type : String , default : 9 },
     group_flag       : { type : String , default : 'out' },
-    created_at       : { type : String },
-    updated_at       : { type : Date }
+    created_at       : { type : String , default : ''},
+    updated_at       : { type : String , default : ''}
 });
 
 usermanageSchema.pre("save", hashPassword);
@@ -79,6 +79,8 @@ function hashPassword(next){
 
     var date = new Date();
     user.created_at = date.toLocaleString();
+    user.register_date = date.toLocaleString();
+    user.modify_date = date.toLocaleString();
 
     if(!user.isModified("password")){
         return next();
