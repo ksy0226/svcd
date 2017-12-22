@@ -97,7 +97,6 @@ function setCntLoad(dataObj) {
         } else if (dataObj[i]._id.status_cd == "4") {                //'처리완료'일 경우
             var totalCnt = dataObj[i].count + Number($('#status3').text());
             var percent = Math.round((dataObj[i].count / totalCnt) * 100); // (160/129+160)*100 반올림 처리
-            alert("percent"+percent);
             $('#chart4').attr('data-text', percent + "%");
             $('#chart4').attr('data-percent', percent);
         }
