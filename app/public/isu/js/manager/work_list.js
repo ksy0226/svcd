@@ -114,8 +114,8 @@ $(document).ready(function () {
  * 다시 조회
  */
 function research(selectedPage) {
-    //dataCnt = 0;
-    //rowIdx = 0;
+    rowIdx = 1;
+    inCnt = 3;
 
     //내용삭제
     $("#more_list").empty();
@@ -129,7 +129,7 @@ function getDataList(selectedPage) {
     if ($('#lower_cd').val() == "") {
         $('#lower_cd').val() = "*";
     }
-    var reqParam = 'page=' + selectedPage + '&perPage=' + dataPerPage + '&searchType=' + $('#searchType').val() + '&status_cd=' + $('#status_cd').val()
+    var reqParam = 'user=manager&page=' + selectedPage + '&perPage=' + dataPerPage + '&searchType=' + $('#searchType').val() + '&status_cd=' + $('#status_cd').val()
         + '&lower_cd=' + $('#lower_cd').val()  + '&reg_date_from='
         + $('#reg_date_from').val() + '&reg_date_to=' + $('#reg_date_to').val()
         + '&searchText=' + encodeURIComponent($('#searchText').val());

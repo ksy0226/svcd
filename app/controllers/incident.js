@@ -438,7 +438,14 @@ module.exports = {
      */
     getIncident: (req, res, next) => {
         var search = service.createSearch(req);
-
+        search.manager_sabun= req.session.email;
+        logger.debug("==========list search.request_id==========="+ search.manager_sabun);
+        
+        if(req.query.user =="manager"){
+            logger.debug("===============gbn================"+req.query.user);
+            search.user = "manager";
+            logger.debug("===============gbn================"+search.user);
+        }
         var page = 1;
         var perPage = 15;
 

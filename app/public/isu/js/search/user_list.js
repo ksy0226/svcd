@@ -267,6 +267,7 @@ function paging(totalDataCnt, dataPerPage, pageCount, currentPage){
  */
 function detailShow(id){
     alert("detailShow");
+    
     //incident id값 세팅
     incident_id = id;
     alert("incident_id"+incident_id);
