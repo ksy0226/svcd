@@ -1,5 +1,3 @@
-'use strict';
-
 const mongoose = require('mongoose');
 const async = require('async');
 const IncidentModel = require('../models/Incident');
@@ -445,19 +443,26 @@ module.exports = {
         });
     },
 
+    //관리자 차트
     chartLoad: (req, res, next) => {
         var today = new Date();
         var thisYear = today.getFullYear();
         var preYear = thisYear - 1;
 
+        var condition = {};
+        if (req.session.group_flag == "in") {
+            condition.manager_dept_cd = req.session.dept_cd;
+        } else if (req.session.group_flag == "out") {
+            condition.request_company_cd = req.session.company_cd;
+        }
+        condition.register_yyyy = {
+            $gte: preYear.toString(),
+            $lte: thisYear.toString()
+        }
+
         async.waterfall([function (callback) {
             var aggregatorOpts = [{
-                $match: { //조건
-                    register_yyyy: {
-                        $gte: preYear.toString(),
-                        $lte: thisYear.toString()
-                    }
-                }
+                $match: condition
             }, {
                 $group: { //그룹
                     _id: {
@@ -467,7 +472,6 @@ module.exports = {
                     count: {
                         $sum: 1
                     }
-
                 }
             }, {
                 $sort: {
@@ -567,20 +571,26 @@ module.exports = {
         });
     },
 
+    //팀장 차트
     deptchartLoad: (req, res, next) => {
         var today = new Date();
         var thisYear = today.getFullYear();
         var preYear = thisYear - 1;
 
+        var condition = {};
+        if (req.session.group_flag == "in") {
+            condition.manager_dept_cd = req.session.dept_cd;
+        } else if (req.session.group_flag == "out") {
+            condition.request_company_cd = req.session.company_cd;
+        }
+        condition.register_yyyy = {
+            $gte: preYear.toString(),
+            $lte: thisYear.toString()
+        }
+
         async.waterfall([function (callback) {
             var aggregatorOpts = [{
-                $match: { //조건
-                    manager_dept_cd: req.session.dept_cd,
-                    register_yyyy: {
-                        $gte: preYear.toString(),
-                        $lte: thisYear.toString()
-                    }
-                }
+                $match: condition //조건
             }, {
                 $group: { //그룹
                     _id: {
@@ -590,7 +600,6 @@ module.exports = {
                     count: {
                         $sum: 1
                     }
-
                 }
             }, {
                 $sort: {
@@ -613,11 +622,7 @@ module.exports = {
         }, function (incident, callback) {
             var aggregatorOpts = [{
                 $match: { //조건
-                    manager_dept_cd: req.session.dept_cd,
-                    register_yyyy: {
-                        $gte: preYear.toString(),
-                        $lte: thisYear.toString()
-                    },
+                    condition,
                     status_cd: {
                         $gte: '3',
                         $lte: '4'
