@@ -99,12 +99,7 @@ function setDataList(dataObj, selectedPage) {
     }
 
     for (var i = startIdx; i < endIdx + 1; i++) {
-        var register_dateVal = dataObj[i - 1].created_at;
-        if (register_dateVal) {
-            register_dateVal = register_dateVal.substring(0, 10);
-        } else {
-            register_dateVal = "";
-        }
+      
 
         var addList = "";
         //addList += "							<tr onclick=window.location='/search/user_detail/" + dataObj[i-1]._id + "'>";
@@ -112,7 +107,7 @@ function setDataList(dataObj, selectedPage) {
         addList += "							<tr onclick=location='/higherProcess/" + dataObj[i - 1]._id + "/edit'>";
         addList += "								<td>" + dataObj[i - 1].higher_nm + "</td>";
         addList += "								<td>" + dataObj[i - 1].description + "</td>";
-        addList += "								<td>" + register_dateVal + "</td>";
+        addList += "								<td>" + dataObj[i - 1].created_at + "</td>";
         addList += "								<td class='text-center'>" + dataObj[i - 1].use_yn + "</td>";
         addList += "							</tr>";
 
