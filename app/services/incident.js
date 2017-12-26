@@ -50,8 +50,7 @@ module.exports = {
         var reg_date_from = req.query.reg_date_from;
         var reg_date_to = req.query.reg_date_to;
        
-        
-        if(req.session.email){
+       
             //나의 업무처리현황
             if(req.query.user == "manager"){
                 AndQueries.push({
@@ -65,7 +64,7 @@ module.exports = {
                     request_id : req.session.email
                 });
             }
-        }
+
       
         //진행상태가 존재하면
         if(status_cd != '*'){

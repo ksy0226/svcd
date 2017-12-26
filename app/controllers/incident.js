@@ -7,6 +7,7 @@ var CompanyProcess = require('../models/CompanyProcess');
 var ProcessStatus = require('../models/ProcessStatus');
 var LowerProcess = require('../models/LowerProcess');
 var Usermanage = require('../models/Usermanage');
+var MyProcess = require('../models/MyProcess');
 var mailer = require('../util/nodemailer');
 var service = require('../services/incident');
 var fs = require('fs');
@@ -438,14 +439,8 @@ module.exports = {
      */
     getIncident: (req, res, next) => {
         var search = service.createSearch(req);
-        search.manager_sabun= req.session.email;
-        logger.debug("==========list search.request_id==========="+ search.manager_sabun);
         
-        if(req.query.user =="manager"){
-            logger.debug("===============gbn================"+req.query.user);
-            search.user = "manager";
-            logger.debug("===============gbn================"+search.user);
-        }
+
         var page = 1;
         var perPage = 15;
 
@@ -460,7 +455,18 @@ module.exports = {
 
 
         try {
-            
+            var condition ={};
+            condition.email = req.session.email;
+            MyProcess.find(condition).select('higher_cd').distinct('higher_cd').exec(function(err, myprocess){
+                logger.debug("=============================================");
+                logger.debug("myprocess1 : ", myprocess);
+                logger.debug("=============================================");
+
+
+            });
+
+
+
             async.waterfall([function (callback) {
                 Incident.count(search.findIncident, function (err, totalCnt) {
                     if (err) {
