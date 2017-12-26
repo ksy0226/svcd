@@ -68,17 +68,20 @@ $(document).ready(function () {
         todayHighlight: true,
         format: "yyyy-mm-dd",
     });
+
     //오늘날짜 설정
     setDatepickerToday($('input[name="incident[complete_reserve_date]"]'));
 
     //접수저장버튼 클릭 시
     $('#receiptSaveBtn').on('click', function () {
         receiptSave();
+        research(1);
     });
 
     //완료저장버튼 클릭 시
     $('#completeSaveBtn').on('click', function () {
         completeSave();
+
     });
 
     //select박스 초기화
@@ -91,7 +94,6 @@ $(document).ready(function () {
     $('#receipt_modal').on('show.bs.modal', function () {
         getLowerNm();
     });
-
 
 
     /**
@@ -112,8 +114,8 @@ $(document).ready(function () {
  * 다시 조회
  */
 function research(selectedPage) {
-    //dataCnt = 0;
-    //rowIdx = 0;
+    rowIdx = 1;
+    inCnt = 3;
 
     //내용삭제
     $("#more_list").empty();
@@ -127,7 +129,7 @@ function getDataList(selectedPage) {
     if ($('#lower_cd').val() == "") {
         $('#lower_cd').val() = "*";
     }
-    var reqParam = 'page=' + selectedPage + '&perPage=' + dataPerPage + '&searchType=' + $('#searchType').val() + '&status_cd=' + $('#status_cd').val()
+    var reqParam = 'user=manager&page=' + selectedPage + '&perPage=' + dataPerPage + '&searchType=' + $('#searchType').val() + '&status_cd=' + $('#status_cd').val()
         + '&lower_cd=' + $('#lower_cd').val()  + '&reg_date_from='
         + $('#reg_date_from').val() + '&reg_date_to=' + $('#reg_date_to').val()
         + '&searchText=' + encodeURIComponent($('#searchText').val());
@@ -181,58 +183,48 @@ function setDataList(dataObj, selectedPage, totalDataCnt) {
     //if(selectedPage>1){
     //기존 데이터 삭제
     $("#more_list tr").remove();
-    //}
-    /*
-    var startIdx = dataPerPage * (selectedPage - 1) + 1;
-    var endIdx = dataPerPage * selectedPage + 1;
 
-    //endIdx 가 실제 데이터 수보다 클 경우,
-    if (dataObj.length < endIdx) { // 7<16
-        endIdx = dataObj.length;
-    }
-    */
     var loopCnt = dataPerPage;
     
-        if (totalDataCnt < dataPerPage){
-            loopCnt = totalDataCnt;
-        }
+    if (totalDataCnt < dataPerPage){
+        loopCnt = totalDataCnt;
+    }
     
     for(var i = 0 ; i < loopCnt ; i++){ 
-    //if (dataObj.length > 0) {
-        //for (var i = startIdx; i < endIdx + 1; i++) {
-            var register_dateVal = dataObj[i].register_date;
-            var receipt_dateVal = dataObj[i].receipt_date;
+    
+        var register_dateVal = dataObj[i].register_date;
+        var receipt_dateVal = dataObj[i].receipt_date;
+        /*
+        if (register_dateVal) {
+            register_dateVal = register_dateVal.substring(0, 10);
+        } else {
+            register_dateVal = "";
+        }
 
-            if (register_dateVal) {
-                register_dateVal = register_dateVal.substring(0, 10);
-            } else {
-                register_dateVal = "";
-            }
+        if (receipt_dateVal) {
+            receipt_dateVal = receipt_dateVal.substring(0, 10);
+        } else {
+            receipt_dateVal = "";
+        }
+        */
+        var addList = "";
+        addList += "							<tr onclick=detailShow('" + dataObj[i]._id + "')>";
+        addList += "								<td class='text-center'>" + dataObj[i].process_speed + "</td>";
+        addList += "								<td class='text-center'>" + dataObj[i].status_cd + "</td>";
+        addList += "								<td>" + dataObj[i].title + "</td>";
+        addList += "								<td>" + dataObj[i].request_company_nm + "/" + dataObj[i].request_nm + "</td>";
+        addList += "								<td class='text-center'>" + dataObj[i].register_date + "</td>";
+        if(dataObj[i].receipt_date ==null){
+            addList += "								<td class='text-center'></td>";
+        }else{
+            addList += "								<td class='text-center'>" + dataObj[i].receipt_date + "</td>";
+            
+        }
+        addList += "							</tr>";
 
-            if (receipt_dateVal) {
-                receipt_dateVal = receipt_dateVal.substring(0, 10);
-            } else {
-                receipt_dateVal = "";
-            }
-
-            var addList = "";
-            //addList += "							<tr onclick=window.location='/manager/work_detail/" + dataObj[i]._id + "'>";
-            //addList += "							<tr style='cursor:hand' onMouserOver='changeColor(this,red)' onMouseOut='changeColer(this,#yellow)' onclick=detailShow('" + dataObj[i]._id + "')>";
-            addList += "							<tr onclick=detailShow('" + dataObj[i]._id + "')>";
-            addList += "								<td class='text-center'>" + dataObj[i].process_speed + "</td>";
-            addList += "								<td class='text-center'>" + dataObj[i].status_cd + "</td>";
-            addList += "								<td>" + dataObj[i].title + "</td>";
-            addList += "								<td>" + dataObj[i].request_company_nm + "/" + dataObj[i].request_nm + "</td>";
-            addList += "								<td class='text-center'>" + register_dateVal + "</td>";
-            addList += "								<td class='text-center'>" + receipt_dateVal + "</td>";
-            //addList += "								<td>" + dataObj[i].lower_nm + "</td>";
-            addList += "							</tr>";
-
-            $("#more_list").append(addList);
-
+        $("#more_list").append(addList);
     } 
  
-
     $('#more_list > tr').each(function () {
 
         /**
@@ -247,7 +239,6 @@ function setDataList(dataObj, selectedPage, totalDataCnt) {
         /**
          * 진행상태
          */
-
         if ($(this).find('td:eq(1)').html() == "1") {
             $(this).find('td:eq(1)').html('<span class="label label-inverse">접수중</span>');
         } if ($(this).find('td:eq(1)').html() == "2") {
@@ -451,12 +442,7 @@ function setDetail(dataObj) {
     $('#_request_company_nm-request_nm').html(dataObj.request_company_nm + "/" + dataObj.request_nm);
     $('#_request_complete_date').html(dataObj.request_complete_date);
     $('#_app_menu').html(dataObj.app_menu);
-    //$('#_register_nm-register_date').html(dataObj.register_nm+"/"+dataObj.register_date);
-    //var register_dateVal = new Date(dataObj.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-    var register_dateVal = new Date(dataObj.register_date).toUTCString() ;//.toISOString().replace(/T/, ' ').replace(/\..+/, '') + (840 * 60 * 1000);
-    $('#_register_nm-register_date').html(dataObj.register_nm + "/" + register_dateVal);
-
-
+    $('#_register_nm-register_date').html(dataObj.register_nm + " / " + dataObj.register_date);
     
 
     $('#_title').html(dataObj.title);

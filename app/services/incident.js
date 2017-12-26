@@ -49,21 +49,44 @@ module.exports = {
         var status_cd = req.query.status_cd == null ? "*" : req.query.status_cd ;
         var reg_date_from = req.query.reg_date_from;
         var reg_date_to = req.query.reg_date_to;
-
-        
+       
         if(req.session.email){
-            AndQueries.push({
-                request_id : req.session.email
-            });
+            if(req.query.user == "manager"){
+                AndQueries.push({
+                    manager_sabun : req.session.email
+                });
+            }else if(req.query.user == "managerall"){
+    
+            }else{
+                AndQueries.push({
+                    request_id : req.session.email
+                });
+            }
         }
-
+      
         //진행상태가 존재하면
         if(status_cd != '*'){
             AndQueries.push({
                 status_cd : req.query.status_cd
             });
         }
+
         
+        if(req.query.gbn == "complete"){
+            AndQueries.push({
+                
+                $or: [{
+                    status_cd: "3"
+                }, {
+                    status_cd: "4"
+                }]
+
+            });
+        }
+
+
+        
+
         //상위업무가 존재하면
         if(higher_cd != '*'){
             AndQueries.push({
