@@ -9,6 +9,8 @@ var processStatusSchema = mongoose.Schema({
   deletedAt : { type : Date }  
 });
 
+processStatusSchema.pre("save", setCreateAt);
+
 function setCreateAt(next){
     var schema = this;
     var date = new Date();

@@ -116,7 +116,9 @@ function getDataList(selectedPage){
     if($('#lower_cd').val() =="" || $('#lower_cd').val() == null){
         $('#lower_cd').val("*");
     }
-     var reqParam = 'page=' + selectedPage + '&perPage=' + dataPerPage + '&searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&lower_cd=' + $('#lower_cd').val() + '&reg_date_from=' + $('#reg_date_from').val()+ '&reg_date_to=' + $('#reg_date_to').val()+ '&searchText=' + encodeURIComponent($('#searchText').val());
+    //전체내용검색 user 구분 추가
+    //user=managerall 시, 전체 Incident 보이도록 처리
+    var reqParam = 'user=managerall&page=' + selectedPage + '&perPage=' + dataPerPage + '&searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&lower_cd=' + $('#lower_cd').val() + '&reg_date_from=' + $('#reg_date_from').val()+ '&reg_date_to=' + $('#reg_date_to').val()+ '&searchText=' + encodeURIComponent($('#searchText').val());
     
     $.ajax({
         type: "GET",
@@ -185,7 +187,7 @@ function setDataList(dataObj, selectedPage, totalDataCnt) {
         var idValue = dataObj[i]._id ;
         var addList = "";
 
-        //addList += "							<tr onclick=window.location='/search/mng_detail/" + dataObj[i]._id + "'>";
+
         addList += "							<tr onclick=detailShow('" + dataObj[i]._id + "') style='cursor:pointer'>";
         if(dataObj[i].status_cd == "1"){
             addList += "								<td>" + dataObj[i].higher_nm + " / " + " " + "</td>";

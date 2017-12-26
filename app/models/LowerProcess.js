@@ -17,6 +17,8 @@ var lowerProcessSchema = mongoose.Schema({
     created_at: { type: String }      //생성일자 
 });
 
+lowerProcessSchema.pre("save", setCreateAt);
+
 function setCreateAt(next){
     var schema = this;
     var date = new Date();

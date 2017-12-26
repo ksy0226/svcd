@@ -1,5 +1,3 @@
-'use strict';
-
 const mongoose = require('mongoose');
 const async = require('async');
 const IncidentModel = require('../models/Incident');
@@ -18,111 +16,111 @@ module.exports = {
      * 회사별 상위업무 통계 데이타 조회
      */
     getComHigher: (req, res, next) => {
-        
-         var svc = service.com_higher(req);
- 
-         IncidentModel.aggregate(svc.aggregatorOpts)
-             .exec(function (err, incident) {
- 
-                 if (err) {
- 
-                     logger.debug("==================================================");
-                     logger.debug(" IncidentModel.aggregate error ", err);
-                     logger.debug("==================================================");
- 
-                     return res.json({
-                         success: false,
-                         message: err
-                     });
- 
-                 } else {
- 
-                     incident.forEach(function (data, idx, incident) {
- 
-                         logger.debug("==================================================");
-                         logger.debug("data ", JSON.stringify(data));
-                         //logger.debug("data.grp.length ", data.grp.length);
-                         logger.debug("==================================================");
- 
- 
-                         var totalCnt = 0; //전체 개수
-                         var stCnt1 = 0; //신청중 개수
-                         var stCnt2 = 0; //처리중 개수
-                         var stCnt3 = 0; //미평가
-                         var stCnt4 = 0; //완료
-                         var stCnt5 = 0; //보류 개수
-                         var stCnt3_4 = 0; //미평가+완료 개수
- 
- 
-                         for (var i = 0; i < data.grp.length; i++) {
-                             //전체 개수
-                             totalCnt = totalCnt + data.grp[i].count;
- 
-                             //신청중 개수
-                             if (data.grp[i].status_cd == '1') {
-                                 stCnt1 = stCnt1 + data.grp[i].count;
-                             }
- 
-                             //처리중 개수
-                             if (data.grp[i].status_cd == '2') {
-                                 stCnt2 = stCnt2 + data.grp[i].count;
-                             }
- 
-                             //미평가 개수
-                             if (data.grp[i].status_cd == '3') {
-                                 stCnt3 = stCnt3 + data.grp[i].count;
-                             }
- 
-                             //완료 개수
-                             if (data.grp[i].status_cd == '4') {
-                                 stCnt4 = stCnt4 + data.grp[i].count;
-                             }
- 
-                             //보류
-                             if (data.grp[i].status_cd == '5') {
-                                 stCnt5 = stCnt5 + data.grp[i].count;
-                             }
- 
-                             //완료 또는 미평가
-                             if (data.grp[i].status_cd == '3' || data.grp[i].status_cd == '4') {
-                                 stCnt3_4 = stCnt3_4 + data.grp[i].count;
-                             }
- 
-                         }
- 
-                         data.totalCnt = totalCnt;
-                         data.stCnt1 = stCnt1;
-                         data.stCnt2 = stCnt2;
-                         data.stCnt3 = stCnt3;
-                         data.stCnt4 = stCnt4;
-                         data.stCnt5 = stCnt5;
-                         data.stCnt3_4 = stCnt3_4;
-                         data.solRatio = ((stCnt3_4 * 100) / totalCnt).toFixed(2);
- 
-                         //평점
-                         if (data.valuationSum > 0) {
-                             data.valAvg = (data.valuationSum / stCnt4).toFixed(2);
-                         } else {
-                             data.valAvg = 0;
-                         }
- 
-                         logger.debug("==================================================");
-                         logger.debug("data.totalCnt : ", data.totalCnt);
-                         logger.debug("data.stCnt1 : ", data.stCnt1);
-                         logger.debug("data.stCnt2 : ", data.stCnt2);
-                         logger.debug("data.stCnt3 : ", data.stCnt3);
-                         logger.debug("data.stCnt4 : ", data.stCnt4);
-                         logger.debug("data.solRatio : ", data.solRatio);
-                         logger.debug("data.valuationSum : ", data.valuationSum);
-                         logger.debug("data.valAvg : ", data.valAvg);
-                         logger.debug("==================================================");
-                     
-                     });
-                     logger.debug("=====>>>>"+JSON.stringify(incident));
-                     res.json(incident);
-                 }
-             })
-     },
+
+        var svc = service.com_higher(req);
+
+        IncidentModel.aggregate(svc.aggregatorOpts)
+            .exec(function (err, incident) {
+
+                if (err) {
+
+                    logger.debug("==================================================");
+                    logger.debug(" IncidentModel.aggregate error ", err);
+                    logger.debug("==================================================");
+
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+
+                } else {
+
+                    incident.forEach(function (data, idx, incident) {
+
+                        logger.debug("==================================================");
+                        logger.debug("data ", JSON.stringify(data));
+                        //logger.debug("data.grp.length ", data.grp.length);
+                        logger.debug("==================================================");
+
+
+                        var totalCnt = 0; //전체 개수
+                        var stCnt1 = 0; //신청중 개수
+                        var stCnt2 = 0; //처리중 개수
+                        var stCnt3 = 0; //미평가
+                        var stCnt4 = 0; //완료
+                        var stCnt5 = 0; //보류 개수
+                        var stCnt3_4 = 0; //미평가+완료 개수
+
+
+                        for (var i = 0; i < data.grp.length; i++) {
+                            //전체 개수
+                            totalCnt = totalCnt + data.grp[i].count;
+
+                            //신청중 개수
+                            if (data.grp[i].status_cd == '1') {
+                                stCnt1 = stCnt1 + data.grp[i].count;
+                            }
+
+                            //처리중 개수
+                            if (data.grp[i].status_cd == '2') {
+                                stCnt2 = stCnt2 + data.grp[i].count;
+                            }
+
+                            //미평가 개수
+                            if (data.grp[i].status_cd == '3') {
+                                stCnt3 = stCnt3 + data.grp[i].count;
+                            }
+
+                            //완료 개수
+                            if (data.grp[i].status_cd == '4') {
+                                stCnt4 = stCnt4 + data.grp[i].count;
+                            }
+
+                            //보류
+                            if (data.grp[i].status_cd == '5') {
+                                stCnt5 = stCnt5 + data.grp[i].count;
+                            }
+
+                            //완료 또는 미평가
+                            if (data.grp[i].status_cd == '3' || data.grp[i].status_cd == '4') {
+                                stCnt3_4 = stCnt3_4 + data.grp[i].count;
+                            }
+
+                        }
+
+                        data.totalCnt = totalCnt;
+                        data.stCnt1 = stCnt1;
+                        data.stCnt2 = stCnt2;
+                        data.stCnt3 = stCnt3;
+                        data.stCnt4 = stCnt4;
+                        data.stCnt5 = stCnt5;
+                        data.stCnt3_4 = stCnt3_4;
+                        data.solRatio = ((stCnt3_4 * 100) / totalCnt).toFixed(2);
+
+                        //평점
+                        if (data.valuationSum > 0) {
+                            data.valAvg = (data.valuationSum / stCnt4).toFixed(2);
+                        } else {
+                            data.valAvg = 0;
+                        }
+
+                        logger.debug("==================================================");
+                        logger.debug("data.totalCnt : ", data.totalCnt);
+                        logger.debug("data.stCnt1 : ", data.stCnt1);
+                        logger.debug("data.stCnt2 : ", data.stCnt2);
+                        logger.debug("data.stCnt3 : ", data.stCnt3);
+                        logger.debug("data.stCnt4 : ", data.stCnt4);
+                        logger.debug("data.solRatio : ", data.solRatio);
+                        logger.debug("data.valuationSum : ", data.valuationSum);
+                        logger.debug("data.valAvg : ", data.valAvg);
+                        logger.debug("==================================================");
+
+                    });
+                    logger.debug("=====>>>>" + JSON.stringify(incident));
+                    res.json(incident);
+                }
+            })
+    },
 
 
     /**
@@ -136,7 +134,7 @@ module.exports = {
      * 상위별 하위업무 통계 데이타 조회
      */
     getHighLower: (req, res, next) => {
-       
+
         var svc = service.high_lower(req);
 
         IncidentModel.aggregate(svc.aggregatorOpts)
@@ -234,7 +232,7 @@ module.exports = {
                         logger.debug("data.valuationSum : ", data.valuationSum);
                         logger.debug("data.valAvg : ", data.valAvg);
                         logger.debug("==================================================");
-                    
+
                     });
 
                     res.json(incident);
@@ -245,6 +243,58 @@ module.exports = {
     /**
      * 메인 카운트 로드
      */
+    userCntLoad: (req, res, next) => {
+        var today = new Date();
+        var thisYear = today.getFullYear();
+
+        var aggregatorOpts = [{
+            $match: { //조건
+                //manager_company_cd: req.session.company_cd  //각 사별 관리담당자는?
+                request_id: req.session.email,     //req.session.sabun 넣을 예정
+                $or: [{
+                    status_cd: "1"
+                }, {
+                    status_cd: "2"
+                }, {
+                    status_cd: "3"
+                }, {
+                    status_cd: "4"
+                }]
+                ,
+                register_yyyy: thisYear.toString()
+
+            }
+        }, {
+            $group: { //그룹칼럼
+                _id: {
+                    status_cd: "$status_cd"
+                },
+                count: {
+                    $sum: 1
+                }
+            }
+        }, {
+            $sort: {
+                status_cd: -1
+            }
+        }]
+
+        IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: err
+                });
+            }
+
+            logger.debug("==================================================");
+            logger.debug("incident : ", incident);
+            logger.debug("==================================================");
+
+            res.json(incident);
+        });
+    },
+
     cntload: (req, res, next) => {
         //var startDate = new Date(new Date().setDate(new Date().getDate() - 60)).toISOString().replace(/T/, ' ').replace(/\..+/, '');
         //var endDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
@@ -252,42 +302,42 @@ module.exports = {
         var thisYear = today.getFullYear();
 
         var aggregatorOpts = [{
-                $match: { //조건
-                    //manager_company_cd: req.session.company_cd  //각 사별 관리담당자는?
-                    //,user_id : req.session.email     //req.session.sabun 넣을 예정
+            $match: { //조건
+                //manager_company_cd: req.session.company_cd  //각 사별 관리담당자는?
+                //,user_id : req.session.email     //req.session.sabun 넣을 예정
 
-                    $or: [{
-                            status_cd: "1"
-                        }, {
-                            status_cd: "2"
-                        }, {
-                            status_cd: "3"
-                        }, {
-                            status_cd: "4"
-                        }]
-                        //,$and : [ { register_date : {$gte: "2017-05-19T04:49:38.881Z"}}
-                        //         ,{ register_date : {$lte:"2017-11-15T04:49:38.881Z"}} ]
-                        //,register_date : {$gte: "2017-10-19T04:49:38.881Z", $lte:"2017-11-15T04:49:38.881Z"}
-                        //,register_date : {$gte: new Date(new Date().setDate(new Date().getDate()-180)), $lte: new Date()}
-                        //, register_date: { $gte: startDate, $lte: endDate }
-                        ,
-                    register_yyyy: thisYear.toString()
+                $or: [{
+                    status_cd: "1"
+                }, {
+                    status_cd: "2"
+                }, {
+                    status_cd: "3"
+                }, {
+                    status_cd: "4"
+                }]
+                //,$and : [ { register_date : {$gte: "2017-05-19T04:49:38.881Z"}}
+                //         ,{ register_date : {$lte:"2017-11-15T04:49:38.881Z"}} ]
+                //,register_date : {$gte: "2017-10-19T04:49:38.881Z", $lte:"2017-11-15T04:49:38.881Z"}
+                //,register_date : {$gte: new Date(new Date().setDate(new Date().getDate()-180)), $lte: new Date()}
+                //, register_date: { $gte: startDate, $lte: endDate }
+                ,
+                register_yyyy: thisYear.toString()
 
-                }
-            }, {
-                $group: { //그룹칼럼
-                    _id: {
-                        status_cd: "$status_cd"
-                        //status_cd: { $ifNull: [ '$status_cd', [{ count: 0 }] ] }
-                    },
-                    count: {
-                        $sum: 1
-                        //$sum : { $ifNull: [ $sum, 0 ] }
-                        //$sum :{ $ifNull: [ "$count", 1] }
-                    }
-
-                }
             }
+        }, {
+            $group: { //그룹칼럼
+                _id: {
+                    status_cd: "$status_cd"
+                    //status_cd: { $ifNull: [ '$status_cd', [{ count: 0 }] ] }
+                },
+                count: {
+                    $sum: 1
+                    //$sum : { $ifNull: [ $sum, 0 ] }
+                    //$sum :{ $ifNull: [ "$count", 1] }
+                }
+
+            }
+        }
             /*
             , {
                 total: { 
@@ -296,10 +346,10 @@ module.exports = {
             }
             */
             , {
-                $sort: {
-                    status_cd: -1
-                }
+            $sort: {
+                status_cd: -1
             }
+        }
         ]
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
             //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
@@ -327,44 +377,44 @@ module.exports = {
 
 
         var aggregatorOpts = [{
-                $match: { //조건
-                    //manager_company_cd : req.session.company_cd  //각 사별 관리담당자는?
-                    //,manager_sabun : req.session.sabun
-                    //,manager_email : req.session.email      //req.session.sabun 넣을 예정 ??
-                    //,
-                    manager_dept_cd: req.session.dept_cd,
-                    $or: [{
-                            status_cd: "1"
-                        }, {
-                            status_cd: "2"
-                        }, {
-                            status_cd: "3"
-                        }, {
-                            status_cd: "4"
-                        }]
-                        //,$and : [ { register_date : {$gte: "2017-05-19T04:49:38.881Z"}}
-                        //         ,{ register_date : {$lte:"2017-11-15T04:49:38.881Z"}} ]
-                        //,register_date : {$gte: "2017-10-19T04:49:38.881Z", $lte:"2017-11-15T04:49:38.881Z"}
-                        //,register_date : {$gte: new Date(new Date().setDate(new Date().getDate()-180)), $lte: new Date()}
-                        //, register_date: { $gte: startDate, $lte: endDate }
-                        ,
-                    register_yyyy: thisYear.toString()
+            $match: { //조건
+                //manager_company_cd : req.session.company_cd  //각 사별 관리담당자는?
+                //,manager_sabun : req.session.sabun
+                //,manager_email : req.session.email      //req.session.sabun 넣을 예정 ??
+                //,
+                manager_dept_cd: req.session.dept_cd,
+                $or: [{
+                    status_cd: "1"
+                }, {
+                    status_cd: "2"
+                }, {
+                    status_cd: "3"
+                }, {
+                    status_cd: "4"
+                }]
+                //,$and : [ { register_date : {$gte: "2017-05-19T04:49:38.881Z"}}
+                //         ,{ register_date : {$lte:"2017-11-15T04:49:38.881Z"}} ]
+                //,register_date : {$gte: "2017-10-19T04:49:38.881Z", $lte:"2017-11-15T04:49:38.881Z"}
+                //,register_date : {$gte: new Date(new Date().setDate(new Date().getDate()-180)), $lte: new Date()}
+                //, register_date: { $gte: startDate, $lte: endDate }
+                ,
+                register_yyyy: thisYear.toString()
 
-                }
-            }, {
-                $group: { //그룹칼럼
-                    _id: {
-                        status_cd: "$status_cd"
-                        //status_cd: { $ifNull: [ '$status_cd', [{ count: 0 }] ] }
-                    },
-                    count: {
-                        $sum: 1
-                        //$sum : { $ifNull: [ $sum, 0 ] }
-                        //$sum :{ $ifNull: [ "$count", 1] }
-                    }
-
-                }
             }
+        }, {
+            $group: { //그룹칼럼
+                _id: {
+                    status_cd: "$status_cd"
+                    //status_cd: { $ifNull: [ '$status_cd', [{ count: 0 }] ] }
+                },
+                count: {
+                    $sum: 1
+                    //$sum : { $ifNull: [ $sum, 0 ] }
+                    //$sum :{ $ifNull: [ "$count", 1] }
+                }
+
+            }
+        }
             /*
             , {
                 total: { 
@@ -373,10 +423,10 @@ module.exports = {
             }
             */
             , {
-                $sort: {
-                    status_cd: -1
-                }
+            $sort: {
+                status_cd: -1
             }
+        }
         ]
         //console.log("deptcntload aggregatorOpts >> "+JSON.stringify(aggregatorOpts));         
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
@@ -393,19 +443,26 @@ module.exports = {
         });
     },
 
+    //관리자 차트
     chartLoad: (req, res, next) => {
         var today = new Date();
         var thisYear = today.getFullYear();
         var preYear = thisYear - 1;
 
+        var condition = {};
+        if (req.session.group_flag == "in") {
+            condition.manager_dept_cd = req.session.dept_cd;
+        } else if (req.session.group_flag == "out") {
+            condition.request_company_cd = req.session.company_cd;
+        }
+        condition.register_yyyy = {
+            $gte: preYear.toString(),
+            $lte: thisYear.toString()
+        }
+
         async.waterfall([function (callback) {
             var aggregatorOpts = [{
-                $match: { //조건
-                    register_yyyy: {
-                        $gte: preYear.toString(),
-                        $lte: thisYear.toString()
-                    }
-                }
+                $match: condition
             }, {
                 $group: { //그룹
                     _id: {
@@ -415,7 +472,6 @@ module.exports = {
                     count: {
                         $sum: 1
                     }
-
                 }
             }, {
                 $sort: {
@@ -515,20 +571,26 @@ module.exports = {
         });
     },
 
+    //팀장 차트
     deptchartLoad: (req, res, next) => {
         var today = new Date();
         var thisYear = today.getFullYear();
         var preYear = thisYear - 1;
 
+        var condition = {};
+        if (req.session.group_flag == "in") {
+            condition.manager_dept_cd = req.session.dept_cd;
+        } else if (req.session.group_flag == "out") {
+            condition.request_company_cd = req.session.company_cd;
+        }
+        condition.register_yyyy = {
+            $gte: preYear.toString(),
+            $lte: thisYear.toString()
+        }
+
         async.waterfall([function (callback) {
             var aggregatorOpts = [{
-                $match: { //조건
-                    manager_dept_cd: req.session.dept_cd,
-                    register_yyyy: {
-                        $gte: preYear.toString(),
-                        $lte: thisYear.toString()
-                    }
-                }
+                $match: condition //조건
             }, {
                 $group: { //그룹
                     _id: {
@@ -538,7 +600,6 @@ module.exports = {
                     count: {
                         $sum: 1
                     }
-
                 }
             }, {
                 $sort: {
@@ -561,11 +622,7 @@ module.exports = {
         }, function (incident, callback) {
             var aggregatorOpts = [{
                 $match: { //조건
-                    manager_dept_cd: req.session.dept_cd,
-                    register_yyyy: {
-                        $gte: preYear.toString(),
-                        $lte: thisYear.toString()
-                    },
+                    condition,
                     status_cd: {
                         $gte: '3',
                         $lte: '4'
@@ -807,7 +864,7 @@ function setMonthData(srcData) {
 
     } catch (e) {
         logger.error("control useremanage mergeUser : ", e);
-    } finally {}
+    } finally { }
     return rtnJSON;
 }
 
@@ -848,7 +905,7 @@ function setChartData(srcData) {
         };
     } catch (e) {
         logger.error("controller statistic setChartData : ", e);
-    } finally {}
+    } finally { }
     return rtnJSON;
 }
 
@@ -876,7 +933,7 @@ function setChartCompleteData(srcData) {
         };
     } catch (e) {
         logger.error("controller statistic setChartCompleteData : ", e);
-    } finally {}
+    } finally { }
     return rtnJSON;
 }
 

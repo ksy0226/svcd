@@ -25,6 +25,8 @@ var oftenqnaSchema = mongoose.Schema({
     updated_at:     { type: Date }
 });
 
+oftenqnaSchema.pre("save", setCreateAt);
+
 function setCreateAt(next){
     var schema = this;
     var date = new Date();

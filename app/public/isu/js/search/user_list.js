@@ -4,13 +4,16 @@ var incident_id = ''; //선택 인시던트 id
 //var higher_cd = '000'//선택 상위코드
 var rowIdx = 0;         //출력 시작 인덱스
 var dataCnt = 0;        // 출력 종료 인덱스
-var inCnt = 15;         //한번에 화면에 조회되는 리스트 수
+var inCnt = 15; //한번에 화면에 조회되는 리스트 수
 
-var totalData = 0;      // 총 데이터 수 
+var totalDataCnt = 0;      // 총 데이터 수 
 
 var dataPerPage = 15;   // 한 페이지에 나타낼 데이터 수
-var pageCount = 10;      // 한 화면에 나타낼 페이지 수
+var pageCnt = 10;      // 한 화면에 나타낼 페이지 수
 var totalPage = 0;
+
+
+
 
 
 $(document).ready(function () {
@@ -38,7 +41,7 @@ $(document).ready(function () {
     });
 
     //최초 페이징
-    paging(totalData, dataPerPage, pageCount, 1);
+    //paging(totalData, dataPerPage, pageCount, 1);
     
     //최초 조회
     getDataList(1);
@@ -118,8 +121,9 @@ function getDataList(selectedPage){
     if($('#lower_cd').val() =="" || $('#lower_cd').val() == null){
         $('#lower_cd').val("*");
     }
-    var reqParam = 'searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&lower_cd=' + $('#lower_cd').val() + '&reg_date_from=' + $('#reg_date_from').val()+ '&reg_date_to=' + $('#reg_date_to').val()+ '&searchText=' + encodeURIComponent($('#searchText').val());
-    
+    //처리된 내용검색 gbn 구분 추가
+    //gbn=complete 시, status=3,4만 가져오기
+    var reqParam = 'gbn=complete&page=' + selectedPage + '&perPage=' + dataPerPage + '&searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&lower_cd=' + $('#lower_cd').val() + '&reg_date_from=' + $('#reg_date_from').val()+ '&reg_date_to=' + $('#reg_date_to').val()+ '&searchText=' + encodeURIComponent($('#searchText').val());
     $.ajax({
         type: "GET",
         async: true,
@@ -137,14 +141,22 @@ function getDataList(selectedPage){
             $('#ajax_indicator').css("display", "");
         },
         success: function (dataObj) {
-            $('#ajax_indicator').css("display", "none");
-            //리스트에 내용 매핑
-            setDataList(dataObj, selectedPage);
-            totalData = dataObj.length;
-            totalPage = Math.ceil(totalData/dataPerPage);
+        
+            totalDataCnt = Number(dataObj.totalCnt);
+            if(totalDataCnt < dataPerPage){
+                totalPage = 1;
+            }else{
+                totalPage = Math.ceil(totalDataCnt/dataPerPage);    // 총 페이지 수
+            }
+    
             $('#totalPage').text(totalPage);
+            $('#totalCnt').text(totalDataCnt);
 
-            paging(totalData, dataPerPage, pageCount, selectedPage);   
+            //리스트에 내용 매핑
+            setDataList(dataObj.incident, selectedPage, totalDataCnt);
+
+            paging(totalDataCnt, dataPerPage, pageCnt, selectedPage);
+
         }
     });
 }
@@ -153,44 +165,33 @@ function getDataList(selectedPage){
 /**
  * 선택된 내용 매핑하기
  */
-function setDataList(dataObj, selectedPage) {
-    //선택한 페이지가 1page 이상일 때,
-    //if(selectedPage>1){
-        //기존 데이터 삭제
-        $("#more_list tr").remove();
-    //}
+function setDataList(dataObj, selectedPage, totalDataCnt) {
+   
+    $("#more_list tr").remove();
     
-    var startIdx = dataPerPage*(selectedPage-1)+1;
-    var endIdx = dataPerPage*selectedPage+1;
+    var loopCnt = dataPerPage;
     
-    //endIdx 가 실제 데이터 수보다 클 경우,
-    if(dataObj.length < endIdx){ // 7<16
-        endIdx = dataObj.length;
-    } 
+    if (totalDataCnt < dataPerPage){
+        loopCnt = totalDataCnt;
+    }
 
-    for(var i = startIdx ; i <endIdx+1 ; i++){ 
-        var register_dateVal = dataObj[i-1].register_date; 
-
-        if(register_dateVal){
-            register_dateVal = register_dateVal.substring(0,10);
-        }else{
-            register_dateVal = ""; 
-        }
+    for(var i = 0 ; i < loopCnt ; i++){ 
+        //if (dataObj.length > 0) {
+            //for (var i = startIdx; i < endIdx + 1; i++) {
 
         var addList = "";
         //addList += "							<tr onclick=window.location='/search/user_detail/" + dataObj[i-1]._id + "'>";
-        addList += "							<tr onclick=detailShow('" + dataObj[i-1]._id + "') style='cursor:pointer' >";
+        addList += "							<tr onclick=detailShow('" + dataObj[i]._id + "') style='cursor:pointer' >";
         //상위업무 제외
         //addList += "								<td>" + dataObj[i-1].higher_nm + "</td>";
-        addList += "								<td>" + dataObj[i-1].lower_nm + "</td>";
-        addList += "								<td>" + dataObj[i-1].title + "</td>";
-        addList += "								<td class='text-center'>" + register_dateVal + "</td>";
-        addList += "								<td class='text-center'>" + dataObj[i-1].manager_nm + "</td>";
+        addList += "								<td class='text-center'>" + dataObj[i].lower_nm + "</td>";
+        addList += "								<td>" + dataObj[i].title + "</td>";
+        addList += "								<td class='text-center'>" + dataObj[i].register_date + "</td>";
+        addList += "								<td class='text-center'>" + dataObj[i].manager_nm + "</td>";
         addList += "							</tr>";
 
         $("#more_list").append(addList);
 
-        startIdx++;
     }
 }
 
@@ -198,9 +199,9 @@ function setDataList(dataObj, selectedPage) {
 /**
  * 페이징 처리
  */
-function paging(totalData, dataPerPage, pageCount, currentPage){
+function paging(totalDataCnt, dataPerPage, pageCount, currentPage){
     
-    var totalPage = Math.ceil(totalData/dataPerPage);    // 총 페이지 수
+    var totalPage = Math.ceil(totalDataCnt/dataPerPage);    // 총 페이지 수
     var pageGroup = Math.ceil(currentPage/pageCount);    // 페이지 그룹
 
     //검색 시, 총 페이지 수가 화면에 뿌려질 페이지(10개Page)보다 작을 경우 처리
@@ -252,7 +253,7 @@ function paging(totalData, dataPerPage, pageCount, currentPage){
         if($id == "next")    selectedPage = next;
         if($id == "prev")    selectedPage = prev;
 
-        paging(totalData, dataPerPage, pageCount, selectedPage);
+        paging(totalDataCnt, dataPerPage, pageCount, selectedPage);
         getDataList(selectedPage);
         
     });
@@ -267,8 +268,11 @@ function paging(totalData, dataPerPage, pageCount, currentPage){
  * @param {*} incident_id  
  */
 function detailShow(id){
+    alert("detailShow");
+    
     //incident id값 세팅
     incident_id = id;
+    alert("incident_id"+incident_id);
 
     var reqParam = '';
     $.ajax({
