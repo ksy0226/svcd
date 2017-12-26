@@ -129,6 +129,8 @@ function getDataList(selectedPage) {
     if ($('#lower_cd').val() == "") {
         $('#lower_cd').val() = "*";
     }
+    //나의업무처리현황 user 구분 추가
+    //user=manager 시, 관리자가 본인이 접수해야할 것만 Incident 보이도록 처리
     var reqParam = 'user=manager&page=' + selectedPage + '&perPage=' + dataPerPage + '&searchType=' + $('#searchType').val() + '&status_cd=' + $('#status_cd').val()
         + '&lower_cd=' + $('#lower_cd').val()  + '&reg_date_from='
         + $('#reg_date_from').val() + '&reg_date_to=' + $('#reg_date_to').val()

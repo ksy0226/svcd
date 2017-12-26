@@ -121,6 +121,8 @@ function getDataList(selectedPage){
     if($('#lower_cd').val() =="" || $('#lower_cd').val() == null){
         $('#lower_cd').val("*");
     }
+    //처리된 내용검색 gbn 구분 추가
+    //gbn=complete 시, status=3,4만 가져오기
     var reqParam = 'gbn=complete&page=' + selectedPage + '&perPage=' + dataPerPage + '&searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&lower_cd=' + $('#lower_cd').val() + '&reg_date_from=' + $('#reg_date_from').val()+ '&reg_date_to=' + $('#reg_date_to').val()+ '&searchText=' + encodeURIComponent($('#searchText').val());
     $.ajax({
         type: "GET",

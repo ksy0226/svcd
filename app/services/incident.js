@@ -50,11 +50,14 @@ module.exports = {
         var reg_date_from = req.query.reg_date_from;
         var reg_date_to = req.query.reg_date_to;
        
+        
         if(req.session.email){
+            //나의 업무처리현황
             if(req.query.user == "manager"){
                 AndQueries.push({
                     manager_sabun : req.session.email
                 });
+            //전체내용검색
             }else if(req.query.user == "managerall"){
     
             }else{
@@ -71,18 +74,18 @@ module.exports = {
             });
         }
 
-        
+        //처리된 내용검색 gbn 구분 추가
+        //gbn=complete 시, status=3,4만 가져오기
         if(req.query.gbn == "complete"){
             AndQueries.push({
-                
                 $or: [{
                     status_cd: "3"
                 }, {
                     status_cd: "4"
                 }]
-
             });
         }
+        //추가 끝
 
 
         

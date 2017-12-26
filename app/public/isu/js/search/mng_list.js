@@ -116,7 +116,9 @@ function getDataList(selectedPage){
     if($('#lower_cd').val() =="" || $('#lower_cd').val() == null){
         $('#lower_cd').val("*");
     }
-     var reqParam = 'user=managerall&page=' + selectedPage + '&perPage=' + dataPerPage + '&searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&lower_cd=' + $('#lower_cd').val() + '&reg_date_from=' + $('#reg_date_from').val()+ '&reg_date_to=' + $('#reg_date_to').val()+ '&searchText=' + encodeURIComponent($('#searchText').val());
+    //전체내용검색 user 구분 추가
+    //user=managerall 시, 전체 Incident 보이도록 처리
+    var reqParam = 'user=managerall&page=' + selectedPage + '&perPage=' + dataPerPage + '&searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&lower_cd=' + $('#lower_cd').val() + '&reg_date_from=' + $('#reg_date_from').val()+ '&reg_date_to=' + $('#reg_date_to').val()+ '&searchText=' + encodeURIComponent($('#searchText').val());
     
     $.ajax({
         type: "GET",
