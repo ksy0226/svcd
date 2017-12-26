@@ -268,11 +268,9 @@ function paging(totalDataCnt, dataPerPage, pageCount, currentPage){
  * @param {*} incident_id  
  */
 function detailShow(id){
-    alert("detailShow");
     
     //incident id값 세팅
     incident_id = id;
-    alert("incident_id"+incident_id);
 
     var reqParam = '';
     $.ajax({
@@ -327,9 +325,7 @@ function setDetail(dataObj){
     $('#_request_company_nm-request_nm').html(dataObj.request_company_nm+"/"+dataObj.request_nm);
     $('#_request_complete_date').html(dataObj.request_complete_date);
     $('#_app_menu').html(dataObj.app_menu);
-    //$('#_register_nm-register_date').html(dataObj.register_nm+"/"+dataObj.register_date);
-    var register_dateVal = new Date(dataObj.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-    $('#_register_nm-register_date').html(dataObj.register_nm+"/"+register_dateVal);
+    $('#_register_nm-register_date').html(dataObj.register_nm+"/"+dataObj.register_date);
 
 
     $('#_title').html(dataObj.title);

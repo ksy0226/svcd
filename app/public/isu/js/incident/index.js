@@ -148,15 +148,7 @@ function setContent(Obj) {
     setMoreBtn(Obj);
 
     for (var i = 0; i < dataObj.length; i++) {
-        //var register_dateVal = new Date(dataObj[i].register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-       /*
-        var register_dateVal = dataObj[i].register_date;
-        if (register_dateVal) {
-            register_dateVal = register_dateVal.substring(0, 10);
-        } else {
-            register_dateVal = "";
-        }
-        */
+       
         var addList = "";
         //addList += "                <div class='col-lg-12'>";
         //addList += "					<div class='card-box'>";
@@ -179,7 +171,6 @@ function setContent(Obj) {
         addList += "									<div class='col-md-11'>";
         addList += "										<div class='forum-sub-title'>";
         addList += "											<span class='text-primary'><b>" + dataObj[i].manager_nm + "</b></span>";
-        //addList += "											<span class='p-w-xs'>" + register_dateVal + "</span>";
         addList += "											<span class='p-w-xs'>" + dataObj[i].register_date + "</span>";
         addList += "										</div>";
         //addList += "										<a href='/incident/viewDetail/" + dataObj[i]._id + "' class='forum-item-title'>";
@@ -301,11 +292,6 @@ function setDetail(dataObj) {
     $('#_request_complete_date').html(dataObj.request_complete_date);
     $('#_app_menu').html(dataObj.app_menu);
     //등록일 양식 변경
-    //var register_dateVal = new Date(dataObj.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-    //$('#_register_nm-register_date').html(dataObj.register_nm + "/" + register_dateVal);
-    //var m = moment();
-    // format으로 출력한다
-    //var register_dateVal = m.format("YYYY-MM-DD HH:mm:ss");
     $('#_register_nm-register_date').html(dataObj.register_nm + "/" + dataObj.register_date);
 
     $('#_title').html(dataObj.title);
@@ -510,10 +496,6 @@ function setDetail(dataObj) {
     if (dataObj.status_cd >= '4') {
         $('#_').addClass('label label-purple');
     }
-    //등록일
-    //var register_dateVal = new Date(dataObj.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-    //var register_dateVal = m.format("YYYY-MM-DD HH:mm:ss");
-    
     $('#_register_date').html(dataObj.register_date);
 
 }

@@ -174,15 +174,6 @@ function setDataList(dataObj, selectedPage, totalDataCnt) {
     }
 
     for(var i = 0 ; i < loopCnt ; i++){ 
-
-        var register_dateVal = dataObj[i].register_date; 
-
-        if(register_dateVal.length > 10){
-            register_dateVal = register_dateVal.substring(0,10);
-        }else{
-            register_dateVal = ""; 
-        }
-
       
         var idValue = dataObj[i]._id ;
         var addList = "";
@@ -204,7 +195,7 @@ function setDataList(dataObj, selectedPage, totalDataCnt) {
         }
 
         addList += "								<td class='text-center'>" + dataObj[i].request_nm + "</td>";
-        addList += "								<td class='text-center'>" + register_dateVal + "</td>";
+        addList += "								<td class='text-center'>" + dataObj[i].register_date + "</td>";
         addList += "								<td class='text-center'>" + dataObj[i].status_nm + "</td>";
         if(dataObj[i].status_cd == 4){
             addList += "								<td class='text-center'>";
@@ -381,9 +372,7 @@ function setDetail(dataObj){
     $('#_request_company_nm-request_nm').html(dataObj.request_company_nm+"/"+dataObj.request_nm);
     $('#_request_complete_date').html(dataObj.request_complete_date);
     $('#_app_menu').html(dataObj.app_menu);
-    //$('#_register_nm-register_date').html(dataObj.register_nm+"/"+dataObj.register_date);
-    var register_dateVal = new Date(dataObj.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-    $('#_register_nm-register_date').html(dataObj.register_nm+"/"+register_dateVal);
+    $('#_register_nm-register_date').html(dataObj.register_nm+"/"+dataObj.register_date);
 
     $('#_title').html(dataObj.title);
     $('#_content').html(dataObj.content);

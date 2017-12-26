@@ -194,21 +194,6 @@ function setDataList(dataObj, selectedPage, totalDataCnt) {
     
     for(var i = 0 ; i < loopCnt ; i++){ 
     
-        var register_dateVal = dataObj[i].register_date;
-        var receipt_dateVal = dataObj[i].receipt_date;
-        /*
-        if (register_dateVal) {
-            register_dateVal = register_dateVal.substring(0, 10);
-        } else {
-            register_dateVal = "";
-        }
-
-        if (receipt_dateVal) {
-            receipt_dateVal = receipt_dateVal.substring(0, 10);
-        } else {
-            receipt_dateVal = "";
-        }
-        */
         var addList = "";
         addList += "							<tr onclick=detailShow('" + dataObj[i]._id + "')>";
         addList += "								<td class='text-center'>" + dataObj[i].process_speed + "</td>";
