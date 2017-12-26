@@ -1,6 +1,7 @@
 'use strict';
 
-const logger = require('log4js').getLogger('app');
+var MyProcess = require('../models/MyProcess');
+var logger = require('log4js').getLogger('app');
 
 module.exports = {
 
@@ -53,9 +54,53 @@ module.exports = {
        
             //나의 업무처리현황
             if(req.query.user == "manager"){
-                AndQueries.push({
-                    manager_sabun : req.session.email
+                //AndQueries.push({
+                //    manager_sabun : req.session.email
+                //});
+
+                var condition ={};
+                condition.email = req.session.email; //나의 상위업무조회
+
+                MyProcess.find(condition).distinct('higher_cd').exec(function(err, myprocess){
+                    logger.debug("=============================================");
+                    logger.debug("myprocess1 : ", myprocess);
+                    logger.debug("=============================================");
+                    
+                    var hObj = {};
+                    var OrQry = [];
+
+                    myprocess.forEach(function(value, index, array){
+
+                        hObj.higher_cd = array[index];
+                        OrQry.push(hObj);
+
+                        logger.debug("=============================================");
+                        logger.debug("array[index] : ",array[index]);
+                        logger.debug("hObj : ", hObj);
+                        logger.debug("OrQry : ", OrQry);
+                        logger.debug("=============================================");
+
+
+                    });
+                    
+                    
+
+                    AndQueries.push({
+                        $or: OrQry
+                    });
+
+                    logger.debug("=============================================");
+                    logger.debug("AndQueries : ", JSON.stringify(AndQueries));
+                    logger.debug("=============================================");
+
                 });
+
+                logger.debug("=============================================");
+                logger.debug("AndQueries xxxx : ", JSON.stringify(AndQueries));
+                logger.debug("=============================================");
+
+
+
             //전체내용검색
             }else if(req.query.user == "managerall"){
     
