@@ -1,6 +1,7 @@
 'use strict';
 
-const logger = require('log4js').getLogger('app');
+var MyProcess = require('../models/MyProcess');
+var logger = require('log4js').getLogger('app');
 
 module.exports = {
 
@@ -50,11 +51,57 @@ module.exports = {
         var reg_date_from = req.query.reg_date_from;
         var reg_date_to = req.query.reg_date_to;
        
-        if(req.session.email){
+       
+            //나의 업무처리현황
             if(req.query.user == "manager"){
-                AndQueries.push({
-                    manager_sabun : req.session.email
+                //AndQueries.push({
+                //    manager_sabun : req.session.email
+                //});
+
+                var condition ={};
+                condition.email = req.session.email; //나의 상위업무조회
+
+                MyProcess.find(condition).distinct('higher_cd').exec(function(err, myprocess){
+                    logger.debug("=============================================");
+                    logger.debug("myprocess1 : ", myprocess);
+                    logger.debug("=============================================");
+                    
+                    var hObj = {};
+                    var OrQry = [];
+
+                    myprocess.forEach(function(value, index, array){
+
+                        hObj.higher_cd = array[index];
+                        OrQry.push(hObj);
+
+                        logger.debug("=============================================");
+                        logger.debug("array[index] : ",array[index]);
+                        logger.debug("hObj : ", hObj);
+                        logger.debug("OrQry : ", OrQry);
+                        logger.debug("=============================================");
+
+
+                    });
+                    
+                    
+
+                    AndQueries.push({
+                        $or: OrQry
+                    });
+
+                    logger.debug("=============================================");
+                    logger.debug("AndQueries : ", JSON.stringify(AndQueries));
+                    logger.debug("=============================================");
+
                 });
+
+                logger.debug("=============================================");
+                logger.debug("AndQueries xxxx : ", JSON.stringify(AndQueries));
+                logger.debug("=============================================");
+
+
+
+            //전체내용검색
             }else if(req.query.user == "managerall"){
     
             }else{
@@ -62,7 +109,7 @@ module.exports = {
                     request_id : req.session.email
                 });
             }
-        }
+
       
         //진행상태가 존재하면
         if(status_cd != '*'){
@@ -71,18 +118,18 @@ module.exports = {
             });
         }
 
-        
+        //처리된 내용검색 gbn 구분 추가
+        //gbn=complete 시, status=3,4만 가져오기
         if(req.query.gbn == "complete"){
             AndQueries.push({
-                
                 $or: [{
                     status_cd: "3"
                 }, {
                     status_cd: "4"
                 }]
-
             });
         }
+        //추가 끝
 
 
         

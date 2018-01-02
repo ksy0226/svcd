@@ -129,6 +129,8 @@ function getDataList(selectedPage) {
     if ($('#lower_cd').val() == "") {
         $('#lower_cd').val() = "*";
     }
+    //나의업무처리현황 user 구분 추가
+    //user=manager 시, 관리자가 본인이 접수해야할 것만 Incident 보이도록 처리
     var reqParam = 'user=manager&page=' + selectedPage + '&perPage=' + dataPerPage + '&searchType=' + $('#searchType').val() + '&status_cd=' + $('#status_cd').val()
         + '&lower_cd=' + $('#lower_cd').val()  + '&reg_date_from='
         + $('#reg_date_from').val() + '&reg_date_to=' + $('#reg_date_to').val()
@@ -192,21 +194,6 @@ function setDataList(dataObj, selectedPage, totalDataCnt) {
     
     for(var i = 0 ; i < loopCnt ; i++){ 
     
-        var register_dateVal = dataObj[i].register_date;
-        var receipt_dateVal = dataObj[i].receipt_date;
-        /*
-        if (register_dateVal) {
-            register_dateVal = register_dateVal.substring(0, 10);
-        } else {
-            register_dateVal = "";
-        }
-
-        if (receipt_dateVal) {
-            receipt_dateVal = receipt_dateVal.substring(0, 10);
-        } else {
-            receipt_dateVal = "";
-        }
-        */
         var addList = "";
         addList += "							<tr onclick=detailShow('" + dataObj[i]._id + "')>";
         addList += "								<td class='text-center'>" + dataObj[i].process_speed + "</td>";

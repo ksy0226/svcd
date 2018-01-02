@@ -107,13 +107,6 @@ function setDataList(dataObj, selectedPage) {
     } 
 
     for(var i = startIdx ; i <endIdx+1 ; i++){ 
-        var register_dateVal = dataObj[i-1].register_date; 
-
-        if(register_dateVal){
-            register_dateVal = register_dateVal.substring(0,10);
-        }else{
-            register_dateVal = ""; 
-        }
 
         var addList = "";
         //addList += "							<tr onclick=window.location='/search/user_detail/" + dataObj[i-1]._id + "'>";
@@ -124,7 +117,7 @@ function setDataList(dataObj, selectedPage) {
         addList += "								<td>" + dataObj[i-1].process_nm + "</td>";
         addList += "								<td>" + dataObj[i-1].description + "</td>";
         addList += "								<td>" + dataObj[i-1].user_nm + "</td>";
-        addList += "								<td class='text-center'>" + register_dateVal + "</td>";
+        addList += "								<td class='text-center'>" + dataObj[i-1].register_date + "</td>";
         addList += "								<td class='text-center'>" + dataObj[i-1].use_yn + "</td>";
         addList += "							</tr>";
 
@@ -268,9 +261,7 @@ function detailShow(id){
     $('#_request_company_nm-request_nm').html(dataObj.request_company_nm+"/"+dataObj.request_nm);
     $('#_request_complete_date').html(dataObj.request_complete_date);
     $('#_app_menu').html(dataObj.app_menu);
-    //$('#_register_nm-register_date').html(dataObj.register_nm+"/"+dataObj.register_date);
-    var register_dateVal = new Date(dataObj.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-    $('#_register_nm-register_date').html(dataObj.register_nm+"/"+register_dateVal);
+    $('#_register_nm-register_date').html(dataObj.register_nm+"/"+dataObj.register_date);
 
 
     $('#_title').html(dataObj.title);

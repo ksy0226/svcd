@@ -121,6 +121,8 @@ function getDataList(selectedPage){
     if($('#lower_cd').val() =="" || $('#lower_cd').val() == null){
         $('#lower_cd').val("*");
     }
+    //처리된 내용검색 gbn 구분 추가
+    //gbn=complete 시, status=3,4만 가져오기
     var reqParam = 'gbn=complete&page=' + selectedPage + '&perPage=' + dataPerPage + '&searchType=' + $('#searchType').val() + '&higher_cd=' + $('#higher_cd').val() + '&lower_cd=' + $('#lower_cd').val() + '&reg_date_from=' + $('#reg_date_from').val()+ '&reg_date_to=' + $('#reg_date_to').val()+ '&searchText=' + encodeURIComponent($('#searchText').val());
     $.ajax({
         type: "GET",
@@ -266,11 +268,9 @@ function paging(totalDataCnt, dataPerPage, pageCount, currentPage){
  * @param {*} incident_id  
  */
 function detailShow(id){
-    alert("detailShow");
     
     //incident id값 세팅
     incident_id = id;
-    alert("incident_id"+incident_id);
 
     var reqParam = '';
     $.ajax({
@@ -325,9 +325,7 @@ function setDetail(dataObj){
     $('#_request_company_nm-request_nm').html(dataObj.request_company_nm+"/"+dataObj.request_nm);
     $('#_request_complete_date').html(dataObj.request_complete_date);
     $('#_app_menu').html(dataObj.app_menu);
-    //$('#_register_nm-register_date').html(dataObj.register_nm+"/"+dataObj.register_date);
-    var register_dateVal = new Date(dataObj.register_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-    $('#_register_nm-register_date').html(dataObj.register_nm+"/"+register_dateVal);
+    $('#_register_nm-register_date').html(dataObj.register_nm+"/"+dataObj.register_date);
 
 
     $('#_title').html(dataObj.title);
