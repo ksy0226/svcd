@@ -467,7 +467,7 @@ module.exports = {
                             message: err
                         });
                     } else {
-                        console.log("totalCnt>>>>>"+totalCnt);
+                        logger.debug("totalCnt>>>>>"+totalCnt);
                         logger.debug("=============================================");
                         logger.debug("incidentCnt : ", totalCnt);
                         logger.debug("=============================================");

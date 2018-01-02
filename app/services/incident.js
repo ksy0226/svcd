@@ -50,67 +50,7 @@ module.exports = {
         var status_cd = req.query.status_cd == null ? "*" : req.query.status_cd ;
         var reg_date_from = req.query.reg_date_from;
         var reg_date_to = req.query.reg_date_to;
-       
-       
-            //나의 업무처리현황
-            if(req.query.user == "manager"){
-                //AndQueries.push({
-                //    manager_sabun : req.session.email
-                //});
-
-                var condition ={};
-                condition.email = req.session.email; //나의 상위업무조회
-
-                MyProcess.find(condition).distinct('higher_cd').exec(function(err, myprocess){
-                    logger.debug("=============================================");
-                    logger.debug("myprocess1 : ", myprocess);
-                    logger.debug("=============================================");
-                    
-                    var hObj = {};
-                    var OrQry = [];
-
-                    myprocess.forEach(function(value, index, array){
-
-                        hObj.higher_cd = array[index];
-                        OrQry.push(hObj);
-
-                        logger.debug("=============================================");
-                        logger.debug("array[index] : ",array[index]);
-                        logger.debug("hObj : ", hObj);
-                        logger.debug("OrQry : ", OrQry);
-                        logger.debug("=============================================");
-
-
-                    });
-                    
-                    
-
-                    AndQueries.push({
-                        $or: OrQry
-                    });
-
-                    logger.debug("=============================================");
-                    logger.debug("AndQueries : ", JSON.stringify(AndQueries));
-                    logger.debug("=============================================");
-
-                });
-
-                logger.debug("=============================================");
-                logger.debug("AndQueries xxxx : ", JSON.stringify(AndQueries));
-                logger.debug("=============================================");
-
-
-
-            //전체내용검색
-            }else if(req.query.user == "managerall"){
-    
-            }else{
-                AndQueries.push({
-                    request_id : req.session.email
-                });
-            }
-
-      
+              
         //진행상태가 존재하면
         if(status_cd != '*'){
             AndQueries.push({
@@ -123,16 +63,13 @@ module.exports = {
         if(req.query.gbn == "complete"){
             AndQueries.push({
                 $or: [{
-                    status_cd: "3"
+                    "status_cd" : "3"
                 }, {
-                    status_cd: "4"
+                    "status_cd" : "4"
                 }]
             });
         }
         //추가 끝
-
-
-        
 
         //상위업무가 존재하면
         if(higher_cd != '*'){
@@ -159,11 +96,65 @@ module.exports = {
             });
         }
 
-        /**
-         * AndQuery 추가
-         */
-        if (AndQueries.length > 0){
-            findIncident.$and = AndQueries
+
+        //나의 업무처리현황
+        if(req.query.user == "manager"){
+     
+            var condition ={};
+            condition.email = req.session.email; //나의 상위업무조회
+    
+            MyProcess.find(condition).distinct('higher_cd').exec(function(err, myprocess){
+
+                logger.debug("=============================================");
+                logger.debug("myprocess1 : ", myprocess);
+                logger.debug("=============================================");
+                
+                AndQueries.push({
+                    "higher_cd" : {"$or" : myprocess}
+                });
+
+                /**
+                 * AndQuery 추가
+                 */
+                if (AndQueries.length > 0){
+                    findIncident.$and = AndQueries
+                }
+
+                logger.debug("=============================================");
+                logger.debug("AndQueries : ", JSON.stringify(AndQueries));
+                logger.debug("=============================================");
+    
+                logger.debug('findIncident : ' + JSON.stringify(findIncident));
+                logger.debug('req.query.higher_cd : ' + req.query.higher_cd);
+                logger.debug('req.query.lower_cd : ' + req.query.lower_cd);
+                logger.debug('req.query.searchType : ' + req.query.searchType);
+                logger.debug('req.query.searchText : ' + req.query.searchText);
+                logger.debug('req.query.reg_date_from : ' + req.query.reg_date_from);
+                logger.debug('req.query.reg_date_to : ' + req.query.reg_date_to);
+        
+                //console.log('findIncident : ' + JSON.stringify(findIncident));
+        
+                return {
+                    searchType: req.query.searchType,
+                    searchText: req.query.searchText,
+                    higher_cd: req.query.higher_cd,
+                    lower_cd: req.query.lower_cd,
+                    findIncident: findIncident,
+                    highlight: highlight
+                };
+
+            });
+    
+           
+
+
+        //전체내용검색
+        }else if(req.query.user == "managerall"){
+
+        }else{
+            AndQueries.push({
+                request_id : req.session.email
+            });
         }
 
         logger.debug('findIncident : ' + JSON.stringify(findIncident));

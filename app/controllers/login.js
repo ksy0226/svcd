@@ -150,9 +150,12 @@ module.exports = {
                         //권한에 따른 분기
                         if (req.session.user_flag == '1') {
                             res.render("main/admin");
-                        } else if (req.session.user_flag == '5') {
+                        } else if (req.session.user_flag == '3') {
                             res.render("main/deptadmin");
-                        } else {
+                        } else if (req.session.user_flag == '4') {
+                            res.render("main/deptadmin");
+                        }
+                         else {
                             res.render("main/user");
                         }
                         //<<<<<==================================================
@@ -264,7 +267,9 @@ module.exports = {
                                 //권한에 따른 분기
                                 if (req.session.user_flag == '1') {
                                     res.render("main/admin");
-                                } else if (req.session.user_flag == '5') {
+                                } else if (req.session.user_flag == '3') {
+                                    res.render("main/deptadmin");
+                                } else if (req.session.user_flag == '4') {
                                     res.render("main/deptadmin");
                                 } else {
                                     res.render("main/user");
