@@ -147,7 +147,7 @@ function setDataList(dataObj) {
             complete_dateVal = complete_dateVal.substring(0, 10);
 
             var addList = "";
-            addList += "<tr onclick=window.location='/search/user_list/' style='cursor:pointer'>";
+            addList += "<tr onclick=window.location='/incident/' style='cursor:pointer'>";
             addList += "	<td>" + dataObj[i].title + "</td>";
             addList += "	<td class='text-center'>" + creat_dateVal + "</td>";
             addList += "	<td class='text-center'>" + dataObj[i].app_menu + "</td>";
@@ -224,7 +224,7 @@ function setDataList2(dataObj2) {
             complete_dateVal = complete_dateVal.substring(0, 10);
 
             var addList = "";
-            addList += "<tr onclick=window.location='/search/user_list/' style='cursor:pointer'>";
+            addList += "<tr onclick=window.location='/incident/' style='cursor:pointer'>";
             addList += "	<td>" + dataObj2[i].title + "</td>";
             addList += "	<td class='text-center'>" + creat_dateVal + "</td>";
             addList += "	<td class='text-center'>" + dataObj2[i].app_menu + "</td>";

@@ -7,6 +7,7 @@ const Incident = require('../models/Incident');
 const ProcessStatus = require('../models/ProcessStatus');
 const ProcessGubun = require('../models/ProcessGubun');
 const LowerProcess = require('../models/LowerProcess');
+const MyProcess = require('../models/MyProcess');
 const Usermanage = require('../models/Usermanage');
 const mailer = require('../util/nodemailer');
 const service = require('../services/incident');
@@ -32,7 +33,11 @@ module.exports = {
                 callback(null, status);
             });
         }, function (status, callback) {
-            LowerProcess.find().sort('higher_cd').sort('lower_nm').exec(function (err, lowerprocess) {
+
+            var condition ={};
+            condition.email = req.session.email;
+
+            MyProcess.find(condition).sort('higher_cd').sort('lower_nm').exec(function (err, lowerprocess) {
                 if (err) {
                     res.render("http/500", {
                         err: err

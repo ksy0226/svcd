@@ -6,7 +6,7 @@ const CompanyModel = require('../models/Company');
 const IncidentModel = require('../models/Incident');
 const HigherProcessModel = require('../models/HigherProcess');
 const LowerProcessModel = require('../models/LowerProcess');
-const MyProcessModel = require('../models/MyProcess');
+const CompanyProcessModel = require('../models/CompanyProcess');
 const OftenQnaModel = require('../models/OftenQna');
 const service = require('../services/incident');
 const service2 = require('../services/oftenqna');
@@ -23,52 +23,43 @@ module.exports = {
      */
     
     user_list: (req, res, next) => {
-        async.waterfall([function (callback) {
-            HigherProcessModel.find({}, function (err, higherprocess) {
-                if (err) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                }
-                callback(null, higherprocess)
-            });
-        }], function (err, higherprocess) {
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            } else {
-                res.render("search/user_list", {
-                    higherprocess: higherprocess
-                });
-            }
-        });
-    },
+        try{
+            
+            var condition = {}; //조건
+            condition.company_cd    = req.session.company_cd; //회사코드
+            //condition.email         = req.session.email; //이메일
     
-    /*
-    user_list: (req, res, next) => {
-        async.waterfall([function (callback) {
-            MyProcessModel.find({}, function (err, myprocess) {
-                if (err) {
-                    res.render("http/500", {
-                        err: err
+            logger.debug("==========================================getMyProcess=======================================");
+            logger.debug("condition : ",condition);
+            logger.debug("=============================================================================================");
+            
+            CompanyProcessModel.find(condition, function (err, myProcess) {
+                if (err){ 
+                    res.json({
+                        success: false,
+                        message: err
+                    });
+                }else{
+    
+                    logger.debug("==========================================getMyProcess=======================================");
+                    //logger.debug("myProcess : ",JSON.stringify(myProcess));
+                    //console.log("myProcess : ",JSON.stringify(myProcess));
+                    
+                    logger.debug("=============================================================================================");
+    
+                    res.render("search/user_list", {
+                        myProcess: myProcess
                     });
                 }
-                callback(null, myprocess)
             });
-        }], function (err, myprocess) {
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            } else {
-                res.render("search/user_list", {
-                    myprocess: myprocess
-                });
-            }
-        });
+    
+        }catch(e){
+            logger.error("myProcess controllers getMyProcess : ", e);
+        }finally{}
+        
     },
-    */
+
+  
     /**
      * 사용자별 상세조회 > Incident 가져오기
      */
