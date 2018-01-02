@@ -19,8 +19,9 @@ IncidentGubunSchema.pre("save", setCreateAt);
 
 function setCreateAt(next){
     var schema = this;
-    var date = new Date();
-    schema.createdAt = date.toLocaleString();
+    var m = moment();    
+    var date = m.format("YYYY-MM-DD HH:mm:ss");
+    schema.createdAt = date;
     return next();
 }
 

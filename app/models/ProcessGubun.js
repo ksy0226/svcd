@@ -20,8 +20,9 @@ processGubunSchema.pre("save", setCreateAt);
 
 function setCreateAt(next){
     var schema = this;
-    var date = new Date();
-    schema.created_at = date.toLocaleString();
+    var m = moment();    
+    var date = m.format("YYYY-MM-DD HH:mm:ss");
+    schema.created_at = date;
     return next();
 }
 

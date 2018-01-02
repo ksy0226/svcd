@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var autoIncrement = require('mongoose-auto-increment');
 var moment = require('moment');
-
+var logger = require('log4js').getLogger('app');
 
 var IncidentSchema = new Schema({
     register_num            : {type : Number, require : true},                                                                                                                      
@@ -82,18 +82,6 @@ var IncidentSchema = new Schema({
 
 IncidentSchema.pre("save", setCreateAt);
 
-function setCreateAt(next){
-    var schema = this;
-    var date = new Date();
-    schema.created_at = date.toLocaleString();
-    schema.register_date = date.toLocaleString();
-    return next();
-}
-
-autoIncrement.initialize(mongoose.connection);
-IncidentSchema.plugin( autoIncrement.plugin , { model : "incident", field : "register_num" , startAt : 1 } );
-module.exports = mongoose.model('incident' , IncidentSchema);
-
 function isEmpty(value){
     var isValid = false;
     if(value){
@@ -115,9 +103,11 @@ IncidentSchema.pre("save", setCreateAt);
 
 function setCreateAt(next){
     var schema = this;
-    var date = new Date();
-    schema.created_at = date.toLocaleString();
-    schema.register_date = date.toLocaleString();
+    var m = moment();    
+    var date = m.format("YYYY-MM-DD HH:mm:ss");
+
+    schema.created_at = date;
+    schema.register_date = date;
     return next();
 }
 
