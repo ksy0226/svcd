@@ -12,11 +12,11 @@ router.route('/status_list').get(controller.status_list);
 router.route('/cntload').get(controller.cntload);
 router.route('/chartLoad').get(controller.chartLoad);
 router.route('/monthlyload').get(controller.monthlyload);
-router.route('/deptcntload').get(controller.deptcntload);
+router.route('/deptcntload').get(controller.cntload);
 router.route('/deptmonthlyLoad').get(controller.deptmonthlyLoad);
 router.route('/deptchartLoad').get(controller.deptchartLoad);
 router.route('/getHighLower').get(controller.getHighLower);
 router.route('/getComHigher').get(controller.getComHigher);
-router.route('/userCntLoad').get(controller.userCntLoad);
+router.route('/userCntLoad').get(controller.cntload);
 
 module.exports = router;
