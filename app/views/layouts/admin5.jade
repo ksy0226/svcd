@@ -70,6 +70,24 @@ html
                             li.menu-title Service Desk
                             li.has_sub
                                 a.waves-effect.waves-primary(href='javascript:void(0);')
+                                    i.md.md-now-widgets
+                                    span  문의하기
+                                    span.menu-arrow
+                                ul.list-unstyled
+                                    li
+                                        a(href='/incident/new/문의하기')
+                                            | 문의등록  
+                                            //i.fa.fa-circle-o.text-pink.m-l-5
+                                    li
+                                        a(href='/incident') 처리진행현황
+                                    li
+                                        a(href='/search/user_qna') 자주묻는 질문과답
+                                    li
+                                        a(href='/search/user_list')
+                                            | 처리된 내용검색 
+                                            //i.fa.fa-circle-o.text-pink.m-l-5
+                            li.has_sub
+                                a.waves-effect.waves-primary(href='javascript:void(0);')
                                     i.md.md-search
                                     span  SD 검색/통계 
                                     span.menu-arrow

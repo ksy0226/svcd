@@ -129,6 +129,33 @@ module.exports = {
             logger.error("myProcess controllers getMyProcess : ", e);
         }finally{}
     },
+
+    /**
+     * 담당자 상위업무를 조회
+     */
+    getMyHigherProcess : (req, callback) => {
+        try{
+
+            var condition = {}; //조건
+            condition.company_cd    = req.session.company_cd; //회사코드
+            condition.email         = req.session.email; //이메일
+
+            MyProcessModel.find(condition).distinct('higher_cd').exec(function(err, getMyHigherProcess){
+
+                //logger.debug("=============================================");
+                //logger.debug("getMyHigherProcess : ", getMyHigherProcess);
+                //logger.debug("=============================================");
+ 
+                return callback(getMyHigherProcess);
+ 
+            });
+
+        }catch(e){
+            logger.error("getMyHigherProcess controllers getMyProcess err: ", e);
+        }finally{
+        }
+    },
+
 };
 
 /**

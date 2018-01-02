@@ -77,10 +77,12 @@ usermanageSchema.methods.hash = function (password) {
 function hashPassword(next){
     var user = this;
 
-    var date = new Date();
-    user.created_at = date.toLocaleString();
-    user.register_date = date.toLocaleString();
-    user.modify_date = date.toLocaleString();
+    var m = moment();    
+    var date = m.format("YYYY-MM-DD HH:mm:ss");
+
+    user.created_at = date;
+    user.register_date = date;
+    user.modify_date = date;
 
     if(!user.isModified("password")){
         return next();
