@@ -241,7 +241,7 @@ module.exports = {
     },
 
     /**
-     * 메인 카운트 로드
+     * 일반 사용자 메인 카운트 로드 (user_flag='9')
      */
     userCntLoad: (req, res, next) => {
         var today = new Date();
@@ -296,34 +296,115 @@ module.exports = {
     },
 
     cntload: (req, res, next) => {
-        //var startDate = new Date(new Date().setDate(new Date().getDate() - 60)).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-        //var endDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
-        var today = new Date();
-        var thisYear = today.getFullYear();
+        logger.debug("cntload controller...");
 
-        var aggregatorOpts = [{
-            $match: { //조건
-                //manager_company_cd: req.session.company_cd  //각 사별 관리담당자는?
-                //,user_id : req.session.email     //req.session.sabun 넣을 예정
 
+        var startDate = new Date(new Date().setDate(new Date().getDate() - 30)).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        var endDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        
+        logger.debug("startDate : ", startDate);
+        logger.debug("endDate : ", endDate);
+
+        //var today = new Date();
+        //var thisYear = today.getFullYear();
+
+        logger.debug("cntload... req.session.user_flag : ", req.session.user_flag);
+
+        var condition = {};
+        var OrQueries = [];
+        var AndQueries = [];
+        if(req.session.user_flag ==1){        //전체관리자
+            logger.debug("==================================================");
+            logger.debug("req.session.user_flag : ", req.session.user_flag);
+            logger.debug("==================================================");
+            
+        }else if(req.session.user_flag == 3){  //업무관리자
+            logger.debug("==================================================");
+            logger.debug("req.session.user_flag : ", req.session.user_flag);
+
+            condition.manager_dept_cd = req.session.dept_cd;
+            
+            logger.debug("condition.manager_dept_cd : ", condition.manager_dept_cd);
+
+            AndQueries.push({
                 $or: [{
-                    status_cd: "1"
-                }, {
-                    status_cd: "2"
-                }, {
-                    status_cd: "3"
-                }, {
-                    status_cd: "4"
+                    manager_dept_cd : condition.manager_dept_cd
                 }]
-                //,$and : [ { register_date : {$gte: "2017-05-19T04:49:38.881Z"}}
-                //         ,{ register_date : {$lte:"2017-11-15T04:49:38.881Z"}} ]
-                //,register_date : {$gte: "2017-10-19T04:49:38.881Z", $lte:"2017-11-15T04:49:38.881Z"}
-                //,register_date : {$gte: new Date(new Date().setDate(new Date().getDate()-180)), $lte: new Date()}
-                //, register_date: { $gte: startDate, $lte: endDate }
-                ,
-                register_yyyy: thisYear.toString()
+            });
+            condition.$and = AndQueries;
 
-            }
+            logger.debug("==================================================");
+
+            
+
+        }else if(req.session.user_flag == 4){  //업무담당자
+            logger.debug("==================================================");
+            logger.debug("req.session.user_flag : ", req.session.user_flag);
+            logger.debug("==================================================");
+            /*업무담당자 나의업무지정 관련 처리 필요*/
+
+
+        }else if(req.session.user_flag == 5){  //고객사관리자
+            logger.debug("==================================================");
+            logger.debug("req.session.user_flag : ", req.session.user_flag);
+
+            condition.request_company_cd = req.session.company_cd;
+            
+            logger.debug("condition.request_company_cd : ", condition.request_company_cd);
+
+            AndQueries.push({
+                $or: [{
+                    request_company_cd : condition.request_company_cd
+                }]
+            });
+            condition.$and = AndQueries;
+
+            logger.debug("==================================================");
+            
+            
+            
+
+        }else if(req.session.user_flag == 9){  //일반사용자
+            logger.debug("==================================================");
+            logger.debug("req.session.user_flag : ", req.session.user_flag);
+
+            condition.request_id = req.session.email;
+
+            logger.debug("condition.request_id : ", condition.request_id);
+
+            AndQueries.push({
+                $or: [{
+                    request_id : condition.request_id
+                }]
+            });
+            condition.$and = AndQueries;
+
+            
+            logger.debug("==================================================");
+            
+        }
+
+        OrQueries.push({
+            $or: [{
+                status_cd: "1"
+            }, {
+                status_cd: "2"
+            }, {
+                status_cd: "3"
+            }, {
+                status_cd: "4"
+            }]
+        });
+        condition.$or = OrQueries;
+
+        logger.debug("condition : ", condition);
+
+        condition.register_date = { $gte: startDate, $lte: endDate } //30일 기간으로 수정
+
+        logger.debug("condition : ", condition);
+        
+        var aggregatorOpts = [{
+            $match: condition
         }, {
             $group: { //그룹칼럼
                 _id: {
@@ -353,7 +434,8 @@ module.exports = {
         ]
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
             //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
-            //console.log("cntload incident"+JSON.stringify(incident));    
+            logger.debug("cntload aggregatorOpts"+JSON.stringify(aggregatorOpts));    
+            
             if (err) {
                 return res.json({
                     success: false,
@@ -366,15 +448,11 @@ module.exports = {
     },
 
     /**
-     * 팀장 메인 카운트 로드
+     * 고객사 관리자 메인 카운트 로드 (user_flag='5')
      */
     deptcntload: (req, res, next) => {
-        //var startDate = new Date(new Date().setDate(new Date().getDate() - 360)).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-        //var endDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
         var today = new Date();
         var thisYear = today.getFullYear();
-
-
 
         var aggregatorOpts = [{
             $match: { //조건
@@ -382,7 +460,7 @@ module.exports = {
                 //,manager_sabun : req.session.sabun
                 //,manager_email : req.session.email      //req.session.sabun 넣을 예정 ??
                 //,
-                manager_dept_cd: req.session.dept_cd,
+                //manager_dept_cd: req.session.dept_cd,
                 $or: [{
                     status_cd: "1"
                 }, {
