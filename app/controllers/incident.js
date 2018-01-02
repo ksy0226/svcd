@@ -452,7 +452,7 @@ module.exports = {
             async.waterfall([function (callback) {
 
 
-                //>>>> 나의 상위 업무만 조회
+                //나의 상위 업무만 조회
                 var condition = {};
                 condition.email = req.session.email;
 
@@ -493,7 +493,7 @@ module.exports = {
 
                     callback(myHigherProcess);
                 });
-                //<<<<< 나의 상위 업무만 조회
+
 
             }, function (myHigherProcess) {
                 Incident.count(search.findIncident, function (err, totalCnt) {
