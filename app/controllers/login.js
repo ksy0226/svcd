@@ -200,6 +200,8 @@ module.exports = {
             
             logger.debug("======================================");
             logger.debug("login req.query.email", req.query.email);
+            logger.debug("login req.query.password", req.query.password);
+            logger.debug("url : ",CONFIG.groupware.uri + "/CoviWeb/api/UserInfo.aspx?email=" + req.query.email + "&password=" + encodeURIComponent(req.query.password));
             logger.debug("======================================");
 
             /**
@@ -210,12 +212,20 @@ module.exports = {
             async.waterfall([function (callback) {
 
                 request({
-                    uri: CONFIG.groupware.uri + "/CoviWeb/api/UserInfo.aspx?type=sso&email=" + req.query.email + "&password=" + encodeURIComponent(req.query.password),
+                    uri: CONFIG.groupware.uri + "/CoviWeb/api/UserInfo.aspx?email=" + req.query.email + "&password=" + encodeURIComponent(req.query.password),
+                    //uri: CONFIG.groupware.uri + "/CoviWeb/api/UserInfo.aspx?email=hilee@isu.co.kr&password=3DE413271C5D3573FC9BF9BF78A9CDFB",
+                    //email=hilee@isu.co.kr&password=3DE413271C5D3573FC9BF9BF78A9CDFB
                     headers: {
                         'Content-type': 'application/json'
                     },
                     method: "GET",
                 }, function (err, response, gwUser) {
+
+                    logger.debug("======================================");
+                    logger.debug("gwUserr", JSON.stringify(gwUser));
+                    logger.debug("======================================");
+
+
                     callback(err, gwUser)
                 });
 

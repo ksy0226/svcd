@@ -17,6 +17,10 @@ $(document).ready(function () {
     
 });
 
+/**
+ * 회사코드 선택 시 사번등록 항목 DISPLAY여부
+ * @param {* 회사코드} obj 
+ */
 function displaySabun(obj){
     if($(obj).val() == 'ISU_ST'){
         $('#row_sabun').slideDown(350);
