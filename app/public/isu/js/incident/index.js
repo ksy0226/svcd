@@ -439,7 +439,6 @@ function setDetail(dataObj) {
             var addList = "";
             addList += "<a href='/incident/download/" + dataObj.attach_file[cnt].path + "'>";
             addList += "<span class='text-pink'> " + dataObj.attach_file[cnt].originalname + "</span>";
-            addList += "<span class='text-muted.m-l-10'> " + "(" + dataObj.attach_file[cnt].size + " Byte)" + "</span>";
             $('#_attach_box').append("<td class='i fa fa-paperclip m-r-10 m-b-10'>" + addList + "</td>");
             $('#_attach_box').append("<tr>" + addList + "</tr>");
         }

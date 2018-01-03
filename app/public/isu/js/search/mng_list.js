@@ -95,6 +95,7 @@ function getLowerProcessList(){
  */
 function setContent(data, higher_cd){
 
+
     $('#lower_cd').empty();
     $('#lower_cd').append("<option value='*'> 전체</option>");
     
@@ -135,7 +136,6 @@ function getDataList(selectedPage){
             $('#ajax_indicator').css("display", "");
         },
         success: function (dataObj) {
- 
             totalDataCnt = Number(dataObj.totalCnt);
             if(totalDataCnt < dataPerPage){
                 totalPage = 1;
@@ -160,13 +160,10 @@ function getDataList(selectedPage){
  * 선택된 내용 매핑하기
  */
 function setDataList(dataObj, selectedPage, totalDataCnt) {
-    //선택한 페이지가 1page 이상일 때,
-    
-    //if(selectedPage>1){
-        //기존 데이터 삭제
-        $("#more_list tr").remove();
-    //}
-    
+
+    $("#more_list tr").remove();
+
+
     var loopCnt = dataPerPage;
 
     if (totalDataCnt < dataPerPage){
@@ -230,7 +227,7 @@ function setDataList(dataObj, selectedPage, totalDataCnt) {
         /**
          * 진행상태
          */
-        if($(this).find('td:eq(4)').html() == "접수" || $(this).find('td:eq(4)').html() == "접수대기"){
+        if($(this).find('td:eq(4)').html() == "접수" || $(this).find('td:eq(4)').html() == "접수대기" || $(this).find('td:eq(4)').html() == "접수중"){
             $(this).find('td:eq(4)').html('<span class="label label-inverse">접수중</span>');
         }if($(this).find('td:eq(4)').html() == "처리중"){
             $(this).find('td:eq(4)').html('<span class="label label-primary">처리중</span>');

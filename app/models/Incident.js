@@ -36,9 +36,9 @@ var IncidentSchema = new Schema({
     manager_sabun           : {type : String},  //담당자 사번
     manager_nm              : {type : String, default:'담당미지정'},  //담당자 명
     manager_dept_cd         : {type : String},  //담당자 부코드
-    manager_dept_nm         : {type : String},  //담당자 부서명
-    manager_position        : {type : String},  //담당자 직위명
-    manager_email           : {type : String},  //담당자 이메일
+    manager_dept_nm         : {type : String, default : ''},  //담당자 부서명
+    manager_position        : {type : String, default : ''},  //담당자 직위명
+    manager_email           : {type : String, default : ''},  //담당자 이메일
     manager_phone           : {type : String},  //담당자 전화
     receipt_date            : {type : String},  //접수일
     business_level          : {type : String},  //난이도

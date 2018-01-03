@@ -131,6 +131,9 @@ function setDataList(dataObj) {
     //기존 데이터 삭제
     $("#more_list tr").remove();
 
+    rowIdx = 0;
+    dataCnt = 0;
+
     //조회 내용 추가
     if (rowIdx < dataObj.length) {
 
@@ -141,19 +144,21 @@ function setDataList(dataObj) {
         }
 
         for (var i = rowIdx; i < dataCnt; i++) {
+            /*
             var creat_dateVal = dataObj[i].created_at;
             creat_dateVal = creat_dateVal.substring(0, 10);
             var complete_dateVal = dataObj[i].complete_date;
             complete_dateVal = complete_dateVal.substring(0, 10);
+            */
 
             var addList = "";
             addList += "<tr onclick=window.location='/incident/' style='cursor:pointer'>";
             addList += "	<td>" + dataObj[i].title + "</td>";
-            addList += "	<td class='text-center'>" + creat_dateVal + "</td>";
+            addList += "	<td class='text-center'>" + dataObj[i].register_date + "</td>";
             addList += "	<td class='text-center'>" + dataObj[i].app_menu + "</td>";
             addList += "	<td class='text-center'>" + dataObj[i].status_nm + "</td>";
             addList += "	<td class='text-center'>" + dataObj[i].manager_nm + "</td>";
-            addList += "	<td class='text-center'>" + complete_dateVal + "</td>";
+            addList += "	<td class='text-center'>" + dataObj[i].complete_date + "</td>";
             addList += "</tr>";
 
             $("#more_list").append(addList);
@@ -218,19 +223,21 @@ function setDataList2(dataObj2) {
         }
 
         for (var i = rowIdx; i < dataCnt; i++) {
+            /*
             var creat_dateVal = dataObj2[i].created_at;
             creat_dateVal = creat_dateVal.substring(0, 10);
             var complete_dateVal = dataObj2[i].complete_date;
             complete_dateVal = complete_dateVal.substring(0, 10);
+            */
 
             var addList = "";
             addList += "<tr onclick=window.location='/incident/' style='cursor:pointer'>";
             addList += "	<td>" + dataObj2[i].title + "</td>";
-            addList += "	<td class='text-center'>" + creat_dateVal + "</td>";
+            addList += "	<td class='text-center'>" + dataObj2[i].register_date + "</td>";
             addList += "	<td class='text-center'>" + dataObj2[i].app_menu + "</td>";
             addList += "	<td class='text-center'>" + dataObj2[i].status_nm + "</td>";
             addList += "	<td class='text-center'>" + dataObj2[i].manager_nm + "</td>";
-            addList += "	<td class='text-center'>" + complete_dateVal + "</td>";
+            addList += "	<td class='text-center'>" + dataObj2[i].complete_date + "</td>";
             addList += "</tr>";
 
             $("#more_list_nocomplete").append(addList);
