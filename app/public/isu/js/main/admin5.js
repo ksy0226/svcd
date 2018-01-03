@@ -203,6 +203,9 @@ function getDataList() {
 
 //내용 매핑
 function setDataList(dataObj) {
+    rowIdx = 0; //출력 시작 인덱스
+    dataCnt = 0; // 출력 종료 인덱스
+
     //기존 데이터 삭제
     $("#more_list tr").remove();
 
