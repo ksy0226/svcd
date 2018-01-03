@@ -39,5 +39,8 @@
     },
     "groupware":{
         "uri":"http://gw.isu.co.kr"
+    },
+    "msgAlimi":{
+        "uri":"http://175.119.100.144:8089"
     }
 }

@@ -1,5 +1,21 @@
 'use strict';
 
+$(document).ready(function () {
+    $('#company_cd').on("change",function(){
+        displaySabun(this);
+    });
+});
+
+function displaySabun(obj){
+    if($(obj).val() == 'ISU_ST'){
+        $('#row_sabun').slideDown(350);
+        $('input[name="usermanage[sabun]"]').attr('required');
+    }else{
+        $('#row_sabun').slideUp(350);
+        $('input[name="usermanage[sabun]"]').removeAttr('required');          
+    }
+}
+
 function companyCd(){
     //선택된 회사 인덱스 값
     var sIdx = $('#company_cd option').index($('#company_cd option:selected'));
