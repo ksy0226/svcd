@@ -13,6 +13,7 @@ var fs = require('fs');
 var path = require('path');
 var CONFIG = require('../../config/config.json');
 var logger = require('log4js').getLogger('app');
+var MyProcess = require('../models/MyProcess');
 
 module.exports = {
     /** 
@@ -46,7 +47,9 @@ module.exports = {
      */
     new: (req, res, next) => {
         async.waterfall([function (callback) {
-            CompanyProcess.find({ "company_cd": req.session.company_cd }, function (err, companyProcess) {
+            CompanyProcess.find({
+                "company_cd": req.session.company_cd
+            }, function (err, companyProcess) {
                 if (err) {
                     res.render("http/500", {
                         err: err
@@ -60,13 +63,13 @@ module.exports = {
                     err: err
                 });
             }
-            
+
             var real_contact = "";
-            if( req.session.office_tel_no != ""){
+            if (req.session.office_tel_no != "") {
                 real_contact = req.session.office_tel_no;
-            }else if(req.session.hp_telno != ""){
+            } else if (req.session.hp_telno != "") {
                 real_contact = req.session.hp_telno;
-            }else if(req.session.email != ""){
+            } else if (req.session.email != "") {
                 real_contact = req.session.email;
             }
 
@@ -124,7 +127,7 @@ module.exports = {
 
     /** 
      * incident 저장
-    */
+     */
     save: (req, res, next) => {
 
         async.waterfall([function (callback) {
@@ -181,7 +184,7 @@ module.exports = {
 
     /** 
      * incident 상담접수(전화) 저장
-    */
+     */
     mng_save: (req, res, next) => {
         async.waterfall([function (callback) {
             var newincident = req.body.incident;
@@ -353,40 +356,38 @@ module.exports = {
 
         if (req.query.page != null && req.query.page != '') page = Number(req.query.page);
         if (req.query.perPage != null && req.query.perPage != '') perPage = Number(req.query.perPage);
-        
 
-        logger.debug("=============================================");
-        logger.debug("page : ", page);
-        logger.debug("perPage : ", perPage);
-        logger.debug("req.query.perPage : ", req.query.perPage);
-        logger.debug("=============================================");
 
-        
+        //logger.debug("=============================================");
+        //logger.debug("page : ", page);
+        //logger.debug("perPage : ", perPage);
+        //logger.debug("req.query.perPage : ", req.query.perPage);
+        //logger.debug("=============================================");
 
         try {
-            
+
             async.waterfall([function (callback) {
                 Incident.count(search.findIncident, function (err, totalCnt) {
-                    
-                    
-                    logger.debug("search.request_id : "+search.request_id);
-                    logger.debug("search.findIncident : "+JSON.stringify(search.findIncident));
+
+
+                    //logger.debug("search.request_id : "+search.request_id);
+                    //logger.debug("search.findIncident : "+JSON.stringify(search.findIncident));
 
                     if (err) {
 
-                        logger.debug("=============================================");
-                        logger.debug("incident : ", err);
-                        logger.debug("=============================================");
+                        //logger.debug("=============================================");
+                        //logger.debug("incident : ", err);
+                        //logger.debug("=============================================");
 
                         return res.json({
                             success: false,
                             message: err
                         });
                     } else {
-                        console.log("totalCnt>>>>>"+totalCnt);
-                        logger.debug("=============================================");
-                        logger.debug("incidentCnt : ", totalCnt);
-                        logger.debug("=============================================");
+                        console.log("totalCnt>>>>>" + totalCnt);
+                        //logger.debug("=============================================");
+                        //logger.debug("incidentCnt : ", totalCnt);
+                        //logger.debug("=============================================");
 
                         callback(null, totalCnt)
                     }
@@ -394,41 +395,41 @@ module.exports = {
             }], function (err, totalCnt) {
 
                 Incident.find(search.findIncident, function (err, incident) {
-                    if (err) {
+                        if (err) {
 
-                        logger.debug("=============================================");
-                        logger.debug("incident : ", err);
-                        logger.debug("=============================================");
+                            //logger.debug("=============================================");
+                            //logger.debug("incident : ", err);
+                            //logger.debug("=============================================");
 
-                        return res.json({
-                            success: false,
-                            message: err
-                        });
-                    } else {
+                            return res.json({
+                                success: false,
+                                message: err
+                            });
+                        } else {
 
-                        //incident에 페이징 처리를 위한 전체 갯수전달
-                        var rtnData = {};
-                        rtnData.incident = incident;
-                        rtnData.totalCnt = totalCnt
+                            //incident에 페이징 처리를 위한 전체 갯수전달
+                            var rtnData = {};
+                            rtnData.incident = incident;
+                            rtnData.totalCnt = totalCnt
 
-                        logger.debug("=============================================");
-                        logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
-                        logger.debug("rtnData : ", JSON.stringify(rtnData));
-                        logger.debug("=============================================");
+                            //logger.debug("=============================================");
+                            //logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
+                            //logger.debug("rtnData : ", JSON.stringify(rtnData));
+                            //logger.debug("=============================================");
 
-                        res.json(rtnData);
+                            res.json(rtnData);
 
-                    }
-                })
-                .sort('-register_date')
-                .skip((page-1)*perPage)
-                .limit(perPage);
+                        }
+                    })
+                    .sort('-register_date')
+                    .skip((page - 1) * perPage)
+                    .limit(perPage);
             });
         } catch (err) {
 
-            logger.debug("===============search control================");
-            logger.debug("search list error : ", err);
-            logger.debug("=============================================");
+            //logger.debug("===============search control================");
+            //logger.debug("search list error : ", err);
+            //logger.debug("=============================================");
 
         } finally {}
 
@@ -437,40 +438,79 @@ module.exports = {
      * Incident 조회
      */
     getIncident: (req, res, next) => {
+
         var search = service.createSearch(req);
-        
+
         var page = 1;
         var perPage = 15;
 
         if (req.query.page != null && req.query.page != '') page = Number(req.query.page);
         if (req.query.perPage != null && req.query.perPage != '') perPage = Number(req.query.perPage);
 
-        logger.debug("=============================================");
-        logger.debug("page : ", page);
-        logger.debug("perPage : ", perPage);
-        logger.debug("req.query.perPage : ", req.query.perPage);
-        logger.debug("search.findIncident : ", search.findIncident);
-        logger.debug("=============================================");
-
         try {
-            
+
             async.waterfall([function (callback) {
+
+
+                //나의 상위 업무만 조회
+                var condition = {};
+                condition.email = req.session.email;
+
+                MyProcess.find(condition).distinct('higher_cd').exec(function (err, myHigherProcess) {
+                    
+                    if (search.findIncident.$and == null) {
+
+                        logger.debug("=============================================");
+                        logger.debug("search.findIncident.$and is null : ", myHigherProcess);
+                        logger.debug("=============================================");
+
+                        search.findIncident.$and = [{
+                            "higher_cd": {
+                                "$in": myHigherProcess
+                            }
+                        }];
+                        //{"$and":[{"higher_cd":{"$in":["H004","H006","H012","H024","H001"]}}]}
+                    } else {
+
+                        logger.debug("=============================================");
+                        logger.debug("search.findIncident.$and is not null : ", myHigherProcess);
+                        logger.debug("=============================================");
+
+                        search.findIncident.$and.push({
+                            "higher_cd": {
+                                "$in": myHigherProcess
+                            }
+                        });
+                        //'$and': [ { lower_cd: 'L004' } ] }
+                    }
+
+                    logger.debug("getIncident =============================================");
+                    logger.debug("page : ", page);
+                    logger.debug("perPage : ", perPage);
+                    logger.debug("req.query.perPage : ", req.query.perPage);
+                    logger.debug("search.findIncident : ", search.findIncident);
+                    logger.debug("getIncident =============================================");
+
+                    callback(myHigherProcess);
+                });
+
+
+            }, function (myHigherProcess) {
                 Incident.count(search.findIncident, function (err, totalCnt) {
                     if (err) {
 
-                        logger.debug("=============================================");
+                        logger.debug("getIncident =============================================");
                         logger.debug("incident : ", err);
-                        logger.debug("=============================================");
+                        logger.debug("getIncident =============================================");
 
                         return res.json({
                             success: false,
                             message: err
                         });
                     } else {
-                        logger.debug("totalCnt>>>>>"+totalCnt);
-                        logger.debug("=============================================");
+                        logger.debug("getIncident =============================================");
                         logger.debug("incidentCnt : ", totalCnt);
-                        logger.debug("=============================================");
+                        logger.debug("getIncident =============================================");
 
                         callback(null, totalCnt)
                     }
@@ -478,41 +518,41 @@ module.exports = {
             }], function (err, totalCnt) {
 
                 Incident.find(search.findIncident, function (err, incident) {
-                    if (err) {
+                        if (err) {
 
-                        logger.debug("=============================================");
-                        logger.debug("incident : ", err);
-                        logger.debug("=============================================");
+                            logger.debug("getIncident =============================================");
+                            logger.debug("incident err: ", err);
+                            logger.debug("getIncident =============================================");
 
-                        return res.json({
-                            success: false,
-                            message: err
-                        });
-                    } else {
+                            return res.json({
+                                success: false,
+                                message: err
+                            });
+                        } else {
 
-                        //incident에 페이징 처리를 위한 전체 갯수전달
-                        var rtnData = {};
-                        rtnData.incident = incident;
-                        rtnData.totalCnt = totalCnt
+                            //incident에 페이징 처리를 위한 전체 갯수전달
+                            var rtnData = {};
+                            rtnData.incident = incident;
+                            rtnData.totalCnt = totalCnt
 
-                        logger.debug("=============================================");
-                        logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
-                        logger.debug("rtnData : ", JSON.stringify(rtnData));
-                        logger.debug("=============================================");
+                            logger.debug("getIncident =============================================");
+                            logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
+                            logger.debug("rtnData : ", JSON.stringify(rtnData));
+                            logger.debug("getIncident =============================================");
 
-                        res.json(rtnData);
+                            res.json(rtnData);
 
-                    }
-                })
-                .sort('-register_date')
-                .skip((page-1)*perPage)
-                .limit(perPage);
+                        }
+                    })
+                    .sort('-register_date')
+                    .skip((page - 1) * perPage)
+                    .limit(perPage);
             });
         } catch (err) {
 
-            logger.debug("===============search control================");
-            logger.debug("search list error : ", err);
-            logger.debug("=============================================");
+            logger.debug("===============getIncident================");
+            logger.debug("getIncident : ", err);
+            logger.debug("==========================================");
 
         } finally {}
 
@@ -535,7 +575,7 @@ module.exports = {
                     });
                 } else {
                     //path 길이 잘라내기
-                    
+
                     if (incident.attach_file.length > 0) {
                         for (var i = 0; i < incident.attach_file.length; i++) {
                             var path = incident.attach_file[i].path
@@ -601,7 +641,9 @@ module.exports = {
                             });
                         } else {
                             //평가 완료 업데이트 성공 시 메일 전송
-                            Usermanage.findOne({ email: Incident.request_id }, function (err, usermanage) {
+                            Usermanage.findOne({
+                                email: Incident.request_id
+                            }, function (err, usermanage) {
                                 if (err) {
                                     return res.json({
                                         success: false,
@@ -635,7 +677,7 @@ module.exports = {
      */
     exceldownload: (req, res, next) => {
         //logger.debug("====>", 1);
-        
+
         /*
         Incident.find(req.body.incident)
             .select('status_nm higher_nm lower_nm request_nm request_company_nm request_dept_nm register_date receipt_date complete_date title content complete_content work_time')
@@ -652,14 +694,14 @@ module.exports = {
                 res.json(incidentJsonData);
             });
         */
-        
+
         var search = service.createSearch(req);
         async.waterfall([function (callback) {
             Incident.find(search.findIncident, function (err, incident) {
-            //우선 주석처리
-            //Incident.find(search.findIncident)
-            //.select ('status_nm higher_nm lower_nm title content')
-            //.exec(function (err, incident) {
+                //우선 주석처리
+                //Incident.find(search.findIncident)
+                //.select ('status_nm higher_nm lower_nm title content')
+                //.exec(function (err, incident) {
                 if (err) {
                     return res.json({
                         success: false,
@@ -679,6 +721,6 @@ module.exports = {
             //console.log(incident);
             res.json(incident);
         });
-        
+
     }
 };
