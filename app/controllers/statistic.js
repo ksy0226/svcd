@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const async = require('async');
 const IncidentModel = require('../models/Incident');
+var MyProcess = require('../models/MyProcess');
 var service = require('../services/statistic');
 const logger = require('log4js').getLogger('app');
 
@@ -294,7 +295,14 @@ module.exports = {
             res.json(incident);
         });
     },
-
+    /**
+     * 메인 상단 카운트 로드
+     * 1 : 전체관리자
+     * 3 : 업무관리자
+     * 4 : 업무담당자
+     * 5 : 고객사관리자
+     * 9 : 일반사용자
+     */
     cntload: (req, res, next) => {
         logger.debug("cntload controller...");
 
@@ -325,8 +333,7 @@ module.exports = {
             logger.debug("req.session.user_flag : ", req.session.user_flag);
 
             condition.manager_dept_cd = req.session.dept_cd;
-            
-            logger.debug("condition.manager_dept_cd : ", condition.manager_dept_cd);
+            //logger.debug("condition.manager_dept_cd : ", condition.manager_dept_cd);
 
             AndQueries.push({
                 $and: [{
@@ -335,16 +342,33 @@ module.exports = {
             });
             condition.$and = AndQueries;
 
-            logger.debug("==================================================");
-
-            
-
         }else if(req.session.user_flag == 4){  //업무담당자
             logger.debug("==================================================");
             logger.debug("req.session.user_flag : ", req.session.user_flag);
             logger.debug("==================================================");
-            /*업무담당자 나의업무지정 관련 처리 필요*/
+            //나의업무지정 상위업무 처리 위한 조건
+            var condition2 = {};
+            condition2.email = req.session.email;
+            MyProcess.find(condition2).distinct('higher_cd').exec(function (err, myHigherProcess) {
 
+                logger.debug("==================================================");
+                logger.debug("myHigherProcess : ", myHigherProcess);
+                logger.debug("==================================================");
+
+                AndQueries.push({
+                    $and: [{
+                        "higher_cd": {
+                            "$in": myHigherProcess
+                        }
+                    }]
+                });
+                condition.$and = AndQueries;
+
+                logger.debug("==================================================");
+                logger.debug("condition : ", JSON.stringify(condition));
+                logger.debug("==================================================");
+
+            });
 
         }else if(req.session.user_flag == 5){  //고객사관리자
             logger.debug("==================================================");
