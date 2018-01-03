@@ -103,43 +103,60 @@ module.exports = {
             });
         }
 
-        //나의 업무처리현황
-        if (req.query.user == "manager") {
+        //일반사용자
+        if (req.session.user_flag == "9") {
 
-            logger.debug("================incident service=================");
-            logger.debug("manager");
-            logger.debug("=================================================");
-
-            //업무 담당자(user_flag = 4)이면
-        } else if (req.query.user == "managerall") {
-
-            logger.debug("================incident service=================");
-            logger.debug("managerall");
-            logger.debug("=================================================");
-
-            //본인 것만 조회 
-        } else {
-
-            logger.debug("================incident service=================");
-            logger.debug("managerall");
-            logger.debug("=================================================");
+            //logger.debug("================incident service=================");
+            //logger.debug("incident service user_flag == 9");
+            //logger.debug("=================================================");
 
             AndQueries.push({
                 request_id: req.session.email
             });
+
+        //고객사관리자(user_flag = 5)이면
+        } else if (req.session.user_flag == "5") {
+
+            //logger.debug("================incident service=================");
+            //logger.debug("incident service user_flag == 5");
+            //logger.debug("=================================================");
+
+            AndQueries.push({
+                request_company_cd: req.session.company_cd
+            });
+
+        //업무담당자 (user_flag = 4)이면
+        } else if (req.session.user_flag == "4") {
+
+            //logger.debug("================incident service=================");
+            //logger.debug("incident service user_flag == 4");
+            //logger.debug("=================================================");
+
+
+        //업무관리자 (user_flag = 3)이면
+        } else if (req.session.user_flag == "3") {
+
+            //logger.debug("================incident service=================");
+            //logger.debug("incident service user_flag == 3");
+            //logger.debug("=================================================");
+
+            AndQueries.push({
+                manager_dept_cd: req.session.dept_cd
+            });
+
         }
 
         if (AndQueries.length > 0) {
             findIncident.$and = AndQueries
         }
 
-        logger.debug('findIncident : ' + JSON.stringify(findIncident));
-        logger.debug('req.query.higher_cd : ' + req.query.higher_cd);
-        logger.debug('req.query.lower_cd : ' + req.query.lower_cd);
-        logger.debug('req.query.searchType : ' + req.query.searchType);
-        logger.debug('req.query.searchText : ' + req.query.searchText);
-        logger.debug('req.query.reg_date_from : ' + req.query.reg_date_from);
-        logger.debug('req.query.reg_date_to : ' + req.query.reg_date_to);
+        //logger.debug('findIncident : ' + JSON.stringify(findIncident));
+        //logger.debug('req.query.higher_cd : ' + req.query.higher_cd);
+        //logger.debug('req.query.lower_cd : ' + req.query.lower_cd);
+        //logger.debug('req.query.searchType : ' + req.query.searchType);
+        //logger.debug('req.query.searchText : ' + req.query.searchText);
+        //logger.debug('req.query.reg_date_from : ' + req.query.reg_date_from);
+        //logger.debug('req.query.reg_date_to : ' + req.query.reg_date_to);
 
         //console.log('findIncident : ' + JSON.stringify(findIncident));
 

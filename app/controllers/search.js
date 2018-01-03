@@ -21,45 +21,45 @@ module.exports = {
     /**
      * 사용자별 리스트 > 상위업무 가져오기
      */
-    
+
     user_list: (req, res, next) => {
-        try{
-            
+        try {
+
             var condition = {}; //조건
-            condition.company_cd    = req.session.company_cd; //회사코드
+            condition.company_cd = req.session.company_cd; //회사코드
             //condition.email         = req.session.email; //이메일
-    
+
             logger.debug("==========================================getMyProcess=======================================");
-            logger.debug("condition : ",condition);
+            logger.debug("condition : ", condition);
             logger.debug("=============================================================================================");
-            
+
             CompanyProcessModel.find(condition, function (err, myProcess) {
-                if (err){ 
+                if (err) {
                     res.json({
                         success: false,
                         message: err
                     });
-                }else{
-    
+                } else {
+
                     logger.debug("==========================================getMyProcess=======================================");
                     //logger.debug("myProcess : ",JSON.stringify(myProcess));
                     //console.log("myProcess : ",JSON.stringify(myProcess));
-                    
+
                     logger.debug("=============================================================================================");
-    
+
                     res.render("search/user_list", {
                         myProcess: myProcess
                     });
                 }
             });
-    
-        }catch(e){
+
+        } catch (e) {
             logger.error("myProcess controllers getMyProcess : ", e);
-        }finally{}
-        
+        } finally { }
+
     },
 
-  
+
     /**
      * 사용자별 상세조회 > Incident 가져오기
      */
@@ -303,16 +303,6 @@ module.exports = {
     list: (req, res, next) => {
 
         var search = service.createSearch(req);
-        search.request_id = req.session.email;
-
-        logger.debug("==========list search.request_id==========="+ search.request_id);
-        logger.debug("==========list search.status_cd============"+ JSON.stringify(search.status_cd) );
-
-        if(req.query.gbn =="complete"){
-            logger.debug("===============gbn================"+req.query.gbn);
-            search.gbn = "complete";
-            logger.debug("===============gbn================"+search.gbn);
-        }
         var page = 1;
         var perPage = 15;
 
@@ -330,10 +320,7 @@ module.exports = {
             async.waterfall([function (callback) {
                 IncidentModel.count(search.findIncident, function (err, totalCnt) {
                     if (err) {
-
-                        logger.debug("=============================================");
-                        logger.debug("incident : ", err);
-                        logger.debug("=============================================");
+                        logger.error("incident : ", err);
 
                         return res.json({
                             success: false,
@@ -341,9 +328,9 @@ module.exports = {
                         });
                     } else {
 
-                        logger.debug("=============================================");
-                        logger.debug("incidentCnt : ", totalCnt);
-                        logger.debug("=============================================");
+                        //logger.debug("=============================================");
+                        //logger.debug("incidentCnt : ", totalCnt);
+                        //logger.debug("=============================================");
 
                         callback(null, totalCnt)
                     }
@@ -377,9 +364,9 @@ module.exports = {
 
                     }
                 })
-                .sort('-register_date')
-                .skip((page-1)*perPage)
-                .limit(perPage);
+                    .sort('-register_date')
+                    .skip((page - 1) * perPage)
+                    .limit(perPage);
             });
         } catch (err) {
 
@@ -387,7 +374,7 @@ module.exports = {
             logger.debug("search list error : ", err);
             logger.debug("=============================================");
 
-        } finally {}
+        } finally { }
     },
     /**
      * user_qna 데이터 조회

@@ -154,8 +154,9 @@ module.exports = {
                             res.render("main/deptadmin");
                         } else if (req.session.user_flag == '4') {
                             res.render("main/deptadmin");
-                        }
-                         else {
+                        } else if (req.session.user_flag == '5') {
+                            res.render("main/admin5");
+                        } else {
                             res.render("main/user");
                         }
                         //<<<<<==================================================
@@ -378,11 +379,11 @@ module.exports = {
                         } else {
                             res.json(incident);
                         }
-                    }).sort('-created_at')
+                    }).sort('-register_date')
                     .limit(10);
             } else if (req.session.user_flag == '5') {
                 Incident.find({
-                        manager_dept_cd: req.session.dept_cd
+                        request_company_cd: req.session.company_cd
                     }, function (err, incident) {
                         if (err) {
                             return res.json({
@@ -392,7 +393,7 @@ module.exports = {
                         } else {
                             res.json(incident);
                         }
-                    }).sort('-created_at')
+                    }).sort('-register_date')
                     .limit(10);
             } else if (req.session.user_flag == '1') {
                 Incident.find({}, function (err, incident) {
@@ -404,7 +405,7 @@ module.exports = {
                         } else {
                             res.json(incident);
                         }
-                    }).sort('-created_at')
+                    }).sort('-register_date')
                     .limit(10);
             } else {
                 Incident.find({
@@ -418,7 +419,7 @@ module.exports = {
                         } else {
                             res.json(incident);
                         }
-                    }).sort('-created_at')
+                    }).sort('-register_date')
                     .limit(10);
             }
         } catch (e) {
@@ -442,7 +443,7 @@ module.exports = {
                     } else {
                         res.json(incident);
                     }
-                }).sort('-created_at');
+                }).sort('-register_date');
             } else {
                 Incident.find({
                     manager_email: req.session.email,
@@ -456,7 +457,7 @@ module.exports = {
                     } else {
                         res.json(incident);
                     }
-                }).sort('-created_at');
+                }).sort('-register_date');
             }
         } catch (e) {
             logger.debug('main_list_nocomplete controllers error ====================> ', e)

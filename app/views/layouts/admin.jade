@@ -82,8 +82,10 @@ html
                                             //i.fa.fa-circle-o.text-pink.m-l-5
                                     li
                                         a(href='/incident') 처리진행현황
+                                    - if(session.group_flag =="in") {
                                     li
                                         a(href='/search/user_qna') 자주묻는 질문과답
+                                    - }
                                     li
                                         a(href='/search/user_list')
                                             | 처리된 내용검색 
