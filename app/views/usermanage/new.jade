@@ -120,18 +120,18 @@ block content
                                                             label.col-sm-2.control-label 사용자권한구분
                                                             .col-sm-9
                                                                 select.form-control(name='usermanage[user_flag]')
-                                                                - if(session.user_flag == 1){
-                                                                option(value='1') 그룹관리자 
-                                                                option(value='3') 업무관리자(팀장)
-                                                                option(value='4') 업무담당자
-                                                                option(value='5') 고객사관리자
-                                                                option(value='9' Selected) 일반사용자
-                                                                - }else{
-                                                                option(value='3') 업무관리자(팀장)
-                                                                option(value='4') 업무담당자
-                                                                option(value='5') 고객사관리자
-                                                                option(value='9' Selected) 일반사용자
-                                                                - }
+                                                                    - if(session.user_flag == 1){
+                                                                        option(value='1') 그룹관리자 
+                                                                        option(value='3') 업무관리자(팀장)
+                                                                        option(value='4') 업무담당자
+                                                                        option(value='5') 고객사관리자
+                                                                        option(value='9') 일반사용자
+                                                                    - }else{
+                                                                        option(value='3') 업무관리자(팀장)
+                                                                        option(value='4') 업무담당자
+                                                                        option(value='5') 고객사관리자
+                                                                        option(value='9') 일반사용자
+                                                                    - }
                                                         .form-group
                                                             label.col-sm-2.control-label 그룹사권한구분
                                                             .col-sm-9

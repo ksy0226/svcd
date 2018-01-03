@@ -14,6 +14,7 @@ var path = require('path');
 var CONFIG = require('../../config/config.json');
 var logger = require('log4js').getLogger('app');
 var MyProcess = require('../models/MyProcess');
+var request = require("request");
 
 module.exports = {
     /** 
@@ -158,6 +159,39 @@ module.exports = {
                 }
                 callback(null);
             });
+        },
+        //SD업무 담당자 메신저 호출
+        function(callback){
+
+            request({
+                uri: "http://175.119.100.144:8089/alimi/call_alimi.jsp?msgtype=CSD&users_id=ISU_ST01004&title=1&link_url=http://gw.isu.co.kr/CoviWeb/Main.aspx?type=helpdesKISU_ST01004",
+                headers: {
+                    'Content-type': 'application/html'
+                },
+                method: "GET",
+            }, function (err, response, body) {
+
+                if(err){
+
+                    logger.debug("=============================================");
+                    logger.debug("incident/save call messenger!!!err  ", err);
+                    logger.debug("=============================================");
+                
+                }
+
+                logger.debug("=============================================");
+                logger.debug("incident/save call messenger!!!response  ", response);
+                logger.debug("incident/save call messenger!!!body  ", body);
+                logger.debug("=============================================");
+
+            });
+
+
+            //http://175.119.100.144:8089/alimi/call_alimi.jsp?msgtype=CSD&users_id="+alimiArr[i]+"&title=1&link_url=http://gw.isu.co.kr/CoviWeb/Main.aspx?type=helpdesK"+alimiArr[i]
+            //http://175.119.100.144:8089/alimi/call_alimi.jsp?msgtype=CSD&users_id=ISU_ST01004&title=1&link_url=http://gw.isu.co.kr/CoviWeb/Main.aspx?type=helpdesKISU_ST01004
+        
+            callback(null);
+
         }], function (err) {
             //logger.debug("trace 2");
             if (err) {
