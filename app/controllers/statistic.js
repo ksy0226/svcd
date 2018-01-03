@@ -311,8 +311,10 @@ module.exports = {
         logger.debug("cntload... req.session.user_flag : ", req.session.user_flag);
 
         var condition = {};
+
         var OrQueries = [];
         var AndQueries = [];
+
         if(req.session.user_flag ==1){        //전체관리자
             logger.debug("==================================================");
             logger.debug("req.session.user_flag : ", req.session.user_flag);
@@ -327,7 +329,7 @@ module.exports = {
             logger.debug("condition.manager_dept_cd : ", condition.manager_dept_cd);
 
             AndQueries.push({
-                $or: [{
+                $and: [{
                     manager_dept_cd : condition.manager_dept_cd
                 }]
             });
@@ -353,7 +355,7 @@ module.exports = {
             logger.debug("condition.request_company_cd : ", condition.request_company_cd);
 
             AndQueries.push({
-                $or: [{
+                $and: [{
                     request_company_cd : condition.request_company_cd
                 }]
             });
@@ -373,7 +375,7 @@ module.exports = {
             logger.debug("condition.request_id : ", condition.request_id);
 
             AndQueries.push({
-                $or: [{
+                $and: [{
                     request_id : condition.request_id
                 }]
             });
