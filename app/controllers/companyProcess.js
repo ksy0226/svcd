@@ -118,9 +118,9 @@ module.exports = {
                     });
                 } else {
 
-                    logger.debug("======================================CompanyProcessModel.find======================================");
-                    logger.debug("companyProcess : ", companyProcess);
-                    logger.debug("====================================================================================================");
+                    //logger.debug("======================================CompanyProcessModel.find======================================");
+                    //logger.debug("companyProcess : ", companyProcess);
+                    //logger.debug("====================================================================================================");
 
                     res.json(companyProcess);
                 }

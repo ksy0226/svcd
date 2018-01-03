@@ -8,8 +8,25 @@ $(document).ready(function () {
     $('#using_yn').val(usermanageObj.using_yn);
     //$('#company_cd').val(usermanageObj.company_nm);
     $('#company_cd').val(usermanageObj.company_cd);
+       
+    $('#company_cd').on("change",function(){
+        displaySabun(this);
+    });
+
+    displaySabun($('#company_cd'));
     
 });
+
+function displaySabun(obj){
+    if($(obj).val() == 'ISU_ST'){
+        $('#row_sabun').slideDown(350);
+        $('input[name="usermanage[sabun]"]').attr('required');
+    }else{
+        $('#row_sabun').slideUp(350);
+        $('input[name="usermanage[sabun]"]').removeAttr('required');          
+    }
+}
+
 
 function companyCd() {
     //선택된 회사 인덱스 값
