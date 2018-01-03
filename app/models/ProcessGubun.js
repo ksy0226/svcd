@@ -1,6 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var moment = require('moment');
 
 var processGubunSchema = mongoose.Schema({
     process_cd: { type: String, required: true, unique:true },     //처리코드

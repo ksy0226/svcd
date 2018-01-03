@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var bcrypt   = require("bcrypt-nodejs");
 const logger = require('log4js').getLogger('app');
+var moment = require('moment');
 
 var usermanageSchema = mongoose.Schema({
     userCompany_nm   : { type : String , default : ''},

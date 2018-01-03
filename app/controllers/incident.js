@@ -157,41 +157,14 @@ module.exports = {
                         err: err
                     });
                 }
+
+                //******************************* */
+                // SD 업무담당자 사내메신저 호출
+                sendAlimi(req);
+                //******************************* */
+
                 callback(null);
             });
-        },
-        //SD업무 담당자 메신저 호출
-        function(callback){
-
-            request({
-                uri: "http://175.119.100.144:8089/alimi/call_alimi.jsp?msgtype=CSD&users_id=ISU_ST01004&title=1&link_url=http://gw.isu.co.kr/CoviWeb/Main.aspx?type=helpdesKISU_ST01004",
-                headers: {
-                    'Content-type': 'application/html'
-                },
-                method: "GET",
-            }, function (err, response, body) {
-
-                if(err){
-
-                    logger.debug("=============================================");
-                    logger.debug("incident/save call messenger!!!err  ", err);
-                    logger.debug("=============================================");
-                
-                }
-
-                logger.debug("=============================================");
-                logger.debug("incident/save call messenger!!!response  ", response);
-                logger.debug("incident/save call messenger!!!body  ", body);
-                logger.debug("=============================================");
-
-            });
-
-
-            //http://175.119.100.144:8089/alimi/call_alimi.jsp?msgtype=CSD&users_id="+alimiArr[i]+"&title=1&link_url=http://gw.isu.co.kr/CoviWeb/Main.aspx?type=helpdesK"+alimiArr[i]
-            //http://175.119.100.144:8089/alimi/call_alimi.jsp?msgtype=CSD&users_id=ISU_ST01004&title=1&link_url=http://gw.isu.co.kr/CoviWeb/Main.aspx?type=helpdesKISU_ST01004
-        
-            callback(null);
-
         }], function (err) {
             //logger.debug("trace 2");
             if (err) {
@@ -238,6 +211,12 @@ module.exports = {
                         err: err
                     });
                 }
+
+                //******************************* */
+                // SD 업무담당자 사내메신저 호출
+                sendAlimi(req);
+                //
+
                 callback(null);
             });
         }], function (err) {
@@ -491,7 +470,7 @@ module.exports = {
                 condition.email = req.session.email;
 
                 MyProcess.find(condition).distinct('higher_cd').exec(function (err, myHigherProcess) {
-                    
+
                     if (search.findIncident.$and == null) {
 
                         logger.debug("=============================================");
@@ -758,3 +737,80 @@ module.exports = {
 
     }
 };
+
+
+
+/**
+ * 업무 담당자에게 메신저 알림보내기
+ */
+function sendAlimi(req) {
+
+    //>>>>> 상위업무에 매핑되는 사원찾기
+    var condition = {};
+    condition.higher_cd = req.body.incident.higher_cd;
+
+    var aggregatorOpts = [{
+        $match: condition
+    }, {
+        $group: { //그룹
+            _id: {
+                email: "$email"
+            }
+        }
+    }, {
+        $lookup: {
+            from: "usermanages", // join 할 collection명
+            localField: "_id.email", // 기본 키($group에서 얻은 값)
+            foreignField: "email", // 외래 키(usermanagers collection에 값) 
+            as: "manager" // 결과를 배출할 alias ( 필드명 )
+        }
+    }, {
+        $project: {
+            "manager.company_cd": 1,
+            "manager.sabun": 1
+        }
+    }]
+
+    MyProcess.aggregate(aggregatorOpts).exec(function (err, targetUser) {
+        if (err) {
+
+            logger.error("=============================================");
+            logger.error("incident/sendAlimi aggregate!!! err  ", err);
+            logger.error("=============================================");
+
+        } else {
+
+            var gw = CONFIG.groupware.uri;
+            var alimi = CONFIG.msgAlimi.uri
+
+            for (var i = 0; i < targetUser.length; i++) {
+
+                //Go Live(운영 시 수정처리)
+                //var manager = targetUser[i].manager[0].company_cd + targetUser[i].manager[0].sabun;
+                var manager = "ISU_ST01004";
+
+                logger.debug("=============================================");
+                logger.debug("incident/save sendAlimi, manager : ", manager);
+                logger.debug("=============================================")
+
+                request({
+                    uri: alimi + "/alimi/call_alimi.jsp?msgtype=CSD&users_id="+manager+"&title=1&link_url=" + gw + "/CoviWeb/Main.aspx?type=helpdesK"+manager,
+                    headers: {
+                        'Content-type': 'application/html'
+                    },
+                    method: "GET",
+                }, function (err, response, body) {
+
+                    //logger.debug("=============================================");
+                    //logger.debug("incident/save call messenger!!!response  ", response);
+                    //logger.debug("incident/save call messenger!!!body  ", body);
+                    //logger.debug("=============================================");
+
+                });
+            }
+
+
+        }
+    });
+    //<<<<< 상위업무에 매핑되는 사원찾기    
+}
