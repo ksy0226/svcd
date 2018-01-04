@@ -7,6 +7,7 @@ var CONFIG = require('../../config/config.json');
 var Usermanage = require('../models/Usermanage');
 var CompanyModel = require('../models/Company');
 var Incident = require('../models/Incident');
+var MyProcess = require('../models/MyProcess');
 var request = require("request");
 var bcrypt = require("bcrypt-nodejs");
 var logger = require('log4js').getLogger('app');
@@ -21,6 +22,12 @@ module.exports = {
     index: (req, res) => {
         if (req.session.user_flag == '1') {
             res.render("main/admin");
+        } else if (req.session.user_flag == '3') {
+            res.render("main/admin3");
+        } else if (req.session.user_flag == '4') {
+            res.render("main/admin4");
+        } else if (req.session.user_flag == '5') {
+            res.render("main/admin5");
         } else {
             res.render("main/user");
         }
@@ -67,7 +74,7 @@ module.exports = {
 
                         logger.debug("=================================================================");
                         logger.debug("usermanage is not null : ", usermanage);
-                        logger.debug("usermanage.authenticate(req.body.password) : ",usermanage.authenticate(req.body.password));
+                        logger.debug("usermanage.authenticate(req.body.password) : ", usermanage.authenticate(req.body.password));
                         logger.debug("=================================================================");
 
                         if (usermanage.authenticate(req.body.password)) { //비밀번호가 일치하면 - 고객사
@@ -151,9 +158,9 @@ module.exports = {
                         if (req.session.user_flag == '1') {
                             res.render("main/admin");
                         } else if (req.session.user_flag == '3') {
-                            res.render("main/deptadmin");
+                            res.render("main/admin3");
                         } else if (req.session.user_flag == '4') {
-                            res.render("main/deptadmin");
+                            res.render("main/admin4");
                         } else if (req.session.user_flag == '5') {
                             res.render("main/admin5");
                         } else {
@@ -198,11 +205,11 @@ module.exports = {
      */
     login: (req, res) => {
         try {
-            
+
             logger.debug("======================================");
             logger.debug("login req.query.email", req.query.email);
             logger.debug("login req.query.password", req.query.password);
-            logger.debug("url : ",CONFIG.groupware.uri + "/CoviWeb/api/UserInfo.aspx?email=" + req.query.email + "&password=" + encodeURIComponent(req.query.password));
+            logger.debug("url : ", CONFIG.groupware.uri + "/CoviWeb/api/UserInfo.aspx?email=" + req.query.email + "&password=" + encodeURIComponent(req.query.password));
             logger.debug("======================================");
 
             /**
@@ -263,7 +270,7 @@ module.exports = {
                                     remember_me: remember_me,
                                     message: "error : 담당자에게 문의하세요."
                                 });
-                            }else{
+                            } else {
                                 req.session.user_flag = usermanage.user_flag;
 
                                 logger.debug("======================================");
@@ -272,16 +279,18 @@ module.exports = {
                                 logger.debug("req.session.dept_cd", req.session.dept_cd);
                                 logger.debug("req.session.access_yn", req.session.access_yn);
                                 logger.debug("======================================");
-        
-        
+
+
                                 //>>>>>==================================================
                                 //권한에 따른 분기
                                 if (req.session.user_flag == '1') {
                                     res.render("main/admin");
                                 } else if (req.session.user_flag == '3') {
-                                    res.render("main/deptadmin");
+                                    res.render("main/admin3");
                                 } else if (req.session.user_flag == '4') {
-                                    res.render("main/deptadmin");
+                                    res.render("main/admin4");
+                                } else if (req.session.user_flag == '5') {
+                                    res.render("main/admin5");
                                 } else {
                                     res.render("main/user");
                                 }
@@ -289,13 +298,13 @@ module.exports = {
                             }
                         });
                     } else {
-                       
+
                         res.render('index', {
                             email: email,
                             remember_me: remember_me,
                             message: "등록된 계정이 없습니다.<br>다시 시도해주세요."
                         });
-                        
+
                     }
 
                 }
@@ -369,62 +378,113 @@ module.exports = {
             //logger.debug('main_list controllers start!');
             if (req.session.user_flag == '9') {
                 Incident.find({
-                        request_id: req.session.email
-                    }, function (err, incident) {
-                        if (err) {
-                            return res.json({
-                                success: false,
-                                message: err
-                            });
-                        } else {
-                            res.json(incident);
-                        }
-                    }).sort('-register_date')
+                    request_id: req.session.email
+                }, function (err, incident) {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+                        res.json(incident);
+                    }
+                }).sort('-register_date')
                     .limit(10);
             } else if (req.session.user_flag == '5') {
+
                 Incident.find({
-                        request_company_cd: req.session.company_cd
-                    }, function (err, incident) {
-                        if (err) {
-                            return res.json({
-                                success: false,
-                                message: err
-                            });
-                        } else {
-                            res.json(incident);
-                        }
-                    }).sort('-register_date')
+                    request_company_cd: req.session.company_cd
+                }, function (err, incident) {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+                        res.json(incident);
+                    }
+                }).sort('-register_date')
                     .limit(10);
+
+            } else if (req.session.user_flag == '4') {
+
+                var AndQueries = [];
+                var condition = {};
+                var condition2 = {};
+                condition2.email = req.session.email;
+
+                MyProcess.find(condition2).distinct('higher_cd').exec(function (err, myHigherProcess) {
+
+                    logger.debug("==================================================");
+                    logger.debug("myHigherProcess : ", JSON.stringify(myHigherProcess));
+                    logger.debug("==================================================");
+
+                    condition.higher_cd = {
+                        "$in": myHigherProcess
+                    };
+                });
+
+                Incident.find(condition, function (err, incident) {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+                        res.json(incident);
+                    }
+                }).sort('-register_date')
+                    .limit(10);
+
+            } else if (req.session.user_flag == '3') {
+
+                Incident.find({
+                    manager_dept_cd: req.session.dept_cd
+                }, function (err, incident) {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+                        res.json(incident);
+                    }
+                }).sort('-register_date')
+                    .limit(10);
+
             } else if (req.session.user_flag == '1') {
+
                 Incident.find({}, function (err, incident) {
-                        if (err) {
-                            return res.json({
-                                success: false,
-                                message: err
-                            });
-                        } else {
-                            res.json(incident);
-                        }
-                    }).sort('-register_date')
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+                        res.json(incident);
+                    }
+                }).sort('-register_date')
                     .limit(10);
+
             } else {
+
                 Incident.find({
-                        manager_email: req.session.email
-                    }, function (err, incident) {
-                        if (err) {
-                            return res.json({
-                                success: false,
-                                message: err
-                            });
-                        } else {
-                            res.json(incident);
-                        }
-                    }).sort('-register_date')
+                    manager_email: req.session.email
+                }, function (err, incident) {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+                        res.json(incident);
+                    }
+                }).sort('-register_date')
                     .limit(10);
+
             }
         } catch (e) {
             logger.debug('main_list controllers error ====================> ', e)
-            //console.log('main_list controllers error ====================> ', e);
         }
     },
 
