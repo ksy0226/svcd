@@ -307,14 +307,14 @@ module.exports = {
         logger.debug("cntload controller...");
 
 
-        var startDate = new Date(new Date().setDate(new Date().getDate() - 30)).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-        var endDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        //var startDate = new Date(new Date().setDate(new Date().getDate() - 30)).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        //var endDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
         
-        logger.debug("startDate : ", startDate);
-        logger.debug("endDate : ", endDate);
+        //logger.debug("startDate : ", startDate);
+        //logger.debug("endDate : ", endDate);
 
-        //var today = new Date();
-        //var thisYear = today.getFullYear();
+        var today = new Date();
+        var thisYear = today.getFullYear();
 
         //logger.debug("cntload... req.session.user_flag : ", req.session.user_flag);
 
@@ -425,8 +425,9 @@ module.exports = {
 
         //logger.debug("condition : ", condition);
 
-        condition.register_date = { $gte: startDate, $lte: endDate } //30일 기간으로 수정
-
+        //condition.register_date = { $gte: startDate, $lte: endDate } //30일 기간으로 수정
+        condition.register_yyyy = thisYear
+        logger.debug("==========condition.register_yyyy==========="+condition.register_yyyy);
         //logger.debug("condition : ", condition);
         
         var aggregatorOpts = [{
