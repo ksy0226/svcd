@@ -464,7 +464,6 @@ module.exports = {
 
             async.waterfall([function (callback) {
 
-
                 //나의 상위 업무만 조회
                 var condition = {};
                 condition.email = req.session.email;
