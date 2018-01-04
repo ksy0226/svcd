@@ -316,7 +316,7 @@ module.exports = {
         //var today = new Date();
         //var thisYear = today.getFullYear();
 
-        logger.debug("cntload... req.session.user_flag : ", req.session.user_flag);
+        //logger.debug("cntload... req.session.user_flag : ", req.session.user_flag);
 
         var condition = {};
 
@@ -324,13 +324,13 @@ module.exports = {
         var AndQueries = [];
 
         if(req.session.user_flag ==1){        //전체관리자
-            logger.debug("==================================================");
-            logger.debug("req.session.user_flag : ", req.session.user_flag);
-            logger.debug("==================================================");
+            //logger.debug("==================================================");
+            //logger.debug("req.session.user_flag : ", req.session.user_flag);
+            //logger.debug("==================================================");
             
         }else if(req.session.user_flag == 3){  //업무관리자
-            logger.debug("==================================================");
-            logger.debug("req.session.user_flag : ", req.session.user_flag);
+            //logger.debug("==================================================");
+            //logger.debug("req.session.user_flag : ", req.session.user_flag);
 
             condition.manager_dept_cd = req.session.dept_cd;
             //logger.debug("condition.manager_dept_cd : ", condition.manager_dept_cd);
@@ -343,17 +343,17 @@ module.exports = {
             condition.$and = AndQueries;
 
         }else if(req.session.user_flag == 4){  //업무담당자
-            logger.debug("==================================================");
-            logger.debug("req.session.user_flag : ", req.session.user_flag);
-            logger.debug("==================================================");
+            //logger.debug("==================================================");
+            //logger.debug("req.session.user_flag : ", req.session.user_flag);
+            //logger.debug("==================================================");
             //나의업무지정 상위업무 처리 위한 조건
             var condition2 = {};
             condition2.email = req.session.email;
             MyProcess.find(condition2).distinct('higher_cd').exec(function (err, myHigherProcess) {
 
-                logger.debug("==================================================");
-                logger.debug("myHigherProcess : ", myHigherProcess);
-                logger.debug("==================================================");
+                //logger.debug("==================================================");
+                //logger.debug("myHigherProcess : ", myHigherProcess);
+                //logger.debug("==================================================");
 
                 AndQueries.push({
                     $and: [{
@@ -364,19 +364,19 @@ module.exports = {
                 });
                 condition.$and = AndQueries;
 
-                logger.debug("==================================================");
-                logger.debug("condition : ", JSON.stringify(condition));
-                logger.debug("==================================================");
+                //logger.debug("==================================================");
+                //logger.debug("condition : ", JSON.stringify(condition));
+                //logger.debug("==================================================");
 
             });
 
         }else if(req.session.user_flag == 5){  //고객사관리자
-            logger.debug("==================================================");
-            logger.debug("req.session.user_flag : ", req.session.user_flag);
+            //logger.debug("==================================================");
+            //logger.debug("req.session.user_flag : ", req.session.user_flag);
 
             condition.request_company_cd = req.session.company_cd;
             
-            logger.debug("condition.request_company_cd : ", condition.request_company_cd);
+            //logger.debug("condition.request_company_cd : ", condition.request_company_cd);
 
             AndQueries.push({
                 $and: [{
@@ -385,18 +385,18 @@ module.exports = {
             });
             condition.$and = AndQueries;
 
-            logger.debug("==================================================");
+            //logger.debug("==================================================");
             
             
             
 
         }else if(req.session.user_flag == 9){  //일반사용자
-            logger.debug("==================================================");
-            logger.debug("req.session.user_flag : ", req.session.user_flag);
+            //logger.debug("==================================================");
+            //logger.debug("req.session.user_flag : ", req.session.user_flag);
 
             condition.request_id = req.session.email;
 
-            logger.debug("condition.request_id : ", condition.request_id);
+            //logger.debug("condition.request_id : ", condition.request_id);
 
             AndQueries.push({
                 $and: [{
@@ -406,7 +406,7 @@ module.exports = {
             condition.$and = AndQueries;
 
             
-            logger.debug("==================================================");
+            //logger.debug("==================================================");
             
         }
 
@@ -423,11 +423,11 @@ module.exports = {
         });
         condition.$or = OrQueries;
 
-        logger.debug("condition : ", condition);
+        //logger.debug("condition : ", condition);
 
         condition.register_date = { $gte: startDate, $lte: endDate } //30일 기간으로 수정
 
-        logger.debug("condition : ", condition);
+        //logger.debug("condition : ", condition);
         
         var aggregatorOpts = [{
             $match: condition
@@ -460,7 +460,7 @@ module.exports = {
         ]
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
             //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
-            logger.debug("cntload aggregatorOpts"+JSON.stringify(aggregatorOpts));    
+            //logger.debug("cntload aggregatorOpts"+JSON.stringify(aggregatorOpts));    
             
             if (err) {
                 return res.json({
