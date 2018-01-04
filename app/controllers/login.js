@@ -375,7 +375,6 @@ module.exports = {
 
     main_list: (req, res, next) => {
         try {
-            //logger.debug('main_list controllers start!');
             if (req.session.user_flag == '9') {
                 Incident.find({
                     request_id: req.session.email
@@ -414,19 +413,12 @@ module.exports = {
                 condition2.email = req.session.email;
 
                 MyProcess.find(condition2).distinct('higher_cd').exec(function (err, myHigherProcess) {
-
-                    logger.debug("==================================================");
-                    logger.debug("myHigherProcess : ", JSON.stringify(myHigherProcess));
-                    
                     condition.higher_cd = {
                         "$in": myHigherProcess
                     };
                 });
 
                 Incident.find(condition, function (err, incident) {
-                    logger.debug("incident : ", JSON.stringify(incident));
-                    logger.debug("==================================================");
-                    
                     if (err) {
                         return res.json({
                             success: false,
@@ -467,23 +459,6 @@ module.exports = {
                     }
                 }).sort('-register_date')
                     .limit(10);
-
-            } else {
-
-                Incident.find({
-                    manager_email: req.session.email
-                }, function (err, incident) {
-                    if (err) {
-                        return res.json({
-                            success: false,
-                            message: err
-                        });
-                    } else {
-                        res.json(incident);
-                    }
-                }).sort('-register_date')
-                    .limit(10);
-
             }
         } catch (e) {
             logger.debug('main_list controllers error ====================> ', e)

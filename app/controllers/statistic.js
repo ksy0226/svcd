@@ -391,12 +391,12 @@ module.exports = {
             
 
         }else if(req.session.user_flag == 9){  //일반사용자
-            //logger.debug("==================================================");
-            //logger.debug("req.session.user_flag : ", req.session.user_flag);
+            logger.debug("==================================================");
+            logger.debug("req.session.user_flag : ", req.session.user_flag);
 
             condition.request_id = req.session.email;
 
-            //logger.debug("condition.request_id : ", condition.request_id);
+            logger.debug("condition.request_id : ", condition.request_id);
 
             AndQueries.push({
                 $and: [{
@@ -406,7 +406,7 @@ module.exports = {
             condition.$and = AndQueries;
 
             
-            //logger.debug("==================================================");
+            logger.debug("==================================================");
             
         }
 
