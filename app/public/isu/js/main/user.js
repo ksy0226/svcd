@@ -18,7 +18,7 @@ function cntLoad() {
     $.ajax({
         type: "GET",
         async: true,
-        url: "/statistic/userCntLoad",
+        url: "/statistic/cntload",
         dataType: "json", // xml, html, script, json 미지정시 자동판단
         timeout: 30000,
         cache: false,

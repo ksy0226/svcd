@@ -35,9 +35,9 @@ module.exports = {
 
     logincheck: (req, res) => {
         try {
-            //logger.debug('logincheck is called '+req.body.remember_me);
+            ////logger.debug('logincheck is called '+req.body.remember_me);
             if (req.body.remember_me === "on") {
-                //logger.debug('req.body.remember_me is on ');
+                ////logger.debug('req.body.remember_me is on ');
                 res.cookie('email', req.body.email);
                 res.cookie('remember_me', req.body.remember_me === "on" ? "true" : "undefined");
                 res.cookie('user_flag', req.body.user_flag);
@@ -46,7 +46,7 @@ module.exports = {
                 email = req.body.email;
                 remember_me = req.body.remember_me;
             } else {
-                //logger.debug('req.body.remember_me is off ');
+                ////logger.debug('req.body.remember_me is off ');
                 res.clearCookie('email');
                 res.clearCookie('remember_me');
                 res.clearCookie('user_flag');
@@ -72,10 +72,10 @@ module.exports = {
 
                     if (usermanage != null) {
 
-                        logger.debug("=================================================================");
-                        logger.debug("usermanage is not null : ", usermanage);
-                        logger.debug("usermanage.authenticate(req.body.password) : ", usermanage.authenticate(req.body.password));
-                        logger.debug("=================================================================");
+                        //logger.debug("=================================================================");
+                        //logger.debug("usermanage is not null : ", usermanage);
+                        //logger.debug("usermanage.authenticate(req.body.password) : ", usermanage.authenticate(req.body.password));
+                        //logger.debug("=================================================================");
 
                         if (usermanage.authenticate(req.body.password)) { //비밀번호가 일치하면 - 고객사
 
@@ -101,9 +101,9 @@ module.exports = {
                         }
                     } else { //usermanage테이블에 계정이 존재하지 않으면 그룹사 일반계정
 
-                        logger.debug("=================================================================");
-                        logger.debug("usermanage is null : ", usermanage, req.body.email);
-                        logger.debug("=================================================================");
+                        //logger.debug("=================================================================");
+                        //logger.debug("usermanage is null : ", usermanage, req.body.email);
+                        //logger.debug("=================================================================");
 
                         request({
                             uri: CONFIG.groupware.uri + "/CoviWeb/api/UserInfo.aspx?type=sso&email=" + req.body.email + "&password=" + encodeURIComponent(req.body.password),
@@ -145,12 +145,12 @@ module.exports = {
                         req.session.office_tel_no = userInfo.office_tel_no;
                         req.session.hp_telno = userInfo.hp_telno;
 
-                        logger.debug("======================================");
-                        logger.debug("req.session.user_flag", req.session.user_flag);
-                        logger.debug("req.session.group_flag", req.session.group_flag);
-                        logger.debug("req.session.dept_cd", req.session.dept_cd);
-                        logger.debug("req.session.access_yn", req.session.access_yn);
-                        logger.debug("======================================");
+                        //logger.debug("======================================");
+                        //logger.debug("req.session.user_flag", req.session.user_flag);
+                        //logger.debug("req.session.group_flag", req.session.group_flag);
+                        //logger.debug("req.session.dept_cd", req.session.dept_cd);
+                        //logger.debug("req.session.access_yn", req.session.access_yn);
+                        //logger.debug("======================================");
 
 
                         //>>>>>==================================================
@@ -196,7 +196,7 @@ module.exports = {
                 }
             });
         } catch (e) {
-            logger.debug(e);
+            //logger.debug(e);
         }
     },
 
@@ -206,11 +206,11 @@ module.exports = {
     login: (req, res) => {
         try {
 
-            logger.debug("======================================");
-            logger.debug("login req.query.email", req.query.email);
-            logger.debug("login req.query.password", req.query.password);
-            logger.debug("url : ", CONFIG.groupware.uri + "/CoviWeb/api/UserInfo.aspx?email=" + req.query.email + "&password=" + encodeURIComponent(req.query.password));
-            logger.debug("======================================");
+            //logger.debug("======================================");
+            //logger.debug("login req.query.email", req.query.email);
+            //logger.debug("login req.query.password", req.query.password);
+            //logger.debug("url : ", CONFIG.groupware.uri + "/CoviWeb/api/UserInfo.aspx?email=" + req.query.email + "&password=" + encodeURIComponent(req.query.password));
+            //logger.debug("======================================");
 
             /**
              * 로그인 정보 매핑
@@ -229,12 +229,13 @@ module.exports = {
                     method: "GET",
                 }, function (err, response, gwUser) {
 
-                    logger.debug("======================================");
-                    logger.debug("gwUserr", JSON.stringify(gwUser));
-                    logger.debug("======================================");
+                    //logger.debug("======================================");
+                    //logger.debug("gwUserr", JSON.stringify(gwUser));
+                    //logger.debug("======================================");
 
-
-                    callback(err, gwUser)
+                    var userInfo = JSON.parse(gwUser);
+                    userInfo.group_flag = 'in';
+                    callback(null, userInfo)
                 });
 
             }], function (err, userInfo) {
@@ -245,6 +246,10 @@ module.exports = {
                 } else {
 
                     if (userInfo.status == 'OK') {
+
+                        //logger.debug("======================================");     
+                        //logger.debug("====================>userInfo.status : ",userInfo.status);
+                        //logger.debug("======================================");
 
                         req.session.email = userInfo.email;
                         req.session.user_id = userInfo.user_id;
@@ -262,7 +267,7 @@ module.exports = {
                         req.session.hp_telno = userInfo.hp_telno;
 
                         Usermanage.findOne({
-                            email: req.body.email
+                            email: req.query.email
                         }).exec(function (err, usermanage) {
                             if (err) {
                                 res.render('index', {
@@ -273,13 +278,12 @@ module.exports = {
                             } else {
                                 req.session.user_flag = usermanage.user_flag;
 
-                                logger.debug("======================================");
-                                logger.debug("req.session.user_flag", req.session.user_flag);
-                                logger.debug("req.session.group_flag", req.session.group_flag);
-                                logger.debug("req.session.dept_cd", req.session.dept_cd);
-                                logger.debug("req.session.access_yn", req.session.access_yn);
-                                logger.debug("======================================");
-
+                                //logger.debug("======================================");
+                                //logger.debug("req.session.user_flag", req.session.user_flag);
+                                //logger.debug("req.session.group_flag", req.session.group_flag);
+                                //logger.debug("req.session.dept_cd", req.session.dept_cd);
+                                //logger.debug("req.session.access_yn", req.session.access_yn);
+                                //logger.debug("======================================");
 
                                 //>>>>>==================================================
                                 //권한에 따른 분기
@@ -306,11 +310,10 @@ module.exports = {
                         });
 
                     }
-
                 }
             });
         } catch (e) {
-            logger.debug(e);
+            //logger.debug(e);
         }
     },
 
@@ -331,7 +334,7 @@ module.exports = {
     },
 
     retry: (req, res) => {
-        //logger.debug('login.js retry is called ');
+        ////logger.debug('login.js retry is called ');
         email = req.cookies.email;
         remember_me = req.cookies.remember_me;
         user_flag = req.cookies.user_flag;
@@ -357,7 +360,7 @@ module.exports = {
     //계정신청
     new: (req, res, next) => {
         try {
-            logger.debug('Login controller New debug >>> ', req.body.usermanage);
+            //logger.debug('Login controller New debug >>> ', req.body.usermanage);
             var usermanage = req.body.usermanage;
             Usermanage.create(req.body.usermanage, function (err, usermanage) {
                 if (err) {
@@ -369,13 +372,13 @@ module.exports = {
                 }
             });
         } catch (e) {
-            logger.debug('usermanage controllers error ====================> ', e)
+            //logger.debug('usermanage controllers error ====================> ', e)
         }
     },
 
     main_list: (req, res, next) => {
         try {
-            //logger.debug('main_list controllers start!');
+            ////logger.debug('main_list controllers start!');
             if (req.session.user_flag == '9') {
                 Incident.find({
                     request_id: req.session.email
@@ -415,8 +418,8 @@ module.exports = {
 
                 MyProcess.find(condition2).distinct('higher_cd').exec(function (err, myHigherProcess) {
 
-                    logger.debug("==================================================");
-                    logger.debug("myHigherProcess : ", JSON.stringify(myHigherProcess));
+                    //logger.debug("==================================================");
+                    //logger.debug("myHigherProcess : ", JSON.stringify(myHigherProcess));
                     
                     condition.higher_cd = {
                         "$in": myHigherProcess
@@ -424,8 +427,8 @@ module.exports = {
                 });
 
                 Incident.find(condition, function (err, incident) {
-                    logger.debug("incident : ", JSON.stringify(incident));
-                    logger.debug("==================================================");
+                    //logger.debug("incident : ", JSON.stringify(incident));
+                    //logger.debug("==================================================");
                     
                     if (err) {
                         return res.json({
@@ -486,7 +489,7 @@ module.exports = {
 
             }
         } catch (e) {
-            logger.debug('main_list controllers error ====================> ', e)
+            //logger.debug('main_list controllers error ====================> ', e)
         }
     },
 
@@ -522,7 +525,7 @@ module.exports = {
                 }).sort('-register_date');
             }
         } catch (e) {
-            logger.debug('main_list_nocomplete controllers error ====================> ', e)
+            //logger.debug('main_list_nocomplete controllers error ====================> ', e)
             //console.log('main_list_nocomplete controllers error ====================> ', e);
         }
     },
