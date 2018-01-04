@@ -142,6 +142,7 @@ module.exports = {
 
             AndQueries.push({
                 manager_dept_cd: req.session.dept_cd
+                //manager_dept_cd: "ISU_STISU_ST005"
             });
 
         }
