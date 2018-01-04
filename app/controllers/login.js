@@ -196,7 +196,7 @@ module.exports = {
                 }
             });
         } catch (e) {
-            logger.debug(e);
+            //logger.debug(e);
         }
     },
 
@@ -313,7 +313,7 @@ module.exports = {
                 }
             });
         } catch (e) {
-            logger.debug(e);
+            //logger.debug(e);
         }
     },
 
