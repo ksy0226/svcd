@@ -29,9 +29,9 @@ module.exports = {
             condition.company_cd = req.session.company_cd; //회사코드
             //condition.email         = req.session.email; //이메일
 
-            logger.debug("==========================================");
-            logger.debug("condition : ", condition);
-            logger.debug("==========================================");
+            //logger.debug("==========================================");
+            //logger.debug("condition : ", condition);
+            //logger.debug("==========================================");
 
             CompanyProcessModel.find(condition, function (err, myProcess) {
                 if (err) {
@@ -41,10 +41,10 @@ module.exports = {
                     });
                 } else {
 
-                    logger.debug("==========================================");
-                    //logger.debug("myProcess : ",JSON.stringify(myProcess));
+                    //logger.debug("==========================================");
+                    ////logger.debug("myProcess : ",JSON.stringify(myProcess));
                     //console.log("myProcess : ",JSON.stringify(myProcess));
-                    logger.debug("===========================================");
+                    //logger.debug("===========================================");
 
                     res.render("search/user_list", {
                         myProcess: myProcess
@@ -63,7 +63,7 @@ module.exports = {
      * 사용자별 상세조회 > Incident 가져오기
      */
     user_detail: (req, res, next) => {
-        logger.debug("Trace user_detail : ", req.params.id);
+        //logger.debug("Trace user_detail : ", req.params.id);
         try {
             IncidentModel.findById({
                 _id: req.params.id
@@ -81,15 +81,13 @@ module.exports = {
                     if (incident.complete_date != '') incident.complete_date = incident.complete_date.substring(0, 10);
                     //incident.complete_date = new Date(incident.complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
 
-
-
                     res.render("search/user_detail", {
                         incident: incident
                     });
                 }
             });
         } catch (e) {
-            logger.debug(e);
+            //logger.debug(e);
             res.render("http/500", {
                 err: err
             });
@@ -127,7 +125,7 @@ module.exports = {
      */
     qna_detail: (req, res, next) => {
 
-        logger.debug("Trace qna_detail : ", req.params.id);
+        //logger.debug("Trace qna_detail : ", req.params.id);
 
         try {
             OftenQnaModel.findById({
@@ -153,7 +151,7 @@ module.exports = {
                 }
             });
         } catch (e) {
-            logger.debug('****************', e);
+            //logger.debug('****************', e);
         }
     },
 
@@ -161,33 +159,161 @@ module.exports = {
      * 전체 조회(관리자용)
      */
     mng_list: (req, res, next) => {
-        async.waterfall([function (callback) {
-            HigherProcessModel.find({}, function (err, higherprocess) {
-                if (err) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                }
-                callback(null, higherprocess)
-            });
-        }], function (err, higherprocess) {
-            if (err) {
-                res.render("http/500", {
-                    err: err
+
+        try{            
+            //업무관리자(팀장)
+            if (req.session.user_flag == "3") {
+                
+                var cdt = {};
+                cdt.dept_cd = req.session.dept_cd; //업무관리자는 해당 부서만 조회
+                //cdt.dept_cd = "ISU_STISU_ST005";
+                
+                /** MyProcess, HigherProcessModel 모델구분 */
+                MyProcess.find(cdt).distinct('higher_cd').exec(function (err, myHigherProcess) {
+                    if (err) {
+                        res.render("http/500", {
+                            err: err
+                        });
+                    } else {
+                        
+                        //logger.debug("=============================================");
+                        //logger.debug("search.mng_list higherprocess ", JSON.stringify(myHigherProcess));
+                        //logger.debug("=============================================");
+
+                        var condition = {};
+                        condition.higher_cd = {
+                            "$in": myHigherProcess
+                        }
+
+                        HigherProcessModel.find(condition, function (err, higherprocess) {
+                            if (err) {
+                                res.render("http/500", {
+                                    err: err
+                                });
+                            } else {
+
+                                //logger.debug("=============================================");
+                                //logger.debug("search.mng_list higherprocess ", JSON.stringify(higherprocess));
+                                //logger.debug("=============================================");
+        
+                                res.render("search/mng_list", {
+                                    higherprocess: higherprocess
+                                });
+        
+                            }
+                        });
+                    }
                 });
-            } else {
-                res.render("search/mng_list", {
-                    higherprocess: higherprocess
+
+
+            //업무담당자일때만 나의 상위 업무만 조회
+            }else if (req.session.user_flag == "4") {
+
+                var cdt = {};
+                cdt.email = req.session.email; //업무담당자는 본인 업무만 조회
+                
+                /** MyProcess, HigherProcessModel 모델구분 */
+                MyProcess.find(cdt).distinct('higher_cd').exec(function (err, myHigherProcess) {
+                    if (err) {
+                        res.render("http/500", {
+                            err: err
+                        });
+                    } else {
+                        
+                        //logger.debug("=============================================");
+                        //logger.debug("search.mng_list higherprocess ", JSON.stringify(myHigherProcess));
+                        //logger.debug("=============================================");
+
+                        var condition = {};
+                        condition.higher_cd = {
+                            "$in": myHigherProcess
+                        }
+
+                        HigherProcessModel.find(condition, function (err, higherprocess) {
+                            if (err) {
+                                res.render("http/500", {
+                                    err: err
+                                });
+                            } else {
+
+                                //logger.debug("=============================================");
+                                //logger.debug("search.mng_list higherprocess ", JSON.stringify(higherprocess));
+                                //logger.debug("=============================================");
+        
+                                res.render("search/mng_list", {
+                                    higherprocess: higherprocess
+                                });
+        
+                            }
+                        });
+                    }
                 });
+
+            } else if (req.session.user_flag == "5") {
+                
+                var condition = {};
+                condition.company_cd = req.session.company_cd; //고객사관리자는 해당회사만 조회
+
+                /** MyProcess, HigherProcessModel 모델구분 */
+                HigherProcessModel.find(condition, function (err, higherprocess) {
+                    if (err) {
+
+                        logger.error("=============================================");
+                        logger.error("search.mng_list err : user_flag == 5 ");
+                        logger.error("=============================================");
+
+                        res.render("http/500", {
+                            err: err
+                        });
+
+                    } else {
+
+                        res.render("search/mng_list", {
+                            higherprocess: higherprocess
+                        });
+
+                    }
+                });
+
+            }else{ //일반사용자에게는 권한이 없고 그룹관리자
+
+                 /** MyProcess, HigherProcessModel 모델구분 */
+                 HigherProcessModel.find({}, function (err, higherprocess) {
+                    if (err) {
+
+                        logger.error("=============================================");
+                        logger.error("search.mng_list err : not equals 3,4,5 ");
+                        logger.error("=============================================");
+
+                        res.render("http/500", {
+                            err: err
+                        });
+
+                    } else {
+
+                        res.render("search/mng_list", {
+                            higherprocess: higherprocess
+                        });
+
+                    }
+                });
+                
             }
-        });
+        }catch(e){
+
+            logger.error("=============================================");
+            logger.error("search.mng_list err : ", e);
+            logger.error("=============================================");
+
+        }finally{}
+
     },
     /**
      * 사용자별 상세조회 > Incident 가져오기
      */
     mng_detail: (req, res, next) => {
 
-        logger.debug("Trace mng_detail : ", req.params.id);
+        //logger.debug("Trace mng_detail : ", req.params.id);
         IncidentModel.findById({
             _id: req.params.id
         }, function (err, incident) {
@@ -268,8 +394,8 @@ module.exports = {
     status_list: (req, res, next) => {
 
         IncidentModel.find(req.body.incident, function (err, incident) {
-            //logger.debug('err', err, '\n');
-            logger.debug('list 호출');
+            ////logger.debug('err', err, '\n');
+            //logger.debug('list 호출');
             if (err) {
                 res.render("http/500", {
                     err: err
@@ -285,9 +411,9 @@ module.exports = {
      * 하위업무 리스트 조회
      */
     getlowerprocess: (req, res, next) => {
-        logger.debug(1);
+        //logger.debug(1);
         LowerProcessModel.find(req.body.lowerprocess, function (err, lowerprocess) {
-            logger.debug('lowerprocess.lower_nm', req.body.lowerprocess);
+            //logger.debug('lowerprocess.lower_nm', req.body.lowerprocess);
             if (err) return res.json({
                 success: false,
                 message: err
@@ -308,11 +434,11 @@ module.exports = {
         if (req.query.page != null && req.query.page != '') page = Number(req.query.page);
         if (req.query.perPage != null && req.query.perPage != '') perPage = Number(req.query.perPage);
 
-        logger.debug("===============search control================");
-        logger.debug("page : ", page);
-        logger.debug("perPage : ", perPage);
-        logger.debug("search.findIncident : ", JSON.stringify(search.findIncident));
-        logger.debug("=============================================");
+        //logger.debug("===============search control================");
+        //logger.debug("page : ", page);
+        //logger.debug("perPage : ", perPage);
+        //logger.debug("search.findIncident : ", JSON.stringify(search.findIncident));
+        //logger.debug("=============================================");
 
         try {
 
@@ -328,9 +454,9 @@ module.exports = {
 
                             if (search.findIncident.$and == null) {
 
-                                logger.debug("=============================================");
-                                logger.debug("search.findIncident.$and is null : ", myHigherProcess);
-                                logger.debug("=============================================");
+                                //logger.debug("=============================================");
+                                //logger.debug("search.findIncident.$and is null : ", myHigherProcess);
+                                //logger.debug("=============================================");
 
                                 search.findIncident.$and = [{
                                     "higher_cd": {
@@ -340,9 +466,9 @@ module.exports = {
                                 //{"$and":[{"higher_cd":{"$in":["H004","H006","H012","H024","H001"]}}]}
                             } else {
 
-                                logger.debug("=============================================");
-                                logger.debug("search.findIncident.$and is not null : ", myHigherProcess);
-                                logger.debug("=============================================");
+                                //logger.debug("=============================================");
+                                //logger.debug("search.findIncident.$and is not null : ", myHigherProcess);
+                                //logger.debug("=============================================");
 
                                 search.findIncident.$and.push({
                                     "higher_cd": {
@@ -352,19 +478,19 @@ module.exports = {
                                 //'$and': [ { lower_cd: 'L004' } ] }
                             }
 
-                            logger.debug("getIncident =============================================");
-                            logger.debug("page : ", page);
-                            logger.debug("perPage : ", perPage);
-                            logger.debug("req.query.perPage : ", req.query.perPage);
-                            logger.debug("search.findIncident : ", search.findIncident);
-                            logger.debug("getIncident =============================================");
+                            //logger.debug("getIncident =============================================");
+                            //logger.debug("page : ", page);
+                            //logger.debug("perPage : ", perPage);
+                            //logger.debug("req.query.perPage : ", req.query.perPage);
+                            //logger.debug("search.findIncident : ", search.findIncident);
+                            //logger.debug("getIncident =============================================");
 
-                            callback(myHigherProcess);
+                            callback(null);
                         });
-                    }else{
+                    } else {
                         callback(null);
                     }
-                    
+
                 },
                 function (callback) {
                     IncidentModel.count(search.findIncident, function (err, totalCnt) {
@@ -377,9 +503,9 @@ module.exports = {
                             });
                         } else {
 
-                            //logger.debug("=============================================");
-                            //logger.debug("incidentCnt : ", totalCnt);
-                            //logger.debug("=============================================");
+                            ////logger.debug("=============================================");
+                            ////logger.debug("incidentCnt : ", totalCnt);
+                            ////logger.debug("=============================================");
 
                             callback(null, totalCnt)
                         }
@@ -390,9 +516,9 @@ module.exports = {
                 IncidentModel.find(search.findIncident, function (err, incident) {
                         if (err) {
 
-                            logger.debug("=============================================");
-                            logger.debug("incident : ", err);
-                            logger.debug("=============================================");
+                            //logger.debug("=============================================");
+                            //logger.debug("incident : ", err);
+                            //logger.debug("=============================================");
 
                             return res.json({
                                 success: false,
@@ -405,10 +531,10 @@ module.exports = {
                             rtnData.incident = incident;
                             rtnData.totalCnt = totalCnt
 
-                            logger.debug("=============================================");
-                            logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
-                            logger.debug("rtnData : ", JSON.stringify(rtnData));
-                            logger.debug("=============================================");
+                            //logger.debug("=============================================");
+                            //logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
+                            //logger.debug("rtnData : ", JSON.stringify(rtnData));
+                            //logger.debug("=============================================");
 
                             res.json(rtnData);
 
@@ -420,9 +546,9 @@ module.exports = {
             });
         } catch (err) {
 
-            logger.debug("===============search control================");
-            logger.debug("search list error : ", err);
-            logger.debug("=============================================");
+            //logger.debug("===============search control================");
+            //logger.debug("search list error : ", err);
+            //logger.debug("=============================================");
 
         } finally {}
     },
@@ -432,7 +558,7 @@ module.exports = {
     getqnalist: (req, res, next) => {
         var search2 = service2.createSearch(req);
 
-        logger.debug("=====================> " + JSON.stringify(search2));
+        //logger.debug("=====================> " + JSON.stringify(search2));
         //console.log("search"+ JSON.stringify(search));
 
         try {
@@ -456,7 +582,7 @@ module.exports = {
                 }
             });
         } catch (e) {
-            logger.debug('oftenqna controllers error ====================> ', e)
+            //logger.debug('oftenqna controllers error ====================> ', e)
         }
     }
 

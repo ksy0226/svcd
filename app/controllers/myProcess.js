@@ -174,6 +174,8 @@ function setNewMyProcess(req){
         
         tmpMP.company_cd    = req.session.company_cd;
         tmpMP.company_nm    = req.session.company_nm;
+        tmpMP.dept_cd       = req.session.dept_cd;
+        tmpMP.dept_nm       = req.session.dept_nm;
         tmpMP.email         = req.session.email;
         tmpMP.employee_nm   = req.session.employee_nm;
         tmpMP.higher_cd     = tmpValue[0];

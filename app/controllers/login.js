@@ -417,14 +417,16 @@ module.exports = {
 
                     logger.debug("==================================================");
                     logger.debug("myHigherProcess : ", JSON.stringify(myHigherProcess));
-                    logger.debug("==================================================");
-
+                    
                     condition.higher_cd = {
                         "$in": myHigherProcess
                     };
                 });
 
                 Incident.find(condition, function (err, incident) {
+                    logger.debug("incident : ", JSON.stringify(incident));
+                    logger.debug("==================================================");
+                    
                     if (err) {
                         return res.json({
                             success: false,

@@ -193,7 +193,6 @@ function setDataList(dataObj, selectedPage, totalDataCnt) {
     }
     
     for(var i = 0 ; i < loopCnt ; i++){ 
-    
         var addList = "";
         addList += "							<tr onclick=detailShow('" + dataObj[i]._id + "')>";
         addList += "								<td class='text-center'>" + dataObj[i].process_speed + "</td>";
