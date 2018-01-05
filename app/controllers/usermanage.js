@@ -292,7 +292,6 @@ module.exports = {
         var search = service.createSearch(req);
 
         //logger.debug("=====================> " + JSON.stringify(search));
-        console.log("=====================> " + JSON.stringify(search));
 
         try {
             async.waterfall([function (callback) {
