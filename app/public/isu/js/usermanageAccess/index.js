@@ -50,7 +50,7 @@ function research(selectedPage) {
 }
 
 function getDataList(selectedPage) {
-    var reqParam = 'searchType=' + $('#searchType').val() + '&company_cd=' + $('#company_cd').val()
+    var reqParam = 'searchType=' + $('#searchType').val() + '&company_cd=' + encodeURIComponent($('#company_cd').val())
         + '&searchText=' + encodeURIComponent($('#searchText').val());
     //+ '&using_yn=' + $('#using_yn').val('N');
 
@@ -181,7 +181,7 @@ function paging(totalData, dataPerPage, pageCount, currentPage) {
 //전체 승인
 function allAccess() {
     if (confirm("전체 승인을 하시겠습니까?")) {
-        var reqParam = 'searchType=' + $('#searchType').val() + '&company_cd=' + $('#company_cd').val()
+        var reqParam = 'searchType=' + $('#searchType').val() + '&company_cd=' + encodeURIComponent($('#company_cd').val())
         + '&searchText=' + encodeURIComponent($('#searchText').val());
 
         $.ajax({
