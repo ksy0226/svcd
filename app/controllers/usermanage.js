@@ -29,8 +29,13 @@ module.exports = {
                         err: err
                     });
                 }
+
+                logger.debug("======================================");
+                logger.debug("usermanage index");
+                logger.debug("======================================");
+
                 callback(null, usermanage, company)
-            });
+            }).sort('company_nm');
         }], function (err, usermanage, company) {
             if (err) {
                 res.render("http/500", {
@@ -131,7 +136,7 @@ module.exports = {
                     err: err
                 });
             } else {
-                res.redirect('/');
+                res.redirect('/usermanage');
             }
         });
     },
