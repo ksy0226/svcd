@@ -342,14 +342,14 @@ module.exports = {
             //logger.debug("==================================================");
             //logger.debug("condition.manager_dept_cd : ", condition.manager_dept_cd);
             //logger.debug("==================================================");
-
+            /*
             AndQueries.push({
                 $and: [{
                     manager_dept_cd: condition.manager_dept_cd
                 }]
             });
             condition.$and = AndQueries;
-
+            */
         } else if (req.session.user_flag == 4) {  //업무담당자
 
             //logger.debug("==================================================");
@@ -392,12 +392,14 @@ module.exports = {
             //logger.debug("condition.request_company_cd : ", condition.request_company_cd);
             //logger.debug("==================================================");
 
+            /*
             AndQueries.push({
                 $and: [{
                     request_company_cd: condition.request_company_cd
                 }]
             });
             condition.$and = AndQueries;
+            */
 
         } else if (req.session.user_flag == 9) {  //일반사용자
 
@@ -411,12 +413,14 @@ module.exports = {
             logger.debug("condition.request_id : ", condition.request_id);
             logger.debug("==================================================");
 
+            /*
             AndQueries.push({
                 $and: [{
                     request_id: condition.request_id
                 }]
             });
             condition.$and = AndQueries;
+            */
 
         }
 
