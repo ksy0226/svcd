@@ -212,7 +212,8 @@ function setContent(Obj) {
             $('.m-l-15:eq(' + i + ') i:eq(' + j + ')').attr('class', 'md md-star text-warning');
         }
 
-        $("img").attr('style','display:none');
+        //처리진행현황 > ISU 로고 없어지는 부분 수정
+        $(".forum-content img").attr('style','display:none');
 
         //말줄임
         $(".truncate1").dotdotdot({

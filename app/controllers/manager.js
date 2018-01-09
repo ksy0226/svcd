@@ -1,4 +1,5 @@
 'use strict';
+
 var express = require('express');
 var session = require('express-session');
 var mongoose = require('mongoose');
@@ -17,6 +18,7 @@ var Iconv = require('iconv-lite');
 var path = require('path');
 var moment = require('moment');
 var CONFIG = require('../../config/config.json');
+var moment = require('moment');
 
 module.exports = {
 
@@ -222,10 +224,16 @@ module.exports = {
         try {
             async.waterfall([function (callback) {
                 var upIncident = req.body.incident;
-                var dt = new Date();
+
                 //logger.debug("=========>1 ", dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds());
                 //logger.debug("=========>2 ", new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
-                upIncident.receipt_date = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+
+                var m = moment();    
+                var date = m.format("YYYY-MM-DD HH:mm:ss");
+                
+                //접수일자 표기 통일하기 위해 수정 (등록일자 형태)
+
+                upIncident.receipt_date = date;
                 upIncident.complete_reserve_date = upIncident.complete_reserve_date + " " + upIncident.complete_hh + ":" + upIncident.complete_mi + ":" + "00"
                 upIncident.status_cd = '2';
                 upIncident.status_nm = '처리중';

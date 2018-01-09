@@ -14,9 +14,9 @@ module.exports = {
      */
     sendAlimi: (higher_cd) => {
 
-        logger.debug("=============================================");
-        logger.debug("util/alimi/sendAlimi, higher_cd : ", higher_cd);
-        logger.debug("=============================================")
+        //logger.debug("=============================================");
+        //logger.debug("util/alimi/sendAlimi, higher_cd : ", higher_cd);
+        //logger.debug("=============================================")
 
         try{
             //>>>>> 상위업무에 매핑되는 사원찾기
