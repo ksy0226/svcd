@@ -4,7 +4,10 @@ $(document).ready(function () {
 
     //그룹사구분 세팅
     setGroupFlag();
-   
+
+    //유지보수 기간 체크 
+    checkDate();
+    
 });
 
 //그룹사구분 세팅
@@ -18,5 +21,14 @@ function setGroupFlag() {
     }else{
         $('#row_group_flag').slideUp(350);
                
+    }
+}
+
+function checkDate(){
+    if($('input[name="company[date_from]"]').val() =="undefined"){
+        $('input[name="company[date_from]"]').val(""); 
+    }
+    if($('input[name="company[date_to]"]').val() =="undefined"){
+        $('input[name="company[date_to]"]').val(""); 
     }
 }
