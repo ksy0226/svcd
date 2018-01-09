@@ -1,19 +1,20 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var async = require('async');
-var Incident = require('../models/Incident');
-var CompanyProcess = require('../models/CompanyProcess');
-var ProcessStatus = require('../models/ProcessStatus');
-var LowerProcess = require('../models/LowerProcess');
-var Usermanage = require('../models/Usermanage');
+const mongoose = require('mongoose');
+const async = require('async');
+const Incident = require('../models/Incident');
+const CompanyProcess = require('../models/CompanyProcess');
+const ProcessStatus = require('../models/ProcessStatus');
+const LowerProcess = require('../models/LowerProcess');
+const Usermanage = require('../models/Usermanage');
+const MyProcess = require('../models/MyProcess');
+const service = require('../services/incident');
 var mailer = require('../util/nodemailer');
-var service = require('../services/incident');
 var fs = require('fs');
 var path = require('path');
 var CONFIG = require('../../config/config.json');
 var logger = require('log4js').getLogger('app');
-var MyProcess = require('../models/MyProcess');
+
 var request = require("request");
 
 module.exports = {

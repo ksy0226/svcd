@@ -114,8 +114,8 @@ $(document).ready(function () {
  * 다시 조회
  */
 function research(selectedPage) {
-    //rowIdx = 1;
-    //inCnt = 3;
+    rowIdx = 1;
+    inCnt = 3;
 
     //내용삭제
     $("#more_list").empty();
@@ -290,7 +290,7 @@ function paging(totalDataCnt, dataPerPage, pageCnt, currentPage) {
 
         var $item = $(this);
         var $id = $item.attr("id");
-        selectedPage = $item.text();
+        var selectedPage = $item.text();
 
         if ($id == "next") selectedPage = next;
         if ($id == "prev") selectedPage = prev;
