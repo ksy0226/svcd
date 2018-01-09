@@ -124,9 +124,6 @@ module.exports = {
             logger.debug("==========================================company getCompany========================================");
             logger.debug("====================================================================================================");
 
-
-
-
             try {
                 request({
                     //uri: "http://gw.isu.co.kr/CoviWeb/api/UserList.aspx?searchName="+encodeURIComponent(req.query.searchText),
@@ -137,17 +134,17 @@ module.exports = {
                     },
                     method: "GET",
                 }, function (err, response, usermanage) {
-    
+
                     //logger.debug("=====================================");
                     //logger.debug("=====>userJSON group ", usermanage);
                     //logger.debug("=====================================");
-    
+
                     Usermanage.find({
-                        employee_nm: {
-                            $regex: new RegExp(req.query.searchText, "i")
-                        }
-                        , group_flag: "out"
-                    })
+                            employee_nm: {
+                                $regex: new RegExp(req.query.searchText, "i")
+                            },
+                            group_flag: "out"
+                        })
                         .limit(10)
                         .exec(function (err, usermanageData) {
                             if (err) {
@@ -169,24 +166,28 @@ module.exports = {
 
 
             CompanyModel.find({}, function (err, companyJsonData) {
-                if (err) {
-                    return res.json({
-                        success: false,
-                        message: err
-                    });
-                } else {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
 
-                    //logger.debug("==========================================CompanyModel.find({}========================================");
-                    //logger.debug("companyJsonData : ",companyJsonData);
-                    //logger.debug("====================================================================================================");
+                        //logger.debug("==========================================CompanyModel.find({}========================================");
+                        //logger.debug("companyJsonData : ",companyJsonData);
+                        //logger.debug("====================================================================================================");
 
-                    res.json(companyJsonData);
-                };
+                        res.json(companyJsonData);
+                    };
 
-            }).sort('company_nm');
+                })
+                .sort({
+                    group_flag: -1,
+                    company_nm: 1
+                });
         } catch (e) {
             logger.error("CompanyModel error : ", e);
-        } finally { }
+        } finally {}
     },
 
     list: (req, res, next) => {
@@ -194,21 +195,25 @@ module.exports = {
 
         async.waterfall([function (callback) {
             CompanyModel.find(search.findCompany, function (err, company) {
-                if (err) {
-                    return res.json({
-                        success: false,
-                        message: err
-                    });
-                } else {
-                    /*
-                    logger.debug("==========================================getcompany=======================================");
-                    logger.debug("company : ", company);
-                    logger.debug("================================================================================================");
-                    */
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+                        /*
+                        logger.debug("==========================================getcompany=======================================");
+                        logger.debug("company : ", company);
+                        logger.debug("================================================================================================");
+                        */
 
-                    callback(null, company);
-                }
-            }).sort('company_cd');
+                        callback(null, company);
+                    }
+                })
+                .sort({
+                    group_flag: -1,
+                    company_nm: 1
+                });
         }], function (err, company) {
             if (err) {
                 return res.json({

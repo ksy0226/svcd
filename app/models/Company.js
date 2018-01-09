@@ -20,6 +20,7 @@ var companySchema = mongoose.Schema({
     updated_at: { type : String },                              //변경일자
     deleted_at: { type : String },                              //삭제일자
     use_yn: { type: String },                       //사용여부(Y:사용, N:미사용)
+    group_flag  : { type : String , default : 'out' },
     date_from: { type: String },                    //유지보수 시작일
     date_to: { type: String }                       //유지보수 종료일
 });

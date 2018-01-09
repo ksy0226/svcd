@@ -982,9 +982,9 @@ module.exports = {
 
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
             //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
-            logger.debug("monthlyload incident >> "+JSON.stringify(incident));
-            logger.debug("monthlyload aggregatorOpts >> "+JSON.stringify(aggregatorOpts));
-                  
+            //logger.debug("monthlyload incident >> "+JSON.stringify(incident));
+            //logger.debug("monthlyload aggregatorOpts >> "+JSON.stringify(aggregatorOpts));
+
             if (err) {
                 return res.json({
                     success: false,
