@@ -8,13 +8,13 @@ var ProcessStatus = require('../models/ProcessStatus');
 var LowerProcess = require('../models/LowerProcess');
 var Usermanage = require('../models/Usermanage');
 var mailer = require('../util/nodemailer');
+var alimi = require('../util/alimi');
 var service = require('../services/incident');
 var fs = require('fs');
 var path = require('path');
 var CONFIG = require('../../config/config.json');
 var logger = require('log4js').getLogger('app');
 var MyProcess = require('../models/MyProcess');
-var request = require("request");
 
 module.exports = {
     /** 
@@ -160,13 +160,13 @@ module.exports = {
 
                 //******************************* */
                 // SD 업무담당자 사내메신저 호출
-                sendAlimi(req);
+                alimi.sendAlimi(req.body.incident.higher_cd);
                 //******************************* */
 
                 callback(null);
             });
         }], function (err) {
-            ////logger.debug("trace 2");
+            //logger.debug("trace 2");
             if (err) {
                 res.render("http/500", {
                     err: err
@@ -214,13 +214,13 @@ module.exports = {
 
                 //******************************* */
                 // SD 업무담당자 사내메신저 호출
-                sendAlimi(req);
-                //
+                alimi.sendAlimi(req.body.incident.higher_cd);
+                //******************************* */
 
                 callback(null);
             });
         }], function (err) {
-            ////logger.debug("trace 2");
+            //logger.debug("trace 2");
             if (err) {
                 res.render("http/500", {
                     err: err
@@ -313,7 +313,7 @@ module.exports = {
      * incident 상세 화면 조회
      */
     viewDetail: (req, res, next) => {
-        ////logger.debug("Trace viewDetail : ", req.params.id);
+        //logger.debug("Trace viewDetail : ", req.params.id);
         try {
             Incident.findById({
                 _id: req.params.id
@@ -371,11 +371,11 @@ module.exports = {
         if (req.query.perPage != null && req.query.perPage != '') perPage = Number(req.query.perPage);
 
 
-        ////logger.debug("=============================================");
-        ////logger.debug("page : ", page);
-        ////logger.debug("perPage : ", perPage);
-        ////logger.debug("req.query.perPage : ", req.query.perPage);
-        ////logger.debug("=============================================");
+        //logger.debug("=============================================");
+        //logger.debug("page : ", page);
+        //logger.debug("perPage : ", perPage);
+        //logger.debug("req.query.perPage : ", req.query.perPage);
+        //logger.debug("=============================================");
 
         try {
 
@@ -383,14 +383,14 @@ module.exports = {
                 Incident.count(search.findIncident, function (err, totalCnt) {
 
 
-                    ////logger.debug("search.request_id : "+search.request_id);
-                    ////logger.debug("search.findIncident : "+JSON.stringify(search.findIncident));
+                    //logger.debug("search.request_id : "+search.request_id);
+                    //logger.debug("search.findIncident : "+JSON.stringify(search.findIncident));
 
                     if (err) {
 
-                        ////logger.debug("=============================================");
-                        ////logger.debug("incident : ", err);
-                        ////logger.debug("=============================================");
+                        //logger.debug("=============================================");
+                        //logger.debug("incident : ", err);
+                        //logger.debug("=============================================");
 
                         return res.json({
                             success: false,
@@ -398,9 +398,9 @@ module.exports = {
                         });
                     } else {
                         console.log("totalCnt>>>>>" + totalCnt);
-                        ////logger.debug("=============================================");
-                        ////logger.debug("incidentCnt : ", totalCnt);
-                        ////logger.debug("=============================================");
+                        //logger.debug("=============================================");
+                        //logger.debug("incidentCnt : ", totalCnt);
+                        //logger.debug("=============================================");
 
                         callback(null, totalCnt)
                     }
@@ -410,9 +410,9 @@ module.exports = {
                 Incident.find(search.findIncident, function (err, incident) {
                         if (err) {
 
-                            ////logger.debug("=============================================");
-                            ////logger.debug("incident : ", err);
-                            ////logger.debug("=============================================");
+                            //logger.debug("=============================================");
+                            //logger.debug("incident : ", err);
+                            //logger.debug("=============================================");
 
                             return res.json({
                                 success: false,
@@ -425,10 +425,10 @@ module.exports = {
                             rtnData.incident = incident;
                             rtnData.totalCnt = totalCnt
 
-                            ////logger.debug("=============================================");
-                            ////logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
-                            ////logger.debug("rtnData : ", JSON.stringify(rtnData));
-                            ////logger.debug("=============================================");
+                            //logger.debug("=============================================");
+                            //logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
+                            //logger.debug("rtnData : ", JSON.stringify(rtnData));
+                            //logger.debug("=============================================");
 
                             res.json(rtnData);
 
@@ -440,9 +440,9 @@ module.exports = {
             });
         } catch (err) {
 
-            ////logger.debug("===============search control================");
-            ////logger.debug("search list error : ", err);
-            ////logger.debug("=============================================");
+            //logger.debug("===============search control================");
+            //logger.debug("search list error : ", err);
+            //logger.debug("=============================================");
 
         } finally {}
 
@@ -575,7 +575,10 @@ module.exports = {
      */
     getIncidentDetail: (req, res, next) => {
 
-        ////logger.debug("Trace viewDetail : ", req.params.id);
+        //logger.debug("==========================================");
+        //logger.debug("getIncidentDetail req.params.id : ", req.params.id);
+        //logger.debug("==========================================");
+
         try {
             Incident.findById({
                 _id: req.params.id
@@ -602,7 +605,7 @@ module.exports = {
                 }
             });
         } catch (e) {
-            //logger.debug('****************', e);
+            logger.error('****************', e);
         }
     },
 
@@ -614,7 +617,7 @@ module.exports = {
     insertedImage: (req, res, next) => {
         //console.log("image upload .....");
         //res.send( '/uploads/' + req.file.filename);
-        ////logger.debug("=====================>incident controllers insertedImage");
+        //logger.debug("=====================>incident controllers insertedImage");
         res.send('/uploads/' + req.file.filename);
     },
 
@@ -622,8 +625,8 @@ module.exports = {
      * 서비스 평가 내용 등록
      */
     valuationSave: (req, res, next) => {
-        ////logger.debug("valuationSave =====================> " + JSON.stringify(req.body));
-        ////logger.debug("req.body.incident : ", req.body.incident);
+        //logger.debug("valuationSave =====================> " + JSON.stringify(req.body));
+        //logger.debug("req.body.incident : ", req.body.incident);
         try {
             async.waterfall([function (callback) {
                 var upIncident = req.body.incident;
@@ -631,7 +634,7 @@ module.exports = {
                 upIncident.status_nm = '완료';
                 callback(null, upIncident);
             }], function (err, upIncident) {
-                ////logger.debug("=========> upIncident ", upIncident);
+                //logger.debug("=========> upIncident ", upIncident);
 
                 if (err) {
                     res.json({
@@ -770,80 +773,3 @@ module.exports = {
 
     }
 };
-
-
-
-/**
- * 업무 담당자에게 메신저 알림보내기
- */
-function sendAlimi(req) {
-
-    //>>>>> 상위업무에 매핑되는 사원찾기
-    var condition = {};
-    condition.higher_cd = req.body.incident.higher_cd;
-
-    var aggregatorOpts = [{
-        $match: condition
-    }, {
-        $group: { //그룹
-            _id: {
-                email: "$email"
-            }
-        }
-    }, {
-        $lookup: {
-            from: "usermanages", // join 할 collection명
-            localField: "_id.email", // 기본 키($group에서 얻은 값)
-            foreignField: "email", // 외래 키(usermanagers collection에 값) 
-            as: "manager" // 결과를 배출할 alias ( 필드명 )
-        }
-    }, {
-        $project: {
-            "manager.company_cd": 1,
-            "manager.sabun": 1
-        }
-    }]
-
-    MyProcess.aggregate(aggregatorOpts).exec(function (err, targetUser) {
-        if (err) {
-
-            logger.error("=============================================");
-            logger.error("incident/sendAlimi aggregate!!! err  ", err);
-            logger.error("=============================================");
-
-        } else {
-
-            var gw = CONFIG.groupware.uri;
-            var alimi = CONFIG.msgAlimi.uri
-
-            for (var i = 0; i < targetUser.length; i++) {
-
-                //Go Live(운영 시 수정처리)
-                var manager = targetUser[i].manager[0].company_cd + targetUser[i].manager[0].sabun;
-                //var manager = "ISU_ST01004";
-
-                //logger.debug("=============================================");
-                //logger.debug("incident/save sendAlimi, manager : ", manager);
-                //logger.debug("=============================================")
-
-                request({
-                    uri: alimi + "/alimi/call_alimi.jsp?msgtype=CSD&users_id=" + manager + "&title=1&link_url=" + gw + "/CoviWeb/Main.aspx?type=helpdesK" + manager,
-                    headers: {
-                        'Content-type': 'application/html'
-                    },
-                    method: "GET",
-                }, function (err, response, body) {
-
-                    ////logger.debug("=============================================");
-                    ////logger.debug("incident/save call messenger!!!response  ", response);
-                    ////logger.debug("incident/save call messenger!!!body  ", body);
-                    ////logger.debug("=============================================");
-
-                });
-            }
-
-
-        }
-    });
-    //<<<<< 상위업무에 매핑되는 사원찾기    
-}

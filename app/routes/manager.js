@@ -8,6 +8,7 @@ const controller = require('../controllers/manager');
 router.route('/work_list').get(ssc.sessionCheck, controller.work_list);
 router.route('/work_detail/:id').get(ssc.sessionCheck, controller.work_detail);
 router.route('/saveReceipt/:id').post(ssc.sessionCheck, controller.saveReceipt);
+router.route('/saveHChange/:id').post(ssc.sessionCheck, controller.saveHChange);
 router.route('/saveComplete/:id').post(ssc.sessionCheck, controller.saveComplete);
 router.route('/work_assign').get(ssc.sessionCheck, controller.work_assign);
 router.route('/month_list').get(ssc.sessionCheck, controller.month_list);
