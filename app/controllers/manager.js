@@ -15,6 +15,7 @@ const logger = require('log4js').getLogger('app');
 const Iconv = require('iconv-lite');
 const path = require('path');
 const CONFIG = require('../../config/config.json');
+var moment = require('moment');
 
 module.exports = {
 
@@ -220,10 +221,20 @@ module.exports = {
         try {
             async.waterfall([function (callback) {
                 var upIncident = req.body.incident;
-                var dt = new Date();
+                //var dt = new Date();
                 //logger.debug("=========>1 ", dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds());
                 //logger.debug("=========>2 ", new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
-                upIncident.receipt_date = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+
+                var m = moment();    
+                var date = m.format("YYYY-MM-DD HH:mm:ss");
+                
+                //schema.register_yyyy = m.format("YYYY");
+                //schema.register_mm = m.format("MM");
+                //schema.register_dd = m.format("DD");
+
+                //접수일자 표기 통일하기 위해 수정 (등록일자 형태)
+                //upIncident.receipt_date = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+                upIncident.receipt_date = date;
                 upIncident.complete_reserve_date = upIncident.complete_reserve_date + " " + upIncident.complete_hh + ":" + upIncident.complete_mi + ":" + "00"
                 upIncident.status_cd = '2';
                 upIncident.status_nm = '처리중';
