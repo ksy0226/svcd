@@ -126,6 +126,7 @@ function getDataList(selectedPage){
         async: true,
         url: "/search/list",
         dataType: "json", // xml, html, script, json 미지정시 자동판단
+        timeout: 30000, //제한 시간
         cache: false,
         data: reqParam, // $($('form')).serialize()
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",

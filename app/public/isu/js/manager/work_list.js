@@ -153,9 +153,7 @@ function getDataList(selectedPage) {
             $('#ajax_indicator').css("display", "");
         },
         success: function (dataObj) {
-        
             totalDataCnt = Number(dataObj.totalCnt);
-
             if(totalDataCnt < dataPerPage){
                 totalPage = 1;
             }else{
@@ -170,8 +168,6 @@ function getDataList(selectedPage) {
 
             paging(totalDataCnt, dataPerPage, pageCnt, selectedPage);
             
-
-
         }
     });
 }
@@ -245,20 +241,20 @@ function setDataList(dataObj, selectedPage, totalDataCnt) {
 /**
  * 페이징 처리
  */
-function paging(totalData, dataPerPage, pageCount, currentPage) {
+function paging(totalDataCnt, dataPerPage, pageCnt, currentPage) {
 
-    var totalPage = Math.ceil(totalData / dataPerPage);    // 총 페이지 수
-    var pageGroup = Math.ceil(currentPage / pageCount);    // 페이지 그룹
+    var totalPage = Math.ceil(totalDataCnt/dataPerPage);    // 총 페이지 수
+    var pageGroup = Math.ceil(currentPage/pageCnt);    // 페이지 그룹
 
     //검색 시, 총 페이지 수가 화면에 뿌려질 페이지(10개Page)보다 작을 경우 처리
-    if (totalPage <= pageCount) {
+    if(totalPage <= pageCnt){
         last = totalPage;
         first = 1;
-    } else {
-        var last = pageGroup * pageCount;    // 화면에 보여질 마지막 페이지 번호
-        if (last > totalPage)
+    }else{
+        var last = pageGroup * pageCnt;    // 화면에 보여질 마지막 페이지 번호
+        if(last > totalPage)
             last = totalPage;
-        var first = last - (pageCount - 1);    // 화면에 보여질 첫번째 페이지 번호
+        var first = last - (pageCnt-1);    // 화면에 보여질 첫번째 페이지 번호
     }
 
     var next = last + 1;
@@ -294,12 +290,12 @@ function paging(totalData, dataPerPage, pageCount, currentPage) {
 
         var $item = $(this);
         var $id = $item.attr("id");
-        selectedPage = $item.text();
+        var selectedPage = $item.text();
 
         if ($id == "next") selectedPage = next;
         if ($id == "prev") selectedPage = prev;
 
-        paging(totalData, dataPerPage, pageCount, selectedPage);
+        paging(totalDataCnt, dataPerPage, pageCnt, selectedPage);
         getDataList(selectedPage);
 
     });

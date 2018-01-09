@@ -134,14 +134,20 @@ block content
                                 tbody(id='more_list')
                             //#more_view.row
                             // start pagination
-                            .row
-                                .col-sm-4
-                                    .dataTables_info Showing 1 to 15 of 
-                                        span(id='totalPage')
-                                        |  pages
-                                .col-sm-8
-                                    .dataTables_paginate.paging_simple_numbers.pull-right
-                                        ul#paging.pagination
+                        .row
+                            .col-sm-4
+                                .dataTables_info.pull Showing 1 to 15 of 
+                                    span(id='totalPage')
+                                    |  pages
+                                    |  /
+                                    |  총 
+                                    span(id='totalCnt')
+                                    |건 
+                               
+                            .col-sm-8
+                                .dataTables_paginate.paging_simple_numbers.pull-right
+                                    ul#paging.pagination
+
                             // end pagination
                 // end Grid Area
             // end container
