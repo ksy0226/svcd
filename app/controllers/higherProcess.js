@@ -152,7 +152,7 @@ module.exports = {
                     message: err
                     });     
                 res.json(higherProcess);
-            }).sort('higher_cd');
+            }).sort('higher_nm');
         }catch(e){
             logger.debug(e);
         }

@@ -177,6 +177,9 @@ block content
                                         button.btn.btn-primary.waves-effect.waves-light.m-l-5(type='button', onClick="javascript:$('#wdetail_modal').modal('hide')")
                                             i.fa.fa-bars
                                             | 목록
+                                        button#hChangeBtn.btn.btn-warning.waves-effect.waves-light.m-l-5(type='button', data-toggle='modal', data-target='#hchange_modal', style='display: none ;')
+                                            i.fa.fa-exchange
+                                            | 업무변경
                                         button#receiptBtn.btn.btn-inverse.waves-effect.waves-light.m-l-5(type='button', data-toggle='modal', data-target='#receipt_modal', style='display: none;')
                                             i.fa.fa-edit
                                             | 접수
@@ -388,6 +391,40 @@ block content
                                             .radio.radio-inline
                                                 input#inlineRadio2(type='radio', value='option2', name='radioInline')
                                                 label(for='inlineRadio2')  상신함 
+
+    //업무변경
+    #hchange_modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='custom-width-modalLabel', aria-hidden='true', style='display: none;')
+        .modal-dialog(style='width:55%;')
+            .modal-content
+                .modal-header
+                    button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                    h4#custom-width-modalLabel.modal-title
+                        b 업무변경
+                    small.text-muted 변경될 업무를 선택하세요
+                .modal-body
+                    // Start Button Area
+                    .row
+                        .col-sm-12
+                            .btn-toolbar.m-b-10(role='toolbar')
+                                .pull-right
+                                    button#hChangeSaveBtn.btn.btn-sm.btn-primary.waves-effect.waves-light(type='button')
+                                        i.fa.fa-check.m-l-5
+                                        |  저장
+                    // End Button Area
+                    // start Insert Area
+                    .row
+                        .col-sm-12
+                            .card-box.m-r-5
+                                form#hchange_form.form-horizontal.group-border-dashed(action='#')
+                                    .form-group
+                                        label.col-sm-2.control-label 상위업무
+                                        .col-sm-6
+                                            select.form-control(name='ch_higher_cd')
+                                                label
+                                    .form-group
+                                        label.col-sm-2.control-label 하위업무
+                                        .col-sm-6
+                                            select.form-control(name='ch_lower_cd')
 
 
     //완료모달

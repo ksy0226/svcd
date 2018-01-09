@@ -1,20 +1,23 @@
 'use strict';
-const express = require('express');
-const session = require('express-session');
-const mongoose = require('mongoose');
-const async = require('async');
-const Incident = require('../models/Incident');
-const ProcessStatus = require('../models/ProcessStatus');
-const ProcessGubun = require('../models/ProcessGubun');
-const LowerProcess = require('../models/LowerProcess');
-const MyProcess = require('../models/MyProcess');
-const Usermanage = require('../models/Usermanage');
-const mailer = require('../util/nodemailer');
-const service = require('../services/incident');
-const logger = require('log4js').getLogger('app');
-const Iconv = require('iconv-lite');
-const path = require('path');
-const CONFIG = require('../../config/config.json');
+
+var express = require('express');
+var session = require('express-session');
+var mongoose = require('mongoose');
+var async = require('async');
+var Incident = require('../models/Incident');
+var ProcessStatus = require('../models/ProcessStatus');
+var ProcessGubun = require('../models/ProcessGubun');
+var LowerProcess = require('../models/LowerProcess');
+var MyProcess = require('../models/MyProcess');
+var Usermanage = require('../models/Usermanage');
+var mailer = require('../util/nodemailer');
+var alimi = require('../util/alimi');
+var service = require('../services/incident');
+var logger = require('log4js').getLogger('app');
+var Iconv = require('iconv-lite');
+var path = require('path');
+var moment = require('moment');
+var CONFIG = require('../../config/config.json');
 var moment = require('moment');
 
 module.exports = {
@@ -128,7 +131,7 @@ module.exports = {
      */
     getIncidentDetail: (req, res, next) => {
 
-        logger.debug("Trace viewDetail : ", req.params.id);
+        //logger.debug("Trace viewDetail : ", req.params.id);
         try {
             Incident.findById({
                 _id: req.params.id
@@ -215,25 +218,21 @@ module.exports = {
      * 접수내용 등록
      */
     saveReceipt: (req, res, next) => {
-        //logger.debug("saveReceipt =====================> " + JSON.stringify(req.body));
-        //logger.debug("req.body.incident : ", req.body.incident);
+        ////logger.debug("saveReceipt =====================> " + JSON.stringify(req.body));
+        ////logger.debug("req.body.incident : ", req.body.incident);
 
         try {
             async.waterfall([function (callback) {
                 var upIncident = req.body.incident;
-                //var dt = new Date();
-                //logger.debug("=========>1 ", dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds());
-                //logger.debug("=========>2 ", new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
+
+                ////logger.debug("=========>1 ", dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds());
+                ////logger.debug("=========>2 ", new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
 
                 var m = moment();    
                 var date = m.format("YYYY-MM-DD HH:mm:ss");
                 
-                //schema.register_yyyy = m.format("YYYY");
-                //schema.register_mm = m.format("MM");
-                //schema.register_dd = m.format("DD");
-
                 //접수일자 표기 통일하기 위해 수정 (등록일자 형태)
-                //upIncident.receipt_date = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+
                 upIncident.receipt_date = date;
                 upIncident.complete_reserve_date = upIncident.complete_reserve_date + " " + upIncident.complete_hh + ":" + upIncident.complete_mi + ":" + "00"
                 upIncident.status_cd = '2';
@@ -296,12 +295,75 @@ module.exports = {
 
     },
 
+
+    /**
+     * 업무변경 등록
+     */
+    saveHChange: (req, res, next) => {
+        
+        try {
+            async.waterfall([function (callback) {
+                var upIncident = req.body.incident;
+
+                var m = moment();    
+                var date = m.format("YYYY-MM-DD HH:mm:ss");
+
+                upIncident.receipt_content = "* 상/하위업무변경 : " + req.session.user_nm + "-" + date;
+
+                //logger.debug("===========================================");
+                //logger.debug("saveHChange req.body : " + JSON.stringify(req.body));
+                //logger.debug("saveHChange upIncident : " + JSON.stringify(upIncident));
+                //logger.debug("===========================================");
+
+                callback(null, upIncident);
+
+            }], function (err, upIncident) {
+                if (err) {
+                    res.json({
+                        success: false,
+                        message: "No data found to update"
+                    });
+                } else {
+                    Incident.findOneAndUpdate({
+                        _id: req.params.id
+                    }, upIncident, function (err, Incident) {
+                        if (err) {
+                            return res.json({
+                                success: false,
+                                message: err
+                            });
+                        } else {
+
+                            //******************************* */
+                            // SD 업무담당자 사내메신저 호출
+                            alimi.sendAlimi(req.body.incident.higher_cd);
+                            //******************************* */
+
+                            return res.json({
+                                success: true,
+                                message: "update successed"
+                            });
+                        }
+                    });
+                }
+            });
+        } catch (e) {
+            logger.error("manager control saveReceipt : ", e);
+            return res.json({
+                success: false,
+                message: err
+            });
+        }
+
+    },
+
+
     /**
      * 완료내용 등록
      */
     saveComplete: (req, res, next) => {
-        //logger.debug("saveComplete =====================> " + JSON.stringify(req.body));
-        //logger.debug("req.body.incident : ", req.body.incident);
+        ////logger.debug("saveComplete =====================> " + JSON.stringify(req.body));
+        ////logger.debug("req.body.incident : ", req.body.incident);
         try {
             async.waterfall([function (callback) {
                 var upIncident = req.body.incident;

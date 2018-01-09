@@ -30,7 +30,7 @@ var IncidentSchema = new Schema({
     real_register_mm        : {type : String},  //실제요청자
     real_contact            : {type : String},  //실제요청자 연락처   
     app_menu                : {type : String, default : 'ServiceDesk'},  //문의 메뉴 경로                                                                                                                                             
-    receipt_content         : {type : String},  //등록내용                                                                         
+    receipt_content         : {type : String},  //접수내용                                                                         
     manager_company_cd      : {type : String},  //담당자 회사코드
     manager_company_nm      : {type : String},  //담당자 회사명
     manager_sabun           : {type : String},  //담당자 사번
@@ -54,7 +54,7 @@ var IncidentSchema = new Schema({
     complete_open_flag      : {type : String, default : 'N'},  //완료후공개여부                                                                     
     higher_cd               : {type : String},  //상위업무 코드
     higher_nm               : {type : String},  //상위업무 이름                                             
-    lower_cd                : {type : String},  //하위업무 코드('BC , 하드웨어 관련 오류','L044','공장/설비관리 부문','L045',
+    lower_cd                : {type : String},  //하위업무 코드
     lower_nm                : {type : String},  //하위업무 이름
     customer_flag           : {type : String},                                                                           
     add_solution_content    : {type : String},                                                                           

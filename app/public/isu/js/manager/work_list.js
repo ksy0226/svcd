@@ -78,11 +78,36 @@ $(document).ready(function () {
         research(1);
     });
 
+    //업무변경버튼 클릭 시
+    $('#hChangeSaveBtn').on('click', function () {
+        if($('select[name="ch_higher_cd"]').val() != '*'){
+            hChangeSave();
+            research(1);
+        }else{
+            alert('변경할 상위업무를 선택하세요.')
+        }
+    });
+
     //완료저장버튼 클릭 시
     $('#completeSaveBtn').on('click', function () {
         completeSave();
+        research(1);
 
     });
+
+    //업무변경 상위업무 선택 시
+    $('select[name="ch_higher_cd"]').on('change', function () {
+        
+        if($('select[name="ch_higher_cd"]').val() != '*'){
+            var higher_cd = $('select[name="ch_higher_cd"]').val();
+            //하위업무
+            var targetSelect = $('select[name="ch_lower_cd"]');
+            getLowerNm(targetSelect, higher_cd);
+        }else{
+            $('select[name="ch_lower_cd"]').empty();
+        }
+    });
+
 
     //select박스 초기화
     setSelectBox();
@@ -92,7 +117,18 @@ $(document).ready(function () {
      * 접수처리 화면
      */
     $('#receipt_modal').on('show.bs.modal', function () {
-        getLowerNm();
+        //하위업무
+        var targetSelect = $('select[name="incident[lower_cd]"]');
+        getLowerNm(targetSelect, higher_cd);
+    });
+
+    /**
+     * 업무변경 화면
+     */
+    $('#hchange_modal').on('show.bs.modal', function () {
+        //상위업무
+        var targetSelect = $('select[name="ch_higher_cd"]');
+        getHigherNm(targetSelect);
     });
 
 
@@ -340,6 +376,7 @@ function initDetail() {
 
 
     $('#receiptBtn').attr('style', 'display:none');
+    $('#hChangeBtn').attr('style', 'display:none');
     $('#completeBtn').attr('style', 'display:none');
 
 
@@ -390,12 +427,15 @@ function setDetail(dataObj) {
     //업무처리 버튼처리
     if (dataObj.status_cd == "1") {
         $('#receiptBtn').attr('style', 'display:');
+        $('#hChangeBtn').attr('style', 'display:');
         $('#completeBtn').attr('style', 'display:none');
     } else if (dataObj.status_cd == "2") {
         $('#receiptBtn').attr('style', 'display:none');
+        $('#hChangeBtn').attr('style', 'display:');
         $('#completeBtn').attr('style', 'display:');
     } else {
         $('#receiptBtn').attr('style', 'display:none');
+        $('#hChangeBtn').attr('style', 'display:none');
         $('#completeBtn').attr('style', 'display:none');
     }
 
@@ -560,7 +600,7 @@ function receiptSave() {
             if (dataObj.success) {
                 $('.modal').modal('hide');
                 initReceiptModal(dataObj);
-                research(selectedPage);
+                //research(selectedPage);
             } else {
                 alert('e : ' + JSON.stringify(dataObj));
             }
@@ -588,6 +628,53 @@ function initReceiptModal(dataObj) {
 }
 //<<================== 접수처리 스크립트 ==============
 
+
+//>>================== 업무변경 스크립트 ==============
+/**
+ * 접수 내용 저장
+ */
+function hChangeSave() {
+    var reqParam = "incident[higher_cd]="+$('select[name="ch_higher_cd"]').val();
+    reqParam += "&incident[higher_nm]=" + $('select[name="ch_higher_cd"] option:selected').text() ;
+    reqParam += "&incident[lower_cd]="+$('select[name="ch_lower_cd"]').val();
+    reqParam += "&incident[lower_nm]=" + $('select[name="ch_lower_cd"] option:selected').text() ;
+    $.ajax({
+        type: "POST",
+        async: true,
+        url: "/manager/saveHChange/" + incident_id,
+        dataType: "json", // xml, html, script, json 미지정시 자동판단
+        timeout: 30000,
+        cache: false,
+        data: reqParam,
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        error: function (request, status, error) {
+            alert("hChangeSave error : " + error);
+        },
+        beforeSend: function () {
+        },
+        success: function (dataObj) {
+
+            if (dataObj.success) {
+                $('.modal').modal('hide');
+                initHChangeModal(dataObj);
+                //research(selectedPage);
+            } else {
+                alert('e : ' + JSON.stringify(dataObj));
+            }
+        }
+    });
+}
+
+/**
+ * 접수모달 초기화
+ */
+function initHChangeModal(dataObj) {
+    $('select[name="ch_lower_cd"]').empty();
+}
+//<<================== 업무변경 스크립트 ==============
+
+
+
 //>>================== 완료처리 스크립트 ==============
 /**
  * 완료 내용 저장
@@ -613,7 +700,7 @@ function completeSave() {
             if (dataObj.success) {
                 $('.modal').modal('hide');
                 initCompleteModal();
-                research(selectedPage);
+                //research(selectedPage);
             } else {
                 alert('e : ' + JSON.stringify(dataObj));
             }
@@ -670,10 +757,50 @@ function setQuestionType(dataObj) {
 //<<================== 완료처리 스크립트 ==============
 
 
+
 /**
- * 요청타입 세팅
+ * 상위업무 조회
  */
-function getLowerNm() {
+function getHigherNm(targetSelect) {
+    var reqParam = "";
+    $.ajax({
+        type: "GET",
+        async: true,
+        url: "/higherProcess/getHigherProcess",
+        dataType: "json", // xml, html, script, json 미지정시 자동판단
+        timeout: 30000,
+        cache: false,
+        data: reqParam,
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        error: function (request, status, error) {
+            alert("error : " + error + " : " + JSON.stringify(request));
+        },
+        beforeSend: function () {
+        },
+        success: function (dataObj) {
+            setHigherSelect(targetSelect, dataObj);
+        }
+    });
+}
+
+
+/**
+ * 상위업무 셀렉트박스 세팅
+ */
+
+function setHigherSelect(targetSelect, dataObj) {
+    targetSelect.empty();
+    targetSelect.append("<option value='*'>선택하세요.</option>");
+    for (var i = 0; i < dataObj.length; i++) {
+        targetSelect.append("<option value='" + dataObj[i].higher_cd + "'>" + dataObj[i].higher_nm + "</option>");
+    }
+}
+
+
+/**
+ * 하위타입 조회
+ */
+function getLowerNm(targetSelect, higher_cd) {
     var reqParam = "";
     $.ajax({
         type: "GET",
@@ -690,19 +817,20 @@ function getLowerNm() {
         beforeSend: function () {
         },
         success: function (dataObj) {
-            setLowerNm(dataObj);
+            setLowerSelect(targetSelect,dataObj);
         }
     });
 }
 
+
 /**
- * 요청타입 세팅
+ * 하위업무 셀렉트박스 세팅
  */
 
-function setLowerNm(dataObj) {
-    $('select[name="incident[lower_cd]"]').empty();
+function setLowerSelect(targetSelect, dataObj) {
+    targetSelect.empty();
     for (var i = 0; i < dataObj.length; i++) {
-        $('select[name="incident[lower_cd]"]').append("<option value='" + dataObj[i].lower_cd + "'>" + dataObj[i].lower_nm + "</option>");
+        targetSelect.append("<option value='" + dataObj[i].lower_cd + "'>" + dataObj[i].lower_nm + "</option>");
     }
 }
 
