@@ -131,7 +131,7 @@ module.exports = {
      */
     getIncidentDetail: (req, res, next) => {
 
-        logger.debug("Trace viewDetail : ", req.params.id);
+        //logger.debug("Trace viewDetail : ", req.params.id);
         try {
             Incident.findById({
                 _id: req.params.id
@@ -218,15 +218,15 @@ module.exports = {
      * 접수내용 등록
      */
     saveReceipt: (req, res, next) => {
-        //logger.debug("saveReceipt =====================> " + JSON.stringify(req.body));
-        //logger.debug("req.body.incident : ", req.body.incident);
+        ////logger.debug("saveReceipt =====================> " + JSON.stringify(req.body));
+        ////logger.debug("req.body.incident : ", req.body.incident);
 
         try {
             async.waterfall([function (callback) {
                 var upIncident = req.body.incident;
 
-                //logger.debug("=========>1 ", dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds());
-                //logger.debug("=========>2 ", new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
+                ////logger.debug("=========>1 ", dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds());
+                ////logger.debug("=========>2 ", new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
 
                 var m = moment();    
                 var date = m.format("YYYY-MM-DD HH:mm:ss");
@@ -301,8 +301,6 @@ module.exports = {
      */
     saveHChange: (req, res, next) => {
         
-
-
         try {
             async.waterfall([function (callback) {
                 var upIncident = req.body.incident;
@@ -312,11 +310,10 @@ module.exports = {
 
                 upIncident.receipt_content = "* 상/하위업무변경 : " + req.session.user_nm + "-" + date;
 
-
-                logger.debug("===========================================");
-                logger.debug("saveHChange req.body : " + JSON.stringify(req.body));
-                logger.debug("saveHChange upIncident : " + JSON.stringify(upIncident));
-                logger.debug("===========================================");
+                //logger.debug("===========================================");
+                //logger.debug("saveHChange req.body : " + JSON.stringify(req.body));
+                //logger.debug("saveHChange upIncident : " + JSON.stringify(upIncident));
+                //logger.debug("===========================================");
 
                 callback(null, upIncident);
 
@@ -365,8 +362,8 @@ module.exports = {
      * 완료내용 등록
      */
     saveComplete: (req, res, next) => {
-        //logger.debug("saveComplete =====================> " + JSON.stringify(req.body));
-        //logger.debug("req.body.incident : ", req.body.incident);
+        ////logger.debug("saveComplete =====================> " + JSON.stringify(req.body));
+        ////logger.debug("req.body.incident : ", req.body.incident);
         try {
             async.waterfall([function (callback) {
                 var upIncident = req.body.incident;

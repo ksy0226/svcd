@@ -66,6 +66,11 @@ $(document).ready(function () {
 });
 
 function selectedHighProcess(obj){
+
+    if($('#higher_cd').val() != '*'){
+        $('#higher_nm').val($('#higher_cd option:selected').text());
+    }
+
     if($(obj).val() == 'H008'){
         $('#app_menu').slideDown(350);
         //$('#app_menu').attr('style','display:');
@@ -84,8 +89,11 @@ function checkValue(){
         return false;
     }
 
-    if($('select[name="incident[higher_cd]"]').val() == '' || $('select[name="incident[higher_cd]"]').val() === null){
-        alert("요청업무를 선택하세요.");
+    alert($('input[name="incident[higher_nm]"]').val());
+    alert($('select[name="incident[higher_cd]"]').val());
+
+    if($('select[name="incident[higher_cd]"]').val() == '*' || $('select[name="incident[higher_cd]"]').val() === null){
+        alert("업무구분을 선택하세요.");
         $('#higher_cd').focus();
         return false;
     }
@@ -203,7 +211,7 @@ function setHighProcess(company_cd){
 function addOption(data){
 
     $('#higher_cd').empty();
-    //$('#higher_cd').append("<option value=''> 전체</option>");
+    $('#higher_cd').append("<option value='*'>선택하세요</option>");
 
     for(var i=0; i<data.length; i++){
         $('#higher_cd').append("<option value='"+data[i]["higher_cd"]+"'>"+data[i]["higher_nm"]+"</option>");
