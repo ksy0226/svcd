@@ -837,18 +837,129 @@ module.exports = {
      * 만족도 현황 
      */
     monthlyload: (req, res, next) => {
+
         var today = new Date();
         var thisYear = today.getFullYear();
 
+        logger.debug("==================================================");
+        logger.debug("req.session.user_flag : ", req.session.user_flag);
+        logger.debug("==================================================");
+
+        var condition = {};
+
+        var OrQueries = [];
+        var AndQueries = [];
+
+        if (req.session.user_flag == 1) {        //전체관리자
+
+            //logger.debug("==================================================");
+            //logger.debug("req.session.user_flag : ", req.session.user_flag);
+            //logger.debug("==================================================");
+
+        } else if (req.session.user_flag == 3) {  //업무관리자
+
+            //logger.debug("==================================================");
+            //logger.debug("req.session.user_flag : ", req.session.user_flag);
+            //logger.debug("==================================================");
+
+            condition.manager_dept_cd = req.session.dept_cd;
+
+            //logger.debug("==================================================");
+            //logger.debug("condition.manager_dept_cd : ", condition.manager_dept_cd);
+            //logger.debug("==================================================");
+           
+
+        } else if (req.session.user_flag == 4) {  //업무담당자
+
+            //logger.debug("==================================================");
+            //logger.debug("req.session.user_flag : ", req.session.user_flag);
+            //logger.debug("==================================================");
+
+            //나의업무지정 상위업무 처리 위한 조건
+            var condition2 = {};
+            condition2.email = req.session.email;
+            MyProcess.find(condition2).distinct('higher_cd').exec(function (err, myHigherProcess) {
+
+                //logger.debug("==================================================");
+                //logger.debug("myHigherProcess : ", myHigherProcess);
+                //logger.debug("==================================================");
+
+                AndQueries.push({
+                    $and: [{
+                        "higher_cd": {
+                            "$in": myHigherProcess
+                        }
+                    }]
+                });
+                condition.$and = AndQueries;
+
+                //logger.debug("==================================================");
+                //logger.debug("condition : ", JSON.stringify(condition));
+                //logger.debug("==================================================");
+
+            });
+
+        } else if (req.session.user_flag == 5) {  //고객사관리자
+
+            //logger.debug("==================================================");
+            //logger.debug("req.session.user_flag : ", req.session.user_flag);
+            //logger.debug("==================================================");
+
+            condition.request_company_cd = req.session.company_cd;
+
+            //logger.debug("==================================================");
+            //logger.debug("condition.request_company_cd : ", condition.request_company_cd);
+            //logger.debug("==================================================");
+
+
+        } else if (req.session.user_flag == 9) {  //일반사용자
+
+            //logger.debug("==================================================");
+            //logger.debug("req.session.user_flag : ", req.session.user_flag);
+            //logger.debug("==================================================");
+
+            condition.request_id = req.session.email;
+
+            //logger.debug("==================================================");
+            //logger.debug("condition.request_id : ", condition.request_id);
+            //logger.debug("==================================================");
+
+        }
+
+        OrQueries.push({
+            "status_cd": {
+                "$in": ["4"]
+            }
+        });
+
+        if (condition.$and == null) {
+
+            condition.$and = OrQueries;
+
+            logger.debug("=============================================");
+            logger.debug("condition.$and is null : ", JSON.stringify(condition));
+            logger.debug("=============================================");
+
+        } else {
+
+            condition.$and.push(OrQueries);
+
+            logger.debug("=============================================");
+            logger.debug("condition.$and is not null : ", JSON.stringify(condition));
+            logger.debug("=============================================");
+
+        }
+
+        //condition.register_date = { $gte: startDate, $lte: endDate } //30일 기간으로 수정
+        condition.register_yyyy = thisYear.toString();
+
+        logger.debug("=============================================");
+        logger.debug("thisYear : ", thisYear.toString());
+        logger.debug("=============================================");
+
 
         var aggregatorOpts = [{
-            $match: { //조건
-                //manager_company_cd : req.session.company_cd  //각 사별 관리담당자는?
-                //,manager_email : req.session.email      //req.session.sabun 넣을 예정
-                //,
-                status_cd: "4",
-                register_yyyy: thisYear.toString()
-            }
+            $match: condition
         }, {
             $group: { //그룹칼럼
                 _id: {
@@ -869,10 +980,11 @@ module.exports = {
             }
         }]
 
-        //console.log("monthlyload aggregatorOpts >> "+JSON.stringify(aggregatorOpts)); 
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
             //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
-            //console.log("monthlyload incident >> "+JSON.stringify(incident));    
+            //logger.debug("monthlyload incident >> "+JSON.stringify(incident));
+            //logger.debug("monthlyload aggregatorOpts >> "+JSON.stringify(aggregatorOpts));
+
             if (err) {
                 return res.json({
                     success: false,
