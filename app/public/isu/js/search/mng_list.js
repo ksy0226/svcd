@@ -196,18 +196,40 @@ function setDataList(dataObj, selectedPage, totalDataCnt) {
         addList += "								<td class='text-center'>" + dataObj[i].status_nm + "</td>";
         if(dataObj[i].status_cd == 4){
             addList += "								<td class='text-center'>";
-            addList += "                                    <p><span id='" + dataObj[i].valuation + "' name='" + dataObj[i].valuation + "' class='m-l-15'>";
-            addList += "									    <i class='md md-star text-muted'></i>";
-            addList += "										<i class='md md-star text-muted'></i>";
-            addList += "										<i class='md md-star text-muted'></i>";
-            addList += "										<i class='md md-star text-muted'></i>";
-            addList += "										<i class='md md-star text-muted'></i>";
-            addList += "									</span></p>";
+            addList += "										<div class='forum-level'>";
+            addList += "											<p class='text-muted font-13'>";
+            addList += "											    <span name='" + dataObj[i]._id + "' class='m-l-15'>";
+            addList += "												    <i class='md md-star text-muted'></i>";
+            addList += "												    <i class='md md-star text-muted'></i>";
+            addList += "												    <i class='md md-star text-muted'></i>";
+            addList += "												    <i class='md md-star text-muted'></i>";
+            addList += "												    <i class='md md-star text-muted'></i>";
+            addList += "												</span>";
+            addList += "											</p>";
+            addList += "											<p></p>";
+            addList += "										</div>";
+            addList += "                                </td>";
+        }else{
+            addList += "								<td class='text-center'>";
+            addList += "										<div class='forum-level'>";
+            addList += "											<p class='text-muted font-13'>";
+            addList += "											    <span name='" + dataObj[i]._id + "' class='m-l-15'>";
+            addList += "												</span>";
+            addList += "											</p>";
+            addList += "											<p></p>";
+            addList += "										</div>";
             addList += "                                </td>";
         }
         addList += "							</tr>";
 
         $("#more_list").append(addList);
+
+        //만족도 별 표시 추가
+        var cnt = parseInt(dataObj[i].valuation, 10);
+        for (var j = 0; j < cnt; j++) {
+            $('.m-l-15:eq(' + i + ') i:eq(' + j + ')').attr('class', 'md md-star text-warning');
+        }
+        
         
     }
    
