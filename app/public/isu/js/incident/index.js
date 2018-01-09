@@ -212,7 +212,7 @@ function setContent(Obj) {
             $('.m-l-15:eq(' + i + ') i:eq(' + j + ')').attr('class', 'md md-star text-warning');
         }
 
-        $("img").attr('style','display:none');
+        $(".forum-content img").attr('style','display:none');
 
         //말줄임
         $(".truncate1").dotdotdot({
