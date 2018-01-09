@@ -12,7 +12,7 @@ block head
     script(src='http://dmaps.daum.net/map_js_init/postcode.v2.js')
     script(src='https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js')
 
-
+    script(src='/isu/js/company/edit.js')
 
 block content
     .content-page
@@ -47,29 +47,37 @@ block content
                                                     i.fa.fa-send-o
                                                     |  저장
                                         hr
+                                        .form-group(id='row_group_flag', style='display:none')
+                                            label.col-sm-3.control-label 그룹사여부
+                                            .col-sm-4
+                                                input#group_flag.form-control(type='hidden', readonly value='#{company.group_flag}', placeholder='')
+                                                input#user_flag.form-control(type='hidden', readonly value='#{session.user_flag}', placeholder='')
+                                                select.form-control(name='company[group_flag]' type='text' value='#{company.group_flag}')
+                                                    option(value='out' selected) 외부고객사
+                                                    option(value='in') 그룹사
                                         .form-group
                                             label.col-sm-3.control-label 회사코드
-                                            .col-sm-3
+                                            .col-sm-4
                                                 input.form-control(type='text', name='company[company_cd]', readonly value='#{company.company_cd}', placeholder='')
                                         .form-group
                                             label.col-sm-3.control-label 회사명
-                                            .col-sm-3
+                                            .col-sm-4
                                                 input.form-control(type='text', name='company[company_nm]', value='#{company.company_nm}', placeholder='')
                                         .form-group
                                             label.col-sm-3.control-label 업태
-                                            .col-sm-3
+                                            .col-sm-4
                                                 input.form-control(type='text', name='company[type]', value='#{company.type}',placeholder='')
                                         .form-group
                                             label.col-sm-3.control-label 대표이사명
-                                            .col-sm-3
+                                            .col-sm-4
                                                 input.form-control(type='text', name='company[ceo_nm]', value='#{company.ceo_nm}', placeholder='')
                                         .form-group
                                             label.col-sm-3.control-label 전화번호
-                                            .col-sm-3
+                                            .col-sm-4
                                                 input.form-control(type='text', name='company[tel_no]', value='#{company.tel_no}', placeholder='')
                                         .form-group
                                             label.col-sm-3.control-label 팩스번호
-                                            .col-sm-3
+                                            .col-sm-4
                                                 input.form-control(type='text', name='company[fax_no]', value='#{company.fax_no}',placeholder='')
                                         .form-group
                                             label.col-sm-3.control-label 회사주소1

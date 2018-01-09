@@ -21,6 +21,10 @@ module.exports = {
                     });
                 }
                 callback(null, usermanage)
+            }).sort({
+                group_flag: -1,
+                company_nm: 1,
+                employee_nm: 1
             });
         }, function (usermanage, callback) {
             CompanyModel.find({}, function (err, company) {
@@ -35,7 +39,10 @@ module.exports = {
                 logger.debug("======================================");
 
                 callback(null, usermanage, company)
-            }).sort('company_nm');
+            }).sort({
+                group_flag: -1,
+                company_nm: 1
+            });
         }], function (err, usermanage, company) {
             if (err) {
                 res.render("http/500", {
