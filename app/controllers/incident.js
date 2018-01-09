@@ -11,12 +11,12 @@ const MyProcess = require('../models/MyProcess');
 const service = require('../services/incident');
 var mailer = require('../util/nodemailer');
 var alimi = require('../util/alimi');
-
 var fs = require('fs');
 var path = require('path');
 var CONFIG = require('../../config/config.json');
 var logger = require('log4js').getLogger('app');
 
+var request = require("request");
 
 module.exports = {
     /** 
@@ -168,7 +168,6 @@ module.exports = {
                 callback(null);
             });
         }], function (err) {
-
             //logger.debug("trace 2");
             if (err) {
                 res.render("http/500", {
@@ -223,7 +222,6 @@ module.exports = {
                 callback(null);
             });
         }], function (err) {
-
             //logger.debug("trace 2");
             if (err) {
                 res.render("http/500", {
@@ -317,7 +315,6 @@ module.exports = {
      * incident 상세 화면 조회
      */
     viewDetail: (req, res, next) => {
-
         //logger.debug("Trace viewDetail : ", req.params.id);
         try {
             Incident.findById({
@@ -376,7 +373,6 @@ module.exports = {
         if (req.query.perPage != null && req.query.perPage != '') perPage = Number(req.query.perPage);
 
 
-
         //logger.debug("=============================================");
         //logger.debug("page : ", page);
         //logger.debug("perPage : ", perPage);
@@ -389,12 +385,10 @@ module.exports = {
                 Incident.count(search.findIncident, function (err, totalCnt) {
 
 
-
                     //logger.debug("search.request_id : "+search.request_id);
                     //logger.debug("search.findIncident : "+JSON.stringify(search.findIncident));
 
                     if (err) {
-
 
                         //logger.debug("=============================================");
                         //logger.debug("incident : ", err);
@@ -406,7 +400,6 @@ module.exports = {
                         });
                     } else {
                         console.log("totalCnt>>>>>" + totalCnt);
-
                         //logger.debug("=============================================");
                         //logger.debug("incidentCnt : ", totalCnt);
                         //logger.debug("=============================================");
@@ -418,7 +411,6 @@ module.exports = {
 
                 Incident.find(search.findIncident, function (err, incident) {
                         if (err) {
-
 
                             //logger.debug("=============================================");
                             //logger.debug("incident : ", err);
@@ -435,7 +427,6 @@ module.exports = {
                             rtnData.incident = incident;
                             rtnData.totalCnt = totalCnt
 
-
                             //logger.debug("=============================================");
                             //logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
                             //logger.debug("rtnData : ", JSON.stringify(rtnData));
@@ -450,7 +441,6 @@ module.exports = {
                     .limit(perPage);
             });
         } catch (err) {
-
 
             //logger.debug("===============search control================");
             //logger.debug("search list error : ", err);
@@ -540,9 +530,9 @@ module.exports = {
                         });
                     } else {
 
-                        ////logger.debug("=============================================");
-                        ////logger.debug("incidentCnt : ", totalCnt);
-                        ////logger.debug("=============================================");
+                        //logger.debug("=============================================");
+                        //logger.debug("incidentCnt : ", totalCnt);
+                        //logger.debug("=============================================");
 
                         callback(null, totalCnt)
                     }
@@ -596,11 +586,7 @@ module.exports = {
      */
     getIncidentDetail: (req, res, next) => {
 
-
-        //logger.debug("==========================================");
-        //logger.debug("getIncidentDetail req.params.id : ", req.params.id);
-        //logger.debug("==========================================");
-
+        //logger.debug("Trace viewDetail : ", req.params.id);
         try {
             Incident.findById({
                 _id: req.params.id
@@ -627,8 +613,7 @@ module.exports = {
                 }
             });
         } catch (e) {
-
-            logger.error('****************', e);
+            //logger.debug('****************', e);
         }
     },
 
@@ -640,7 +625,6 @@ module.exports = {
     insertedImage: (req, res, next) => {
         //console.log("image upload .....");
         //res.send( '/uploads/' + req.file.filename);
-
         //logger.debug("=====================>incident controllers insertedImage");
         res.send('/uploads/' + req.file.filename);
     },
@@ -649,7 +633,6 @@ module.exports = {
      * 서비스 평가 내용 등록
      */
     valuationSave: (req, res, next) => {
-
         //logger.debug("valuationSave =====================> " + JSON.stringify(req.body));
         //logger.debug("req.body.incident : ", req.body.incident);
         try {
@@ -659,7 +642,6 @@ module.exports = {
                 upIncident.status_nm = '완료';
                 callback(null, upIncident);
             }], function (err, upIncident) {
-
                 //logger.debug("=========> upIncident ", upIncident);
 
                 if (err) {
@@ -798,3 +780,7 @@ module.exports = {
         });
 
     }
+};
+
+
+
