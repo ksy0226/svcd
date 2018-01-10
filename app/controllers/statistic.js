@@ -585,17 +585,60 @@ module.exports = {
         var today = new Date();
         var thisYear = today.getFullYear();
         var preYear = thisYear - 1;
-
         var condition = {};
-        if (req.session.group_flag == "in") {
-            condition.manager_dept_cd = req.session.dept_cd;
-        } else if (req.session.group_flag == "out") {
-            condition.request_company_cd = req.session.company_cd;
-        }
+
         condition.register_yyyy = {
             $gte: preYear.toString(),
             $lte: thisYear.toString()
         }
+
+        var OrQueries = [];
+        var AndQueries = [];
+
+        if (req.session.user_flag == 1) {        //전체관리자
+
+        } else if (req.session.user_flag == 3) {  //업무관리자
+            condition.manager_dept_cd = req.session.dept_cd;
+
+        } else if (req.session.user_flag == 4) {  //업무담당자
+
+            //나의업무지정 상위업무 처리 위한 조건
+            var condition2 = {};
+            condition2.email = req.session.email;
+            MyProcess.find(condition2).distinct('higher_cd').exec(function (err, myHigherProcess) {
+
+                AndQueries.push({
+                    $and: [{
+                        "higher_cd": {
+                            "$in": myHigherProcess
+                        }
+                    }]
+                });
+                condition.$and = AndQueries;
+
+            });
+
+        } else if (req.session.user_flag == 5) {  //고객사관리자
+
+            condition.request_company_cd = req.session.company_cd;
+
+        } else if (req.session.user_flag == 9) {  //일반사용자
+
+            logger.debug("==================================================");
+            logger.debug("req.session.user_flag : ", req.session.user_flag);
+            logger.debug("==================================================");
+
+            condition.request_id = req.session.email;
+
+            logger.debug("==================================================");
+            logger.debug("condition.request_id : ", condition.request_id);
+            logger.debug("==================================================");
+
+        }
+
+
+        //condition.register_date = { $gte: startDate, $lte: endDate } //30일 기간으로 수정
+        //condition.register_yyyy = thisYear.toString();
 
         async.waterfall([function (callback) {
             var aggregatorOpts = [{
@@ -867,7 +910,7 @@ module.exports = {
             //logger.debug("==================================================");
             //logger.debug("condition.manager_dept_cd : ", condition.manager_dept_cd);
             //logger.debug("==================================================");
-           
+
 
         } else if (req.session.user_flag == 4) {  //업무담당자
 
@@ -1129,10 +1172,10 @@ function setChartData(srcData) {
 
     try {
         for (var i = 0; i < srcData.length; i++) {
-            if (Number(srcData[i]._id.register_yyyy) == thisYear) {
+            if (Number(srcData[i]._id.register_yyyy) == lastYear) {
                 var idx = Number(srcData[i]._id.register_mm);
                 cnt1.splice(idx - 1, 1, srcData[i].count);
-            } else if (Number(srcData[i]._id.register_yyyy) == lastYear) {
+            } else if (Number(srcData[i]._id.register_yyyy) == thisYear) {
                 var idx = Number(srcData[i]._id.register_mm);
                 cnt2.splice(idx - 1, 1, srcData[i].count);
             }
@@ -1169,10 +1212,10 @@ function setChartCompleteData(srcData) {
 
     try {
         for (var i = 0; i < srcData.length; i++) {
-            if (Number(srcData[i]._id.register_yyyy) == thisYear) {
+            if (Number(srcData[i]._id.register_yyyy) == lastYear) {
                 var idx = Number(srcData[i]._id.register_mm);
                 cnt1.splice(idx - 1, 1, srcData[i].count);
-            } else if (Number(srcData[i]._id.register_yyyy) == lastYear) {
+            } else if (Number(srcData[i]._id.register_yyyy) == thisYear) {
                 var idx = Number(srcData[i]._id.register_mm);
                 cnt2.splice(idx - 1, 1, srcData[i].count);
             }
