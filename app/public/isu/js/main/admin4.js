@@ -41,10 +41,13 @@ function cntLoad() {
 }
 
 function setCntLoad(dataObj) {
+    //alert(JSON.stringify(dataObj));
+
     $('#status' + "1").html(0);
     $('#status' + "2").html(0);
     $('#status' + "3").html(0);
     $('#status' + "4").html(0);
+
     $('#chart1').attr('data-text', "0" + "%");
     $('#chart1').attr('data-percent', "0");
     $('#chart2').attr('data-text', "0" + "%");

@@ -365,20 +365,35 @@ module.exports = {
                 //logger.debug("myHigherProcess : ", myHigherProcess);
                 //logger.debug("==================================================");
 
-                AndQueries.push({
-                    $and: [{
+                if (condition.$and == null) {
+
+                    //logger.debug("=============================================");
+                    //logger.debug("search.findIncident.$and is null : ", myHigherProcess);
+                    //logger.debug("=============================================");
+
+                    condition.$and = [{
                         "higher_cd": {
                             "$in": myHigherProcess
                         }
-                    }]
-                });
-                condition.$and = AndQueries;
+                    }];
+                } else {
+                    //logger.debug("=============================================");
+                    //logger.debug("search.findIncident.$and is not null : ", myHigherProcess);
+                    //logger.debug("=============================================");
+
+                    condition.$and.push({
+                        "higher_cd": {
+                            "$in": myHigherProcess
+                        }
+                    });
+                }
 
                 //logger.debug("==================================================");
                 //logger.debug("condition : ", JSON.stringify(condition));
                 //logger.debug("==================================================");
 
             });
+
 
         } else if (req.session.user_flag == 5) {  //고객사관리자
 
@@ -424,36 +439,48 @@ module.exports = {
 
         }
 
-        OrQueries.push({
-            "status_cd": {
-                "$in": ["1", "2", "3", "4"]
-            }
-        });
-
         if (condition.$and == null) {
 
-            condition.$and = OrQueries;
+            //logger.debug("=============================================");
+            //logger.debug("search.findIncident.$and is null : ", myHigherProcess);
+            //logger.debug("=============================================");
 
-            logger.debug("=============================================");
-            logger.debug("condition.$and is null : ", JSON.stringify(condition));
-            logger.debug("=============================================");
+            condition.$and = [{
+                "status_cd": {
+                    "$in": ["1", "2", "3", "4"]
+                }
+            }];
 
         } else {
 
-            condition.$and.push(OrQueries);
+            //logger.debug("=============================================");
+            //logger.debug("search.findIncident.$and is not null : ", myHigherProcess);
+            //logger.debug("=============================================");
 
-            logger.debug("=============================================");
-            logger.debug("condition.$and is not null : ", JSON.stringify(condition));
-            logger.debug("=============================================");
+            condition.$and.push({
+                "status_cd": {
+                    "$in": ["1", "2", "3", "4"]
+                }
+            });
 
         }
 
-        //condition.register_date = { $gte: startDate, $lte: endDate } //30일 기간으로 수정
-        condition.register_yyyy = thisYear.toString();
+        if (condition.$and == null) {
+            condition.$and = [{
+                "register_yyyy":
+                    thisYear.toString()
+            }];
+        } else {
+            condition.$and.push({
+                "register_yyyy":
+                    thisYear.toString()
+            });
+        }
 
-        logger.debug("=============================================");
-        logger.debug("thisYear : ", thisYear.toString());
-        logger.debug("=============================================");
+        //condition.register_date = { $gte: startDate, $lte: endDate } //30일 기간으로 수정
+        //condition.register_yyyy = thisYear.toString();
+
+        //logger.debug(">>>>>>>>>>>>>>>>>>>>>>>>>>>> : ", JSON.stringify(condition));
 
         var aggregatorOpts = [{
             $match: condition
@@ -486,7 +513,7 @@ module.exports = {
         ]
 
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
-
+            logger.debug(">>>>>>>>>>>>>>>>>>>>>>>>>>>> : ", JSON.stringify(incident));
             //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
             //logger.debug("cntload aggregatorOpts"+JSON.stringify(aggregatorOpts));    
 
@@ -607,14 +634,31 @@ module.exports = {
             condition2.email = req.session.email;
             MyProcess.find(condition2).distinct('higher_cd').exec(function (err, myHigherProcess) {
 
-                AndQueries.push({
-                    $and: [{
+                if (condition.$and == null) {
+
+                    //logger.debug("=============================================");
+                    //logger.debug("search.findIncident.$and is null : ", myHigherProcess);
+                    //logger.debug("=============================================");
+
+                    condition.$and = [{
                         "higher_cd": {
                             "$in": myHigherProcess
                         }
-                    }]
-                });
-                condition.$and = AndQueries;
+                    }];
+
+                } else {
+
+                    //logger.debug("=============================================");
+                    //logger.debug("search.findIncident.$and is not null : ", myHigherProcess);
+                    //logger.debug("=============================================");
+
+                    condition.$and.push({
+                        "higher_cd": {
+                            "$in": myHigherProcess
+                        }
+                    });
+
+                }
 
             });
 
@@ -622,17 +666,21 @@ module.exports = {
 
             condition.request_company_cd = req.session.company_cd;
 
+            //logger.debug("==================================================");
+            //logger.debug("condition.request_company_cd : ", condition.request_company_cd);
+            //logger.debug("==================================================");
+
         } else if (req.session.user_flag == 9) {  //일반사용자
 
-            logger.debug("==================================================");
-            logger.debug("req.session.user_flag : ", req.session.user_flag);
-            logger.debug("==================================================");
+            //logger.debug("==================================================");
+            //logger.debug("req.session.user_flag : ", req.session.user_flag);
+            //logger.debug("==================================================");
 
             condition.request_id = req.session.email;
 
-            logger.debug("==================================================");
-            logger.debug("condition.request_id : ", condition.request_id);
-            logger.debug("==================================================");
+            //logger.debug("==================================================");
+            //logger.debug("condition.request_id : ", condition.request_id);
+            //logger.debug("==================================================");
 
         }
 
@@ -661,7 +709,8 @@ module.exports = {
             }]
 
             IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
-                //console.log("incident >>>>>> " + JSON.stringify(incident));
+                //logger.debug("incident >>>>>> " + JSON.stringify(incident));
+                //logger.debug("aggregatorOpts >>>>>> " + JSON.stringify(aggregatorOpts));
                 if (err) {
                     return res.json({
                         success: false,
@@ -673,16 +722,7 @@ module.exports = {
             });
         }, function (incident, callback) {
             var aggregatorOpts = [{
-                $match: { //조건
-                    register_yyyy: {
-                        $gte: preYear.toString(),
-                        $lte: thisYear.toString()
-                    },
-                    status_cd: {
-                        $gte: '3',
-                        $lte: '4'
-                    }
-                }
+                $match: condition
             }, {
                 $group: { //그룹
                     _id: {
@@ -715,12 +755,7 @@ module.exports = {
             });
         }], function (err, incident, incident2) {
             var aggregatorOpts = [{
-                $match: { //조건
-                    register_yyyy: {
-                        $gte: preYear.toString(),
-                        $lte: thisYear.toString()
-                    }
-                }
+                $match: condition
             }, {
                 $group: { //그룹
                     _id: {
@@ -737,7 +772,17 @@ module.exports = {
                 }
             }]
 
+
             IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident3) {
+
+                logger.debug("=============================================");
+                logger.debug("condition : ", condition);
+                logger.debug("=============================================");
+
+                logger.debug("=============================================");
+                logger.debug("incident3 : ", incident3);
+                logger.debug("=============================================");
+
                 //console.log("incident2 >>>>>> " + JSON.stringify(incident2));
                 if (err) {
                     return res.json({
@@ -927,14 +972,28 @@ module.exports = {
                 //logger.debug("myHigherProcess : ", myHigherProcess);
                 //logger.debug("==================================================");
 
-                AndQueries.push({
-                    $and: [{
+                if (condition.$and == null) {
+
+                    //logger.debug("=============================================");
+                    //logger.debug("search.findIncident.$and is null : ", myHigherProcess);
+                    //logger.debug("=============================================");
+
+                    condition.$and = [{
                         "higher_cd": {
                             "$in": myHigherProcess
                         }
-                    }]
-                });
-                condition.$and = AndQueries;
+                    }];
+                } else {
+                    //logger.debug("=============================================");
+                    //logger.debug("search.findIncident.$and is not null : ", myHigherProcess);
+                    //logger.debug("=============================================");
+
+                    condition.$and.push({
+                        "higher_cd": {
+                            "$in": myHigherProcess
+                        }
+                    });
+                }
 
                 //logger.debug("==================================================");
                 //logger.debug("condition : ", JSON.stringify(condition));
@@ -969,37 +1028,50 @@ module.exports = {
 
         }
 
-        OrQueries.push({
-            "status_cd": {
-                "$in": ["4"]
-            }
-        });
-
         if (condition.$and == null) {
 
-            condition.$and = OrQueries;
+            //logger.debug("=============================================");
+            //logger.debug("search.findIncident.$and is null : ", myHigherProcess);
+            //logger.debug("=============================================");
 
-            logger.debug("=============================================");
-            logger.debug("condition.$and is null : ", JSON.stringify(condition));
-            logger.debug("=============================================");
+            condition.$and = [{
+                "status_cd": {
+                    "$in": ["4"]
+                }
+            }];
 
         } else {
 
-            condition.$and.push(OrQueries);
+            //logger.debug("=============================================");
+            //logger.debug("search.findIncident.$and is not null : ", myHigherProcess);
+            //logger.debug("=============================================");
 
-            logger.debug("=============================================");
-            logger.debug("condition.$and is not null : ", JSON.stringify(condition));
-            logger.debug("=============================================");
+            condition.$and.push({
+                "status_cd": {
+                    "$in": ["4"]
+                }
+            });
 
         }
 
         //condition.register_date = { $gte: startDate, $lte: endDate } //30일 기간으로 수정
-        condition.register_yyyy = thisYear.toString();
+        //condition.register_yyyy = thisYear.toString();
+
+        if (condition.$and == null) {
+            condition.$and = [{
+                "register_yyyy":
+                    thisYear.toString()
+            }];
+        } else {
+            condition.$and.push({
+                "register_yyyy":
+                    thisYear.toString()
+            });
+        }
 
         logger.debug("=============================================");
         logger.debug("thisYear : ", thisYear.toString());
         logger.debug("=============================================");
-
 
         var aggregatorOpts = [{
             $match: condition
