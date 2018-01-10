@@ -14,7 +14,7 @@ router.route('/chartLoad').get(controller.chartLoad);
 router.route('/monthlyload').get(controller.monthlyload);
 router.route('/deptcntload').get(controller.cntload);
 router.route('/deptmonthlyLoad').get(controller.monthlyload);
-router.route('/deptchartLoad').get(controller.deptchartLoad);
+router.route('/deptchartLoad').get(controller.chartLoad);
 router.route('/getHighLower').get(controller.getHighLower);
 router.route('/getComHigher').get(controller.getComHigher);
 router.route('/userCntLoad').get(controller.cntload);

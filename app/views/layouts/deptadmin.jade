@@ -47,8 +47,10 @@ html
                                     a.waves-effect(href='/incident/new/문의하기') 문의하기
                                 li
                                     a.waves-effect(href='/incident') 처리진행현황
+                                - if(session.group_flag =="in") {
                                 li
                                     a.waves-effect(href='/search/user_qna') 자주묻는질문과답
+                                - }
                             ul.nav.navbar-nav.navbar-right.pull-right
                                 li.hidden-xs
                                     a.waves-effect.waves-light(href='/usermanage/myPage')
@@ -58,7 +60,6 @@ html
                                     a.waves-effect.waves-light(href='/logout')
                                         i.md.md-settings-power
                                         |  로그아웃
-
 
             .left.side-menu
                 .sidebar-inner.slimscrollleft
