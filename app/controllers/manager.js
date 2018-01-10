@@ -38,7 +38,7 @@ module.exports = {
             });
         }, function (status, callback) {
 
-            var condition ={};
+            var condition = {};
             condition.email = req.session.email;
 
             MyProcess.find(condition).sort('higher_cd').sort('lower_nm').exec(function (err, lowerprocess) {
@@ -79,10 +79,6 @@ module.exports = {
                             message: err
                         });
                     } else {
-
-
-
-
                         callback(null, incident)
                     }
                 });
@@ -110,9 +106,6 @@ module.exports = {
                     if (incident.complete_reserve_date != '') incident.complete_reserve_date = incident.complete_reserve_date.substring(0, 10);
                     if (incident.complete_date != '') incident.complete_date = incident.complete_date.substring(0, 10);
                     //incident.complete_date = new Date(incident.complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-
-
-
 
                     res.render("manager/work_detail", {
                         incident: incident,
@@ -228,9 +221,9 @@ module.exports = {
                 ////logger.debug("=========>1 ", dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds());
                 ////logger.debug("=========>2 ", new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
 
-                var m = moment();    
+                var m = moment();
                 var date = m.format("YYYY-MM-DD HH:mm:ss");
-                
+
                 //접수일자 표기 통일하기 위해 수정 (등록일자 형태)
 
                 upIncident.receipt_date = date;
@@ -300,12 +293,12 @@ module.exports = {
      * 업무변경 등록
      */
     saveHChange: (req, res, next) => {
-        
+
         try {
             async.waterfall([function (callback) {
                 var upIncident = req.body.incident;
 
-                var m = moment();    
+                var m = moment();
                 var date = m.format("YYYY-MM-DD HH:mm:ss");
 
                 upIncident.receipt_content = "* 상/하위업무변경 : " + req.session.user_nm + "-" + date;
@@ -367,8 +360,12 @@ module.exports = {
         try {
             async.waterfall([function (callback) {
                 var upIncident = req.body.incident;
-                var dt = new Date();
-                upIncident.complete_date = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+
+                var m = moment();
+                var date = m.format("YYYY-MM-DD HH:mm:ss");
+
+                //upIncident.complete_date = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+                upIncident.complete_date = date;
                 upIncident.status_cd = '3';
                 upIncident.status_nm = '미평가';
 

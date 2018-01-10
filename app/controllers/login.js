@@ -377,12 +377,18 @@ module.exports = {
     },
 
     main_list: (req, res, next) => {
+
+
         try {
-            ////logger.debug('main_list controllers start!');
             if (req.session.user_flag == '9') {
                 Incident.find({
                     request_id: req.session.email
                 }, function (err, incident) {
+
+                    //logger.debug("======================================");
+                    //logger.debug("incident : ", incident);
+                    //logger.debug("======================================");
+
                     if (err) {
                         return res.json({
                             success: false,
@@ -420,7 +426,7 @@ module.exports = {
 
                     //logger.debug("==================================================");
                     //logger.debug("myHigherProcess : ", JSON.stringify(myHigherProcess));
-                    
+
                     condition.higher_cd = {
                         "$in": myHigherProcess
                     };
@@ -429,7 +435,7 @@ module.exports = {
                 Incident.find(condition, function (err, incident) {
                     //logger.debug("incident : ", JSON.stringify(incident));
                     //logger.debug("==================================================");
-                    
+
                     if (err) {
                         return res.json({
                             success: false,
@@ -494,12 +500,21 @@ module.exports = {
     },
 
     main_list_nocomplete: (req, res, next) => {
+        var today = new Date();
+        var thisYear = today.getFullYear();
+
         try {
             if (req.session.user_flag == '9') {
                 Incident.find({
                     request_id: req.session.email,
-                    status_cd: "3"
+                    status_cd: '3',
+                    register_yyyy: thisYear.toString()
                 }, function (err, incident) {
+
+                    logger.debug("======================================");
+                    logger.debug("incident : ", incident);
+                    logger.debug("======================================");
+
                     if (err) {
                         return res.json({
                             success: false,
