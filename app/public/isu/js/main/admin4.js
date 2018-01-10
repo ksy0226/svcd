@@ -41,7 +41,7 @@ function cntLoad() {
 }
 
 function setCntLoad(dataObj) {
-    //alert(JSON.stringify(dataObj));
+    alert(JSON.stringify(dataObj));
 
     $('#status' + "1").html(0);
     $('#status' + "2").html(0);
