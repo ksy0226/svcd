@@ -121,6 +121,9 @@ module.exports = {
                     });
                 }
                 callback(null, company)
+            }).sort({
+                group_flag: -1,
+                company_nm: 1
             });
         }], function (err, company) {
             if (err) {
