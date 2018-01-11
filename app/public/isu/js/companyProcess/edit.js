@@ -114,7 +114,7 @@ function setHigherProcess(data){
  */
 function getCompanyProcess(){
     if($('#company_cd').val() != '-'){
-        var reqParam = 'company_cd=' + $('#company_cd').val() ;
+        var reqParam = 'company_cd=' + encodeURIComponent($('#company_cd').val()) ;
         $.ajax({          
             type: "GET",
             async: true,

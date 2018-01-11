@@ -306,6 +306,41 @@ module.exports = {
 
     cntload: (req, res, next) => {
 
+        /*
+        try{
+            async.waterfall([function(callback) {
+
+                logger.debug("xxxxxxxxxxxxx");
+                callback(null,'first');
+                logger.debug("xxxxxxxxxxxxx");
+
+            },function(val, callback) {
+
+                logger.debug("xxxxxxxxxxxxx2");
+                logger.debug("val : ",val);
+                callback('second');
+                logger.debug("xxxxxxxxxxxxx2")
+
+            }],function(value){
+            
+                logger.debug("yyyyyyyyyyyyy");
+                logger.debug('value : ',value);
+                logger.debug("yyyyyyyyyyyyy");
+            
+            });
+
+        }catch(e){
+
+            logger.debug("zzzzzzzzzzzzz");
+            logger.debug('first');
+            logger.debug("zzzzzzzzzzzzz");
+
+        }finally{}
+        */
+
+        
+
+
         //var startDate = new Date(new Date().setDate(new Date().getDate() - 30)).toISOString().replace(/T/, ' ').replace(/\..+/, '');
         //var endDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
 
@@ -342,14 +377,7 @@ module.exports = {
             //logger.debug("==================================================");
             //logger.debug("condition.manager_dept_cd : ", condition.manager_dept_cd);
             //logger.debug("==================================================");
-            /*
-            AndQueries.push({
-                $and: [{
-                    manager_dept_cd: condition.manager_dept_cd
-                }]
-            });
-            condition.$and = AndQueries;
-            */
+
         } else if (req.session.user_flag == 4) {  //업무담당자
 
             //logger.debug("==================================================");
@@ -371,9 +399,10 @@ module.exports = {
                             "$in": myHigherProcess
                         }
                     }];
-                    //logger.debug("=============================================");
-                    //logger.debug("condition.$and is null : ", JSON.stringify(condition));
-                    //logger.debug("=============================================");
+                    
+                    logger.debug("=============================================");
+                    logger.debug("condition.$and is null : ", JSON.stringify(condition));
+                    logger.debug("=============================================");
 
                 } else {
 
@@ -383,9 +412,9 @@ module.exports = {
                         }
                     });
 
-                    //logger.debug("=============================================");
-                    //logger.debug("condition.$and is not null : ", JSON.stringify(condition));
-                    //logger.debug("=============================================");
+                    logger.debug("=============================================");
+                    logger.debug("condition.$and is not null : ", JSON.stringify(condition));
+                    logger.debug("=============================================");
                 }
 
                 //logger.debug("==================================================");
@@ -406,15 +435,6 @@ module.exports = {
             //logger.debug("condition.request_company_cd : ", condition.request_company_cd);
             //logger.debug("==================================================");
 
-            /*
-            AndQueries.push({
-                $and: [{
-                    request_company_cd: condition.request_company_cd
-                }]
-            });
-            condition.$and = AndQueries;
-            */
-
         } else if (req.session.user_flag == 9) {  //일반사용자
 
             //logger.debug("==================================================");
@@ -427,15 +447,6 @@ module.exports = {
             //logger.debug("condition.request_id : ", condition.request_id);
             //logger.debug("==================================================");
 
-            /*
-            AndQueries.push({
-                $and: [{
-                    request_id: condition.request_id
-                }]
-            });
-            condition.$and = AndQueries;
-            */
-
         }
 
         if (condition.$and == null) {
@@ -445,9 +456,10 @@ module.exports = {
                     "$in": ["1", "2", "3", "4"]
                 }
             }];
-            //logger.debug("=============================================");
-            //logger.debug("condition.$and is null : ", JSON.stringify(condition));
-            //logger.debug("=============================================");
+            
+            logger.debug("=============================================");
+            logger.debug("condition.$and is null : ", JSON.stringify(condition));
+            logger.debug("=============================================");
 
         } else {
 
@@ -492,12 +504,26 @@ module.exports = {
         //logger.debug("thisYear : ", thisYear.toString());
         //logger.debug("=============================================");
 
+        //var cdt = {"$and":[{"status_cd":{"$in":["1","2","3","4"]}},{"register_yyyy":"2018"},{"higher_cd":{"$in":["H001"]}}]};
+        //var cdt = {"$and":[{"status_cd":{"$in":["1","2","3","4"]}},{"register_yyyy":"2018"},{"higher_cd":{"$in":["H001"]}}]};
+        var cdt = {"$and":[{"status_cd":{"$in":["1","2","3","4"]}},{"register_yyyy":"2018"},{"higher_cd":{"$in":["H001"]}}]};
+
+        logger.debug("=============================================");
+        logger.debug("cdt : ", cdt);
+        logger.debug("JSON.stringify(cdt) : ", JSON.stringify(cdt));
+        logger.debug("condition : ", condition);
+        logger.debug("JSON.stringify(condition) : ", JSON.stringify(condition));
+        logger.debug("=============================================");
+
         var aggregatorOpts = [{
-            $match: condition
+            //$match: condition
+            $match : cdt
         }, {
             $group: { //그룹칼럼
                 _id: {
-                    status_cd: "$status_cd"
+                    register_yyyy: "$register_yyyy",
+                    status_cd: "$status_cd",
+                    higher_cd: "$higher_cd"
                     //status_cd: { $ifNull: [ '$status_cd', [{ count: 0 }] ] }
                 },
                 count: {
@@ -508,13 +534,13 @@ module.exports = {
 
             }
         }
-            /*
-            , {
-                total: { 
-                    $sum: "$count"
-                } 
-            }
-            */
+            
+            //, {
+            //    total: { 
+            //        $sum: "$count"
+            //    } 
+            //}
+            
             , {
             $sort: {
                 status_cd: -1
@@ -543,6 +569,9 @@ module.exports = {
 
             res.json(incident);
         });
+
+        
+
     },
 
 
@@ -729,9 +758,9 @@ module.exports = {
         }
         */
 
-        logger.debug("=============================================");
-        logger.debug("condition : ", JSON.stringify(condition));
-        logger.debug("=============================================");
+        //logger.debug("=============================================");
+        //logger.debug("chartLoad condition : ", JSON.stringify(condition));
+        //logger.debug("=============================================");
 
         async.waterfall([function (callback) {
             var aggregatorOpts = [{
