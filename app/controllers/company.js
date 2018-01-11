@@ -123,7 +123,7 @@ module.exports = {
 
             logger.debug("==========================================company getCompany========================================");
             logger.debug("====================================================================================================");
-
+/*
             try {
                 request({
                     //uri: "http://gw.isu.co.kr/CoviWeb/api/UserList.aspx?searchName="+encodeURIComponent(req.query.searchText),
@@ -163,7 +163,7 @@ module.exports = {
             } catch (e) {
                 logger.error("===control usermanager.js userJSON : ", e);
             }
-
+*/
 
             CompanyModel.find({}, function (err, companyJsonData) {
                     if (err) {
