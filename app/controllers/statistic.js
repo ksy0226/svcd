@@ -525,13 +525,10 @@ module.exports = {
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
 
             //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
-            //logger.debug("cntload aggregatorOpts"+JSON.stringify(aggregatorOpts));    
 
-            logger.debug("==================================================");
             logger.debug("==================================================");
             logger.debug(" aggregatorOpts : ", JSON.stringify(aggregatorOpts));
             logger.debug(" incident : ", JSON.stringify(incident));
-            logger.debug("==================================================");
             logger.debug("==================================================");
 
             if (err) {

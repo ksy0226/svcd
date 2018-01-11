@@ -45,7 +45,14 @@ module.exports = {
             logger.debug("=================================================================================================");
 
             MyProcessModel.deleteMany(condition, function( err, writeOpResult ){
-                if (err){ 
+                
+                if (err){
+
+                    logger.debug("==================================MyProcessModel.deleteMany======================================");
+                    logger.debug("err : ", err); //처리결과
+                    logger.debug("=================================================================================================");
+                    
+                    
                     res.json({
                         success: false,
                         message: err

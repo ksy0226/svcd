@@ -114,8 +114,8 @@ module.exports = {
                         }, function (err, response, gwUser) {
                             var userInfo = JSON.parse(gwUser);
                             //운영 시 9로 수정
-                            //userInfo.user_flag = '9';
-                            userInfo.user_flag = '5';
+                            userInfo.user_flag = '9';
+                            //userInfo.user_flag = '5';
                             userInfo.group_flag = 'in';
                             callback(null, userInfo);
                         });
