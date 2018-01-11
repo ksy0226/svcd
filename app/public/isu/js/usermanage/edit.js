@@ -14,8 +14,21 @@ $(document).ready(function () {
     });
 
     displaySabun($('#company_cd'));
+
+    //회사주소 체크 
+    checkCompanyAddress();
     
 });
+
+/**
+ * 회사주소 체크
+ */
+function checkCompanyAddress(){
+    if($('input[name="usermanage[dom_addr2]"]').val() =="undefined"){
+        $('input[name="usermanage[dom_addr2]"]').val(""); 
+    }
+}
+
 
 /**
  * 회사코드 선택 시 사번등록 항목 DISPLAY여부
