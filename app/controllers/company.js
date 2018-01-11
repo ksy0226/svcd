@@ -55,6 +55,9 @@ module.exports = {
                     company: company
                 });
             }
+        }).sort({
+            group_flag: -1,
+            company_nm: 1
         });
     },
 
