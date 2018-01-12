@@ -259,6 +259,7 @@ function detailShow(id) {
             initDetail();
             setDetail(dataObj);
             $('#wdetail_modal').modal('show');
+            
         }
     });
 }
