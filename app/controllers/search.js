@@ -436,18 +436,19 @@ module.exports = {
         if (req.query.page != null && req.query.page != '') page = Number(req.query.page);
         if (req.query.perPage != null && req.query.perPage != '') perPage = Number(req.query.perPage);
 
-         
-        if (search.findIncident.$and == null) {
+        if(req.query.user  != 'managerall'){
+            if (search.findIncident.$and == null) {
+                
+                search.findIncident.$and = [{
+                    "request_id": req.session.email
+                }];
             
-            search.findIncident.$and = [{
-                "request_id": req.session.email
-            }];
-         
-        } else {
-          
-            search.findIncident.$and.push({
-                "request_id": req.session.email
-            });
+            } else {
+            
+                search.findIncident.$and.push({
+                    "request_id": req.session.email
+                });
+            }
         }
         //logger.debug("===============search control================");
         //logger.debug("page : ", page);
