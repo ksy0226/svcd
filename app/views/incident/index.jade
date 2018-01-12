@@ -55,7 +55,7 @@ block content
                                     label.col-sm-2.control-label 진행구분
                                     .col-sm-2
                                         select.form-control(id='status_cd' name='status_cd')
-                                            option(value ='*')전체
+                                            option(value ='*') 전체
                                             - if (ProcessStatus.length > 0) {
                                                 - for( var i = 0 ; length = ProcessStatus.length > i ; i++ ){ //속도가 느리다고 알고 있음.
                                                     option(value ='#{ProcessStatus[i].status_cd}') #{ProcessStatus[i].status_nm}
