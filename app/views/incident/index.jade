@@ -1,5 +1,6 @@
 extends ../layouts/default
 block head
+    script(src='/vendor/jquery/jquery.min.js')
     // summernot
     link(href='/plugins/summernote/dist/summernote.css', rel='stylesheet')
     // form summernote
@@ -7,19 +8,16 @@ block head
 
     //첨부파일
     script(src='/vendor/fileupload/js/fileinput.js', type='text/javascript')
-    link(href='/vendor/fileupload/css/fileinput.css', media='all', rel='stylesheet', type='text/css')
-
+    link(type='text/css', href='/vendor/fileupload/css/fileinput.css', media='all', rel='stylesheet')
     link(href='/plugins/switchery/switchery.min.css', rel='stylesheet')
-    link(href='/assets/css/bootstrap.min.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/core.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/icons.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/components.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/pages.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/menu_light.css', rel='stylesheet', type='text/css')
-    link(href='/assets/css/responsive.css', rel='stylesheet', type='text/css')
-
+    link(type='text/css', href='/assets/css/bootstrap.min.css', rel='stylesheet')
+    link(type='text/css', href='/assets/css/core.css', rel='stylesheet')
+    link(type='text/css', href='/assets/css/icons.css', rel='stylesheet')
+    link(type='text/css', href='/assets/css/components.css', rel='stylesheet')
+    link(type='text/css', href='/assets/css/pages.css', rel='stylesheet')
+    link(type='text/css', href='/assets/css/menu_light.css', rel='stylesheet')
+    link(type='text/css', href='/assets/css/responsive.css', rel='stylesheet')
     script(src='/assets/js/modernizr.min.js')
-
     script(src='/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')
     script(src='/plugins/bootstrap-daterangepicker/daterangepicker.js')
     
@@ -27,9 +25,6 @@ block head
 
     // 더보기
     script(src='/plugins/dotdotdot/jquery.dotdotdot.min.js')
-    
-    
-
 
 
 block content
