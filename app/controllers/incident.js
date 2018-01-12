@@ -602,10 +602,12 @@ module.exports = {
                     if (incident.attach_file.length > 0) {
                         for (var i = 0; i < incident.attach_file.length; i++) {
                             var path = incident.attach_file[i].path
+                            /*
                             incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
                             if (incident.attach_file[i].mimetype != null && incident.attach_file[i].mimetype.indexOf('image') > -1) {
                                 incident.attach_file[i].mimetype = 'image';
                             }
+                            */
                         }
                     }
 

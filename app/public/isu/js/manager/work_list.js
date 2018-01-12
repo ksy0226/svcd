@@ -516,10 +516,11 @@ function setDetail(dataObj) {
          */
     if (dataObj.attach_file.length > 0) {
         $('#_attach').html('');
-
+    
         for (var cnt = 0; cnt < dataObj.attach_file.length; cnt++) {
+            alert("<a href='/search/download" + dataObj.attach_file[cnt].path + "'>");
             var fileList = "";
-            fileList += "<a href='/search/download/" + dataObj.attach_file[cnt].path + "'>";
+            fileList += "<a href='/search/download" + dataObj.attach_file[cnt].path + "'>";
             fileList += "<span class='text-pink'> " + dataObj.attach_file[cnt].originalname + "</span>";
             fileList += "<span class='text-muted.m-l-10'> " + "(" + dataObj.attach_file[cnt].size + " Byte)" + "</span>";
             //$('#_attach').addClass('i fa fa-paperclip m-r-10 m-b-10');
