@@ -9,6 +9,7 @@ const LowerProcess = require('../models/LowerProcess');
 const Usermanage = require('../models/Usermanage');
 const MyProcess = require('../models/MyProcess');
 const service = require('../services/incident');
+const moment = require('moment');
 var mailer = require('../util/nodemailer');
 var alimi = require('../util/alimi');
 var fs = require('fs');
@@ -183,7 +184,6 @@ module.exports = {
                 } else {
                     res.render("incident/index", {
                         ProcessStatus: ProcessStatus
-                        ///,moment
                     });
                 }
             });

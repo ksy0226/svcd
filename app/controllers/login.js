@@ -422,31 +422,55 @@ module.exports = {
                 var condition2 = {};
                 condition2.email = req.session.email;
 
-                MyProcess.find(condition2).distinct('higher_cd').exec(function (err, myHigherProcess) {
+                async.waterfall([function (callback) {
+                    MyProcess.find(condition2).distinct('higher_cd').exec(function (err, myHigherProcess) {
+                        
+                        logger.debug("======================================");
+                        logger.debug("condition2 : ", condition2);
+                        logger.debug("======================================");
+                        
+                        if (condition.$and == null) {
+                            condition.$and = [{
+                                "higher_cd": {
+                                    "$in": myHigherProcess
+                                }
+                            }];
+                        } else {
+                            condition.$and.push({
+                                "higher_cd": {
+                                    "$in": myHigherProcess
+                                }
+                            });
+                        }
 
-                    //logger.debug("==================================================");
-                    //logger.debug("myHigherProcess : ", JSON.stringify(myHigherProcess));
-
-                    condition.higher_cd = {
-                        "$in": myHigherProcess
-                    };
-                });
-
-                Incident.find(condition, function (err, incident) {
-                    //logger.debug("incident : ", JSON.stringify(incident));
-                    //logger.debug("==================================================");
-
-                    if (err) {
-                        return res.json({
-                            success: false,
-                            message: err
-                        });
-                    } else {
-                        res.json(incident);
-                    }
-                }).sort('-register_date')
+                        callback(null, myHigherProcess)
+                    
+                    }).sort('-register_date')
                     .limit(10);
+                }], function (err, myHigherProcess) {
 
+                        Incident.find(condition, function (err, incident) {
+
+                            logger.debug("======================================");
+                            logger.debug("condition2 : ", condition2);
+                            logger.debug("======================================");
+                            
+                            logger.debug("======================================");
+                            logger.debug("incident : ", incident);
+                            logger.debug("======================================");
+
+
+                        if (err) {
+                            return res.json({
+                                success: false,
+                                message: err
+                            });
+                        } else {
+                            res.json(incident);
+                        }
+                    }).sort('-register_date')
+                    .limit(10);
+                });
             } else if (req.session.user_flag == '3') {
 
                 Incident.find({
@@ -495,7 +519,7 @@ module.exports = {
 
             }
         } catch (e) {
-            //logger.debug('main_list controllers error ====================> ', e)
+
         }
     },
 
@@ -540,8 +564,7 @@ module.exports = {
                 }).sort('-register_date');
             }
         } catch (e) {
-            //logger.debug('main_list_nocomplete controllers error ====================> ', e)
-            //console.log('main_list_nocomplete controllers error ====================> ', e);
+
         }
     },
 
