@@ -78,6 +78,7 @@ module.exports = {
             });
         }
         //추가 끝
+        
 
         //상위업무가 존재하면
         if (higher_cd != '*') {
@@ -145,13 +146,23 @@ module.exports = {
                 //manager_dept_cd: "ISU_STISU_ST005"
             });
 
+        }else if(req.session.user_flag == "1") {
+
+            //logger.debug("================incident service=================");
+            //logger.debug("incident service user_flag == 3");
+            //logger.debug("=================================================");
+
         }
+
 
         if (AndQueries.length > 0) {
             findIncident.$and = AndQueries
         }
 
-        logger.debug('findIncident : ' + JSON.stringify(findIncident));
+        logger.debug('12345 findIncident : ' + JSON.stringify(findIncident));
+        
+        
+        
         //logger.debug('req.query.higher_cd : ' + req.query.higher_cd);
         //logger.debug('req.query.lower_cd : ' + req.query.lower_cd);
         //logger.debug('req.query.searchType : ' + req.query.searchType);
