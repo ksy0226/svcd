@@ -32,6 +32,7 @@
     "date-utils": "^1.2.21",
     "dateformat": "^3.0.2",
     "emailjs": "^1.0.8",
+    "escape-string-regexp": "^1.0.5",
     "express": "^4.15.2",
     "express-cluster": "0.0.4",
     "express-http-to-https": "^1.0.2",
