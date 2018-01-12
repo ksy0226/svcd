@@ -368,7 +368,21 @@ module.exports = {
      */
     userlist: (req, res, next) => {
         var search = service.createSearch(req);
-        search.request_id = req.session.email;
+        
+        if (search.findIncident.$and == null) {
+            search.findIncident.$and = [{
+                "request_id": req.session.email
+            }];
+        } else {
+            search.findIncident.$and = [{
+                "request_id": req.session.email
+            }];
+        }
+
+        //logger.debug("=============================================");
+        //logger.debug(" userlist >>>> search.request_id  : ",  search.request_id );
+        //logger.debug("=============================================");
+
 
         var page = 1;
         var perPage = 3;
@@ -388,7 +402,7 @@ module.exports = {
             async.waterfall([function (callback) {
                 Incident.count(search.findIncident, function (err, totalCnt) {
 
-
+                   
                     //logger.debug("search.request_id : "+search.request_id);
                     //logger.debug("search.findIncident : "+JSON.stringify(search.findIncident));
 
@@ -403,7 +417,6 @@ module.exports = {
                             message: err
                         });
                     } else {
-                        console.log("totalCnt>>>>>" + totalCnt);
                         //logger.debug("=============================================");
                         //logger.debug("incidentCnt : ", totalCnt);
                         //logger.debug("=============================================");
