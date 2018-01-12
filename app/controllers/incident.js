@@ -370,14 +370,20 @@ module.exports = {
         var search = service.createSearch(req);
         
         if (search.findIncident.$and == null) {
+            
             search.findIncident.$and = [{
                 "request_id": req.session.email
             }];
+         
         } else {
-            search.findIncident.$and = [{
+
+          
+            search.findIncident.$and.push({
                 "request_id": req.session.email
-            }];
+            });
         }
+
+
 
         //logger.debug("=============================================");
         //logger.debug(" userlist >>>> search.request_id  : ",  search.request_id );
