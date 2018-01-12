@@ -332,6 +332,8 @@ module.exports = {
                             var path = incident.attach_file[i].path
                             if(path.indexOf(CONFIG.fileUpload.directory) > -1){
                                 incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
+                            }else{
+                                incident.attach_file[i].path = incident.attach_file[i].path + "/" + incident.attach_file[i].filename;
                             }
                             if (incident.attach_file[i].mimetype != null && incident.attach_file[i].mimetype.indexOf('image') > -1) {
                                 incident.attach_file[i].mimetype = 'image';
@@ -606,6 +608,8 @@ module.exports = {
                             var path = incident.attach_file[i].path
                             if(path.indexOf(CONFIG.fileUpload.directory) > -1){
                                 incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
+                            }else{
+                                incident.attach_file[i].path = incident.attach_file[i].path + "/" + incident.attach_file[i].filename;
                             }
                             if (incident.attach_file[i].mimetype != null && incident.attach_file[i].mimetype.indexOf('image') > -1) {
                                 incident.attach_file[i].mimetype = 'image';
