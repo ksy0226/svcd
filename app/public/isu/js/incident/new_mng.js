@@ -89,9 +89,6 @@ function checkValue(){
         return false;
     }
 
-    alert($('input[name="incident[higher_nm]"]').val());
-    alert($('select[name="incident[higher_cd]"]').val());
-
     if($('select[name="incident[higher_cd]"]').val() == '*' || $('select[name="incident[higher_cd]"]').val() === null){
         alert("업무구분을 선택하세요.");
         $('#higher_cd').focus();
