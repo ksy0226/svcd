@@ -726,29 +726,34 @@ module.exports = {
     //관리자 차트
     chartLoad: (req, res, next) => {
 
-        try {
-            var today = new Date();
-            var thisYear = today.getFullYear();
-            var preYear = thisYear - 1;
-            var condition = {};
-            var OrQueries = [];
-            var AndQueries = [];
-
+        try{
             async.waterfall([function (callback) {
-                if (req.session.user_flag == 4) {
 
+                var today = new Date();
+                var thisYear = today.getFullYear();
+                var preYear = thisYear - 1;
+                var condition = {};
+                var OrQueries = [];
+                var AndQueries = [];
+
+
+                if (req.session.user_flag == 4) {
+                    
                     //나의업무지정 상위업무 처리 위한 조건
                     var condition2 = {};
                     condition2.email = req.session.email;
                     MyProcess.find(condition2).distinct('higher_cd').exec(function (err, myHigherProcess) {
 
                         if (condition.$and == null) {
+
                             condition.$and = [{
                                 "higher_cd": {
                                     "$in": myHigherProcess
                                 }
                             }];
+
                         } else {
+
                             condition.$and.push({
                                 "higher_cd": {
                                     "$in": myHigherProcess
@@ -757,24 +762,24 @@ module.exports = {
                         }
 
                         if (condition.$and == null) {
+
                             condition.$and = [{
                                 register_yyyy: {
                                     $gte: preYear.toString(),
                                     $lte: thisYear.toString()
                                 }
                             }];
+
                         } else {
+
                             condition.$and.push({
                                 register_yyyy: {
                                     $gte: preYear.toString(),
                                     $lte: thisYear.toString()
                                 }
                             });
-                        }
-                        logger.debug("======================================");
-                        logger.debug("condition : ", JSON.stringify(condition));
-                        logger.debug("======================================");
 
+                        }
                         callback(null, condition);
                     });
 
@@ -783,195 +788,175 @@ module.exports = {
                     if (req.session.user_flag == 1) {        //전체관리자
 
                     } else if (req.session.user_flag == 3) {  //업무관리자
+
                         condition.manager_dept_cd = req.session.dept_cd;
+
                     } else if (req.session.user_flag == 5) {  //고객사관리자
+
                         condition.request_company_cd = req.session.company_cd;
+
                     } else if (req.session.user_flag == 9) {  //일반사용자
+
                         condition.request_id = req.session.email;
+
                     }
 
                     if (condition.$and == null) {
+
                         condition.$and = [{
                             register_yyyy: {
                                 $gte: preYear.toString(),
                                 $lte: thisYear.toString()
                             }
                         }];
+
                     } else {
+
                         condition.$and.push({
                             register_yyyy: {
                                 $gte: preYear.toString(),
                                 $lte: thisYear.toString()
                             }
                         });
+
                     }
-                    logger.debug("======================================");
-                    logger.debug("condition2 : ", JSON.stringify(condition));
-                    logger.debug("======================================");
+                    callback(null, condition)
+                };
 
-                    callback(null, condition);
-                }
-            }, function (condition, callback) {
-                logger.debug("======================================");
-                logger.debug("condition3 : ", JSON.stringify(condition));
-                logger.debug("======================================");
-
-
-                var aggregatorOpts = [{
-                    $match: condition
-                }, {
-                    $group: { //그룹
-                        _id: {
-                            register_yyyy: "$register_yyyy",
-                            register_mm: "$register_mm"
-                        },
-                        count: {
-                            $sum: 1
-                        }
-                    }
-                }, {
-                    $sort: {
-                        register_yyyy: -1,
-                        register_mm: -1
-                    }
-                }]
-
-                logger.debug("======================================");
-                logger.debug("condition3 : ", JSON.stringify(condition));
-                logger.debug("======================================");
-
-                logger.debug("======================================");
-                logger.debug("aggregatorOpts1 : ", JSON.stringify(aggregatorOpts));
-                logger.debug("======================================");
-
-                
-                IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
-                    logger.debug("======================================");
-                    logger.debug("incident1 : ", JSON.stringify(incident));
-                    logger.debug("======================================");
-
-                    if (err) {
-
-                        return res.json({
-                            success: false,
-                            message: err
-                        });
-                    } else {
-                        callback(null, condition, incident);
-                    }
-                });
-              
-                
-            }, function (condition, incident, callback) {
-                logger.debug("======================================");
-                logger.debug("condition4 : ", JSON.stringify(condition));
-                logger.debug("======================================");
-
-                
-                if (condition.$and == null) {
-                    condition.$and = [{
-                        status_cd: {
-                            $gte: preYear.toString(),
-                            $lte: thisYear.toString()
-                        }
-                    }];
+            }], function (err, condition) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
                 } else {
-                    condition.$and.push({
-                        status_cd: {
-                            $gte: preYear.toString(),
-                            $lte: thisYear.toString()
-                        }
+                    async.waterfall([function (callback) {
+
+                        var aggregatorOpts = [{
+                            $match: condition 
+                        }, {
+                            $group: { //그룹
+                                _id: {
+                                    register_yyyy: "$register_yyyy",
+                                    register_mm: "$register_mm"
+                                },
+                                count: {
+                                    $sum: 1
+                                }
+                            }
+                        }, {
+                            $sort: {
+                                register_yyyy: -1,
+                                register_mm: -1
+                            }
+                        }]
+            
+                        IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
+                           
+                            if (err) {
+                                return res.json({
+                                    success: false,
+                                    message: err
+                                });
+                            } else {
+                                callback(null, incident)
+                            }
+                            /*
+                            if (condition.$and == null) {
+                                condition.$and = [{
+                                    status_cd: {
+                                        $gte: '3',
+                                        $lte: '4'
+                                    }
+                                }];
+                            } else {
+        
+                                condition.$and.push({
+                                    status_cd: {
+                                        $gte: '3',
+                                        $lte: '4'
+                                    }
+                                });
+                            }
+                            */
+                        });
+                    
+                    }, function (incident, callback) {
+
+                        var aggregatorOpts = [{
+                            $match:condition
+                        }, {
+                            $group: { //그룹
+                                _id: {
+                                    register_yyyy: "$register_yyyy",
+                                    register_mm: "$register_mm",
+                                },
+                                count: {
+                                    $sum: 1
+                                }
+            
+                            }
+                        }, {
+                            $sort: {
+                                register_yyyy: -1,
+                                register_mm: -1,
+                                status_cd: -1
+                            }
+                        }]
+
+                        IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident2) {
+                            if (err) {
+                                return res.json({
+                                    success: false,
+                                    message: err
+                                });
+                            } else {
+                                callback(null, incident, incident2)
+                            }
+                        });
+                    }], function (err, incident, incident2) {
+                        var aggregatorOpts = [{
+                            $match: condition
+                                /*
+                                { 
+                                register_yyyy: {
+                                    $gte: preYear.toString(),
+                                    $lte: thisYear.toString()
+                                }
+                                
+                                }*/
+                        }, {
+                            $group: { 
+                                _id: {
+                                    register_yyyy: "$register_yyyy",
+                                },
+                                count: {
+                                    $sum: 1
+                                }
+            
+                            }
+                        }, {
+                            $sort: {
+                                register_yyyy: -1,
+                            }
+                        }]
+            
+                        IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident3) {
+                            if (err) {
+                                return res.json({
+                                    success: false,
+                                    message: err
+                                });
+                            } else {
+                                res.json(mergeChart(setChartData(incident), setChartCompleteData(incident2), incident3));
+                            }
+                        });
                     });
                 }
-
-                
-                var aggregatorOpts = [{
-                    $match: condition
-                    //,status_cd: {
-                    //    $gte: '3',
-                    //    $lte: '4'
-                    //}
-                }, {
-                    $group: { //그룹
-                        _id: {
-                            register_yyyy: "$register_yyyy",
-                            register_mm: "$register_mm",
-                        },
-                        count: {
-                            $sum: 1
-                        }
-
-                    }
-                }, {
-                    $sort: {
-                        register_yyyy: -1,
-                        register_mm: -1,
-                        status_cd: -1
-                    }
-                }]
-                logger.debug("======================================");
-                logger.debug("condition4 aggregatorOpts : ", JSON.stringify(aggregatorOpts));
-                logger.debug("======================================");
-
-                
-                IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident2) {
-                    if (err) {
-                        return res.json({
-                            success: false,
-                            message: err
-                        });
-                    } else {
-                        //callback(null, condition, incident, incident2)
-                    }
-                });
-                
-                callback(null, null, null, null)
-            }], function (err, condition, incident, incident2) {
-                logger.debug("======================================");
-                logger.debug("conditionxxx : ", JSON.stringify(condition));
-                logger.debug("======================================");
-                /*
-                var aggregatorOpts = [{
-                    $match: {
-                        register_yyyy: {
-                            $gte: preYear.toString(),
-                            $lte: thisYear.toString()
-                        }
-                    }
-                }, {
-                    $group: { //그룹
-                        _id: {
-                            register_yyyy: "$register_yyyy",
-                        },
-                        count: {
-                            $sum: 1
-                        }
-
-                    }
-                }, {
-                    $sort: {
-                        register_yyyy: -1,
-                    }
-                }]
-
-                IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident3) {
-                    if (err) {
-                        return res.json({
-                            success: false,
-                            message: err
-                        });
-                    } else {
-
-                        res.json(mergeChart(setChartData(incident), setChartCompleteData(incident2), incident3));
-                    }
-                });
-                */
             });
-
-        } catch (e) {
+        }catch (e) {
 
             logger.error("======================================");
-            logger.error("cntload error : ", e);
+            logger.error("chartload error : ", e);
             logger.error("======================================");
 
         } finally { }
