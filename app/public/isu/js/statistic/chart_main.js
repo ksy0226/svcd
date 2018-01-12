@@ -32,10 +32,10 @@ function setChartLoad(dataObj) {
     //alert(JSON.stringify(dataObj[2]));
     //alert(JSON.stringify(dataObj[3]));
 
-    $('#chartPreYear').html(dataObj[3]._id.register_yyyy + '년');
-    $('#chartPreYearCnt').html(dataObj[3].count + '건');
-    $('#chartYear').html(dataObj[2]._id.register_yyyy + '년');
-    $('#chartYearCnt').html(dataObj[2].count + '건');
+    $('#chartPreYear').html(dataObj[2]._id.register_yyyy + '년');
+    $('#chartPreYearCnt').html(dataObj[2].count + '건');
+    $('#chartYear').html(dataObj[3]._id.register_yyyy + '년');
+    $('#chartYearCnt').html(dataObj[3].count + '건');
 
     var DrawSparkline = function () {
         $('#sparkline1').sparkline(dataObj[0].cnt1, {
@@ -51,18 +51,18 @@ function setChartLoad(dataObj) {
             tooltipFormat: '{{offset:offset}} {{y:value}}건',
             tooltipValueLookups: {
                 'offset': {
-                    0: dataObj[3]._id.register_yyyy + '년' + ' 1월 :',
-                    1: dataObj[3]._id.register_yyyy + '년' + ' 2월 :',
-                    2: dataObj[3]._id.register_yyyy + '년' + ' 3월 :',
-                    3: dataObj[3]._id.register_yyyy + '년' + ' 4월 :',
-                    4: dataObj[3]._id.register_yyyy + '년' + ' 5월 :',
-                    5: dataObj[3]._id.register_yyyy + '년' + ' 6월 :',
-                    6: dataObj[3]._id.register_yyyy + '년' + ' 7월 :',
-                    7: dataObj[3]._id.register_yyyy + '년' + ' 8월 :',
-                    8: dataObj[3]._id.register_yyyy + '년' + ' 9월 :',
-                    9: dataObj[3]._id.register_yyyy + '년' + ' 10월 :',
-                    10: dataObj[3]._id.register_yyyy + '년' + ' 11월 :',
-                    11: dataObj[3]._id.register_yyyy + '년' + ' 12월 :'
+                    0: dataObj[2]._id.register_yyyy + '년' + ' 1월 :',
+                    1: dataObj[2]._id.register_yyyy + '년' + ' 2월 :',
+                    2: dataObj[2]._id.register_yyyy + '년' + ' 3월 :',
+                    3: dataObj[2]._id.register_yyyy + '년' + ' 4월 :',
+                    4: dataObj[2]._id.register_yyyy + '년' + ' 5월 :',
+                    5: dataObj[2]._id.register_yyyy + '년' + ' 6월 :',
+                    6: dataObj[2]._id.register_yyyy + '년' + ' 7월 :',
+                    7: dataObj[2]._id.register_yyyy + '년' + ' 8월 :',
+                    8: dataObj[2]._id.register_yyyy + '년' + ' 9월 :',
+                    9: dataObj[2]._id.register_yyyy + '년' + ' 10월 :',
+                    10: dataObj[2]._id.register_yyyy + '년' + ' 11월 :',
+                    11: dataObj[2]._id.register_yyyy + '년' + ' 12월 :'
                 }
             },
         });
@@ -81,18 +81,18 @@ function setChartLoad(dataObj) {
             tooltipFormat: '{{offset:offset}} {{y:value}}건',
             tooltipValueLookups: {
                 'offset': {
-                    0: dataObj[2]._id.register_yyyy + '년' + ' 1월 :',
-                    1: dataObj[2]._id.register_yyyy + '년' + ' 2월 :',
-                    2: dataObj[2]._id.register_yyyy + '년' + ' 3월 :',
-                    3: dataObj[2]._id.register_yyyy + '년' + ' 4월 :',
-                    4: dataObj[2]._id.register_yyyy + '년' + ' 5월 :',
-                    5: dataObj[2]._id.register_yyyy + '년' + ' 6월 :',
-                    6: dataObj[2]._id.register_yyyy + '년' + ' 7월 :',
-                    7: dataObj[2]._id.register_yyyy + '년' + ' 8월 :',
-                    8: dataObj[2]._id.register_yyyy + '년' + ' 9월 :',
-                    9: dataObj[2]._id.register_yyyy + '년' + ' 10월 :',
-                    10: dataObj[2]._id.register_yyyy + '년' + ' 11월 :',
-                    11: dataObj[2]._id.register_yyyy + '년' + ' 12월 :'
+                    0: dataObj[3]._id.register_yyyy + '년' + ' 1월 :',
+                    1: dataObj[3]._id.register_yyyy + '년' + ' 2월 :',
+                    2: dataObj[3]._id.register_yyyy + '년' + ' 3월 :',
+                    3: dataObj[3]._id.register_yyyy + '년' + ' 4월 :',
+                    4: dataObj[3]._id.register_yyyy + '년' + ' 5월 :',
+                    5: dataObj[3]._id.register_yyyy + '년' + ' 6월 :',
+                    6: dataObj[3]._id.register_yyyy + '년' + ' 7월 :',
+                    7: dataObj[3]._id.register_yyyy + '년' + ' 8월 :',
+                    8: dataObj[3]._id.register_yyyy + '년' + ' 9월 :',
+                    9: dataObj[3]._id.register_yyyy + '년' + ' 10월 :',
+                    10: dataObj[3]._id.register_yyyy + '년' + ' 11월 :',
+                    11: dataObj[3]._id.register_yyyy + '년' + ' 12월 :'
                 }
             },
         });
