@@ -726,8 +726,9 @@ module.exports = {
     //관리자 차트
     chartLoad: (req, res, next) => {
 
-        try {
+        try{
             async.waterfall([function (callback) {
+
                 var today = new Date();
                 var thisYear = today.getFullYear();
                 var preYear = thisYear - 1;
@@ -735,8 +736,9 @@ module.exports = {
                 var OrQueries = [];
                 var AndQueries = [];
 
-                if (req.session.user_flag == 4) {
 
+                if (req.session.user_flag == 4) {
+                    
                     //나의업무지정 상위업무 처리 위한 조건
                     var condition2 = {};
                     condition2.email = req.session.email;
@@ -820,129 +822,138 @@ module.exports = {
                     }
                     callback(null, condition)
                 };
-            }, function (err, condition) {
 
-                var aggregatorOpts = [{
-                    $match: condition
-                }, {
-                    $group: { //그룹
-                        _id: {
-                            register_yyyy: "$register_yyyy",
-                            register_mm: "$register_mm"
-                        },
-                        count: {
-                            $sum: 1
-                        }
-                    }
-                }, {
-                    $sort: {
-                        register_yyyy: -1,
-                        register_mm: -1
-                    }
-                }]
+            }], function (err, condition) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                } else {
+                    async.waterfall([function (callback) {
 
-                IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
-
-                    if (err) {
-                        return res.json({
-                            success: false,
-                            message: err
-                        });
-                    } else {
-                        callback(null, condition, incident)
-                    }
-                    /*
-                    if (condition.$and == null) {
-                        condition.$and = [{
-                            status_cd: {
-                                $gte: '3',
-                                $lte: '4'
+                        var aggregatorOpts = [{
+                            $match: condition 
+                        }, {
+                            $group: { //그룹
+                                _id: {
+                                    register_yyyy: "$register_yyyy",
+                                    register_mm: "$register_mm"
+                                },
+                                count: {
+                                    $sum: 1
+                                }
                             }
-                        }];
-                    } else {
- 
-                        condition.$and.push({
-                            status_cd: {
-                                $gte: '3',
-                                $lte: '4'
+                        }, {
+                            $sort: {
+                                register_yyyy: -1,
+                                register_mm: -1
                             }
+                        }]
+            
+                        IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
+                           
+                            if (err) {
+                                return res.json({
+                                    success: false,
+                                    message: err
+                                });
+                            } else {
+                                callback(null, incident)
+                            }
+                            /*
+                            if (condition.$and == null) {
+                                condition.$and = [{
+                                    status_cd: {
+                                        $gte: '3',
+                                        $lte: '4'
+                                    }
+                                }];
+                            } else {
+        
+                                condition.$and.push({
+                                    status_cd: {
+                                        $gte: '3',
+                                        $lte: '4'
+                                    }
+                                });
+                            }
+                            */
                         });
-                    }
-                    */
-                });
-
-            }, function (condition, incident, callback) {
-
-                var aggregatorOpts = [{
-                    $match: condition
-                }, {
-                    $group: { //그룹
-                        _id: {
-                            register_yyyy: "$register_yyyy",
-                            register_mm: "$register_mm",
-                        },
-                        count: {
-                            $sum: 1
-                        }
-
-                    }
-                }, {
-                    $sort: {
-                        register_yyyy: -1,
-                        register_mm: -1,
-                        status_cd: -1
-                    }
-                }]
-
-                IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident2) {
-                    if (err) {
-                        return res.json({
-                            success: false,
-                            message: err
-                        });
-                    } else {
-                        callback(null, condition, incident, incident2)
-                    }
-                });
-            }], function (err, condition, incident, incident2) {
-                var aggregatorOpts = [{
-                    $match: condition
-                    /*
-                    { 
-                    register_yyyy: {
-                        $gte: preYear.toString(),
-                        $lte: thisYear.toString()
-                    }
                     
-                    }*/
-                }, {
-                    $group: {
-                        _id: {
-                            register_yyyy: "$register_yyyy",
-                        },
-                        count: {
-                            $sum: 1
-                        }
+                    }, function (incident, callback) {
 
-                    }
-                }, {
-                    $sort: {
-                        register_yyyy: -1,
-                    }
-                }]
+                        var aggregatorOpts = [{
+                            $match:condition
+                        }, {
+                            $group: { //그룹
+                                _id: {
+                                    register_yyyy: "$register_yyyy",
+                                    register_mm: "$register_mm",
+                                },
+                                count: {
+                                    $sum: 1
+                                }
+            
+                            }
+                        }, {
+                            $sort: {
+                                register_yyyy: -1,
+                                register_mm: -1,
+                                status_cd: -1
+                            }
+                        }]
 
-                IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident3) {
-                    if (err) {
-                        return res.json({
-                            success: false,
-                            message: err
+                        IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident2) {
+                            if (err) {
+                                return res.json({
+                                    success: false,
+                                    message: err
+                                });
+                            } else {
+                                callback(null, incident, incident2)
+                            }
                         });
-                    } else {
-                        res.json(mergeChart(setChartData(incident), setChartCompleteData(incident2), incident3));
-                    }
-                });
+                    }], function (err, incident, incident2) {
+                        var aggregatorOpts = [{
+                            $match: condition
+                                /*
+                                { 
+                                register_yyyy: {
+                                    $gte: preYear.toString(),
+                                    $lte: thisYear.toString()
+                                }
+                                
+                                }*/
+                        }, {
+                            $group: { 
+                                _id: {
+                                    register_yyyy: "$register_yyyy",
+                                },
+                                count: {
+                                    $sum: 1
+                                }
+            
+                            }
+                        }, {
+                            $sort: {
+                                register_yyyy: -1,
+                            }
+                        }]
+            
+                        IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident3) {
+                            if (err) {
+                                return res.json({
+                                    success: false,
+                                    message: err
+                                });
+                            } else {
+                                res.json(mergeChart(setChartData(incident), setChartCompleteData(incident2), incident3));
+                            }
+                        });
+                    });
+                }
             });
-        } catch (e) {
+        }catch (e) {
 
             logger.error("======================================");
             logger.error("chartload error : ", e);
