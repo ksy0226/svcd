@@ -7,6 +7,9 @@ $(document).ready(function () {
 
     //유지보수 기간 체크 
     checkDate();
+
+    //회사주소 체크
+    checkComAddress();
     
 });
 
@@ -25,10 +28,21 @@ function setGroupFlag() {
 }
 
 function checkDate(){
+    //유지보수 기간 FROM ~ TO
     if($('input[name="company[date_from]"]').val() =="undefined"){
         $('input[name="company[date_from]"]').val(""); 
     }
     if($('input[name="company[date_to]"]').val() =="undefined"){
         $('input[name="company[date_to]"]').val(""); 
+    }
+}
+
+function checkComAddress(){
+    //회사주소 1, 회사주소 2
+    if($('input[name="company[addr]"]').val() =="undefined"){
+        $('input[name="company[addr]"]').val(""); 
+    }
+    if($('input[name="company[addr2]"]').val() =="undefined"){
+        $('input[name="company[addr2]"]').val(""); 
     }
 }

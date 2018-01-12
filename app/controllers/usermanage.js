@@ -311,6 +311,9 @@ module.exports = {
                     } else {
                         callback(null, usermanage)
                     }
+                }).sort({
+                    group_flag: -1,
+                    company_nm: 1
                 });
             }], function (err, usermanage) {
                 if (err) {
