@@ -812,6 +812,9 @@ module.exports = {
                     callback(null, condition);
                 }
             }, function (condition, callback) {
+                logger.debug("======================================");
+                logger.debug("condition3 : ", JSON.stringify(condition));
+                logger.debug("======================================");
 
 
                 var aggregatorOpts = [{
@@ -841,10 +844,10 @@ module.exports = {
                 logger.debug("aggregatorOpts1 : ", JSON.stringify(aggregatorOpts));
                 logger.debug("======================================");
 
-
+                
                 IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
                     logger.debug("======================================");
-                    logger.debug("incident : ", JSON.stringify(incident));
+                    logger.debug("incident1 : ", JSON.stringify(incident));
                     logger.debug("======================================");
 
                     if (err) {
@@ -854,21 +857,40 @@ module.exports = {
                             message: err
                         });
                     } else {
-                        callback(null, condition, incident)
+                        callback(null, condition, incident);
                     }
                 });
+              
+                
             }, function (condition, incident, callback) {
                 logger.debug("======================================");
                 logger.debug("condition4 : ", JSON.stringify(condition));
                 logger.debug("======================================");
 
+                
+                if (condition.$and == null) {
+                    condition.$and = [{
+                        status_cd: {
+                            $gte: preYear.toString(),
+                            $lte: thisYear.toString()
+                        }
+                    }];
+                } else {
+                    condition.$and.push({
+                        status_cd: {
+                            $gte: preYear.toString(),
+                            $lte: thisYear.toString()
+                        }
+                    });
+                }
 
+                
                 var aggregatorOpts = [{
-                    $match: condition,
-                    status_cd: {
-                        $gte: '3',
-                        $lte: '4'
-                    }
+                    $match: condition
+                    //,status_cd: {
+                    //    $gte: '3',
+                    //    $lte: '4'
+                    //}
                 }, {
                     $group: { //그룹
                         _id: {
@@ -887,7 +909,11 @@ module.exports = {
                         status_cd: -1
                     }
                 }]
+                logger.debug("======================================");
+                logger.debug("condition4 aggregatorOpts : ", JSON.stringify(aggregatorOpts));
+                logger.debug("======================================");
 
+                
                 IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident2) {
                     if (err) {
                         return res.json({
@@ -895,10 +921,16 @@ module.exports = {
                             message: err
                         });
                     } else {
-                        callback(null, condition, incident, incident2)
+                        //callback(null, condition, incident, incident2)
                     }
                 });
+                
+                callback(null, null, null, null)
             }], function (err, condition, incident, incident2) {
+                logger.debug("======================================");
+                logger.debug("conditionxxx : ", JSON.stringify(condition));
+                logger.debug("======================================");
+                /*
                 var aggregatorOpts = [{
                     $match: {
                         register_yyyy: {
@@ -933,6 +965,7 @@ module.exports = {
                         res.json(mergeChart(setChartData(incident), setChartCompleteData(incident2), incident3));
                     }
                 });
+                */
             });
 
         } catch (e) {
