@@ -60,8 +60,8 @@ module.exports = {
                     for (var i = 0; i < targetUser.length; i++) {
 
                         //Go Live(운영 시 수정처리)
-                        //var manager = targetUser[i].manager[0].company_cd + targetUser[i].manager[0].sabun;
-                        var manager = "ISU_ST01004";
+                        var manager = targetUser[i].manager[0].company_cd + targetUser[i].manager[0].sabun;
+                        //var manager = "ISU_ST01004";
 
                         //logger.debug("=============================================");
                         //logger.debug("util/alimi/sendAlimi, manager : ", manager);
