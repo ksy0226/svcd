@@ -428,12 +428,27 @@ module.exports = {
     list: (req, res, next) => {
 
         var search = service.createSearch(req);
+
         var page = 1;
         var perPage = 15;
+        var condition = {};
 
         if (req.query.page != null && req.query.page != '') page = Number(req.query.page);
         if (req.query.perPage != null && req.query.perPage != '') perPage = Number(req.query.perPage);
 
+         
+        if (search.findIncident.$and == null) {
+            
+            search.findIncident.$and = [{
+                "request_id": req.session.email
+            }];
+         
+        } else {
+          
+            search.findIncident.$and.push({
+                "request_id": req.session.email
+            });
+        }
         //logger.debug("===============search control================");
         //logger.debug("page : ", page);
         //logger.debug("perPage : ", perPage);
@@ -447,7 +462,7 @@ module.exports = {
                     //상위업무가 전체이고, SD 담당자일때만 나의 상위 업무만 조회
                     if (req.query.higher_cd == "*" && req.session.user_flag == "4") {
 
-                        var condition = {};
+                        
                         condition.email = req.session.email;
 
                         MyProcess.find(condition).distinct('higher_cd').exec(function (err, myHigherProcess) {

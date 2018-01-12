@@ -335,6 +335,14 @@ module.exports = {
                             }else{
                                 incident.attach_file[i].path = incident.attach_file[i].path + "/" + incident.attach_file[i].filename;
                             }
+
+                            logger.debug("=============================================");
+                            logger.debug("incident.attach_file[i].path 1 : ", incident.attach_file[i].path);
+                            logger.debug("incident.attach_file[i].filename 1 : ", incident.attach_file[i].filename);
+                            logger.debug("incident.attach_file[i].originalname 1 : ", incident.attach_file[i].originalname);
+                            logger.debug("=============================================");
+
+
                             if (incident.attach_file[i].mimetype != null && incident.attach_file[i].mimetype.indexOf('image') > -1) {
                                 incident.attach_file[i].mimetype = 'image';
                             }
@@ -370,14 +378,20 @@ module.exports = {
         var search = service.createSearch(req);
         
         if (search.findIncident.$and == null) {
+            
             search.findIncident.$and = [{
                 "request_id": req.session.email
             }];
+         
         } else {
-            search.findIncident.$and = [{
+
+          
+            search.findIncident.$and.push({
                 "request_id": req.session.email
-            }];
+            });
         }
+
+
 
         //logger.debug("=============================================");
         //logger.debug(" userlist >>>> search.request_id  : ",  search.request_id );
@@ -624,6 +638,13 @@ module.exports = {
                             }else{
                                 incident.attach_file[i].path = incident.attach_file[i].path + "/" + incident.attach_file[i].filename;
                             }
+
+                            logger.debug("=============================================");
+                            logger.debug("incident.attach_file[i].path 2 : ", incident.attach_file[i].path);
+                            logger.debug("incident.attach_file[i].filename 2 : ", incident.attach_file[i].filename);
+                            logger.debug("incident.attach_file[i].originalname 2 : ", incident.attach_file[i].originalname);
+                            logger.debug("=============================================");
+
                             if (incident.attach_file[i].mimetype != null && incident.attach_file[i].mimetype.indexOf('image') > -1) {
                                 incident.attach_file[i].mimetype = 'image';
                             }
