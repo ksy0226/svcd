@@ -503,7 +503,7 @@ module.exports = {
             async.waterfall([function (callback) {
 
                 //상위업무가 전체이고, SD 담당자일때만 나의 상위 업무만 조회
-                //if (req.query.higher_cd == "*" && req.session.user_flag == "4") {
+                if (req.query.higher_cd == "*" && req.session.user_flag == "4") {
 
                     var condition = {};
                     condition.email = req.session.email;
@@ -545,9 +545,9 @@ module.exports = {
 
                         callback(null);
                     });
-                //} else {
-                //    callback(null);
-                //}
+                } else {
+                    callback(null);
+                }
 
             },
             function (callback) {
