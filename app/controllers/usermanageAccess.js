@@ -142,7 +142,7 @@ module.exports = {
                     } else {
                         callback(null, usermanageAccess)
                     }
-                });
+                }).sort('userCompany_nm').sort('employee_nm');
             }], function (err, usermanageAccess) {
                 if (err) {
                     return res.json({
