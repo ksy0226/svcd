@@ -188,7 +188,7 @@ module.exports = {
                     } else {
                         res.json(processGubun);
                     }
-                });
+                }).sort('-process_nm');
             });
         } catch (e) {
             logger.error("manager control saveReceipt : ", e);
@@ -210,7 +210,7 @@ module.exports = {
                     });
                 }
                 callback(null, processGubun)
-            });
+            }).sort('-process_nm');
         }], function (err, processGubun) {
             if (err) {
                 res.render("http/500", {
