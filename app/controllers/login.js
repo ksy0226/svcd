@@ -234,6 +234,7 @@ module.exports = {
                     //logger.debug("======================================");
 
                     var userInfo = JSON.parse(gwUser);
+                    userInfo.user_flag = '9';
                     userInfo.group_flag = 'in';
                     callback(null, userInfo)
                 });
@@ -276,8 +277,11 @@ module.exports = {
                                     message: "error : 담당자에게 문의하세요."
                                 });
                             } else {
-                                req.session.user_flag = usermanage.user_flag;
-
+                                if(usermanage == null){
+                                    userInfo.user_flag = '9';
+                                }else{
+                                    req.session.user_flag = usermanage.user_flag;
+                                }
                                 //logger.debug("======================================");
                                 //logger.debug("req.session.user_flag", req.session.user_flag);
                                 //logger.debug("req.session.group_flag", req.session.group_flag);

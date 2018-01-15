@@ -492,18 +492,18 @@ module.exports = {
         if (req.query.page != null && req.query.page != '') page = Number(req.query.page);
         if (req.query.perPage != null && req.query.perPage != '') perPage = Number(req.query.perPage);
 
-        //logger.debug("===============search control================");
-        //logger.debug("page : ", page);
-        //logger.debug("perPage : ", perPage);
+        logger.debug("===============search control================");
+        logger.debug("12121212121req.query.higher_cd : ", req.query.higher_cd);
+        logger.debug("12121212121req.query.lower_cd : ", req.query.lower_cd);
         //logger.debug("search.findIncident : ", JSON.stringify(search.findIncident));
-        //logger.debug("=============================================");
+        logger.debug("=============================================");
 
         try {
 
             async.waterfall([function (callback) {
 
                 //상위업무가 전체이고, SD 담당자일때만 나의 상위 업무만 조회
-                //if (req.query.higher_cd == "*" && req.session.user_flag == "4") {
+                if (req.session.user_flag == "4") {
 
                     var condition = {};
                     condition.email = req.session.email;
@@ -545,9 +545,9 @@ module.exports = {
 
                         callback(null);
                     });
-                //} else {
-                //    callback(null);
-                //}
+                } else {
+                    callback(null);
+                }
 
             },
             function (callback) {
