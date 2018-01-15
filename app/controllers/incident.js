@@ -493,8 +493,8 @@ module.exports = {
         if (req.query.perPage != null && req.query.perPage != '') perPage = Number(req.query.perPage);
 
         logger.debug("===============search control================");
-        logger.debug("12121212121req.query.higher_cd : ", req.query.higher_cd);
-        logger.debug("12121212121req.query.lower_cd : ", req.query.lower_cd);
+        logger.debug("req.query.higher_cd : ", req.query.higher_cd);
+        logger.debug("req.query.lower_cd : ", req.query.lower_cd);
         //logger.debug("search.findIncident : ", JSON.stringify(search.findIncident));
         logger.debug("=============================================");
 
@@ -522,6 +522,12 @@ module.exports = {
                                 }
                             }];
                             //{"$and":[{"higher_cd":{"$in":["H004","H006","H012","H024","H001"]}}]}
+                            
+                            if(req.query.status_cd != "1"){
+                                search.findIncident.$and.push({"manager_sabun":req.session.email})
+                            }
+
+
                         } else {
 
                             //logger.debug("=============================================");
@@ -533,15 +539,46 @@ module.exports = {
                                     "$in": myHigherProcess
                                 }
                             });
+                            
+                            if(req.query.status_cd != "1"){
+                                search.findIncident.$and.push({"manager_sabun":req.session.email})
+                            }
+
                             //'$and': [ { lower_cd: 'L004' } ] }
                         }
+                        
+                       
+                        
+                        /*
+                        if (search.findIncident.$or == null) {
 
-                        //logger.debug("getIncident =============================================");
+                            //logger.debug("=============================================");
+                            //logger.debug("search.findIncident.$and is null : ", myHigherProcess);
+                            //logger.debug("=============================================");
+
+                            search.findIncident.$or = [{
+                                "manager_sabun": req.session.email
+                            }];
+                            //{"$and":[{"higher_cd":{"$in":["H004","H006","H012","H024","H001"]}}]}
+                        } else {
+
+                            //logger.debug("=============================================");
+                            //logger.debug("search.findIncident.$and is not null : ", myHigherProcess);
+                            //logger.debug("=============================================");
+
+                            search.findIncident.$or.push({
+                                "manager_sabun": req.session.email
+                            });
+                            //'$and': [ { lower_cd: 'L004' } ] }
+                        }
+                        */
+
+                        logger.debug("getIncident =============================================");
                         //logger.debug("page : ", page);
                         //logger.debug("perPage : ", perPage);
                         //logger.debug("req.query.perPage : ", req.query.perPage);
-                        //logger.debug("search.findIncident : ", search.findIncident);
-                        //logger.debug("getIncident =============================================");
+                        logger.debug("search.findIncident : ", JSON.stringify(search.findIncident));
+                        logger.debug("getIncident =============================================");
 
                         callback(null);
                     });
@@ -551,6 +588,7 @@ module.exports = {
 
             },
             function (callback) {
+
                 Incident.count(search.findIncident, function (err, totalCnt) {
                     if (err) {
                         logger.error("incident : ", err);
