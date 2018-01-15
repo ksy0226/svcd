@@ -17,6 +17,10 @@ module.exports = {
         //logger.debug("=============================================");
         //logger.debug("util/alimi/sendAlimi, higher_cd : ", higher_cd);
         //logger.debug("=============================================")
+        
+        logger.error("=============================================");
+        logger.error("util/alimi/sendAlimi, higher_cd : ", higher_cd);
+        logger.error("=============================================")
 
         try{
             //>>>>> 상위업무에 매핑되는 사원찾기
@@ -45,6 +49,10 @@ module.exports = {
                 }
             }]
 
+            logger.error("=============================================");
+            logger.error("util/alimi/sendAlimi aggregate!!! aggregatorOpts  ", JSON.stringify(aggregatorOpts));
+            logger.error("=============================================");
+
             MyProcess.aggregate(aggregatorOpts).exec(function (err, targetUser) {
                 if (err) {
 
@@ -61,9 +69,9 @@ module.exports = {
 
                         for (var i = 0; i < targetUser.length; i++) {
 
-                            logger.debug("=============================================");
-                            logger.debug("util/alimi/sendAlimi aggregate!!! aggregatorOpts  ", aggregatorOpts);
-                            logger.debug("=============================================");
+                            logger.error("=============================================");
+                            logger.error("util/alimi/sendAlimi aggregate!!! aggregatorOpts  ", aggregatorOpts);
+                            logger.error("=============================================");
 
                             //Go Live(운영 시 수정처리)
                             if(targetUser[i].manager[0].company_cd != null && targetUser[i].manager[0].sabun != null){
@@ -85,9 +93,9 @@ module.exports = {
                                 });
                             }else{
 
-                                logger.debug("=============================================");
-                                logger.debug("util/alimi/sendAlimi aggregate!!! targetUser[i]  ", JSON.stringify(targetUser[i]));
-                                logger.debug("=============================================");
+                                logger.error("=============================================");
+                                logger.error("util/alimi/sendAlimi aggregate!!! targetUser[i]  ", JSON.stringify(targetUser[i]));
+                                logger.error("=============================================");
 
                             }
                         }
@@ -103,7 +111,9 @@ module.exports = {
             logger.error("util/alimi/sendAlimi error : ", e);
             logger.error("=============================================")
 
-        }finally{}
+        }finally{
+
+        }
     
     },
 
