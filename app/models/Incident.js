@@ -33,7 +33,6 @@ var IncidentSchema = new Schema({
     receipt_content         : {type : String},  //접수내용                                                                         
     manager_company_cd      : {type : String},  //담당자 회사코드
     manager_company_nm      : {type : String},  //담당자 회사명
-    manager_sabun           : {type : String},  //담당자 사번
     manager_nm              : {type : String, default:'담당미지정'},  //담당자 명
     manager_dept_cd         : {type : String},  //담당자 부코드
     manager_dept_nm         : {type : String, default : ''},  //담당자 부서명
