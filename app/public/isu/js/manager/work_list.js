@@ -224,25 +224,34 @@ function setDataList(dataObj, selectedPage, totalDataCnt) {
         loopCnt = totalDataCnt;
     }
     
-    for(var i = 0 ; i < loopCnt ; i++){ 
+    if(loopCnt > 0){
+
+        for(var i = 0 ; i < loopCnt ; i++){ 
+            var addList = "";
+            addList += "							<tr onclick=detailShow('" + dataObj[i]._id + "')>";
+            addList += "								<td class='text-center'>" + dataObj[i].process_speed + "</td>";
+            addList += "								<td class='text-center'>" + dataObj[i].status_cd + "</td>";
+            addList += "								<td>" + dataObj[i].title + "</td>";
+            addList += "								<td>" + dataObj[i].request_company_nm + "/" + dataObj[i].request_nm + "</td>";
+            addList += "								<td class='text-center'>" + dataObj[i].register_date + "</td>";
+            if(dataObj[i].receipt_date ==null){
+                addList += "								<td class='text-center'></td>";
+            }else{
+                addList += "								<td class='text-center'>" + dataObj[i].receipt_date + "</td>";
+                
+            }
+            addList += "							</tr>";
+
+            $("#more_list").append(addList);
+        } 
+    }else{
         var addList = "";
-        addList += "							<tr onclick=detailShow('" + dataObj[i]._id + "')>";
-        addList += "								<td class='text-center'>" + dataObj[i].process_speed + "</td>";
-        addList += "								<td class='text-center'>" + dataObj[i].status_cd + "</td>";
-        addList += "								<td>" + dataObj[i].title + "</td>";
-        addList += "								<td>" + dataObj[i].request_company_nm + "/" + dataObj[i].request_nm + "</td>";
-        addList += "								<td class='text-center'>" + dataObj[i].register_date + "</td>";
-        if(dataObj[i].receipt_date ==null){
-            addList += "								<td class='text-center'></td>";
-        }else{
-            addList += "								<td class='text-center'>" + dataObj[i].receipt_date + "</td>";
-            
-        }
-        addList += "							</tr>";
+        addList += "<tr>";
+        addList += "    <td colspan='6' class='text-center'>조회된 데이타가 없습니다.</td>";
+        addList += "</tr>";
 
         $("#more_list").append(addList);
-    } 
- 
+    }
     $('#more_list > tr').each(function () {
 
         /**
