@@ -61,23 +61,35 @@ module.exports = {
 
                         for (var i = 0; i < targetUser.length; i++) {
 
+                            logger.debug("=============================================");
+                            logger.debug("util/alimi/sendAlimi aggregate!!! aggregatorOpts  ", aggregatorOpts);
+                            logger.debug("=============================================");
+
                             //Go Live(운영 시 수정처리)
-                            var manager = targetUser[i].manager[0].company_cd + targetUser[i].manager[0].sabun;
-                            //var manager = "ISU_ST01004";
+                            if(targetUser[i].manager[0].company_cd != null && targetUser[i].manager[0].sabun != null){
+                                var manager = targetUser[i].manager[0].company_cd + targetUser[i].manager[0].sabun;
+                                //var manager = "ISU_ST01004";
 
-                            //logger.debug("=============================================");
-                            //logger.debug("util/alimi/sendAlimi, manager : ", manager);
-                            //logger.debug("=============================================")
+                                //logger.debug("=============================================");
+                                //logger.debug("util/alimi/sendAlimi, manager : ", manager);
+                                //logger.debug("=============================================")
 
-                            request({
-                                uri: alimi + "/alimi/call_alimi.jsp?msgtype=CSD&users_id=" + manager + "&title=1&link_url=" + gw + "/CoviWeb/Main.aspx?type=helpdesK" + manager,
-                                headers: {
-                                    'Content-type': 'application/html'
-                                },
-                                method: "GET",
-                            }, function (err, response, body) {
-                                //todo
-                            });
+                                request({
+                                    uri: alimi + "/alimi/call_alimi.jsp?msgtype=CSD&users_id=" + manager + "&title=1&link_url=" + gw + "/CoviWeb/Main.aspx?type=helpdesK" + manager,
+                                    headers: {
+                                        'Content-type': 'application/html'
+                                    },
+                                    method: "GET",
+                                }, function (err, response, body) {
+                                    //todo
+                                });
+                            }else{
+
+                                logger.debug("=============================================");
+                                logger.debug("util/alimi/sendAlimi aggregate!!! targetUser[i]  ", JSON.stringify(targetUser[i]));
+                                logger.debug("=============================================");
+
+                            }
                         }
                     }
 
