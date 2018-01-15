@@ -459,9 +459,12 @@ module.exports = {
             //logger.debug('Login controller New debug >>> ', req.body.usermanage);
             var usermanage = req.body.usermanage;
 
-            logger.debug("===============================")
-            logger.debug("req.body.usermanage : ", JSON.stringify(req.body.usermanage) );
-            logger.debug("===============================")
+            //미승인 세팅
+            usermanage.access_yn = 'N';
+
+            //logger.debug("===============================")
+            //logger.debug("req.body.usermanage : ", JSON.stringify(req.body.usermanage) );
+            //logger.debug("===============================")
 
             Usermanage.create(req.body.usermanage, function (err, usermanage) {
                 if (err) {
