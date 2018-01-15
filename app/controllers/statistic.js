@@ -613,7 +613,7 @@ module.exports = {
 
                 IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
 
-                    //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
+                    //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_email : "14002"}, function (err, incident) {
 
                     //logger.debug("==================================================");
                     //logger.debug(" aggregatorOpts : ", JSON.stringify(aggregatorOpts));
@@ -659,7 +659,7 @@ module.exports = {
         var aggregatorOpts = [{
             $match: { //조건
                 //manager_company_cd : req.session.company_cd  //각 사별 관리담당자는?
-                //,manager_sabun : req.session.sabun
+                //,manager_email : req.session.sabun
                 //,manager_email : req.session.email      //req.session.sabun 넣을 예정 ??
                 //,
                 //manager_dept_cd: req.session.dept_cd,
@@ -710,7 +710,7 @@ module.exports = {
         ]
         //console.log("deptcntload aggregatorOpts >> "+JSON.stringify(aggregatorOpts));         
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
-            //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
+            //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_email : "14002"}, function (err, incident) {
             //console.log("dept incident"+JSON.stringify(incident));    
             if (err) {
                 return res.json({
@@ -1280,7 +1280,7 @@ module.exports = {
         var aggregatorOpts = [{
             $match: { //조건
                 //manager_company_cd : "ISU_ST"  //각 사별 관리담당자는?
-                //,manager_sabun : "12001"     //req.session.sabun 넣을 예정
+                //,manager_email : "12001"     //req.session.sabun 넣을 예정
                 manager_dept_cd: req.session.dept_cd,
                 status_cd: "4",
                 register_yyyy: thisYear.toString()
@@ -1307,7 +1307,7 @@ module.exports = {
 
         //console.log("deptmonthlyload aggregatorOpts >> "+JSON.stringify(aggregatorOpts)+thisYear); 
         IncidentModel.aggregate(aggregatorOpts).exec(function (err, incident) {
-            //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_sabun : "14002"}, function (err, incident) {
+            //IncidentModel.count({status_cd: '4', manager_company_cd : "ISU_ST", manager_email : "14002"}, function (err, incident) {
             //console.log("deptmonthlyload incident >> "+JSON.stringify(incident));    
             if (err) {
                 return res.json({

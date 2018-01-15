@@ -524,7 +524,7 @@ module.exports = {
                             //{"$and":[{"higher_cd":{"$in":["H004","H006","H012","H024","H001"]}}]}
                             
                             if(req.query.status_cd != "1"){
-                                search.findIncident.$and.push({"manager_sabun":req.session.email})
+                                search.findIncident.$and.push({"manager_email":req.session.email})
                             }
 
 
@@ -541,7 +541,7 @@ module.exports = {
                             });
                             
                             if(req.query.status_cd != "1"){
-                                search.findIncident.$and.push({"manager_sabun":req.session.email})
+                                search.findIncident.$and.push({"manager_email":req.session.email})
                             }
 
                             //'$and': [ { lower_cd: 'L004' } ] }
@@ -557,7 +557,7 @@ module.exports = {
                             //logger.debug("=============================================");
 
                             search.findIncident.$or = [{
-                                "manager_sabun": req.session.email
+                                "manager_email": req.session.email
                             }];
                             //{"$and":[{"higher_cd":{"$in":["H004","H006","H012","H024","H001"]}}]}
                         } else {
@@ -567,7 +567,7 @@ module.exports = {
                             //logger.debug("=============================================");
 
                             search.findIncident.$or.push({
-                                "manager_sabun": req.session.email
+                                "manager_email": req.session.email
                             });
                             //'$and': [ { lower_cd: 'L004' } ] }
                         }

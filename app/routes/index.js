@@ -21,6 +21,11 @@ router.route('/login/main_list_nocomplete').get(ssc.sessionCheck, controller.mai
 /**
  * 그룹시스템 인터페이스 용
  */
+
 router.route('/login').get(controller.login);
+/**
+ * stlc 로그인 용
+ */
+router.route('/loginstlc').get(controller.loginstlc);
 
 module.exports = router;
