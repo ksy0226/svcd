@@ -716,8 +716,10 @@ module.exports = {
                                         message: err
                                     });
                                 } else {
-                                    if (usermanage.email_send_yn == 'Y') {
-                                        mailer.evaluationSend(Incident, upIncident);
+                                    if(usermanage != null){
+                                        if (usermanage.email_send_yn == 'Y') {
+                                            mailer.evaluationSend(Incident, upIncident);
+                                        }
                                     }
                                 }
                             });
