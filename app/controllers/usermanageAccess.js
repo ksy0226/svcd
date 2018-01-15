@@ -28,7 +28,11 @@ module.exports = {
                     });
                 }
                 callback(null, usermanageAccess, company)
-            });
+            }).sort({
+                group_flag: -1,
+                company_nm: 1
+            })
+            ;
         }], function (err, usermanageAccess, company) {
             if (err) {
                 res.render("http/500", {
@@ -66,6 +70,9 @@ module.exports = {
                     });
                 }
                 callback(null, company)
+            }).sort({
+                group_flag: -1,
+                company_nm: 1
             });
         }], function (err, company) {
             Usermanage.findById(req.params.id, function (err, usermanageAccess) {

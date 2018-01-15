@@ -5,7 +5,7 @@ var moment = require('moment');
 
 var usermanageSchema = mongoose.Schema({
     userCompany_nm   : { type : String , default : ''},
-    company_cd       : { type : String },
+    company_cd       : { type : String , default : ''},
     company_nm       : { type : String , default : '미승인'},
     email            : { type : String , required: true, unique:true },
     user_id          : { type : String },
