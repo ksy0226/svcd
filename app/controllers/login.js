@@ -344,15 +344,18 @@ module.exports = {
                         });
                     }
 
-                    //logger.debug("=================================================================");
-                    //logger.debug("req.query.email : ", req.query.email);
-                    //logger.debug("=================================================================");
+                    logger.debug("=================================================================");
+                    logger.debug("req.query.email : ", req.query.email);
+                    logger.debug("req.query.key : ", req.query.key);
+                    logger.debug("=================================================================");
+
+
 
                     if (usermanage != null) {
 
-                        //logger.debug("=================================================================");
-                        //logger.debug("usermanage is not null : ", usermanage);
-                        //logger.debug("=================================================================");
+                        logger.debug("=================================================================");
+                        logger.debug("usermanage is not null : ", usermanage);
+                        logger.debug("=================================================================");
 
                         if (req.query.key == "$2a$10$0bnBGRBBgiLTMPc8M8LZIuNjErIdMLGOI6SPjLxlIVIhi81HOA0U6") { //키값이 일치하면 - 고객사
 
