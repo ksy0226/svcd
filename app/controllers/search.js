@@ -255,7 +255,7 @@ module.exports = {
                 condition.company_cd = req.session.company_cd; //고객사관리자는 해당회사만 조회
 
                 /** MyProcess, HigherProcessModel 모델구분 */
-                HigherProcessModel.find(condition, function (err, higherprocess) {
+                CompanyProcessModel.find(condition, function (err, higherprocess) {
                     if (err) {
 
                         logger.error("=============================================");
