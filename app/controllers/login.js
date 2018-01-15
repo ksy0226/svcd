@@ -321,6 +321,96 @@ module.exports = {
         }
     },
 
+    /**
+     * stlc 링크 시
+     */
+    loginstlc: (req, res) => {
+        
+        try {
+            
+
+            /**
+             * 로그인 정보 매핑
+             * usermanage 테이블에서 사용자 1차 검색 (비밀번호 틀릴 시 그룹웨어 검색)
+             * usermanage 테이블에 존재않을 시 그룹웨어 검색  
+             */
+                Usermanage.findOne({
+                    email: req.body.email
+                }).exec(function (err, usermanage) {
+                    if (err) {
+                        res.render('index', {
+                            email: email,
+                            remember_me: remember_me,
+                            message: "error : 담당자에게 문의하세요."
+                        });
+                    }
+
+                    if (usermanage != null) {
+
+                        //logger.debug("=================================================================");
+                        //logger.debug("usermanage is not null : ", usermanage);
+                        //logger.debug("usermanage.authenticate(req.body.password) : ", usermanage.authenticate(req.body.password));
+                        //logger.debug("=================================================================");
+
+                        if (req.body.key == "$2a$10$0bnBGRBBgiLTMPc8M8LZIuNjErIdMLGOI6SPjLxlIVIhi81HOA0U6") { //키값이 일치하면 - 고객사
+
+                            req.session.email = usermanage.email;
+                            req.session.user_id = usermanage.user_id;
+                            req.session.sabun = usermanage.sabun;
+                            req.session.password = usermanage.password;
+                            req.session.user_flag = usermanage.user_flag;
+                            req.session.group_flag = usermanage.group_flag;
+                            req.session.user_nm = usermanage.employee_nm;
+                            req.session.company_cd = usermanage.company_cd;
+                            req.session.company_nm = usermanage.company_nm;
+                            req.session.dept_cd = usermanage.dept_cd;
+                            req.session.dept_nm = usermanage.dept_nm;
+                            req.session.position_nm = usermanage.position_nm;
+                            req.session.jikchk_nm = usermanage.jikchk_nm;
+                            req.session.office_tel_no = usermanage.office_tel_no;
+                            req.session.hp_telno = usermanage.hp_telno;
+
+                            //>>>>>==================================================
+                            //권한에 따른 분기
+                            if (req.session.user_flag == '1') {
+                                res.render("main/admin");
+                            } else if (req.session.user_flag == '3') {
+                                res.render("main/admin3");
+                            } else if (req.session.user_flag == '4') {
+                                res.render("main/admin4");
+                            } else if (req.session.user_flag == '5') {
+                                res.render("main/admin5");
+                            } else {
+                                res.render("main/user");
+                            }
+                            //<<<<<==================================================
+                           
+                        } else { //key 일치하지 않으면 
+                            res.render('index', {
+                                email: email,
+                                remember_me: remember_me,
+                                message: "등록된 계정이 없습니다.<br>다시 시도해주세요."
+                            });
+                        }
+                    } else { //usermanage테이블에 계정이 존재하지 않으면 그룹사 일반계정
+
+                        //logger.debug("=================================================================");
+                        //logger.debug("usermanage is null : ", usermanage, req.body.email);
+                        //logger.debug("=================================================================");
+
+                        res.render('index', {
+                            email: email,
+                            remember_me: remember_me,
+                            message: "등록된 계정이 없습니다.<br>다시 시도해주세요."
+                        });
+                    }
+                });       
+         
+        } catch (e) {
+            //logger.debug(e);
+        }
+    },
+
 
     logout: (req, res) => {
 
@@ -366,6 +456,11 @@ module.exports = {
         try {
             //logger.debug('Login controller New debug >>> ', req.body.usermanage);
             var usermanage = req.body.usermanage;
+
+            logger.debug("===============================")
+            logger.debug("req.body.usermanage : ", JSON.stringify(req.body.usermanage) );
+            logger.debug("===============================")
+
             Usermanage.create(req.body.usermanage, function (err, usermanage) {
                 if (err) {
                     res.render("http/500", {
