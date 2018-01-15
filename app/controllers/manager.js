@@ -264,8 +264,10 @@ module.exports = {
                                         message: err
                                     });
                                 } else {
-                                    if (usermanage.email_send_yn == 'Y') {
-                                        mailer.receiveSend(Incident, upIncident);
+                                    if(usermanage != null){
+                                        if (usermanage.email_send_yn == 'Y') {
+                                            mailer.receiveSend(Incident, upIncident);
+                                        }
                                     }
                                 }
                             });
@@ -398,8 +400,10 @@ module.exports = {
                                         message: err
                                     });
                                 } else {
-                                    if (usermanage.email_send_yn == 'Y') {
-                                        mailer.finishSend(Incident, upIncident);
+                                    if(usermanage != null){
+                                        if (usermanage.email_send_yn == 'Y') {
+                                            mailer.finishSend(Incident, upIncident);
+                                        }
                                     }
                                 }
                             });
