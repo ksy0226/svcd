@@ -336,11 +336,11 @@ module.exports = {
                                 incident.attach_file[i].path = incident.attach_file[i].path + "/" + incident.attach_file[i].filename;
                             }
 
-                            logger.debug("=============================================");
-                            logger.debug("incident.attach_file[i].path 1 : ", incident.attach_file[i].path);
-                            logger.debug("incident.attach_file[i].filename 1 : ", incident.attach_file[i].filename);
-                            logger.debug("incident.attach_file[i].originalname 1 : ", incident.attach_file[i].originalname);
-                            logger.debug("=============================================");
+                            //logger.debug("=============================================");
+                            //logger.debug("incident.attach_file[i].path 1 : ", incident.attach_file[i].path);
+                            //logger.debug("incident.attach_file[i].filename 1 : ", incident.attach_file[i].filename);
+                            //logger.debug("incident.attach_file[i].originalname 1 : ", incident.attach_file[i].originalname);
+                            //logger.debug("=============================================");
 
 
                             if (incident.attach_file[i].mimetype != null && incident.attach_file[i].mimetype.indexOf('image') > -1) {
@@ -492,11 +492,11 @@ module.exports = {
         if (req.query.page != null && req.query.page != '') page = Number(req.query.page);
         if (req.query.perPage != null && req.query.perPage != '') perPage = Number(req.query.perPage);
 
-        logger.debug("===============search control================");
-        logger.debug("req.query.higher_cd : ", req.query.higher_cd);
-        logger.debug("req.query.lower_cd : ", req.query.lower_cd);
+        //logger.debug("===============search control================");
+        //logger.debug("req.query.higher_cd : ", req.query.higher_cd);
+        //logger.debug("req.query.lower_cd : ", req.query.lower_cd);
         //logger.debug("search.findIncident : ", JSON.stringify(search.findIncident));
-        logger.debug("=============================================");
+        //logger.debug("=============================================");
 
         try {
 
@@ -573,12 +573,12 @@ module.exports = {
                         }
                         */
 
-                        logger.debug("getIncident =============================================");
+                        //logger.debug("getIncident =============================================");
                         //logger.debug("page : ", page);
                         //logger.debug("perPage : ", perPage);
                         //logger.debug("req.query.perPage : ", req.query.perPage);
-                        logger.debug("search.findIncident : ", JSON.stringify(search.findIncident));
-                        logger.debug("getIncident =============================================");
+                        //logger.debug("search.findIncident : ", JSON.stringify(search.findIncident));
+                        //logger.debug("getIncident =============================================");
 
                         callback(null);
                     });
@@ -677,11 +677,11 @@ module.exports = {
                                 incident.attach_file[i].path = incident.attach_file[i].path + "/" + incident.attach_file[i].filename;
                             }
 
-                            logger.debug("=============================================");
-                            logger.debug("incident.attach_file[i].path 2 : ", incident.attach_file[i].path);
-                            logger.debug("incident.attach_file[i].filename 2 : ", incident.attach_file[i].filename);
-                            logger.debug("incident.attach_file[i].originalname 2 : ", incident.attach_file[i].originalname);
-                            logger.debug("=============================================");
+                            //logger.debug("=============================================");
+                            //logger.debug("incident.attach_file[i].path 2 : ", incident.attach_file[i].path);
+                            //logger.debug("incident.attach_file[i].filename 2 : ", incident.attach_file[i].filename);
+                            //logger.debug("incident.attach_file[i].originalname 2 : ", incident.attach_file[i].originalname);
+                            //logger.debug("=============================================");
 
                             if (incident.attach_file[i].mimetype != null && incident.attach_file[i].mimetype.indexOf('image') > -1) {
                                 incident.attach_file[i].mimetype = 'image';

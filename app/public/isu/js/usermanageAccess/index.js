@@ -100,7 +100,7 @@ function setDataList(dataObj, selectedPage) {
         for (var i = startIdx; i < endIdx + 1; i++) {
             var addList = "";
             addList += "							<tr onclick=location='/usermanageAccess/edit/" + dataObj[i - 1]._id + "'>";
-            addList += "								<td>" + dataObj[i - 1].company_nm + "</td>";
+            addList += "								<td>" + dataObj[i - 1].userCompany_nm + "</td>";
             addList += "								<td>" + dataObj[i - 1].email + "</td>";
             addList += "								<td class='text-center'>" + dataObj[i - 1].employee_nm + "</td>";
             addList += "								<td>" + dataObj[i - 1].dept_nm + "</td>";
