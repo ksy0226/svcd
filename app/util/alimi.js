@@ -57,25 +57,28 @@ module.exports = {
                     var gw = CONFIG.groupware.uri;
                     var alimi = CONFIG.msgAlimi.uri
 
-                    for (var i = 0; i < targetUser.length; i++) {
+                    if(targetUser != null){
 
-                        //Go Live(운영 시 수정처리)
-                        var manager = targetUser[i].manager[0].company_cd + targetUser[i].manager[0].sabun;
-                        //var manager = "ISU_ST01004";
+                        for (var i = 0; i < targetUser.length; i++) {
 
-                        //logger.debug("=============================================");
-                        //logger.debug("util/alimi/sendAlimi, manager : ", manager);
-                        //logger.debug("=============================================")
+                            //Go Live(운영 시 수정처리)
+                            var manager = targetUser[i].manager[0].company_cd + targetUser[i].manager[0].sabun;
+                            //var manager = "ISU_ST01004";
 
-                        request({
-                            uri: alimi + "/alimi/call_alimi.jsp?msgtype=CSD&users_id=" + manager + "&title=1&link_url=" + gw + "/CoviWeb/Main.aspx?type=helpdesK" + manager,
-                            headers: {
-                                'Content-type': 'application/html'
-                            },
-                            method: "GET",
-                        }, function (err, response, body) {
-                            //todo
-                        });
+                            //logger.debug("=============================================");
+                            //logger.debug("util/alimi/sendAlimi, manager : ", manager);
+                            //logger.debug("=============================================")
+
+                            request({
+                                uri: alimi + "/alimi/call_alimi.jsp?msgtype=CSD&users_id=" + manager + "&title=1&link_url=" + gw + "/CoviWeb/Main.aspx?type=helpdesK" + manager,
+                                headers: {
+                                    'Content-type': 'application/html'
+                                },
+                                method: "GET",
+                            }, function (err, response, body) {
+                                //todo
+                            });
+                        }
                     }
 
 
