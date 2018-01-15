@@ -465,10 +465,19 @@ module.exports = {
 
             Usermanage.create(req.body.usermanage, function (err, usermanage) {
                 if (err) {
+                    logger.debug("===============================")
+                    logger.debug("err : ", err );
+                    logger.debug("===============================")
+        
                     res.render("http/500", {
                         err: err
                     });
                 } else {
+                    logger.debug("===============================")
+                    logger.debug("usermanage : ", usermanage );
+                    logger.debug("JSON.stringify(req.body.usermanage) : ", JSON.stringify(req.body.usermanage) );
+                    logger.debug("===============================")
+                    
                     res.send(usermanage);
                 }
             });

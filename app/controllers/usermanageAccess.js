@@ -11,6 +11,11 @@ const Iconv = require('iconv-lite');
 module.exports = {
 
     index: (req, res, next) => {
+
+        logger.debug("===============================")
+        logger.debug("==============index============");
+        logger.debug("===============================")
+
         async.waterfall([function (callback) {
             Usermanage.find({}, function (err, usermanageAccess) {
                 if (err) {
@@ -39,6 +44,12 @@ module.exports = {
                     err: err
                 });
             } else {
+                logger.debug("===============================")
+                logger.debug("usermanageAccess : ", usermanageAccess);
+                logger.debug("company : ", company);
+                logger.debug("===============================")
+
+
                 res.render("usermanageAccess/index", {
                     company: company,
                     usermanageAccess: usermanageAccess

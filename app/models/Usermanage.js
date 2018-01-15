@@ -57,7 +57,10 @@ usermanageSchema.pre("findOneAndUpdate", function hashPassword(next){
 usermanageSchema.methods.authenticate = function (password) {
     var user = this;
     try{
-        return bcrypt.compareSync(password,user.password);
+        
+        return bcrypt.compareSync(password, user.password);
+
+
     }catch(e){
         logger.debug(e);
         return false;
