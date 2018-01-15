@@ -206,11 +206,11 @@ module.exports = {
     login: (req, res) => {
         try {
 
-            //logger.debug("======================================");
-            //logger.debug("login req.query.email", req.query.email);
-            //logger.debug("login req.query.password", req.query.password);
-            //logger.debug("url : ", CONFIG.groupware.uri + "/CoviWeb/api/UserInfo.aspx?email=" + req.query.email + "&password=" + encodeURIComponent(req.query.password));
-            //logger.debug("======================================");
+            logger.debug("======================================");
+            logger.debug("login req.query.email", req.query.email);
+            logger.debug("login req.query.password", req.query.password);
+            logger.debug("url : ", CONFIG.groupware.uri + "/CoviWeb/api/UserInfo.aspx?email=" + req.query.email + "&password=" + encodeURIComponent(req.query.password));
+            logger.debug("======================================");
 
             /**
              * 로그인 정보 매핑
@@ -455,9 +455,9 @@ module.exports = {
                             logger.debug("condition2 : ", condition2);
                             logger.debug("======================================");
                             
-                            logger.debug("======================================");
-                            logger.debug("incident : ", incident);
-                            logger.debug("======================================");
+                            //logger.debug("======================================");
+                            //logger.debug("incident : ", incident);
+                            //logger.debug("======================================");
 
 
                         if (err) {
