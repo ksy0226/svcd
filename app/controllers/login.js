@@ -328,14 +328,13 @@ module.exports = {
         
         try {
             
-
             /**
              * 로그인 정보 매핑
              * usermanage 테이블에서 사용자 1차 검색 (비밀번호 틀릴 시 그룹웨어 검색)
              * usermanage 테이블에 존재않을 시 그룹웨어 검색  
              */
                 Usermanage.findOne({
-                    email: req.body.email
+                    email: req.query.email
                 }).exec(function (err, usermanage) {
                     if (err) {
                         res.render('index', {
@@ -345,14 +344,17 @@ module.exports = {
                         });
                     }
 
+                    //logger.debug("=================================================================");
+                    //logger.debug("req.query.email : ", req.query.email);
+                    //logger.debug("=================================================================");
+
                     if (usermanage != null) {
 
                         //logger.debug("=================================================================");
                         //logger.debug("usermanage is not null : ", usermanage);
-                        //logger.debug("usermanage.authenticate(req.body.password) : ", usermanage.authenticate(req.body.password));
                         //logger.debug("=================================================================");
 
-                        if (req.body.key == "$2a$10$0bnBGRBBgiLTMPc8M8LZIuNjErIdMLGOI6SPjLxlIVIhi81HOA0U6") { //키값이 일치하면 - 고객사
+                        if (req.query.key == "$2a$10$0bnBGRBBgiLTMPc8M8LZIuNjErIdMLGOI6SPjLxlIVIhi81HOA0U6") { //키값이 일치하면 - 고객사
 
                             req.session.email = usermanage.email;
                             req.session.user_id = usermanage.user_id;
