@@ -116,7 +116,7 @@ function setCreateAt(next){
 }
 
 autoIncrement.initialize(mongoose.connection);
-IncidentSchema.plugin( autoIncrement.plugin , { model : "incident", field : "register_num" , startAt : 1 } );
+IncidentSchema.plugin( autoIncrement.plugin , { model : "incident", field : "register_num" , startAt : 51100 } );
 module.exports = mongoose.model('incident' , IncidentSchema);
 
 
