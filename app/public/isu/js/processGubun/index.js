@@ -115,9 +115,9 @@ function setDataList(dataObj, selectedPage) {
         //상위업무 제외
         //addList += "								<td>" + dataObj[i-1].higher_nm + "</td>";
         addList += "								<td>" + dataObj[i-1].process_nm + "</td>";
+        addList += "								<td>" + dataObj[i-1].question_type + "</td>";
         addList += "								<td>" + dataObj[i-1].description + "</td>";
         addList += "								<td>" + dataObj[i-1].user_nm + "</td>";
-        addList += "								<td class='text-center'>" + dataObj[i-1].register_date + "</td>";
         addList += "								<td class='text-center'>" + dataObj[i-1].use_yn + "</td>";
         addList += "							</tr>";
 

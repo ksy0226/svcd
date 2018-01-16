@@ -86,20 +86,57 @@ module.exports = {
      */
     edit: (req, res, next) => {
         try {
-            ProcessGubunModel.findById(req.params.id, function (err, processGubun) {
-                if (err) return res.json({
-                    success: false,
-                    message: err
+            
+            
+            async.waterfall([function (callback) {
+            
+                HigherProcessModel.find({}, function (err, higher) {
+                    if (err) {
+                        res.render("http/500", {
+                            err: err
+                        });
+                    }
+                    callback(null, higher)
                 });
-                //if (!req.user._id.equals(question.author)) return res.json({
-                //    success: false,
-                //    message: "Unauthrized Attempt"
-                //});
-                res.render("processGubun/edit", {
-                    processGubun: processGubun
-                    //,user: req.user
-                });
+            
+            }], function (err, higher) {
+                if (err) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                } else {
+                    
+                    ProcessGubunModel.findById(req.params.id, function (err, processGubun) {
+                        if (err) return res.json({
+                            success: false,
+                            message: err
+                        });
+                        //if (!req.user._id.equals(question.author)) return res.json({
+                        //    success: false,
+                        //    message: "Unauthrized Attempt"
+                        //});
+
+                        //logger.debug("================================");
+                        //logger.debug("processGubun : ", JSON.stringify(processGubun));
+                        //logger.debug("================================");
+
+                        res.render("processGubun/edit", {
+                            higher : higher,
+                            processGubun: processGubun
+                            //,user: req.user
+                        });
+                    });
+
+
+                }
             });
+            
+            
+            
+            
+
+
+
         } catch (e) {
             logger.error(e);
             res.render("http/500", {
@@ -169,7 +206,7 @@ module.exports = {
         try {
             async.waterfall([function (callback) {
                 //상위코드용 업무처리 개수 조회
-                ProcessGubunModel.count({ "higher_cd": req.params.higher_cd }, function (err, count) {
+                ProcessGubunModel.count({ "higher_cd": req.params.higher_cd, "use_yn":"사용" }, function (err, count) {
                     if (err) return res.json({
                         success: false,
                         message: err
@@ -179,7 +216,7 @@ module.exports = {
             }], function (err, count) {
                 var higher_cd = req.params.higher_cd;
                 if (count == 0) higher_cd = '000'; //상위코드용 업무처리가 없으면 공통으로 조회
-                ProcessGubunModel.find({ "higher_cd": higher_cd }, function (err, processGubun) {
+                ProcessGubunModel.find({ "higher_cd": higher_cd, "use_yn":"사용" }, function (err, processGubun) {
                     if (err) {
                         return res.json({
                             success: false,

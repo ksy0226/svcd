@@ -282,13 +282,14 @@ module.exports = {
                                 } else {
                                     req.session.user_flag = usermanage.user_flag;
                                 }
-                                //logger.debug("======================================");
-                                //logger.debug("req.session.user_flag", req.session.user_flag);
-                                //logger.debug("req.session.group_flag", req.session.group_flag);
-                                //logger.debug("req.session.dept_cd", req.session.dept_cd);
-                                //logger.debug("req.session.access_yn", req.session.access_yn);
-                                //logger.debug("usermanage", JSON.stringify(usermanage));
-                                //logger.debug("======================================");
+                                
+                                logger.debug("======================================");
+                                logger.debug("req.session.user_flag", req.session.user_flag);
+                                logger.debug("req.session.group_flag", req.session.group_flag);
+                                logger.debug("req.session.dept_cd", req.session.dept_cd);
+                                logger.debug("req.session.access_yn", req.session.access_yn);
+                                logger.debug("usermanage", JSON.stringify(usermanage));
+                                logger.debug("======================================");
 
                                 //>>>>>==================================================
                                 //권한에 따른 분기

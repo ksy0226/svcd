@@ -37,14 +37,26 @@ block content
                                                 i.fa.fa-send-o
                                                 |  저장
                                     hr
-                                    .form-group(style='display:none')
-                                        label.col-sm-3.control-label 상위업무코드
-                                        .col-sm-3
-                                            input.form-control(name='processGubun[higher_cd]', type='text', value='#{processGubun.higher_cd}')
                                     .form-group
                                         label.col-sm-3.control-label 상위업무명
                                         .col-sm-3
-                                            input.form-control(name='processGubun[higher_nm]', type='text', value='#{processGubun.higher_nm}' readonly)
+                                            select.form-control(id='higher_cd' name='processGubun[higher_cd]' onchange='higherCd()')
+                                                option(value ='000') 공통
+                                                - if (higher.length > 0) {
+                                                    - for( var i = 0 ; length = higher.length > i ; i++ ){ //속도가 느리다고 알고 있음.
+                                                        option(value ='#{higher[i].higher_cd}') #{higher[i].higher_nm}
+                                                    - }
+                                                - }
+                                    .form-group
+                                        label.col-sm-3.control-label 처리유형
+                                        .col-sm-3
+                                            select.form-control.input-sm(id='question_type', name='processGubun[question_type]')
+                                                option(value='장애' selected) 장애 
+                                                option(value='오류') 오류
+                                                option(value='운영') 운영
+                                                option(value='추가개발') 추가개발
+                                                option(value='신규개발') 신규개발
+                                                option(value='기타') 기타
                                     .form-group
                                         label.col-sm-3.control-label 처리구분코드
                                         .col-sm-3
