@@ -14,8 +14,8 @@ module.exports = {
      */
     edit: (req, res, next) => {
 
-        logger.debug("==========================================companyProcess edit=======================================");
-        logger.debug("====================================================================================================");
+        //logger.debug("==========================================companyProcess edit=======================================");
+        //logger.debug("====================================================================================================");
 
         try {
             res.render("companyProcess/edit");
@@ -29,17 +29,17 @@ module.exports = {
     update: (req, res, next) => {
         try{
 
-            logger.debug("==========================================companyProcess update=======================================");
-            logger.debug("req.body.company_cd : ",req.body.company_cd);
-            logger.debug("req.body.companyProcess : ",req.body.companyProcess);
-            logger.debug("======================================================================================================");
+            //logger.debug("==========================================companyProcess update=======================================");
+            //logger.debug("req.body.company_cd : ",req.body.company_cd);
+            //logger.debug("req.body.companyProcess : ",req.body.companyProcess);
+            //logger.debug("======================================================================================================");
 
             var condition = {}; //조건
             condition.company_cd    = req.body.company_cd; //회사코드
 
-            logger.debug("==========================================companyProcess update=======================================");
-            logger.debug("condition : ",condition);
-            logger.debug("=================================================================================================");
+            //logger.debug("==========================================companyProcess update=======================================");
+            //logger.debug("condition : ",condition);
+            //logger.debug("=================================================================================================");
 
             CompanyProcessModel.deleteMany(condition, function( err, writeOpResult ){
                 if (err){ 
@@ -56,16 +56,16 @@ module.exports = {
                     if(req.body.companyProcess != ""){
                         var newCompanyProcess = setNewCompanyProcess(req);
                     
-                        logger.debug("======================================ProcessModel.create======================================");
-                        logger.debug("newCompanyProcess : ", newCompanyProcess); 
-                        logger.debug("=================================================================================================");
+                        //logger.debug("======================================ProcessModel.create======================================");
+                        //logger.debug("newCompanyProcess : ", newCompanyProcess); 
+                        //logger.debug("=================================================================================================");
         
                         CompanyProcessModel.create(newCompanyProcess, function (err, writeOpResult) {
                             if (err) {
 
-                                logger.debug("======================================CompanyProcessModel.create======================================");
-                                logger.debug("err : ", err); 
-                                logger.debug("=================================================================================================");
+                                //logger.debug("======================================CompanyProcessModel.create======================================");
+                                //logger.debug("err : ", err); 
+                                //logger.debug("=================================================================================================");
 
                                 res.json({
                                     success: false,
@@ -73,9 +73,9 @@ module.exports = {
                                 }); 
                             } else {
 
-                                logger.debug("======================================CompanyProcessModel.create======================================");
-                                logger.debug("writeOpResult : ", writeOpResult); //처리결과
-                                logger.debug("=================================================================================================");
+                                //logger.debug("======================================CompanyProcessModel.create======================================");
+                                //logger.debug("writeOpResult : ", writeOpResult); //처리결과
+                                //logger.debug("=================================================================================================");
                         
                                 res.json({
                                     success: true,
@@ -106,9 +106,9 @@ module.exports = {
                 condition.company_cd = req.query.company_cd;
             }
 
-            logger.debug("==========================================getCompanyProcess=========================================");
-            logger.debug("condition : ", condition);
-            logger.debug("====================================================================================================");
+            //logger.debug("==========================================getCompanyProcess=========================================");
+            //logger.debug("condition : ", condition);
+            //logger.debug("====================================================================================================");
 
             CompanyProcessModel.find(condition, function (err, companyProcess) {
                 if (err) {
@@ -152,9 +152,9 @@ function setNewCompanyProcess(req){
 
             companyProcessArr[i]     = tmpMP;
     
-            logger.debug("======================================setNewCompanyProcess===.====================================");
-            logger.debug("tmpMP["+i+"]", tmpMP);
-            logger.debug("==================================================================================================");
+            //logger.debug("======================================setNewCompanyProcess===.====================================");
+            //logger.debug("tmpMP["+i+"]", tmpMP);
+            //logger.debug("==================================================================================================");
     
         }
         

@@ -28,10 +28,10 @@ module.exports = {
 
     update: (req, res, next) => {
         try{
-            logger.debug("==========================================myProcess update=======================================");
-            logger.debug("req.body.higher_cd : ",req.body.higher_cd);
-            logger.debug("req.body.myProcess : ",req.body.myProcess);
-            logger.debug("=================================================================================================");
+            //logger.debug("==========================================myProcess update=======================================");
+            //logger.debug("req.body.higher_cd : ",req.body.higher_cd);
+            //logger.debug("req.body.myProcess : ",req.body.myProcess);
+            //logger.debug("=================================================================================================");
 
             var condition = {}; //조건
             condition.company_cd    = req.session.company_cd; //회사코드
@@ -40,17 +40,17 @@ module.exports = {
                 condition.higher_cd = req.body.higher_cd;
             }
 
-            logger.debug("==========================================myProcess update=======================================");
-            logger.debug("condition : ",condition);
-            logger.debug("=================================================================================================");
+            //logger.debug("==========================================myProcess update=======================================");
+            //logger.debug("condition : ",condition);
+            //logger.debug("=================================================================================================");
 
             MyProcessModel.deleteMany(condition, function( err, writeOpResult ){
                 
                 if (err){
 
-                    logger.debug("==================================MyProcessModel.deleteMany======================================");
-                    logger.debug("err : ", err); //처리결과
-                    logger.debug("=================================================================================================");
+                    //logger.debug("==================================MyProcessModel.deleteMany======================================");
+                    //logger.debug("err : ", err); //처리결과
+                    //logger.debug("=================================================================================================");
                     
                     
                     res.json({
@@ -66,9 +66,9 @@ module.exports = {
                     if(req.body.myProcess != ""){
                         var newMyProcessModel = setNewMyProcess(req);
                         
-                        logger.debug("======================================MyProcessModel.create======================================");
-                        logger.debug("newMyProcessModel : ", newMyProcessModel); 
-                        logger.debug("=================================================================================================");
+                        //logger.debug("======================================MyProcessModel.create======================================");
+                        //logger.debug("newMyProcessModel : ", newMyProcessModel); 
+                        //logger.debug("=================================================================================================");
         
                         MyProcessModel.create(newMyProcessModel, function (err, writeOpResult) {
                             if (err) {
@@ -78,9 +78,9 @@ module.exports = {
                                 }); 
                             } else {
 
-                                logger.debug("======================================MyProcessModel.create======================================");
-                                logger.debug("writeOpResult : ", writeOpResult); //처리결과
-                                logger.debug("=================================================================================================");
+                                //logger.debug("======================================MyProcessModel.create======================================");
+                                //logger.debug("writeOpResult : ", writeOpResult); //처리결과
+                                //logger.debug("=================================================================================================");
                         
                                 res.json({
                                     success: true,
@@ -112,9 +112,9 @@ module.exports = {
             condition.company_cd    = req.session.company_cd; //회사코드
             condition.email         = req.session.email; //이메일
 
-            logger.debug("==========================================getMyProcess=======================================");
-            logger.debug("condition : ",condition);
-            logger.debug("=============================================================================================");
+            //logger.debug("==========================================getMyProcess=======================================");
+            //logger.debug("condition : ",condition);
+            //logger.debug("=============================================================================================");
             
             MyProcessModel.find(condition, function (err, myProcess) {
                 if (err){ 
@@ -124,9 +124,9 @@ module.exports = {
                     });
                 }else{
 
-                    logger.debug("==========================================getMyProcess=======================================");
-                    logger.debug("myProcess : ",JSON.stringify(myProcess));
-                    logger.debug("=============================================================================================");
+                    //logger.debug("==========================================getMyProcess=======================================");
+                    //logger.debug("myProcess : ",JSON.stringify(myProcess));
+                    //logger.debug("=============================================================================================");
 
                     res.json(myProcess);
                 }
@@ -192,9 +192,9 @@ function setNewMyProcess(req){
 
         myProcessArr[i]     = tmpMP;
 
-        logger.debug("==========================================setNewMyProcess=======================================");
-        logger.debug("tmpMP["+i+"]", tmpMP);
-        logger.debug("================================================================================================");
+        //logger.debug("==========================================setNewMyProcess=======================================");
+        //logger.debug("tmpMP["+i+"]", tmpMP);
+        //logger.debug("================================================================================================");
 
     }
     
