@@ -396,6 +396,7 @@ function setDetail(dataObj){
 
     $('#_title').html(dataObj.title);
     $('#_content').html(dataObj.content);
+    $('#_receipt_content').html(dataObj.receipt_content);
 
     if(dataObj.status_cd == '1'){
         $('#_status_nm').addClass('label label-inverse');
@@ -410,8 +411,6 @@ function setDetail(dataObj){
     }else if(dataObj.status_cd == '5'){
         $('#_status_nm').addClass('label label-info');
     }
-
-
 
 
     /**

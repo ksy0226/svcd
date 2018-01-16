@@ -137,13 +137,44 @@ module.exports = {
     save: (req, res, next) => {
         //logger.debug('Usermanage save debug Start >>> ', req.body.usermanage);
         var usermanage = req.body.usermanage;
-        Usermanage.create(req.body.usermanage, function (err, usermanage) {
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
+
+        async.waterfall([function (callback) {
+            Usermanage.count({ 'email': usermanage.email }, function (err, userCnt) {
+                if (err) {
+
+                    logger.debug("=============================================");
+                    logger.debug("login.js new usermanage err : ", err);
+                    logger.debug("=============================================");
+
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
+
+                    //logger.debug("=============================================");
+                    //logger.debug("login new usermanage userCnt : ", userCnt);
+                    //logger.debug("=============================================");
+
+                    callback(null, userCnt)
+                }
+            })
+        }], function (err, userCnt) {
+            var rtnData = {};
+
+            if (userCnt > 0) {
+                rtnData.message = "중복된 계정이 존재합니다.";
+                res.send(rtnData.message);
             } else {
-                res.redirect('/usermanage');
+                Usermanage.create(req.body.usermanage, function (err, usermanage) {
+                    if (err) {
+                        res.render("http/500", {
+                            err: err
+                        });
+                    } else {
+                        res.redirect('/usermanage');
+                    }
+                });
             }
         });
     },
@@ -248,7 +279,7 @@ module.exports = {
     myPageUpdate: (req, res, next) => {
         req.body.usermanage.updatedAt = Date.now();
         Usermanage.findOneAndUpdate({
-            email: req.session.email 
+            email: req.session.email
         }, req.body.usermanage, function (err, usermanage) {
             /*
             logger.debug(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");

@@ -6,11 +6,11 @@ module.exports = {
 
     sessionCheck: (req, res, next) => {
         var minute = 60 * 1000;
-        logger.debug('sessionCheck email' + req.session.email);
-        logger.debug('req.session.user_flag : ' + req.session.user_flag);
-        logger.debug('req.session.group_flag : ' + req.session.group_flag);
 
         logger.debug('=====================session=================');
+        logger.debug('req.session.email : ' + req.session.email);
+        logger.debug('req.session.user_flag : ' + req.session.user_flag);
+        logger.debug('req.session.group_flag : ' + req.session.group_flag);
         logger.debug('req.session.dept_cd : ' + req.session.dept_cd);
         logger.debug('=============================================\n');
         

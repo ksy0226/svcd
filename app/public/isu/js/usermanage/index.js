@@ -99,13 +99,15 @@ function setDataList(dataObj, selectedPage) {
     if (endIdx > 0) {
         for (var i = startIdx; i < endIdx + 1; i++) {
             var addList = "";
-            addList += "							<tr onclick=location='/usermanage/edit/" + dataObj[i-1]._id + "'>";
-            addList += "								<td>" + dataObj[i-1].company_nm + "</td>";
-            addList += "								<td>" + dataObj[i-1].email + "</td>";
-            addList += "								<td class='text-center'>" + dataObj[i-1].employee_nm + "</td>";
-            addList += "								<td>" + dataObj[i-1].dept_nm + "</td>";
-            addList += "								<td class='text-center'>" + dataObj[i-1].position_nm + "</td>";
-            addList += "								<td class='text-center'>" + dataObj[i-1].hp_telno + "</td>";
+            addList += "							<tr onclick=location='/usermanage/edit/" + dataObj[i - 1]._id + "'>";
+            addList += "								<td>" + dataObj[i - 1].company_nm + "</td>";
+            addList += "								<td>" + dataObj[i - 1].email + "</td>";
+            addList += "								<td class='text-center'>" + dataObj[i - 1].employee_nm + "</td>";
+            addList += "								<td>" + dataObj[i - 1].dept_nm + "</td>";
+            addList += "								<td class='text-center'>" + dataObj[i - 1].position_nm + "</td>";
+            addList += "								<td class='text-center'>" + dataObj[i - 1].hp_telno + "</td>";
+            addList += "								<td class='text-center'>" + dataObj[i - 1].using_yn + "</td>";
+            addList += "								<td class='text-center'>" + dataObj[i - 1].email_send_yn + "</td>";
             addList += "							</tr>";
 
             $("#more_list").append(addList);
@@ -120,6 +122,22 @@ function setDataList(dataObj, selectedPage) {
 
         $("#more_list").append(addList);
     }
+
+    $('#more_list > tr').each(function () {
+        // 진행상태
+        if ($(this).find('td:eq(6)').html() == "Y") {
+            $(this).find('td:eq(6)').html('사용');
+        } else {
+            $(this).find('td:eq(6)').html('사용안함');
+        }
+
+        if ($(this).find('td:eq(7)').html() == "Y") {
+            $(this).find('td:eq(7)').html('사용');
+        } else {
+            $(this).find('td:eq(7)').html('사용안함');
+        }
+    })
+
 }
 
 
