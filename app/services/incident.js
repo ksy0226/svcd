@@ -138,13 +138,15 @@ module.exports = {
         } else if (req.session.user_flag == "3") {
 
             //logger.debug("================incident service=================");
-            //logger.debug("incident service user_flag == 3");
+            //logger.debug("incident service user_flag == 3 req.query.user : ",req.query.user);
             //logger.debug("=================================================");
 
-            AndQueries.push({
-                manager_dept_cd: req.session.dept_cd
-                //manager_dept_cd: "ISU_STISU_ST005"
-            });
+            if(req.query.user != "manager"){
+                AndQueries.push({
+                    manager_dept_cd: req.session.dept_cd
+                    //manager_dept_cd: "ISU_STISU_ST005"
+                });
+            }
 
         }else if(req.session.user_flag == "1") {
 
