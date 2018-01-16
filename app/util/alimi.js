@@ -22,6 +22,8 @@ module.exports = {
         logger.error("util/alimi/sendAlimi, higher_cd : ", higher_cd);
         logger.error("=============================================")
 
+        /*
+
         try{
             //>>>>> 상위업무에 매핑되는 사원찾기
             var condition = {};
@@ -114,7 +116,7 @@ module.exports = {
         }finally{
 
         }
-    
+        */
     },
 
 };
