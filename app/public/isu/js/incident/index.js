@@ -98,10 +98,8 @@ function getDataList() {
             alert("error : " + error);
         },
         beforeSend: function () {
-            $('#ajax_indicator').css("display", "");
         },
         success: function (dataObj) {
-            $('#ajax_indicator').css("display", "none");
             setContent(dataObj);
         }
     });
@@ -146,9 +144,7 @@ function setContent(Obj) {
     var dataObj = Obj.incident;
     //더보기 버튼 처리
     setMoreBtn(Obj);
-
     for (var i = 0; i < dataObj.length; i++) {
-       
         var addList = "";
         //addList += "                <div class='col-lg-12'>";
         //addList += "					<div class='card-box'>";
@@ -226,7 +222,6 @@ function setContent(Obj) {
 
         //검색어하이라이트
         //$('#aaa').highlight('진행');
-        
     }
     rowIdx++;
     

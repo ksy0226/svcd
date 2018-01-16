@@ -207,8 +207,8 @@ module.exports = {
         try {
 
             logger.debug("======================================");
-            logger.debug("login req.query.email", req.query.email);
-            logger.debug("login req.query.password", req.query.password);
+            logger.debug("login req.query.email : ", req.query.email);
+            logger.debug("login req.query.password : ", req.query.password);
             logger.debug("url : ", CONFIG.groupware.uri + "/CoviWeb/api/UserInfo.aspx?email=" + req.query.email + "&password=" + encodeURIComponent(req.query.password));
             logger.debug("======================================");
 
