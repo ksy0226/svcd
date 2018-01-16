@@ -132,8 +132,12 @@ function receiptSave() {
                     beforeSend: function () {
                     },
                     success: function (dataObj) {
-                        alert("계정 신청이 완료되었습니다.");
-                        $('#usermanageNew_modal').modal('hide');
+                        if (dataObj.gubun == 'N') {
+                            alert("중복된 계정이 존재합니다.");
+                        } else {
+                            alert("계정 신청이 완료되었습니다.");
+                            $('#usermanageNew_modal').modal('hide');
+                        }
                     }
                 });
             } catch (error) {

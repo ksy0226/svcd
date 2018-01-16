@@ -277,9 +277,9 @@ module.exports = {
                                     message: "error : 담당자에게 문의하세요."
                                 });
                             } else {
-                                if(usermanage == null){
+                                if (usermanage == null) {
                                     req.session.user_flag = '9';
-                                }else{
+                                } else {
                                     req.session.user_flag = usermanage.user_flag;
                                 }
                                 
@@ -327,92 +327,92 @@ module.exports = {
      * stlc 링크 시
      */
     loginstlc: (req, res) => {
-        
+
         try {
-            
+
             /**
              * 로그인 정보 매핑
              * usermanage 테이블에서 사용자 1차 검색 (비밀번호 틀릴 시 그룹웨어 검색)
              * usermanage 테이블에 존재않을 시 그룹웨어 검색  
              */
-                Usermanage.findOne({
-                    email: req.query.email
-                }).exec(function (err, usermanage) {
-                    if (err) {
-                        res.render('index', {
-                            email: email,
-                            remember_me: remember_me,
-                            message: "error : 담당자에게 문의하세요."
-                        });
-                    }
+            Usermanage.findOne({
+                email: req.query.email
+            }).exec(function (err, usermanage) {
+                if (err) {
+                    res.render('index', {
+                        email: email,
+                        remember_me: remember_me,
+                        message: "error : 담당자에게 문의하세요."
+                    });
+                }
+
+                //logger.debug("=================================================================");
+                //logger.debug("req.query.email : ", req.query.email);
+                //logger.debug("req.query.key : ", req.query.key);
+                //logger.debug("=================================================================");
+
+
+
+                if (usermanage != null) {
 
                     //logger.debug("=================================================================");
-                    //logger.debug("req.query.email : ", req.query.email);
-                    //logger.debug("req.query.key : ", req.query.key);
+                    //logger.debug("usermanage is not null : ", usermanage);
                     //logger.debug("=================================================================");
 
+                    if (req.query.key == "$2a$10$0bnBGRBBgiLTMPc8M8LZIuNjErIdMLGOI6SPjLxlIVIhi81HOA0U6") { //키값이 일치하면 - 고객사
 
+                        req.session.email = usermanage.email;
+                        req.session.user_id = usermanage.user_id;
+                        req.session.sabun = usermanage.sabun;
+                        req.session.password = usermanage.password;
+                        req.session.user_flag = usermanage.user_flag;
+                        req.session.group_flag = usermanage.group_flag;
+                        req.session.user_nm = usermanage.employee_nm;
+                        req.session.company_cd = usermanage.company_cd;
+                        req.session.company_nm = usermanage.company_nm;
+                        req.session.dept_cd = usermanage.dept_cd;
+                        req.session.dept_nm = usermanage.dept_nm;
+                        req.session.position_nm = usermanage.position_nm;
+                        req.session.jikchk_nm = usermanage.jikchk_nm;
+                        req.session.office_tel_no = usermanage.office_tel_no;
+                        req.session.hp_telno = usermanage.hp_telno;
 
-                    if (usermanage != null) {
-
-                        //logger.debug("=================================================================");
-                        //logger.debug("usermanage is not null : ", usermanage);
-                        //logger.debug("=================================================================");
-
-                        if (req.query.key == "$2a$10$0bnBGRBBgiLTMPc8M8LZIuNjErIdMLGOI6SPjLxlIVIhi81HOA0U6") { //키값이 일치하면 - 고객사
-
-                            req.session.email = usermanage.email;
-                            req.session.user_id = usermanage.user_id;
-                            req.session.sabun = usermanage.sabun;
-                            req.session.password = usermanage.password;
-                            req.session.user_flag = usermanage.user_flag;
-                            req.session.group_flag = usermanage.group_flag;
-                            req.session.user_nm = usermanage.employee_nm;
-                            req.session.company_cd = usermanage.company_cd;
-                            req.session.company_nm = usermanage.company_nm;
-                            req.session.dept_cd = usermanage.dept_cd;
-                            req.session.dept_nm = usermanage.dept_nm;
-                            req.session.position_nm = usermanage.position_nm;
-                            req.session.jikchk_nm = usermanage.jikchk_nm;
-                            req.session.office_tel_no = usermanage.office_tel_no;
-                            req.session.hp_telno = usermanage.hp_telno;
-
-                            //>>>>>==================================================
-                            //권한에 따른 분기
-                            if (req.session.user_flag == '1') {
-                                res.render("main/admin");
-                            } else if (req.session.user_flag == '3') {
-                                res.render("main/admin3");
-                            } else if (req.session.user_flag == '4') {
-                                res.render("main/admin4");
-                            } else if (req.session.user_flag == '5') {
-                                res.render("main/admin5");
-                            } else {
-                                res.render("main/user");
-                            }
-                            //<<<<<==================================================
-                           
-                        } else { //key 일치하지 않으면 
-                            res.render('index', {
-                                email: email,
-                                remember_me: remember_me,
-                                message: "등록된 계정이 없습니다.<br>다시 시도해주세요."
-                            });
+                        //>>>>>==================================================
+                        //권한에 따른 분기
+                        if (req.session.user_flag == '1') {
+                            res.render("main/admin");
+                        } else if (req.session.user_flag == '3') {
+                            res.render("main/admin3");
+                        } else if (req.session.user_flag == '4') {
+                            res.render("main/admin4");
+                        } else if (req.session.user_flag == '5') {
+                            res.render("main/admin5");
+                        } else {
+                            res.render("main/user");
                         }
-                    } else { //usermanage테이블에 계정이 존재하지 않으면 그룹사 일반계정
+                        //<<<<<==================================================
 
-                        //logger.debug("=================================================================");
-                        //logger.debug("usermanage is null : ", usermanage, req.body.email);
-                        //logger.debug("=================================================================");
-
+                    } else { //key 일치하지 않으면 
                         res.render('index', {
                             email: email,
                             remember_me: remember_me,
                             message: "등록된 계정이 없습니다.<br>다시 시도해주세요."
                         });
                     }
-                });       
-         
+                } else { //usermanage테이블에 계정이 존재하지 않으면 그룹사 일반계정
+
+                    //logger.debug("=================================================================");
+                    //logger.debug("usermanage is null : ", usermanage, req.body.email);
+                    //logger.debug("=================================================================");
+
+                    res.render('index', {
+                        email: email,
+                        remember_me: remember_me,
+                        message: "등록된 계정이 없습니다.<br>다시 시도해주세요."
+                    });
+                }
+            });
+
         } catch (e) {
             //logger.debug(e);
         }
@@ -468,25 +468,59 @@ module.exports = {
             usermanage.access_yn = 'N';
 
             //logger.debug("===============================")
-            //logger.debug("req.body.usermanage : ", JSON.stringify(req.body.usermanage) );
+            //logger.debug("req.body.usermanage : ", JSON.stringify(req.body.usermanage));
+            //logger.debug("req.body.usermanage : ", JSON.stringify(usermanage.email));
             //logger.debug("===============================")
 
-            Usermanage.create(req.body.usermanage, function (err, usermanage) {
-                if (err) {
-                    //logger.debug("===============================")
-                    //logger.debug("err : ", err );
-                    //logger.debug("===============================")
-        
-                    res.render("http/500", {
-                        err: err
-                    });
+            async.waterfall([function (callback) {
+                Usermanage.count({ 'email': usermanage.email }, function (err, userCnt) {
+                    if (err) {
+
+                        logger.debug("=============================================");
+                        logger.debug("login.js new usermanage err : ", err);
+                        logger.debug("=============================================");
+
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+
+                        //logger.debug("=============================================");
+                        //logger.debug("login new usermanage userCnt : ", userCnt);
+                        //logger.debug("=============================================");
+
+                        callback(null, userCnt)
+                    }
+                })
+            }], function (err, userCnt) {
+                var rtnData = {};
+
+                if (userCnt > 0) {
+                    rtnData.gubun = 'N'
+                    res.send(rtnData);
                 } else {
-                    //logger.debug("===============================")
-                    //logger.debug("usermanage : ", usermanage );
-                    //logger.debug("JSON.stringify(req.body.usermanage) : ", JSON.stringify(req.body.usermanage) );
-                    //logger.debug("===============================")
-                    
-                    res.send(usermanage);
+                    Usermanage.create(usermanage, function (err, usermanage) {
+                        if (err) {
+                            logger.debug("===============================")
+                            logger.debug("login.js new err : ", err);
+                            logger.debug("===============================")
+
+                            return res.json({
+                                success: false,
+                                message: err
+                            });
+                        } else {
+                            //logger.debug("===============================")
+                            //logger.debug("usermanage : ", usermanage);
+                            //logger.debug("JSON.stringify(req.body.usermanage) : ", JSON.stringify(req.body.usermanage));
+                            //logger.debug("===============================")
+
+                            rtnData.gubun = 'Y';
+                            //rtnData.usermanage = usermanage;
+                            res.send(rtnData);
+                        }
+                    });
                 }
             });
         } catch (e) {
@@ -496,8 +530,8 @@ module.exports = {
 
     main_list: (req, res, next) => {
 
-
         try {
+            
             if (req.session.user_flag == '9') {
                 Incident.find({
                     request_id: req.session.email
@@ -542,11 +576,11 @@ module.exports = {
 
                 async.waterfall([function (callback) {
                     MyProcess.find(condition2).distinct('higher_cd').exec(function (err, myHigherProcess) {
-                        
+
                         //logger.debug("======================================");
                         //logger.debug("condition2 : ", condition2);
                         //logger.debug("======================================");
-                        
+
                         if (condition.$and == null) {
                             condition.$and = [{
                                 "higher_cd": {
@@ -562,20 +596,20 @@ module.exports = {
                         }
 
                         callback(null, myHigherProcess)
-                    
+
                     }).sort('-register_date')
-                    .limit(10);
+                        .limit(10);
                 }], function (err, myHigherProcess) {
 
-                        Incident.find(condition, function (err, incident) {
+                    Incident.find(condition, function (err, incident) {
 
-                            //logger.debug("======================================");
-                            //logger.debug("condition2 : ", condition2);
-                            //logger.debug("======================================");
-                            
-                            //logger.debug("======================================");
-                            //logger.debug("incident : ", incident);
-                            //logger.debug("======================================");
+                        //logger.debug("======================================");
+                        //logger.debug("condition2 : ", condition2);
+                        //logger.debug("======================================");
+
+                        //logger.debug("======================================");
+                        //logger.debug("incident : ", incident);
+                        //logger.debug("======================================");
 
 
                         if (err) {
@@ -587,7 +621,7 @@ module.exports = {
                             res.json(incident);
                         }
                     }).sort('-register_date')
-                    .limit(10);
+                        .limit(10);
                 });
             } else if (req.session.user_flag == '3') {
 
