@@ -28,7 +28,9 @@ module.exports = {
     },
 
     save: (req, res, next) => {
+
         var higherProcess = req.body.higherProcess;
+        
         higherProcess.sabun = req.session.email;
         higherProcess.user_nm = req.session.user_nm;
         higherProcess.company_cd = req.session.company_cd;
@@ -45,9 +47,11 @@ module.exports = {
                 res.render("http/500", {
                     err: err
                 });
+            }else{
+                res.redirect('/higherProcess/');
             }
         });
-        res.redirect('/higherProcess/');
+
     },
 
 
@@ -70,15 +74,17 @@ module.exports = {
         HigherProcessModel.findOneAndUpdate({
             _id: req.params.id
         }, req.body.higherProcess, function (err, higherProcess) {
-            if (err) return res.json({
+            if (err){ return res.json({
                 success: false,
                 message: err
             });
-            if (!higherProcess) return res.json({
-                success: false,
-                message: "No data found to update"
-            });
+        }else{
+            //if (!higherProcess) return res.json({
+            //    success: false,
+            //    message: "No data found to update"
+            //});
             res.redirect('/higherProcess/');
+        }
         });
     },
 
@@ -86,15 +92,17 @@ module.exports = {
         HigherProcessModel.findOneAndRemove({
             _id: req.params.id
         }, function (err, higherProcess) {
-            if (err) return res.json({
+            if (err){ return res.json({
                 success: false,
                 message: err
             });
-            if (!higherProcess) return res.json({
-                success: false,
-                message: "No data found to delete"
-            });
+        }else{
+            //if (!higherProcess) return res.json({
+            //    success: false,
+            //    message: "No data found to delete"
+            //});
             res.redirect('/higherProcess/');
+        }
         });
     },
 
@@ -147,11 +155,14 @@ module.exports = {
             }
 
             HigherProcessModel.find(condition, function(err, higherProcess) {
-                if (err) return res.json({
-                    success: false,
-                    message: err
-                    });     
-                res.json(higherProcess);
+                if (err){ 
+                    return res.json({
+                        success: false,
+                        message: err
+                    });   
+                }else{  
+                    res.json(higherProcess);
+                }
             }).sort('higher_nm');
         }catch(e){
             logger.debug(e);

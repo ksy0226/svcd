@@ -206,11 +206,11 @@ module.exports = {
     login: (req, res) => {
         try {
 
-            logger.debug("======================================");
-            logger.debug("login req.query.email", req.query.email);
-            logger.debug("login req.query.password", req.query.password);
-            logger.debug("url : ", CONFIG.groupware.uri + "/CoviWeb/api/UserInfo.aspx?email=" + req.query.email + "&password=" + encodeURIComponent(req.query.password));
-            logger.debug("======================================");
+            //logger.debug("======================================");
+            //logger.debug("login req.query.email : ", req.query.email);
+            //logger.debug("login req.query.password : ", req.query.password);
+            //logger.debug("url : ", CONFIG.groupware.uri + "/CoviWeb/api/UserInfo.aspx?email=" + req.query.email + "&password=" + encodeURIComponent(req.query.password));
+            //logger.debug("======================================");
 
             /**
              * 로그인 정보 매핑
@@ -278,7 +278,7 @@ module.exports = {
                                 });
                             } else {
                                 if(usermanage == null){
-                                    userInfo.user_flag = '9';
+                                    req.session.user_flag = '9';
                                 }else{
                                     req.session.user_flag = usermanage.user_flag;
                                 }
@@ -287,6 +287,7 @@ module.exports = {
                                 //logger.debug("req.session.group_flag", req.session.group_flag);
                                 //logger.debug("req.session.dept_cd", req.session.dept_cd);
                                 //logger.debug("req.session.access_yn", req.session.access_yn);
+                                //logger.debug("usermanage", JSON.stringify(usermanage));
                                 //logger.debug("======================================");
 
                                 //>>>>>==================================================
@@ -344,18 +345,18 @@ module.exports = {
                         });
                     }
 
-                    logger.debug("=================================================================");
-                    logger.debug("req.query.email : ", req.query.email);
-                    logger.debug("req.query.key : ", req.query.key);
-                    logger.debug("=================================================================");
+                    //logger.debug("=================================================================");
+                    //logger.debug("req.query.email : ", req.query.email);
+                    //logger.debug("req.query.key : ", req.query.key);
+                    //logger.debug("=================================================================");
 
 
 
                     if (usermanage != null) {
 
-                        logger.debug("=================================================================");
-                        logger.debug("usermanage is not null : ", usermanage);
-                        logger.debug("=================================================================");
+                        //logger.debug("=================================================================");
+                        //logger.debug("usermanage is not null : ", usermanage);
+                        //logger.debug("=================================================================");
 
                         if (req.query.key == "$2a$10$0bnBGRBBgiLTMPc8M8LZIuNjErIdMLGOI6SPjLxlIVIhi81HOA0U6") { //키값이 일치하면 - 고객사
 
@@ -471,18 +472,18 @@ module.exports = {
 
             Usermanage.create(req.body.usermanage, function (err, usermanage) {
                 if (err) {
-                    logger.debug("===============================")
-                    logger.debug("err : ", err );
-                    logger.debug("===============================")
+                    //logger.debug("===============================")
+                    //logger.debug("err : ", err );
+                    //logger.debug("===============================")
         
                     res.render("http/500", {
                         err: err
                     });
                 } else {
-                    logger.debug("===============================")
-                    logger.debug("usermanage : ", usermanage );
-                    logger.debug("JSON.stringify(req.body.usermanage) : ", JSON.stringify(req.body.usermanage) );
-                    logger.debug("===============================")
+                    //logger.debug("===============================")
+                    //logger.debug("usermanage : ", usermanage );
+                    //logger.debug("JSON.stringify(req.body.usermanage) : ", JSON.stringify(req.body.usermanage) );
+                    //logger.debug("===============================")
                     
                     res.send(usermanage);
                 }
@@ -541,9 +542,9 @@ module.exports = {
                 async.waterfall([function (callback) {
                     MyProcess.find(condition2).distinct('higher_cd').exec(function (err, myHigherProcess) {
                         
-                        logger.debug("======================================");
-                        logger.debug("condition2 : ", condition2);
-                        logger.debug("======================================");
+                        //logger.debug("======================================");
+                        //logger.debug("condition2 : ", condition2);
+                        //logger.debug("======================================");
                         
                         if (condition.$and == null) {
                             condition.$and = [{
@@ -567,9 +568,9 @@ module.exports = {
 
                         Incident.find(condition, function (err, incident) {
 
-                            logger.debug("======================================");
-                            logger.debug("condition2 : ", condition2);
-                            logger.debug("======================================");
+                            //logger.debug("======================================");
+                            //logger.debug("condition2 : ", condition2);
+                            //logger.debug("======================================");
                             
                             //logger.debug("======================================");
                             //logger.debug("incident : ", incident);
@@ -651,9 +652,9 @@ module.exports = {
                     register_yyyy: thisYear.toString()
                 }, function (err, incident) {
 
-                    logger.debug("======================================");
-                    logger.debug("incident : ", incident);
-                    logger.debug("======================================");
+                    //logger.debug("======================================");
+                    //logger.debug("incident : ", incident);
+                    //logger.debug("======================================");
 
                     if (err) {
                         return res.json({
