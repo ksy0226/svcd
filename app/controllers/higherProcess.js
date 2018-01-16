@@ -45,9 +45,11 @@ module.exports = {
                 res.render("http/500", {
                     err: err
                 });
+            }else{
+                res.redirect('/higherProcess/');
             }
         });
-        res.redirect('/higherProcess/');
+
     },
 
 
