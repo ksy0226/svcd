@@ -17,7 +17,7 @@ const CONFIG = require('./config/config.json');
 
 const app = express();
 app.locals.pretty = true;
-app.set('case sensitive routes', true); //페이지 라우트 시 대소문자 구분
+app.set('case sensitive routes', true); //?�이지 ?�우?????�?�문??구분
 require('./config/mongoose');
 
 const logger = log4js.getLogger('app');
@@ -27,7 +27,7 @@ const routes = require('./config/routes')();
 //const smtpPool = require('nodemailer-smtp-pool');
 
 /**
- * 운영환경
+ * ?�영?�경
  */
 app.settings.env = 'development';
 //app.settings.env = 'production';
@@ -68,8 +68,8 @@ app.set('view engine', 'jade');
 /**
  * http-to-https
  */
-var redirectToHTTPS = require('express-http-to-https')
-app.use(redirectToHTTPS(['localhost:3000'], ['/test']));
+//var redirectToHTTPS = require('express-http-to-https')
+//app.use(redirectToHTTPS(['localhost:3000'], ['/test']));
 
 /**
  * mailer
@@ -78,7 +78,7 @@ app.use(redirectToHTTPS(['localhost:3000'], ['/test']));
 //app.use(smtpPool);
 
 /**
- * JADE에서 Session 사용
+ * JADE?�서 Session ?�용
  */
 app.use(function(req,res,next){
    res.locals.session = req.session;
