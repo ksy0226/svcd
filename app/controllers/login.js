@@ -35,9 +35,9 @@ module.exports = {
 
     logincheck: (req, res) => {
         try {
-            ////logger.debug('logincheck is called '+req.body.remember_me);
+            //logger.debug('logincheck is called '+req.body.remember_me);
             if (req.body.remember_me === "on") {
-                ////logger.debug('req.body.remember_me is on ');
+                //logger.debug('req.body.remember_me is on ');
                 res.cookie('email', req.body.email);
                 res.cookie('remember_me', req.body.remember_me === "on" ? "true" : "undefined");
                 res.cookie('user_flag', req.body.user_flag);
@@ -46,7 +46,7 @@ module.exports = {
                 email = req.body.email;
                 remember_me = req.body.remember_me;
             } else {
-                ////logger.debug('req.body.remember_me is off ');
+                //logger.debug('req.body.remember_me is off ');
                 res.clearCookie('email');
                 res.clearCookie('remember_me');
                 res.clearCookie('user_flag');
@@ -145,12 +145,13 @@ module.exports = {
                         req.session.office_tel_no = userInfo.office_tel_no;
                         req.session.hp_telno = userInfo.hp_telno;
 
-                        //logger.debug("======================================");
-                        //logger.debug("req.session.user_flag", req.session.user_flag);
-                        //logger.debug("req.session.group_flag", req.session.group_flag);
-                        //logger.debug("req.session.dept_cd", req.session.dept_cd);
-                        //logger.debug("req.session.access_yn", req.session.access_yn);
-                        //logger.debug("======================================");
+                        logger.debug("======================================");
+                        logger.debug("req.session.email", req.session.email);
+                        logger.debug("req.session.user_flag", req.session.user_flag);
+                        logger.debug("req.session.group_flag", req.session.group_flag);
+                        logger.debug("req.session.dept_cd", req.session.dept_cd);
+                        logger.debug("req.session.access_yn", req.session.access_yn);
+                        logger.debug("======================================");
 
 
                         //>>>>>==================================================
@@ -284,6 +285,7 @@ module.exports = {
                                 }
                                 
                                 logger.debug("======================================");
+                                logger.debug("req.session.email", req.session.email);
                                 logger.debug("req.session.user_flag", req.session.user_flag);
                                 logger.debug("req.session.group_flag", req.session.group_flag);
                                 logger.debug("req.session.dept_cd", req.session.dept_cd);
@@ -435,7 +437,7 @@ module.exports = {
     },
 
     retry: (req, res) => {
-        ////logger.debug('login.js retry is called ');
+        //logger.debug('login.js retry is called ');
         email = req.cookies.email;
         remember_me = req.cookies.remember_me;
         user_flag = req.cookies.user_flag;
