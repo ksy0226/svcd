@@ -10,7 +10,6 @@ module.exports = {
 
     index: (req, res, next) => {
         HigherProcessModel.find(req.body.higherProcess, function (err, higherProcess) {
-            logger.debug('list 호출');
             if (err) {
                 res.render("http/500", {
                     err: err
@@ -30,7 +29,7 @@ module.exports = {
     save: (req, res, next) => {
 
         var higherProcess = req.body.higherProcess;
-        
+
         higherProcess.sabun = req.session.email;
         higherProcess.user_nm = req.session.user_nm;
         higherProcess.company_cd = req.session.company_cd;
@@ -47,7 +46,7 @@ module.exports = {
                 res.render("http/500", {
                     err: err
                 });
-            }else{
+            } else {
                 res.redirect('/higherProcess/');
             }
         });
@@ -74,17 +73,18 @@ module.exports = {
         HigherProcessModel.findOneAndUpdate({
             _id: req.params.id
         }, req.body.higherProcess, function (err, higherProcess) {
-            if (err){ return res.json({
-                success: false,
-                message: err
-            });
-        }else{
-            //if (!higherProcess) return res.json({
-            //    success: false,
-            //    message: "No data found to update"
-            //});
-            res.redirect('/higherProcess/');
-        }
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: err
+                });
+            } else {
+                //if (!higherProcess) return res.json({
+                //    success: false,
+                //    message: "No data found to update"
+                //});
+                res.redirect('/higherProcess/');
+            }
         });
     },
 
@@ -92,17 +92,18 @@ module.exports = {
         HigherProcessModel.findOneAndRemove({
             _id: req.params.id
         }, function (err, higherProcess) {
-            if (err){ return res.json({
-                success: false,
-                message: err
-            });
-        }else{
-            //if (!higherProcess) return res.json({
-            //    success: false,
-            //    message: "No data found to delete"
-            //});
-            res.redirect('/higherProcess/');
-        }
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: err
+                });
+            } else {
+                //if (!higherProcess) return res.json({
+                //    success: false,
+                //    message: "No data found to delete"
+                //});
+                res.redirect('/higherProcess/');
+            }
         });
     },
 
@@ -147,24 +148,24 @@ module.exports = {
     /**
      * 상위업무조회
      */
-    getHigherProcess :  (req, res, next) => {   
-        try{
+    getHigherProcess: (req, res, next) => {
+        try {
             var condition = {};
-            if(req.query.company_cd != null){
+            if (req.query.company_cd != null) {
                 condition.company_cd = req.query.company_cd;
             }
 
-            HigherProcessModel.find(condition, function(err, higherProcess) {
-                if (err){ 
+            HigherProcessModel.find(condition, function (err, higherProcess) {
+                if (err) {
                     return res.json({
                         success: false,
                         message: err
-                    });   
-                }else{  
+                    });
+                } else {
                     res.json(higherProcess);
                 }
             }).sort('higher_nm');
-        }catch(e){
+        } catch (e) {
             logger.debug(e);
         }
     },
@@ -172,7 +173,7 @@ module.exports = {
     /**
      * 회사별 상위업무 조회 페이지 - 상위업무조회
      */
-    
+
     getHigher: (req, res, next) => {
         try {
 
@@ -197,7 +198,7 @@ module.exports = {
             }).sort('higher_cd');
         } catch (e) {
             logger.error("HigherProcessModel error : ", e);
-        } finally { }
+        } finally {}
     }
-    
+
 };

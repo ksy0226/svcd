@@ -26,12 +26,9 @@ module.exports = {
     index: (req, res, next) => {
         async.waterfall([function (callback) {
             ProcessStatus.find({}, function (err, ProcessStatus) {
-                if (err) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                }
-                callback(null, ProcessStatus)
+
+                callback(err, ProcessStatus)
+
             }).sort('-created_at');
         }], function (err, ProcessStatus) {
             if (err) {
@@ -54,37 +51,35 @@ module.exports = {
             CompanyProcess.find({
                 "company_cd": req.session.company_cd
             }, function (err, companyProcess) {
-                if (err) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                }
-                callback(null, companyProcess)
+
+                callback(err, companyProcess)
+
             });
         }], function (err, companyProcess) {
             if (err) {
                 res.render("http/500", {
                     err: err
                 });
-            }
+            } else {
 
-            var real_contact = "";
-            if (req.session.office_tel_no != "") {
-                real_contact = req.session.office_tel_no;
-            } else if (req.session.hp_telno != "") {
-                real_contact = req.session.hp_telno;
-            } else if (req.session.email != "") {
-                real_contact = req.session.email;
-            }
+                var real_contact = "";
+                if (req.session.office_tel_no != "") {
+                    real_contact = req.session.office_tel_no;
+                } else if (req.session.hp_telno != "") {
+                    real_contact = req.session.hp_telno;
+                } else if (req.session.email != "") {
+                    real_contact = req.session.email;
+                }
 
-            res.render("incident/new", {
-                companyProcess: companyProcess,
-                user_nm: req.session.user_nm,
-                sabun: req.session.sabun,
-                office_tel_no: req.session.office_tel_no,
-                hp_telno: req.session.hp_telno,
-                real_contact: real_contact
-            });
+                res.render("incident/new", {
+                    companyProcess: companyProcess,
+                    user_nm: req.session.user_nm,
+                    sabun: req.session.sabun,
+                    office_tel_no: req.session.office_tel_no,
+                    hp_telno: req.session.hp_telno,
+                    real_contact: real_contact
+                });
+            }
         });
     },
 
@@ -93,39 +88,6 @@ module.exports = {
      */
     new_mng: (req, res, next) => {
         res.render("incident/new_mng");
-        //res.render("incident/new_mng");
-        /*
-        async.waterfall([function (callback) {
-            CompanyProcess.find({ "company_cd": req.session.company_cd }, function (err, companyProcess) {
-                if (err) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                }
-                callback(null, companyProcess)
-            });
-        }], function (err, companyProcess) {
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
-            }
-            var real_contact = req.session.office_tel_no + '/';
-            real_contact += req.session.hp_telno + '/';
-            real_contact += req.session.email + '/';
-            if (real_contact == "//") real_contact = "";
-
-            res.render("incident/new_mng", {
-                companyProcess: companyProcess,
-                user_nm: req.session.user_nm,
-                sabun: req.session.sabun,
-                office_tel_no: req.session.office_tel_no,
-                hp_telno: req.session.hp_telno,
-                real_contact: real_contact
-            });
-        });
-        */
-
     },
 
 
@@ -155,38 +117,34 @@ module.exports = {
                 newincident.attach_file = req.files;
             }
             Incident.create(newincident, function (err, newincident) {
-                if (err) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                }
 
                 //******************************* */
                 // SD 업무담당자 사내메신저 호출
                 alimi.sendAlimi(req.body.incident.higher_cd);
                 //******************************* */
 
-                callback(null);
+                callback(err);
             });
         }], function (err) {
-            //logger.debug("trace 2");
+
             if (err) {
                 res.render("http/500", {
                     err: err
                 });
-            }
+            } else {
 
-            ProcessStatus.find({}, function (err, ProcessStatus) {
-                if (err) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                } else {
-                    res.render("incident/index", {
-                        ProcessStatus: ProcessStatus
-                    });
-                }
-            });
+                ProcessStatus.find({}, function (err, ProcessStatus) {
+                    if (err) {
+                        res.render("http/500", {
+                            err: err
+                        });
+                    } else {
+                        res.render("incident/index", {
+                            ProcessStatus: ProcessStatus
+                        });
+                    }
+                });
+            }
 
         });
     },
@@ -208,56 +166,34 @@ module.exports = {
                 newincident.attach_file = req.files;
             }
             Incident.create(newincident, function (err, newincident) {
-                if (err) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                }
 
                 //******************************* */
                 // SD 업무담당자 사내메신저 호출
                 alimi.sendAlimi(req.body.incident.higher_cd);
                 //******************************* */
 
-                callback(null);
+                callback(err);
             });
-        }], function (err) {
-            //logger.debug("trace 2");
+        }, function (err, callback) {
+            ProcessStatus.find({}, function (err, status) {
+                callback(err, status);
+            });
+        }, function (err, status, callback) {
+            LowerProcess.find().sort('higher_cd').sort('lower_nm').exec(function (err, lowerprocess) {
+                callback(err, status, lowerprocess)
+            });
+        }], function (err, status, lowerprocess) {
             if (err) {
                 res.render("http/500", {
                     err: err
                 });
             } else {
-                async.waterfall([function (callback) {
-                    ProcessStatus.find({}, function (err, status) {
-                        if (err) {
-                            res.render("http/500", {
-                                err: err
-                            });
-                        }
-                        callback(null, status);
-                    });
-                }, function (status, callback) {
-                    LowerProcess.find().sort('higher_cd').sort('lower_nm').exec(function (err, lowerprocess) {
-                        if (err) {
-                            res.render("http/500", {
-                                err: err
-                            });
-                        }
-                        callback(null, status, lowerprocess)
-                    });
-                }], function (err, status, lowerprocess) {
-                    if (err) {
-                        res.render("http/500", {
-                            err: err
-                        });
-                    } else {
-                        res.render("manager/work_list", {
-                            status: status,
-                            lowerprocess: lowerprocess
-                        });
-                    }
+
+                res.render("manager/work_list", {
+                    status: status,
+                    lowerprocess: lowerprocess
                 });
+
             }
         });
     },
@@ -299,15 +235,14 @@ module.exports = {
             _id: req.params.id
             //,author: req.user._id
         }, function (err, incident) {
-            if (err) return res.json({
-                success: false,
-                message: err
-            });
-            if (!incident) return res.json({
-                success: false,
-                message: "No data found to delete"
-            });
-            res.redirect('/incident');
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: err
+                });
+            } else {
+                res.redirect('/incident');
+            }
         });
     },
 
@@ -315,7 +250,6 @@ module.exports = {
      * incident 상세 화면 조회
      */
     viewDetail: (req, res, next) => {
-        //logger.debug("Trace viewDetail : ", req.params.id);
         try {
             Incident.findById({
                 _id: req.params.id
@@ -330,9 +264,9 @@ module.exports = {
                     if (incident.attach_file.length > 0) {
                         for (var i = 0; i < incident.attach_file.length; i++) {
                             var path = incident.attach_file[i].path
-                            if(path.indexOf(CONFIG.fileUpload.directory) > -1){
+                            if (path.indexOf(CONFIG.fileUpload.directory) > -1) {
                                 incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
-                            }else{
+                            } else {
                                 incident.attach_file[i].path = incident.attach_file[i].path + "/" + incident.attach_file[i].filename;
                             }
 
@@ -352,14 +286,10 @@ module.exports = {
                         incident: incident,
                         user: req.user
                     });
-
-                    /*모달형식
-                    res.send(incident);
-                    */
                 }
             });
         } catch (e) {
-            //logger.debug('incident viewDetail error : ', e);
+            logger.error('incident viewDetail error : ', e);
         }
     },
 
@@ -377,16 +307,16 @@ module.exports = {
     userlist: (req, res, next) => {
 
         var search = service.createSearch(req);
-        
+
         if (search.findIncident.$and == null) {
-            
+
             search.findIncident.$and = [{
                 "request_id": req.session.email
             }];
-         
+
         } else {
 
-          
+
             search.findIncident.$and.push({
                 "request_id": req.session.email
             });
@@ -420,60 +350,58 @@ module.exports = {
 
                 Incident.count(search.findIncident, function (err, totalCnt) {
 
-                   
-                    
+                    //logger.debug("=============================================");
+                    //logger.debug("incidentCnt : ", totalCnt);
+                    //logger.debug("=============================================");
 
-                    if (err) {
+                    callback(err, totalCnt)
 
-                        //logger.debug("=============================================");
-                        //logger.debug("incident : ", err);
-                        //logger.debug("=============================================");
-
-                        return res.json({
-                            success: false,
-                            message: err
-                        });
-                    } else {
-                        
-                        //logger.debug("=============================================");
-                        //logger.debug("incidentCnt : ", totalCnt);
-                        //logger.debug("=============================================");
-
-                        callback(null, totalCnt)
-                    }
                 })
             }], function (err, totalCnt) {
 
-                Incident.find(search.findIncident, function (err, incident) {
-                        if (err) {
+                if (err) {
 
-                            //logger.debug("=============================================");
-                            //logger.debug("incident : ", err);
-                            //logger.debug("=============================================");
+                    //logger.debug("=============================================");
+                    //logger.debug("incident : ", err);
+                    //logger.debug("=============================================");
 
-                            return res.json({
-                                success: false,
-                                message: err
-                            });
-                        } else {
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
 
-                            //incident에 페이징 처리를 위한 전체 갯수전달
-                            var rtnData = {};
-                            rtnData.incident = incident;
-                            rtnData.totalCnt = totalCnt
+                    Incident.find(search.findIncident, function (err, incident) {
+                            if (err) {
 
-                            //logger.debug("=============================================");
-                            //logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
-                            //logger.debug("rtnData : ", JSON.stringify(rtnData));
-                            //logger.debug("=============================================");
+                                //logger.debug("=============================================");
+                                //logger.debug("incident : ", err);
+                                //logger.debug("=============================================");
 
-                            res.json(rtnData);
+                                return res.json({
+                                    success: false,
+                                    message: err
+                                });
+                            } else {
 
-                        }
-                    })
-                    .sort('-register_date')
-                    .skip((page - 1) * perPage)
-                    .limit(perPage);
+                                //incident에 페이징 처리를 위한 전체 갯수전달
+                                var rtnData = {};
+                                rtnData.incident = incident;
+                                rtnData.totalCnt = totalCnt
+
+                                //logger.debug("=============================================");
+                                //logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
+                                //logger.debug("rtnData : ", JSON.stringify(rtnData));
+                                //logger.debug("=============================================");
+
+                                res.json(rtnData);
+
+                            }
+                        })
+                        .sort('-register_date')
+                        .skip((page - 1) * perPage)
+                        .limit(perPage);
+                }
             });
         } catch (err) {
 
@@ -488,7 +416,7 @@ module.exports = {
      * Incident 조회
      */
     getIncident: (req, res, next) => {
-    
+
         var search = service.createSearch(req);
         var page = 1;
         var perPage = 15;
@@ -506,143 +434,150 @@ module.exports = {
 
             async.waterfall([function (callback) {
 
-                //상위업무가 전체이고, SD 담당자일때만 나의 상위 업무만 조회
-                if (req.session.user_flag == "1" || req.session.user_flag == "4" || (req.query.user == "manager" && req.session.user_flag == "3")) {
+                    //상위업무가 전체이고, SD 담당자일때만 나의 상위 업무만 조회
+                    if (req.session.user_flag == "1" || req.session.user_flag == "4" || (req.query.user == "manager" && req.session.user_flag == "3")) {
 
-                    var condition = {};
-                    condition.email = req.session.email;
+                        var condition = {};
+                        condition.email = req.session.email;
 
-                    MyProcess.find(condition).distinct('higher_cd').exec(function (err, myHigherProcess) {
+                        MyProcess.find(condition).distinct('higher_cd').exec(function (err, myHigherProcess) {
 
-                        if (search.findIncident.$and == null) {
+                            if (search.findIncident.$and == null) {
 
-                            //logger.debug("=============================================");
-                            //logger.debug("search.findIncident.$and is null : ", myHigherProcess);
-                            //logger.debug("=============================================");
+                                //logger.debug("=============================================");
+                                //logger.debug("search.findIncident.$and is null : ", myHigherProcess);
+                                //logger.debug("=============================================");
 
-                            search.findIncident.$and = [{
-                                "higher_cd": {
-                                    "$in": myHigherProcess
+                                search.findIncident.$and = [{
+                                    "higher_cd": {
+                                        "$in": myHigherProcess
+                                    }
+                                }];
+                                //{"$and":[{"higher_cd":{"$in":["H004","H006","H012","H024","H001"]}}]}
+
+                                if (req.query.status_cd != "1") {
+                                    search.findIncident.$and.push({
+                                        "manager_email": req.session.email
+                                    })
                                 }
-                            }];
-                            //{"$and":[{"higher_cd":{"$in":["H004","H006","H012","H024","H001"]}}]}
-                            
-                            if(req.query.status_cd != "1"){
-                                search.findIncident.$and.push({"manager_email":req.session.email})
+
+
+                            } else {
+
+                                //logger.debug("=============================================");
+                                //logger.debug("search.findIncident.$and is not null : ", myHigherProcess);
+                                //logger.debug("=============================================");
+
+                                search.findIncident.$and.push({
+                                    "higher_cd": {
+                                        "$in": myHigherProcess
+                                    }
+                                });
+
+                                if (req.query.status_cd != "1") {
+                                    search.findIncident.$and.push({
+                                        "manager_email": req.session.email
+                                    })
+                                }
+
+                                //'$and': [ { lower_cd: 'L004' } ] }
                             }
 
 
-                        } else {
 
-                            //logger.debug("=============================================");
-                            //logger.debug("search.findIncident.$and is not null : ", myHigherProcess);
-                            //logger.debug("=============================================");
+                            /*
+                            if (search.findIncident.$or == null) {
 
-                            search.findIncident.$and.push({
-                                "higher_cd": {
-                                    "$in": myHigherProcess
-                                }
-                            });
-                            
-                            if(req.query.status_cd != "1"){
-                                search.findIncident.$and.push({"manager_email":req.session.email})
+                                //logger.debug("=============================================");
+                                //logger.debug("search.findIncident.$and is null : ", myHigherProcess);
+                                //logger.debug("=============================================");
+
+                                search.findIncident.$or = [{
+                                    "manager_email": req.session.email
+                                }];
+                                //{"$and":[{"higher_cd":{"$in":["H004","H006","H012","H024","H001"]}}]}
+                            } else {
+
+                                //logger.debug("=============================================");
+                                //logger.debug("search.findIncident.$and is not null : ", myHigherProcess);
+                                //logger.debug("=============================================");
+
+                                search.findIncident.$or.push({
+                                    "manager_email": req.session.email
+                                });
+                                //'$and': [ { lower_cd: 'L004' } ] }
                             }
+                            */
 
-                            //'$and': [ { lower_cd: 'L004' } ] }
-                        }
-                        
-                       
-                        
-                        /*
-                        if (search.findIncident.$or == null) {
+                            //logger.debug("getIncident =============================================");
+                            //logger.debug("page : ", page);
+                            //logger.debug("perPage : ", perPage);
+                            //logger.debug("req.query.perPage : ", req.query.perPage);
+                            //logger.debug("search.findIncident : ", JSON.stringify(search.findIncident));
+                            //logger.debug("getIncident =============================================");
+
+                            callback(err);
+                        });
+                    } else {
+                        callback(err);
+                    }
+
+                },
+                function (err, callback) {
+
+                    if (err) {
+                        callback(err, 0)
+                    } else {
+                        Incident.count(search.findIncident, function (err, totalCnt) {
+
 
                             //logger.debug("=============================================");
-                            //logger.debug("search.findIncident.$and is null : ", myHigherProcess);
+                            //logger.debug("incidentCnt : ", totalCnt);
                             //logger.debug("=============================================");
 
-                            search.findIncident.$or = [{
-                                "manager_email": req.session.email
-                            }];
-                            //{"$and":[{"higher_cd":{"$in":["H004","H006","H012","H024","H001"]}}]}
-                        } else {
+                            callback(err, totalCnt)
 
-                            //logger.debug("=============================================");
-                            //logger.debug("search.findIncident.$and is not null : ", myHigherProcess);
-                            //logger.debug("=============================================");
-
-                            search.findIncident.$or.push({
-                                "manager_email": req.session.email
-                            });
-                            //'$and': [ { lower_cd: 'L004' } ] }
-                        }
-                        */
-
-                        //logger.debug("getIncident =============================================");
-                        //logger.debug("page : ", page);
-                        //logger.debug("perPage : ", perPage);
-                        //logger.debug("req.query.perPage : ", req.query.perPage);
-                        //logger.debug("search.findIncident : ", JSON.stringify(search.findIncident));
-                        //logger.debug("getIncident =============================================");
-
-                        callback(null);
+                        });
+                    }
+                }
+            ], function (err, totalCnt) {
+                if (err) {
+                    return res.json({
+                        success: false,
+                        message: err
                     });
                 } else {
-                    callback(null);
+                    Incident.find(search.findIncident, function (err, incident) {
+                            if (err) {
+
+                                //logger.debug("=============================================");
+                                //logger.debug("incident : ", err);
+                                //logger.debug("=============================================");
+
+                                return res.json({
+                                    success: false,
+                                    message: err
+                                });
+                            } else {
+
+                                //incident에 페이징 처리를 위한 전체 갯수전달
+                                var rtnData = {};
+                                rtnData.incident = incident;
+                                rtnData.totalCnt = totalCnt
+
+                                //logger.debug("=============================================");
+                                //logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
+                                //logger.debug("rtnData : ", JSON.stringify(rtnData));
+                                //logger.debug("=============================================");
+
+                                res.json(rtnData);
+
+                            }
+                        })
+                        .sort('-register_date')
+                        .skip((page - 1) * perPage)
+                        .limit(perPage);
                 }
-
-            },
-            function (callback) {
-
-                Incident.count(search.findIncident, function (err, totalCnt) {
-                    if (err) {
-                        logger.error("incident : ", err);
-
-                        return res.json({
-                            success: false,
-                            message: err
-                        });
-                    } else {
-
-                        //logger.debug("=============================================");
-                        //logger.debug("incidentCnt : ", totalCnt);
-                        //logger.debug("=============================================");
-
-                        callback(null, totalCnt)
-                    }
-                });
-            }
-        ], function (err, totalCnt) {
-
-            Incident.find(search.findIncident, function (err, incident) {
-                    if (err) {
-
-                        //logger.debug("=============================================");
-                        //logger.debug("incident : ", err);
-                        //logger.debug("=============================================");
-
-                        return res.json({
-                            success: false,
-                            message: err
-                        });
-                    } else {
-
-                        //incident에 페이징 처리를 위한 전체 갯수전달
-                        var rtnData = {};
-                        rtnData.incident = incident;
-                        rtnData.totalCnt = totalCnt
-
-                        //logger.debug("=============================================");
-                        //logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
-                        //logger.debug("rtnData : ", JSON.stringify(rtnData));
-                        //logger.debug("=============================================");
-
-                        res.json(rtnData);
-
-                    }
-                })
-                .sort('-register_date')
-                .skip((page - 1) * perPage)
-                .limit(perPage);
             });
         } catch (err) {
 
@@ -675,9 +610,9 @@ module.exports = {
                     if (incident.attach_file.length > 0) {
                         for (var i = 0; i < incident.attach_file.length; i++) {
                             var path = incident.attach_file[i].path
-                            if(path.indexOf(CONFIG.fileUpload.directory) > -1){
+                            if (path.indexOf(CONFIG.fileUpload.directory) > -1) {
                                 incident.attach_file[i].path = path.substring(path.indexOf(CONFIG.fileUpload.directory) + CONFIG.fileUpload.directory.length + 1);
-                            }else{
+                            } else {
                                 incident.attach_file[i].path = incident.attach_file[i].path + "/" + incident.attach_file[i].filename;
                             }
 
@@ -690,7 +625,7 @@ module.exports = {
                             if (incident.attach_file[i].mimetype != null && incident.attach_file[i].mimetype.indexOf('image') > -1) {
                                 incident.attach_file[i].mimetype = 'image';
                             }
-                            
+
                         }
                     }
 
@@ -738,37 +673,40 @@ module.exports = {
                     Incident.findOneAndUpdate({
                         _id: req.params.id
                     }, upIncident, function (err, Incident) {
-                        if (err) return res.json({
-                            success: false,
-                            message: err
-                        });
-                        if (!Incident) {
+                        if (err) {
                             return res.json({
                                 success: false,
-                                message: "No data found to update"
+                                message: err
                             });
                         } else {
-                            //평가 완료 업데이트 성공 시 메일 전송
-                            Usermanage.findOne({
-                                email: Incident.request_id
-                            }, function (err, usermanage) {
-                                if (err) {
-                                    return res.json({
-                                        success: false,
-                                        message: err
-                                    });
-                                } else {
-                                    if(usermanage != null){
-                                        if (usermanage.email_send_yn == 'Y') {
-                                            mailer.evaluationSend(Incident, upIncident);
+                            if (!Incident) {
+                                return res.json({
+                                    success: false,
+                                    message: "No data found to update"
+                                });
+                            } else {
+                                //평가 완료 업데이트 성공 시 메일 전송
+                                Usermanage.findOne({
+                                    email: Incident.request_id
+                                }, function (err, usermanage) {
+                                    if (err) {
+                                        return res.json({
+                                            success: false,
+                                            message: err
+                                        });
+                                    } else {
+                                        if (usermanage != null) {
+                                            if (usermanage.email_send_yn == 'Y') {
+                                                mailer.evaluationSend(Incident, upIncident);
+                                            }
                                         }
                                     }
-                                }
-                            });
-                            return res.json({
-                                success: true,
-                                message: "update successed"
-                            });
+                                });
+                                return res.json({
+                                    success: true,
+                                    message: "update successed"
+                                });
+                            }
                         }
                     });
                 }
@@ -842,17 +780,15 @@ module.exports = {
                     //.select ('status_nm higher_nm lower_nm title content')
                     //.exec(function (err, incident) {
                     if (err) {
-                        return res.json({
-                            success: false,
-                            message: err
-                        });
-                    }
+                        callback(err, incident)
+                    } else {
 
-                    //logger.debug("=============================================");
-                    //logger.debug("incident count : ", incident.length);
-                    //logger.debug("=============================================");
-                    
-                    callback(null, incident)
+                        //logger.debug("=============================================");
+                        //logger.debug("incident count : ", incident.length);
+                        //logger.debug("=============================================");
+
+                        callback(err, incident)
+                    }
                 })
             }
         ], function (err, incident) {
@@ -861,13 +797,11 @@ module.exports = {
                     success: false,
                     message: err
                 });
+            } else {
+                //console.log(incident);
+                res.json(incident);
             }
-            //console.log(incident);
-            res.json(incident);
         });
 
     }
 };
-
-
-
