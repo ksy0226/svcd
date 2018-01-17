@@ -44,11 +44,11 @@ module.exports = {
                     err: err
                 });
             } else {
-                logger.debug("===============================")
-                logger.debug("usermanageAccess : ", usermanageAccess);
-                logger.debug("company : ", company);
-                logger.debug("===============================")
-
+                
+                //logger.debug("===============================")
+                //logger.debug("usermanageAccess : ", usermanageAccess);
+                //logger.debug("company : ", company);
+                //logger.debug("===============================")
 
                 res.render("usermanageAccess/index", {
                     company: company,
