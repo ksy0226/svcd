@@ -550,32 +550,6 @@ module.exports = {
 
                             //'$and': [ { lower_cd: 'L004' } ] }
                         }
-                        
-                       
-                        
-                        /*
-                        if (search.findIncident.$or == null) {
-
-                            logger.debug("=============================================");
-                            logger.debug("search.findIncident.$and is null : ", myHigherProcess);
-                            logger.debug("=============================================");
-
-                            search.findIncident.$or = [{
-                                "manager_email": req.session.email
-                            }];
-                            //{"$and":[{"higher_cd":{"$in":["H004","H006","H012","H024","H001"]}}]}
-                        } else {
-
-                            logger.debug("=============================================");
-                            logger.debug("search.findIncident.$and is not null : ", myHigherProcess);
-                            logger.debug("=============================================");
-
-                            search.findIncident.$or.push({
-                                "manager_email": req.session.email
-                            });
-                            //'$and': [ { lower_cd: 'L004' } ] }
-                        }
-                        */
 
                         logger.debug("getIncident =============================================");
                         logger.debug("page : ", page);
