@@ -15,8 +15,8 @@ module.exports = {
         logger.debug('req.session.dept_cd : ' + req.session.dept_cd);
         logger.debug('=============================================\n');
 
-        if (req.session.email != null) {
-            
+        if (req.session.email != null || req.session.email != undefined) {
+            logger.debug('trace1');
             next();
 
         } else { //세션값이 없으면
@@ -28,8 +28,8 @@ module.exports = {
             logger.debug('req.cookies.group_flag : ' + req.cookies.group_flag);
             logger.debug('=============================================\n');
 
-            if (req.cookies.user_flag !== null) {
-               
+            if (req.cookies.user_flag != null || req.session.email != undefined) {
+                logger.debug('trace2');
                 req.session.email = req.cookies.email;
                 req.session.user_flag = req.cookies.user_flag;
                 req.session.group_flag = req.cookies.group_flag;
@@ -50,7 +50,7 @@ module.exports = {
                 next();
 
             } else {
-
+                logger.debug('trace3');
                 var email = req.cookies.email;
                 var remember_me = req.cookies.remember_me;
 

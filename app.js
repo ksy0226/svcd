@@ -41,8 +41,8 @@ app.use(flash());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(session({secret: CONFIG.cryptoKey, resave: false, saveUninitialized: true}));
-//app.use(session({secret: CONFIG.cryptoKey, resave: false, saveUninitialized: true, cookie:{maxAge:6000}}));
+//app.use(session({secret: CONFIG.cryptoKey, resave: false, saveUninitialized: true}));
+app.use(session({secret: CONFIG.cryptoKey, resave: false, saveUninitialized: true, cookie:{maxAge:6000}}));
 
 app.use(methodOverride('_method'));
 

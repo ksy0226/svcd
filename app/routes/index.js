@@ -9,7 +9,7 @@ const controller = require('../controllers/login');
 /* GET home page. */
 router.get('/', ssc.sessionCheck, controller.index);
 
-router.route('/index').post(ssc.sessionCheck, controller.logincheck)
+router.route('/index').post(controller.logincheck)
                       .get(ssc.sessionCheck, controller.retry);
 router.route('/new').post(ssc.sessionCheck, controller.new);
 router.route('/index1').get(ssc.sessionCheck, controller.index1);  
