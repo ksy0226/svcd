@@ -69,18 +69,19 @@ module.exports = {
                 res.render("http/500", {
                     err: err
                 });
+            } else {
+                if (!company) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                } else {
+                    res.redirect('/company/');
+                }
             }
-            if (!company) {
-                res.render("http/500", {
-                    err: err
-                });
-            }
-            res.redirect('/company/');
         });
     },
 
     delete: (req, res, next) => {
-        logger.debug("Trace delete", req.params.id);
 
         CompanyModel.findOneAndRemove({
             _id: req.params.id
@@ -90,31 +91,30 @@ module.exports = {
                 res.render("http/500", {
                     err: err
                 });
+            } else {
+                if (!company) {
+                    res.render("http/500", {
+                        err: err
+                    });
+                } else {
+                    res.redirect('/company/');
+                }
             }
-            if (!company) {
-                res.render("http/500", {
-                    err: err
-                });
-            }
-            //res.render('index', {messages: req.flash('info')});
-            res.redirect('/company/');
         });
     },
 
     exceldownload: (req, res, next) => {
-        logger.debug(1);
+
         CompanyModel.find(req.body.company, function (err, companyJsonData) {
-            if (err) return res.json({
-                success: false,
-                message: err
-            });
-            logger.debug(companyJsonData);
-            //res.json(companyJsonData);
-            //res.send({companyJsonData: companyJsonData});
-            /*res.render("company/list", {
-            companyJsonData: companyJsonData
-        });*/
-            res.json(companyJsonData);
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: err
+                });
+            } else {
+
+                res.json(companyJsonData);
+            }
         });
     },
 
@@ -126,47 +126,47 @@ module.exports = {
 
             logger.debug("==========================================company getCompany========================================");
             logger.debug("====================================================================================================");
-/*
-            try {
-                request({
-                    //uri: "http://gw.isu.co.kr/CoviWeb/api/UserList.aspx?searchName="+encodeURIComponent(req.query.searchText),
-                    uri: CONFIG.groupware.uri + "/CoviWeb/api/UserList.aspx?searchName=" + encodeURIComponent(req.query.searchText),
-                    //uri: "http://gw.isu.co.kr/CoviWeb/api/UserInfo.aspx?email=hilee@isu.co.kr&password=nimda3",
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    method: "GET",
-                }, function (err, response, usermanage) {
+            /*
+                        try {
+                            request({
+                                //uri: "http://gw.isu.co.kr/CoviWeb/api/UserList.aspx?searchName="+encodeURIComponent(req.query.searchText),
+                                uri: CONFIG.groupware.uri + "/CoviWeb/api/UserList.aspx?searchName=" + encodeURIComponent(req.query.searchText),
+                                //uri: "http://gw.isu.co.kr/CoviWeb/api/UserInfo.aspx?email=hilee@isu.co.kr&password=nimda3",
+                                headers: {
+                                    'Content-type': 'application/json'
+                                },
+                                method: "GET",
+                            }, function (err, response, usermanage) {
 
-                    //logger.debug("=====================================");
-                    //logger.debug("=====>userJSON group ", usermanage);
-                    //logger.debug("=====================================");
+                                //logger.debug("=====================================");
+                                //logger.debug("=====>userJSON group ", usermanage);
+                                //logger.debug("=====================================");
 
-                    Usermanage.find({
-                            employee_nm: {
-                                $regex: new RegExp(req.query.searchText, "i")
-                            },
-                            group_flag: "out"
-                        })
-                        .limit(10)
-                        .exec(function (err, usermanageData) {
-                            if (err) {
-                                return res.json({
-                                    success: false,
-                                    message: err
-                                });
-                            } else {
-                                if (usermanage != null) {
-                                    usermanage = JSON.parse(usermanage);
-                                }
-                                res.json(mergeUser(usermanage, usermanageData));
-                            }
-                        }); //usermanage.find End
-                }); //request End
-            } catch (e) {
-                logger.error("===control usermanager.js userJSON : ", e);
-            }
-*/
+                                Usermanage.find({
+                                        employee_nm: {
+                                            $regex: new RegExp(req.query.searchText, "i")
+                                        },
+                                        group_flag: "out"
+                                    })
+                                    .limit(10)
+                                    .exec(function (err, usermanageData) {
+                                        if (err) {
+                                            return res.json({
+                                                success: false,
+                                                message: err
+                                            });
+                                        } else {
+                                            if (usermanage != null) {
+                                                usermanage = JSON.parse(usermanage);
+                                            }
+                                            res.json(mergeUser(usermanage, usermanageData));
+                                        }
+                                    }); //usermanage.find End
+                            }); //request End
+                        } catch (e) {
+                            logger.error("===control usermanager.js userJSON : ", e);
+                        }
+            */
 
             CompanyModel.find({}, function (err, companyJsonData) {
                     if (err) {

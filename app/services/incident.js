@@ -161,9 +161,7 @@ module.exports = {
             findIncident.$and = AndQueries
         }
 
-        logger.debug('12345 findIncident : ' + JSON.stringify(findIncident));
-        
-        
+        logger.debug('service.createSearch.findIncident : ' + JSON.stringify(findIncident));
         
         //logger.debug('req.query.higher_cd : ' + req.query.higher_cd);
         //logger.debug('req.query.lower_cd : ' + req.query.lower_cd);
@@ -182,7 +180,5 @@ module.exports = {
             findIncident: findIncident,
             highlight: highlight
         };
-
-
     }
 };
