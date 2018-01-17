@@ -150,6 +150,7 @@ function setLowerProcess(data){
  * 나의 업무 가져오기
  */
 function getMyProcess() { 
+    alert("getMyProcess()");
     //var reqParam = 'searchText=' + encodeURIComponent($('#searchText').val());
     var reqParam = 'higher_cd=' + $('#higher_cd').val();
     $.ajax({
@@ -190,7 +191,7 @@ function setMyProcess(data){
  */
 function saveMyProcess(){
     var myProcess = $("#myProcessSelect").val().toString();
-    var reqParam = "higher_cd=" + $('#higher_cd').val()+"&myProcess="+myProcess;
+    var reqParam = "higher_cd=" + $('#higher_cd').val()+"&myProcess="+encodeURIComponent(myProcess);
     $.ajax({
         type: "POST",
         async: true,
@@ -199,7 +200,7 @@ function saveMyProcess(){
         timeout: 30000, //제한 시간
         cache: false,
         data: reqParam, // $($('form')).serialize()
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        //contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         error: function (request, status, error) {
             alert("saveMyProcess error : " + error+ " "+request.responseText);
         },

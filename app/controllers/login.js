@@ -35,22 +35,14 @@ module.exports = {
 
     logincheck: (req, res) => {
         try {
-            //logger.debug('logincheck is called '+req.body.remember_me);
             if (req.body.remember_me === "on") {
-                //logger.debug('req.body.remember_me is on ');
                 res.cookie('email', req.body.email);
                 res.cookie('remember_me', req.body.remember_me === "on" ? "true" : "undefined");
-                res.cookie('user_flag', req.body.user_flag);
-                res.cookie('group_flag', req.body.group_flag);
-                //res.cookie('password', req.body.password);
                 email = req.body.email;
                 remember_me = req.body.remember_me;
             } else {
-                //logger.debug('req.body.remember_me is off ');
                 res.clearCookie('email');
                 res.clearCookie('remember_me');
-                res.clearCookie('user_flag');
-                res.clearCookie('group_flag');
             }
 
             /**
@@ -129,30 +121,11 @@ module.exports = {
                 } else {
 
                     if (userInfo.status == 'OK') {
-                        req.session.email = userInfo.email;
-                        req.session.user_id = userInfo.user_id;
-                        req.session.sabun = userInfo.sabun;
-                        req.session.password = userInfo.password;
-                        req.session.user_flag = userInfo.user_flag;
-                        req.session.group_flag = userInfo.group_flag;
-                        req.session.user_nm = userInfo.employee_nm;
-                        req.session.company_cd = userInfo.company_cd;
-                        req.session.company_nm = userInfo.company_nm;
-                        req.session.dept_cd = userInfo.dept_cd;
-                        req.session.dept_nm = userInfo.dept_nm;
-                        req.session.position_nm = userInfo.position_nm;
-                        req.session.jikchk_nm = userInfo.jikchk_nm;
-                        req.session.office_tel_no = userInfo.office_tel_no;
-                        req.session.hp_telno = userInfo.hp_telno;
 
-                        logger.debug("======================================");
-                        logger.debug("req.session.email", req.session.email);
-                        logger.debug("req.session.user_flag", req.session.user_flag);
-                        logger.debug("req.session.group_flag", req.session.group_flag);
-                        logger.debug("req.session.dept_cd", req.session.dept_cd);
-                        logger.debug("req.session.access_yn", req.session.access_yn);
-                        logger.debug("======================================");
-
+                        //>>>>>==================================================
+                        //세션,쿠키 설정
+                        setUser(req, res, userInfo);
+                        //<<<<<==================================================
 
                         //>>>>>==================================================
                         //권한에 따른 분기
@@ -253,20 +226,10 @@ module.exports = {
                         //logger.debug("====================>userInfo.status : ",userInfo.status);
                         //logger.debug("======================================");
 
-                        req.session.email = userInfo.email;
-                        req.session.user_id = userInfo.user_id;
-                        req.session.sabun = userInfo.sabun;
-                        req.session.password = userInfo.password;
-                        req.session.group_flag = userInfo.group_flag;
-                        req.session.user_nm = userInfo.employee_nm;
-                        req.session.company_cd = userInfo.company_cd;
-                        req.session.company_nm = userInfo.company_nm;
-                        req.session.dept_cd = userInfo.dept_cd;
-                        req.session.dept_nm = userInfo.dept_nm;
-                        req.session.position_nm = userInfo.position_nm;
-                        req.session.jikchk_nm = userInfo.jikchk_nm;
-                        req.session.office_tel_no = userInfo.office_tel_no;
-                        req.session.hp_telno = userInfo.hp_telno;
+                        //>>>>>==================================================
+                        //세션,쿠키 설정
+                        setUser(req, res, userInfo);
+                        //<<<<<==================================================
 
                         Usermanage.findOne({
                             email: req.query.email
@@ -339,7 +302,7 @@ module.exports = {
              */
             Usermanage.findOne({
                 email: req.query.email
-            }).exec(function (err, usermanage) {
+            }).exec(function (err, userInfo) {
                 if (err) {
                     res.render('index', {
                         email: email,
@@ -353,31 +316,18 @@ module.exports = {
                 //logger.debug("req.query.key : ", req.query.key);
                 //logger.debug("=================================================================");
 
-
-
-                if (usermanage != null) {
+                if (userInfo != null) {
 
                     //logger.debug("=================================================================");
-                    //logger.debug("usermanage is not null : ", usermanage);
+                    //logger.debug("userInfo is not null : ", userInfo);
                     //logger.debug("=================================================================");
 
                     if (req.query.key == "$2a$10$0bnBGRBBgiLTMPc8M8LZIuNjErIdMLGOI6SPjLxlIVIhi81HOA0U6") { //키값이 일치하면 - 고객사
 
-                        req.session.email = usermanage.email;
-                        req.session.user_id = usermanage.user_id;
-                        req.session.sabun = usermanage.sabun;
-                        req.session.password = usermanage.password;
-                        req.session.user_flag = usermanage.user_flag;
-                        req.session.group_flag = usermanage.group_flag;
-                        req.session.user_nm = usermanage.employee_nm;
-                        req.session.company_cd = usermanage.company_cd;
-                        req.session.company_nm = usermanage.company_nm;
-                        req.session.dept_cd = usermanage.dept_cd;
-                        req.session.dept_nm = usermanage.dept_nm;
-                        req.session.position_nm = usermanage.position_nm;
-                        req.session.jikchk_nm = usermanage.jikchk_nm;
-                        req.session.office_tel_no = usermanage.office_tel_no;
-                        req.session.hp_telno = usermanage.hp_telno;
+                                                //>>>>>==================================================
+                        //세션,쿠키 설정
+                        setUser(req, res, userInfo);
+                        //<<<<<==================================================
 
                         //>>>>>==================================================
                         //권한에 따른 분기
@@ -404,7 +354,7 @@ module.exports = {
                 } else { //usermanage테이블에 계정이 존재하지 않으면 그룹사 일반계정
 
                     //logger.debug("=================================================================");
-                    //logger.debug("usermanage is null : ", usermanage, req.body.email);
+                    //logger.debug("usermanage is null : ", userInfo, req.body.email);
                     //logger.debug("=================================================================");
 
                     res.render('index', {
@@ -426,6 +376,20 @@ module.exports = {
         delete req.session.email;
         email = req.cookies.email;
         remember_me = req.cookies.remember_me;
+
+        res.clearCookie('user_flag');
+        res.clearCookie('group_flag');
+        res.clearCookie('user_id');
+        res.clearCookie('sabun');
+        res.clearCookie('employee_nm');
+        res.clearCookie('company_cd');
+        res.clearCookie('company_nm');
+        res.clearCookie('dept_cd');
+        res.clearCookie('dept_nm');
+        res.clearCookie('position_nm');
+        res.clearCookie('jikchk_nm');
+        res.clearCookie('office_tel_no');
+        res.clearCookie('hp_telno');
 
         if (email == null) email = "";
 
@@ -456,6 +420,7 @@ module.exports = {
     index1: (req, res, next) => {
         res.render("index1");
     },
+
     index2: (req, res, next) => {
         res.render("index2");
     },
@@ -513,6 +478,7 @@ module.exports = {
                                 message: err
                             });
                         } else {
+
                             //logger.debug("===============================")
                             //logger.debug("usermanage : ", usermanage);
                             //logger.debug("JSON.stringify(req.body.usermanage) : ", JSON.stringify(req.body.usermanage));
@@ -606,13 +572,8 @@ module.exports = {
                     Incident.find(condition, function (err, incident) {
 
                         //logger.debug("======================================");
-                        //logger.debug("condition2 : ", condition2);
-                        //logger.debug("======================================");
-
-                        //logger.debug("======================================");
                         //logger.debug("incident : ", incident);
                         //logger.debug("======================================");
-
 
                         if (err) {
                             return res.json({
@@ -723,3 +684,36 @@ module.exports = {
     },
 
 };
+
+function setUser(req, res, userInfo){
+
+    req.session.email = userInfo.email;
+    req.session.user_id = userInfo.user_id;
+    req.session.sabun = userInfo.sabun;
+    req.session.password = userInfo.password;
+    req.session.user_flag = userInfo.user_flag;
+    req.session.group_flag = userInfo.group_flag;
+    req.session.user_nm = userInfo.employee_nm;
+    req.session.company_cd = userInfo.company_cd;
+    req.session.company_nm = userInfo.company_nm;
+    req.session.dept_cd = userInfo.dept_cd;
+    req.session.dept_nm = userInfo.dept_nm;
+    req.session.position_nm = userInfo.position_nm;
+    req.session.jikchk_nm = userInfo.jikchk_nm;
+    req.session.office_tel_no = userInfo.office_tel_no;
+    req.session.hp_telno = userInfo.hp_telno;
+
+    res.cookie('email', userInfo.email); 
+    res.cookie('user_flag', userInfo.user_flag);
+    res.cookie('group_flag', userInfo.group_flag);
+    res.cookie('employee_nm', userInfo.employee_nm);
+    res.cookie('company_cd', userInfo.company_cd);
+    res.cookie('company_nm', userInfo.company_nm);
+    res.cookie('dept_cd', userInfo.dept_cd);
+    res.cookie('dept_nm', userInfo.dept_nm);
+    res.cookie('position_nm', userInfo.position_nm);
+    res.cookie('jikchk_nm', userInfo.jikchk_nm);
+    res.cookie('office_tel_no', userInfo.office_tel_no);
+    res.cookie('hp_telno', userInfo.hp_telno);
+
+}
