@@ -125,7 +125,7 @@ module.exports = {
                 }else{
 
                     //logger.debug("==========================================getMyProcess=======================================");
-                    //logger.debug("myProcess : ",JSON.stringify(myProcess));
+                    //logger.debug("getmyProcess : ",JSON.stringify(myProcess));
                     //logger.debug("=============================================================================================");
 
                     res.json(myProcess);
@@ -170,8 +170,14 @@ module.exports = {
  * @param {*} myProcess : 나의 업무 문자열
  */
 function setNewMyProcess(req){
-
+    
     var lowerList = req.body.myProcess.split(',');
+    //logger.debug("==========================================setNewMyProcess=======================================");
+    //logger.debug("req.body.myProcess", req.body.myProcess);
+    //logger.debug("lowerList", lowerList);
+    //logger.debug("================================================================================================");
+
+
     var myProcessArr = new Array(lowerList.length); //반환 객체
 
     for(var i = 0 ; i < lowerList.length ; i++){
