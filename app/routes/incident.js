@@ -21,8 +21,8 @@ router.route('/getIncident').get(ssc.sessionCheck, controller.getIncident);
 router.route('/getIncidentDetail/:id').get(ssc.sessionCheck, controller.getIncidentDetail);
 router.route('/download/:path1/:path2').get(ssc.sessionCheck, controller.download);
 router.route('/valuationSave/:id').post(ssc.sessionCheck,controller.valuationSave);
-router.route('/exceldownload').get(controller.exceldownload);
-router.route('/insertedImage').get(controller.insertedImage);
+router.route('/exceldownload').get(ssc.sessionCheck, controller.exceldownload);
+router.route('/insertedImage').get(ssc.sessionCheck, controller.insertedImage);
 
 
 

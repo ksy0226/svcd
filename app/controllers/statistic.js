@@ -306,39 +306,6 @@ module.exports = {
 
     cntload: (req, res, next) => {
 
-        /*
-        try{
-            async.waterfall([function(callback) {
-
-                //logger.debug("xxxxxxxxxxxxx");
-                callback(null,'first');
-                //logger.debug("xxxxxxxxxxxxx");
-
-            },function(val, callback) {
-
-                //logger.debug("xxxxxxxxxxxxx2");
-                //logger.debug("val : ",val);
-                callback('second');
-                //logger.debug("xxxxxxxxxxxxx2")
-
-            }],function(value){
-            
-                //logger.debug("yyyyyyyyyyyyy");
-                //logger.debug('value : ',value);
-                //logger.debug("yyyyyyyyyyyyy");
-            
-            });
-
-        }catch(e){
-
-            //logger.debug("zzzzzzzzzzzzz");
-            //logger.debug('first');
-            //logger.debug("zzzzzzzzzzzzz");
-
-        }finally{}
-        */
-
-
         try {
             async.waterfall([function (callback) {
 
@@ -354,7 +321,7 @@ module.exports = {
                 var OrQueries = [];
                 var AndQueries = [];
 
-                if (req.session.user_flag == 4) {
+                if (req.session.user_flag == 3 || req.session.user_flag == 4) {
 
                     //나의업무지정 상위업무 처리 위한 조건
                     var condition2 = {};
@@ -464,13 +431,13 @@ module.exports = {
                         //logger.debug("req.session.user_flag : ", req.session.user_flag);
                         //logger.debug("==================================================");
 
-                    } else if (req.session.user_flag == 3) {  //업무관리자
+                    //} else if (req.session.user_flag == 3) {  //업무관리자
 
                         //logger.debug("==================================================");
                         //logger.debug("req.session.user_flag : ", req.session.user_flag);
                         //logger.debug("==================================================");
 
-                        condition.manager_dept_cd = req.session.dept_cd;
+                        //condition.manager_dept_cd = req.session.dept_cd;
 
                         //logger.debug("==================================================");
                         //logger.debug("condition.manager_dept_cd : ", condition.manager_dept_cd);
@@ -737,7 +704,7 @@ module.exports = {
                 var AndQueries = [];
 
 
-                if (req.session.user_flag == 4) {
+                if (req.session.user_flag == 3 || req.session.user_flag == 4) {
                     
                     //나의업무지정 상위업무 처리 위한 조건
                     var condition2 = {};
@@ -787,9 +754,9 @@ module.exports = {
 
                     if (req.session.user_flag == 1) {        //전체관리자
 
-                    } else if (req.session.user_flag == 3) {  //업무관리자
+                    //} else if (req.session.user_flag == 3) {  //업무관리자
 
-                        condition.manager_dept_cd = req.session.dept_cd;
+                    //    condition.manager_dept_cd = req.session.dept_cd;
 
                     } else if (req.session.user_flag == 5) {  //고객사관리자
 
@@ -1104,7 +1071,7 @@ module.exports = {
                 var OrQueries = [];
                 var AndQueries = [];
 
-                if (req.session.user_flag == 4) {
+                if (req.session.user_flag == 3 || req.session.user_flag == 4) {
 
                     //나의업무지정 상위업무 처리 위한 조건
                     var condition2 = {};
@@ -1169,9 +1136,9 @@ module.exports = {
 
                     if (req.session.user_flag == 1) {        //전체관리자
 
-                    } else if (req.session.user_flag == 3) {  //업무관리자
+                    //} else if (req.session.user_flag == 3) {  //업무관리자
 
-                        condition.manager_dept_cd = req.session.dept_cd;
+                    //    condition.manager_dept_cd = req.session.dept_cd;
 
                     } else if (req.session.user_flag == 5) {  //고객사관리자
 

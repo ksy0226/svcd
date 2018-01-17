@@ -11,6 +11,12 @@ module.exports = {
 
     createSearch: (req) => {
 
+        //logger.debug("================incident service=================");
+        //logger.debug("incident service req.query.gbn : ",req.query.gbn);
+        //logger.debug("incident service req.query : ",req.query);
+        //logger.debug("incident service req.session.user_flag : ",req.session.user_flag);
+        //logger.debug("=================================================");
+
         var findIncident = {},
             findUser = null,
             highlight = {};
@@ -25,7 +31,7 @@ module.exports = {
                         $regex: new RegExp(req.query.searchText, "i")
                     }
                 });
-                logger.debug('OrQueries : ' + JSON.stringify(OrQueries));
+                //logger.debug('OrQueries : ' + JSON.stringify(OrQueries));
                 highlight.title = req.query.searchText;
             } else if (searchTypes.indexOf("content") >= 0) {
                 OrQueries.push({
@@ -33,7 +39,7 @@ module.exports = {
                         $regex: new RegExp(req.query.searchText, "i")
                     }
                 });
-                logger.debug('OrQueries : ' + OrQueries);
+                //logger.debug('OrQueries : ' + OrQueries);
                 highlight.content = req.query.searchText;
             } else if (searchTypes.indexOf("title,content") >= 0) {
                 OrQueries.push({
@@ -44,7 +50,7 @@ module.exports = {
                         $regex: new RegExp(req.query.searchText, "i")
                     }
                 });
-                logger.debug('OrQueries : ' + OrQueries);
+                //logger.debug('OrQueries : ' + OrQueries);
                 highlight.content = req.query.searchText;
             }
 
@@ -161,7 +167,7 @@ module.exports = {
             findIncident.$and = AndQueries
         }
 
-        logger.debug('service.createSearch.findIncident : ' + JSON.stringify(findIncident));
+        //logger.debug('service.createSearch.findIncident : ' + JSON.stringify(findIncident));
         
         //logger.debug('req.query.higher_cd : ' + req.query.higher_cd);
         //logger.debug('req.query.lower_cd : ' + req.query.lower_cd);
