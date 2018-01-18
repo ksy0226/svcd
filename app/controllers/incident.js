@@ -169,7 +169,7 @@ module.exports = {
                 callback(null);
             });
         }], function (err) {
-            logger.debug("trace 2");
+            //logger.debug("trace 2");
             if (err) {
                 res.render("http/500", {
                     err: err
@@ -222,7 +222,7 @@ module.exports = {
                 callback(null);
             });
         }], function (err) {
-            logger.debug("trace 2");
+            //logger.debug("trace 2");
             if (err) {
                 res.render("http/500", {
                     err: err
@@ -315,7 +315,7 @@ module.exports = {
      * incident 상세 화면 조회
      */
     viewDetail: (req, res, next) => {
-        logger.debug("Trace viewDetail : ", req.params.id);
+        //logger.debug("Trace viewDetail : ", req.params.id);
         try {
             Incident.findById({
                 _id: req.params.id
@@ -336,11 +336,11 @@ module.exports = {
                                 incident.attach_file[i].path = incident.attach_file[i].path + "/" + incident.attach_file[i].filename;
                             }
 
-                            logger.debug("=============================================");
-                            logger.debug("incident.attach_file[i].path 1 : ", incident.attach_file[i].path);
-                            logger.debug("incident.attach_file[i].filename 1 : ", incident.attach_file[i].filename);
-                            logger.debug("incident.attach_file[i].originalname 1 : ", incident.attach_file[i].originalname);
-                            logger.debug("=============================================");
+                            //logger.debug("=============================================");
+                            //logger.debug("incident.attach_file[i].path 1 : ", incident.attach_file[i].path);
+                            //logger.debug("incident.attach_file[i].filename 1 : ", incident.attach_file[i].filename);
+                            //logger.debug("incident.attach_file[i].originalname 1 : ", incident.attach_file[i].originalname);
+                            //logger.debug("=============================================");
 
 
                             if (incident.attach_file[i].mimetype != null && incident.attach_file[i].mimetype.indexOf('image') > -1) {
@@ -392,42 +392,34 @@ module.exports = {
             });
         }
 
-
-        logger.debug("=============================================");
-        logger.debug(" userlist >>>> search.request_id  : ",  search.request_id );
-        logger.debug("=============================================");
-
         var page = 1;
         var perPage = 3;
 
         if (req.query.page != null && req.query.page != '') page = Number(req.query.page);
         if (req.query.perPage != null && req.query.perPage != '') perPage = Number(req.query.perPage);
 
-        logger.debug("=============================================");
-        logger.debug("page : ", page);
-        logger.debug("perPage : ", perPage);
-        logger.debug("req.query.perPage : ", req.query.perPage);
-        logger.debug("=============================================");
+        //logger.debug("=============================================");
+        //logger.debug("page : ", page);
+        //logger.debug("perPage : ", perPage);
+        //logger.debug("req.query.perPage : ", req.query.perPage);
+        //logger.debug("=============================================");
 
         try {
 
             async.waterfall([function (callback) {
 
-                logger.debug("=============================================");
-                logger.debug("search.request_id : "+search.request_id);
-                logger.debug("search.findIncident : "+JSON.stringify(search.findIncident));
-                logger.debug("=============================================");
+                //logger.debug("=============================================");
+                //logger.debug("req.session.email : "+req.session.email);                
+                //logger.debug("search.findIncident : "+JSON.stringify(search.findIncident));
+                //logger.debug("=============================================");
 
                 Incident.count(search.findIncident, function (err, totalCnt) {
 
-                   
-                    
-
                     if (err) {
 
-                        logger.debug("=============================================");
-                        logger.debug("incident : ", err);
-                        logger.debug("=============================================");
+                        //logger.debug("=============================================");
+                        //logger.debug("incident : ", err);
+                        //logger.debug("=============================================");
 
                         return res.json({
                             success: false,
@@ -435,9 +427,9 @@ module.exports = {
                         });
                     } else {
                         
-                        logger.debug("=============================================");
-                        logger.debug("incidentCnt : ", totalCnt);
-                        logger.debug("=============================================");
+                        //logger.debug("=============================================");
+                        //logger.debug("incidentCnt : ", totalCnt);
+                        //logger.debug("=============================================");
 
                         callback(null, totalCnt)
                     }
@@ -447,9 +439,9 @@ module.exports = {
                 Incident.find(search.findIncident, function (err, incident) {
                         if (err) {
 
-                            logger.debug("=============================================");
-                            logger.debug("incident : ", err);
-                            logger.debug("=============================================");
+                            //logger.debug("=============================================");
+                            //logger.debug("incident : ", err);
+                            //logger.debug("=============================================");
 
                             return res.json({
                                 success: false,
@@ -462,10 +454,10 @@ module.exports = {
                             rtnData.incident = incident;
                             rtnData.totalCnt = totalCnt
 
-                            logger.debug("=============================================");
-                            logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
-                            logger.debug("rtnData : ", JSON.stringify(rtnData));
-                            logger.debug("=============================================");
+                            //logger.debug("=============================================");
+                            //logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
+                            //logger.debug("rtnData : ", JSON.stringify(rtnData));
+                            //logger.debug("=============================================");
 
                             res.json(rtnData);
 
@@ -477,9 +469,9 @@ module.exports = {
             });
         } catch (err) {
 
-            logger.debug("===============search control================");
-            logger.debug("search list error : ", err);
-            logger.debug("=============================================");
+            //logger.debug("===============search control================");
+            //logger.debug("search list error : ", err);
+            //logger.debug("=============================================");
 
         } finally {}
 
@@ -496,11 +488,11 @@ module.exports = {
         if (req.query.page != null && req.query.page != '') page = Number(req.query.page);
         if (req.query.perPage != null && req.query.perPage != '') perPage = Number(req.query.perPage);
 
-        logger.debug("===============search control================");
-        logger.debug("req.query.higher_cd : ", req.query.higher_cd);
-        logger.debug("req.query.lower_cd : ", req.query.lower_cd);
-        logger.debug("search.findIncident : ", JSON.stringify(search.findIncident));
-        logger.debug("=============================================");
+        //logger.debug("===============search control================");
+        //logger.debug("req.query.higher_cd : ", req.query.higher_cd);
+        //logger.debug("req.query.lower_cd : ", req.query.lower_cd);
+        //logger.debug("search.findIncident : ", JSON.stringify(search.findIncident));
+        //logger.debug("=============================================");
 
         try {
 
@@ -516,9 +508,9 @@ module.exports = {
 
                         if (search.findIncident.$and == null) {
 
-                            logger.debug("=============================================");
-                            logger.debug("search.findIncident.$and is null : ", myHigherProcess);
-                            logger.debug("=============================================");
+                            //logger.debug("=============================================");
+                            //logger.debug("search.findIncident.$and is null : ", myHigherProcess);
+                            //logger.debug("=============================================");
 
                             search.findIncident.$and = [{
                                 "higher_cd": {
@@ -534,9 +526,9 @@ module.exports = {
 
                         } else {
 
-                            logger.debug("=============================================");
-                            logger.debug("search.findIncident.$and is not null : ", myHigherProcess);
-                            logger.debug("=============================================");
+                            //logger.debug("=============================================");
+                            //logger.debug("search.findIncident.$and is not null : ", myHigherProcess);
+                            //logger.debug("=============================================");
 
                             search.findIncident.$and.push({
                                 "higher_cd": {
@@ -551,12 +543,12 @@ module.exports = {
                             //'$and': [ { lower_cd: 'L004' } ] }
                         }
 
-                        logger.debug("getIncident =============================================");
-                        logger.debug("page : ", page);
-                        logger.debug("perPage : ", perPage);
-                        logger.debug("req.query.perPage : ", req.query.perPage);
-                        logger.debug("search.findIncident : ", JSON.stringify(search.findIncident));
-                        logger.debug("getIncident =============================================");
+                        //logger.debug("getIncident =============================================");
+                        //logger.debug("page : ", page);
+                        //logger.debug("perPage : ", perPage);
+                        //logger.debug("req.query.perPage : ", req.query.perPage);
+                        //logger.debug("search.findIncident : ", JSON.stringify(search.findIncident));
+                        //logger.debug("getIncident =============================================");
 
                         callback(err);
                     });
@@ -577,9 +569,9 @@ module.exports = {
                         });
                     } else {
 
-                        logger.debug("=============================================");
-                        logger.debug("incidentCnt : ", totalCnt);
-                        logger.debug("=============================================");
+                        //logger.debug("=============================================");
+                        //logger.debug("incidentCnt : ", totalCnt);
+                        //logger.debug("=============================================");
 
                         callback(null, totalCnt)
                     }
@@ -590,9 +582,9 @@ module.exports = {
             Incident.find(search.findIncident, function (err, incident) {
                     if (err) {
 
-                        logger.debug("=============================================");
-                        logger.debug("incident : ", err);
-                        logger.debug("=============================================");
+                        //logger.debug("=============================================");
+                        //logger.debug("incident : ", err);
+                        //logger.debug("=============================================");
 
                         return res.json({
                             success: false,
@@ -605,10 +597,10 @@ module.exports = {
                         rtnData.incident = incident;
                         rtnData.totalCnt = totalCnt
 
-                        logger.debug("=============================================");
-                        logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
-                        logger.debug("rtnData : ", JSON.stringify(rtnData));
-                        logger.debug("=============================================");
+                        //logger.debug("=============================================");
+                        //logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
+                        //logger.debug("rtnData : ", JSON.stringify(rtnData));
+                        //logger.debug("=============================================");
 
                         res.json(rtnData);
 
@@ -620,9 +612,9 @@ module.exports = {
             });
         } catch (err) {
 
-            logger.debug("===============search control================");
-            logger.debug("search list error : ", err);
-            logger.debug("=============================================");
+            //logger.debug("===============search control================");
+            //logger.debug("search list error : ", err);
+            //logger.debug("=============================================");
 
         } finally {}
 
@@ -633,7 +625,7 @@ module.exports = {
      */
     getIncidentDetail: (req, res, next) => {
 
-        logger.debug("Trace viewDetail : ", req.params.id);
+        //logger.debug("Trace viewDetail : ", req.params.id);
         try {
             Incident.findById({
                 _id: req.params.id
@@ -655,11 +647,11 @@ module.exports = {
                                 incident.attach_file[i].path = incident.attach_file[i].path + "/" + incident.attach_file[i].filename;
                             }
 
-                            logger.debug("=============================================");
-                            logger.debug("incident.attach_file[i].path 2 : ", incident.attach_file[i].path);
-                            logger.debug("incident.attach_file[i].filename 2 : ", incident.attach_file[i].filename);
-                            logger.debug("incident.attach_file[i].originalname 2 : ", incident.attach_file[i].originalname);
-                            logger.debug("=============================================");
+                            //logger.debug("=============================================");
+                            //logger.debug("incident.attach_file[i].path 2 : ", incident.attach_file[i].path);
+                            //logger.debug("incident.attach_file[i].filename 2 : ", incident.attach_file[i].filename);
+                            //logger.debug("incident.attach_file[i].originalname 2 : ", incident.attach_file[i].originalname);
+                            //logger.debug("=============================================");
 
                             if (incident.attach_file[i].mimetype != null && incident.attach_file[i].mimetype.indexOf('image') > -1) {
                                 incident.attach_file[i].mimetype = 'image';
@@ -684,7 +676,7 @@ module.exports = {
     insertedImage: (req, res, next) => {
         //console.log("image upload .....");
         //res.send( '/uploads/' + req.file.filename);
-        logger.debug("=====================>incident controllers insertedImage");
+        //logger.debug("=====================>incident controllers insertedImage");
         res.send('/uploads/' + req.file.filename);
     },
 
@@ -692,8 +684,8 @@ module.exports = {
      * 서비스 평가 내용 등록
      */
     valuationSave: (req, res, next) => {
-        logger.debug("valuationSave =====================> " + JSON.stringify(req.body));
-        logger.debug("req.body.incident : ", req.body.incident);
+        //logger.debug("valuationSave =====================> " + JSON.stringify(req.body));
+        //logger.debug("req.body.incident : ", req.body.incident);
         try {
             async.waterfall([function (callback) {
                 var upIncident = req.body.incident;
@@ -701,7 +693,7 @@ module.exports = {
                 upIncident.status_nm = '완료';
                 callback(null, upIncident);
             }], function (err, upIncident) {
-                logger.debug("=========> upIncident ", upIncident);
+                //logger.debug("=========> upIncident ", upIncident);
 
                 if (err) {
                     res.json({
@@ -777,9 +769,9 @@ module.exports = {
 
                         if (search.findIncident.$and == null) {
 
-                            logger.debug("=============================================");
-                            logger.debug("search.findIncident.$and is null : ", myHigherProcess);
-                            logger.debug("=============================================");
+                            //logger.debug("=============================================");
+                            //logger.debug("search.findIncident.$and is null : ", myHigherProcess);
+                            //logger.debug("=============================================");
 
                             search.findIncident.$and = [{
                                 "higher_cd": {
@@ -789,9 +781,9 @@ module.exports = {
                             //{"$and":[{"higher_cd":{"$in":["H004","H006","H012","H024","H001"]}}]}
                         } else {
 
-                            logger.debug("=============================================");
-                            logger.debug("search.findIncident.$and is not null : ", myHigherProcess);
-                            logger.debug("=============================================");
+                            //logger.debug("=============================================");
+                            //logger.debug("search.findIncident.$and is not null : ", myHigherProcess);
+                            //logger.debug("=============================================");
 
                             search.findIncident.$and.push({
                                 "higher_cd": {
@@ -822,9 +814,9 @@ module.exports = {
                         });
                     }
 
-                    logger.debug("=============================================");
-                    logger.debug("incident count : ", incident.length);
-                    logger.debug("=============================================");
+                    //logger.debug("=============================================");
+                    //logger.debug("incident count : ", incident.length);
+                    //logger.debug("=============================================");
                     
                     callback(null, incident)
                 })
