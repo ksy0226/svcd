@@ -13,6 +13,7 @@ router.route('/mng_list').get(ssc.sessionCheck, controller.mng_list);
 router.route('/remain_list').get(ssc.sessionCheck, controller.remain_list);
 router.route('/status_list').get(ssc.sessionCheck, controller.status_list);
 router.route('/getlowerprocess').get(ssc.sessionCheck, controller.getlowerprocess);
+router.route('/gethigherprocess').get(ssc.sessionCheck, controller.gethigherprocess);
 router.route('/list').get(ssc.sessionCheck, controller.list);
 router.route('/getqnalist').get(controller.getqnalist);
 router.route('/qna_detail/:id').get(ssc.sessionCheck, controller.qna_detail);

@@ -36,7 +36,9 @@ $(document).ready(function () {
 
     //최초 페이징
     //paging(totalData, dataPerPage, pageCnt, 1);
-    
+    //
+    getCompany();
+
     //최초 조회
     getDataList(1);
 
@@ -45,6 +47,12 @@ $(document).ready(function () {
         research(1);
     }); 
 
+    //회사 선택 시
+    $('#company_cd').on('change', function () {
+        getHigherProcessList();
+        research(1);
+    });
+    /*
     //상위업무 변경 시
     $('#higher_cd').on('change', function () {
         getLowerProcessList();
@@ -55,6 +63,7 @@ $(document).ready(function () {
     $('#lower_cd').on('change', function () {
         research(1);
     });
+    */
 
 });
 
@@ -68,32 +77,81 @@ function research(selectedPage){
 
 
 /**
+ * 상위업무 가져오기
+ */
+function getHigherProcessList(){
+    var reqParam = 'company_cd=' + $('#company_cd').val();
+    alert("reqParam : "+reqParam);
+
+    $.ajax({
+        type: "GET",
+        async: true,
+        url: "/search/gethigherprocess",
+        dataType: "json", // xml, html, script, json 미지정시 자동판단
+        timeout: 30000, //제한 시간
+        cache: false,
+        data: reqParam, // $($('form')).serialize()
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        error: function (request, status, error) {
+            alert("getHigherProcessList error : " + error);
+        },
+        beforeSend: function () {
+        },
+        success: function (dataObj) {
+            setHigherContent(dataObj);
+        }
+    });
+}
+
+/**
  * 하위업무 가져오기
  */
 function getLowerProcessList(){
     var reqParam = 'higher_cd=' + $('#higher_cd').val();
     $.ajax({
+
         type: "GET",
+        async: true,
         url: "/search/getlowerprocess",
-        contentType: "application/json",
-        data: JSON.stringify({"higher_cd":reqParam}),
-        //data: reqParam,
-        dataType: "json",
-        success: function(data, status){
-            setContent(data, reqParam);
+        dataType: "json", // xml, html, script, json 미지정시 자동판단
+        timeout: 30000, //제한 시간
+        cache: false,
+        data: reqParam, // $($('form')).serialize()
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        error: function (request, status, error) {
+            alert("getLowerProcessList error : " + error);
         },
-        error: function(data, status, err) {
-            logger.debug("err : "+err);
-            return;
+        beforeSend: function () {
+        },
+        success: function (dataObj) {
+            setContent(dataObj);
         }
     });
 }
 
 
 /**
+ * 상위업무 뿌리기
+ */
+function setHigherContent(data){
+        $('#higher_cd').empty();
+        $('#higher_cd').append("<option value='*'> 전체</option>");
+        
+        for(var i=0; i<data.length; i++){
+            var higher_cdVal = data[i]["higher_cd"];
+            //alert("i" + higher_cdVal);
+
+            if(data[i]["company_cd"] == $('#company_cd').val()){
+                $('#higher_cd').append("<option value='"+higher_cdVal+"'>"+data[i]["higher_nm"]+"</option>");
+            }
+        }
+    }
+
+
+/**
  * 하위업무 뿌리기
  */
-function setContent(data, higher_cd){
+function setContent(data){
 
 
     $('#lower_cd').empty();
@@ -455,5 +513,44 @@ function setDetail(dataObj){
         $('#_attach').removeClass();
     }
     
+
+}
+
+
+/**
+ * 회사 정보 조회
+ */
+function getCompany() {
+    //var reqParam = 'company_cd=' + company_cd ;
+    $.ajax({
+        type: "GET",
+        async: true,
+        url: "/company/getCompany/",
+        contentType: "application/json",
+        //data : reqParam,
+        dataType: "json",
+        error: function (request, status, error) {
+            alert("getCompany : " + error + " " + request.responseText);
+        },
+        success: function (data) {
+            setCompany(data);
+        }
+    });
+}
+
+/**
+ * 회사 정보 세팅
+ */
+function setCompany(data) {
+    $('#company_cd').empty();
+    $('#company_cd').append("<option value='*' selected>전체</option>");
+    for (var i = 0; i < data.length; i++) {
+        $('#company_cd').append("<option value='" + data[i]["company_cd"] + "'>" + data[i]["company_nm"] + "</option>");
+    }
+
+    
+    //회사 세팅이 끝나면 조회한다.
+    getHighLowerSt();
+
 
 }

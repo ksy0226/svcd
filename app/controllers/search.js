@@ -406,13 +406,39 @@ module.exports = {
             });
         });
     },
+    /**
+     * 상위업무 리스트 조회
+     */
+    gethigherprocess: (req, res, next) => {
+        //logger.debug(1);
+
+        var condition = {};
+        if (req.query.company_cd != null) {
+            condition.company_cd = req.query.company_cd;
+        }
+
+        CompanyProcessModel.find(condition, function (err, higherprocess) {
+            //logger.debug('lowerprocess.lower_nm', req.body.lowerprocess);
+            if (err) return res.json({
+                success: false,
+                message: err
+            });
+            res.json(higherprocess);
+        });
+    },
 
     /**
      * 하위업무 리스트 조회
      */
     getlowerprocess: (req, res, next) => {
         //logger.debug(1);
-        LowerProcessModel.find(req.body.lowerprocess, function (err, lowerprocess) {
+        
+        var condition = {};
+        if (req.query.higher_cd != null) {
+            condition.higher_cd = req.query.higher_cd;
+        }
+
+        HigherProcessModel.find(condition, function (err, lowerprocess) {
             //logger.debug('lowerprocess.lower_nm', req.body.lowerprocess);
             if (err) return res.json({
                 success: false,
