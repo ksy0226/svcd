@@ -27,7 +27,8 @@ module.exports = {
             logger.debug('req.cookies.group_flag : ' + req.cookies.group_flag);
             logger.debug('=============================================\n');
 
-            if (req.cookies.user_flag != null || req.session.email != undefined) {
+            if (req.cookies.user_flag != null || req.session.user_flag != undefined) {
+                
                 req.session.email = req.cookies.email;
                 req.session.user_flag = req.cookies.user_flag;
                 req.session.group_flag = req.cookies.group_flag;
