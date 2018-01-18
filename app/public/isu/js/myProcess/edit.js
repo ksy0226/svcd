@@ -150,7 +150,6 @@ function setLowerProcess(data){
  * 나의 업무 가져오기
  */
 function getMyProcess() { 
-    alert("getMyProcess()");
     //var reqParam = 'searchText=' + encodeURIComponent($('#searchText').val());
     var reqParam = 'higher_cd=' + $('#higher_cd').val();
     $.ajax({
