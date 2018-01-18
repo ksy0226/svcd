@@ -194,6 +194,7 @@ function setDataList(dataObj, selectedPage, totalDataCnt) {
 
         addList += "								<td class='text-center'>" + dataObj[i].request_nm + "</td>";
         addList += "								<td class='text-center'>" + dataObj[i].register_date + "</td>";
+        addList += "								<td class='text-center'>" + dataObj[i].manager_nm + "</td>";
         addList += "								<td class='text-center'>" + dataObj[i].status_nm + "</td>";
         if(dataObj[i].status_cd == 4){
             addList += "								<td class='text-center'>";
