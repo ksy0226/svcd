@@ -245,10 +245,12 @@ module.exports = {
 
                                 if (usermanage == null) {
                                     req.session.user_flag = '9';
+                                    res.cookie('user_flag', '9');
                                 } else {
                                     req.session.user_flag = usermanage.user_flag;
+                                    res.cookie('user_flag', usermanage.user_flag);
                                 }
-                                
+
                                 logger.debug("======================================");
                                 logger.debug("req.session.email", req.session.email);
                                 logger.debug("req.session.user_flag", req.session.user_flag);
