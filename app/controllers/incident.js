@@ -561,7 +561,7 @@ module.exports = {
                         callback(err);
                     });
                 } else {
-                    callback(err);
+                    callback(null);
                 }
 
             },
