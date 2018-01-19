@@ -22,15 +22,16 @@ function fnTableToExcel(dvData){
         txtArea1.document.write(tab_text);
         txtArea1.document.close();
         txtArea1.focus(); 
-        sa=txtArea1.document.execCommand("SaveAs",true,"exceldownload.xls");
+        var sa=txtArea1.document.execCommand("SaveAs",true,"exceldownload.xls");
     } else {                //other browser not tested on IE 11
-        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+        var sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
     }  
     return (sa);
 }
 
 
 function fnAllExcel(JsonData){
+    alert("fnAllExcel()");
     var arrData = typeof JsonData != 'object' ? JSON.parse(JsonData) : JsonData;
 
     var tab_text="<table border='1px'>";
@@ -152,9 +153,9 @@ function fnAllExcel(JsonData){
         txtArea1.document.write(tab_text);
         txtArea1.document.close();
         txtArea1.focus(); 
-        sa=txtArea1.document.execCommand("SaveAs",true,"exceldownload.xls");
+        var sa = txtArea1.document.execCommand("SaveAs",true,"exceldownload.xls");
     } else {                //other browser not tested on IE 11
-        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+        var sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
     }  
     return (sa);
     
@@ -194,10 +195,10 @@ function fnJsonToExcel(JsonData){
         txtArea1.document.write(tab_text);
         txtArea1.document.close();
         txtArea1.focus(); 
-        sa=txtArea1.document.execCommand("SaveAs",true,"exceldownload.xls");
+        var sa = txtArea1.document.execCommand("SaveAs",true,"exceldownload.xls");
     } else {                //other browser not tested on IE 11
         //sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
-        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+        var sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
     }  
     return (sa);
 }

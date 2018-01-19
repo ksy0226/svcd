@@ -41,6 +41,20 @@ module.exports = {
                 });
                 //logger.debug('OrQueries : ' + OrQueries);
                 highlight.content = req.query.searchText;
+            } else if (searchTypes.indexOf("request") >= 0) {
+                OrQueries.push({
+                    request_nm: {
+                        $regex: new RegExp(req.query.searchText, "i")
+                    }
+                });
+                highlight.request_nm = req.query.searchText;
+            } else if (searchTypes.indexOf("manager") >= 0) {
+                OrQueries.push({
+                    manager_nm: {
+                        $regex: new RegExp(req.query.searchText, "i")
+                    }
+                });
+                highlight.manager_nm = req.query.searchText;
             } else if (searchTypes.indexOf("title,content") >= 0) {
                 OrQueries.push({
                     title: {
@@ -194,7 +208,7 @@ module.exports = {
             findIncident.$and = AndQueries
         }
 
-        //logger.debug('service.createSearch.findIncident : ' + JSON.stringify(findIncident));
+        logger.debug('121212 findIncident : ' + JSON.stringify(findIncident));
         
         //logger.debug('req.query.higher_cd : ' + req.query.higher_cd);
         //logger.debug('req.query.lower_cd : ' + req.query.lower_cd);
