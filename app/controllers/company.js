@@ -234,4 +234,42 @@ module.exports = {
             }
         });
     },
+    
+    /**
+     * 권한별 회사 정보 조회
+     */
+    getUFCompany: (req, res, next) => {
+        try {
+
+            logger.debug("==========================================company getCompany========================================");
+            logger.debug("====================================================================================================");
+            var condition ={};
+            if(req.session.user_flag == "5"){
+                condition.company_cd = req.session.company_cd;
+            }
+            CompanyModel.find(condition, function (err, companyJsonData) {
+                if (err) {
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
+
+                    //logger.debug("==========================================CompanyModel.find({}========================================");
+                    //logger.debug("companyJsonData : ",companyJsonData);
+                    //logger.debug("====================================================================================================");
+
+                    res.json(companyJsonData);
+                };
+
+            })
+            .sort({
+                group_flag: -1,
+                company_nm: 1
+            });
+            
+        } catch (e) {
+            logger.error("CompanyModel error : ", e);
+        } finally {}
+    },
 };

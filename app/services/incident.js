@@ -59,6 +59,7 @@ module.exports = {
             }
         }
 
+        var company_cd = req.query.company_cd == null ? "*" : req.query.company_cd;
         var higher_cd = req.query.higher_cd == null ? "*" : req.query.higher_cd;
         var lower_cd = req.query.lower_cd == null ? "*" : req.query.lower_cd;
         var status_cd = req.query.status_cd == null ? "*" : req.query.status_cd;
@@ -84,6 +85,9 @@ module.exports = {
             });
         }
         //추가 끝
+        
+        
+
         
 
         //상위업무가 존재하면
@@ -138,7 +142,14 @@ module.exports = {
             //logger.debug("================incident service=================");
             //logger.debug("incident service user_flag == 4");
             //logger.debug("=================================================");
-
+            //회사코드가 존재하면
+            if(req.query.user == "managerall"){
+                if (company_cd != '*') {
+                    AndQueries.push({
+                        request_company_cd: company_cd
+                    });
+                }
+            }
 
         //업무관리자 (user_flag = 3)이면
         } else if (req.session.user_flag == "3") {
@@ -148,17 +159,33 @@ module.exports = {
             //logger.debug("=================================================");
 
             if(req.query.user != "manager"){
-                AndQueries.push({
-                    manager_dept_cd: req.session.dept_cd
-                    //manager_dept_cd: "ISU_STISU_ST005"
-                });
+                if(req.query.user == "managerall"){
+                    if (company_cd != '*') {
+                        AndQueries.push({
+                            request_company_cd: company_cd
+                        });
+                    }
+                }else{
+                    AndQueries.push({
+                        manager_dept_cd: req.session.dept_cd
+                        //manager_dept_cd: "ISU_STISU_ST005"
+                    });
+                }
             }
 
         }else if(req.session.user_flag == "1") {
 
-            //logger.debug("================incident service=================");
-            //logger.debug("incident service user_flag == 3");
-            //logger.debug("=================================================");
+            logger.debug("================incident service=================");
+            logger.debug("incident service user_flag == 1 ",company_cd);
+            logger.debug("=================================================");
+
+            if(req.query.user == "managerall"){
+                if (company_cd != '*') {
+                    AndQueries.push({
+                        request_company_cd: company_cd
+                    });
+                }
+            }
 
         }
 

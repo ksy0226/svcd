@@ -203,9 +203,9 @@ module.exports = {
                     method: "GET",
                 }, function (err, response, gwUser) {
 
-                    logger.debug("======================================");
-                    logger.debug("gwUserr", JSON.stringify(gwUser));
-                    logger.debug("======================================");
+                    //logger.debug("======================================");
+                    //logger.debug("gwUserr", JSON.stringify(gwUser));
+                    //logger.debug("======================================");
 
                     var userInfo = JSON.parse(gwUser);
                     userInfo.user_flag = '9';
@@ -222,9 +222,9 @@ module.exports = {
 
                     if (userInfo.status == 'OK') {
 
-                        logger.debug("======================================");     
-                        logger.debug("====================>userInfo.status : ",userInfo.status);
-                        logger.debug("======================================");
+                        //logger.debug("======================================");     
+                        //logger.debug("====================>userInfo.status : ",userInfo.status);
+                        //logger.debug("======================================");
 
                         //>>>>>==================================================
                         //세션,쿠키 설정
@@ -241,8 +241,6 @@ module.exports = {
                                     message: "error : 담당자에게 문의하세요."
                                 });
                             } else {
-
-
                                 if (usermanage == null) {
                                     req.session.user_flag = '9';
                                 } else {
