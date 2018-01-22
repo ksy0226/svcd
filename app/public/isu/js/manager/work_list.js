@@ -35,18 +35,25 @@ $(document).ready(function () {
         }
     });
 
-
+    getCompany();
     //최초 페이징
     //paging(totalData, dataPerPage, pageCount, 1);
 
     //최초 조회
-    getDataList(1);
+    //getDataList(1);
 
     //조회버튼 클릭 시
     $('#searchBtn').on('click', function () {
         $('#lower_cd').val('*');
         research(1);
     });
+
+    //회사 선택 시
+    $('#company_cd').on('change', function () {
+        //getHigherProcessList(); //회사에 따라 상위업무 세팅
+        research(1);
+    });
+
 
 
     //진행상태 변경 시
@@ -168,14 +175,14 @@ function getDataList(selectedPage) {
     //나의업무처리현황 user 구분 추가
     //user=manager 시, 관리자가 본인이 접수해야할 것만 Incident 보이도록 처리
     var reqParam = 'user=manager&page=' + selectedPage + '&perPage=' + dataPerPage + '&searchType=' + $('#searchType').val() + '&status_cd=' + $('#status_cd').val()
+        + '&company_cd=' + encodeURIComponent($('#company_cd').val())
         + '&lower_cd=' + $('#lower_cd').val()  + '&reg_date_from='
         + $('#reg_date_from').val() + '&reg_date_to=' + $('#reg_date_to').val()
         + '&searchText=' + encodeURIComponent($('#searchText').val());
-
     $.ajax({
         type: "GET",
         async: true,
-        url: "/incident/getIncident",
+        url: "/incident/getIncident",    //mng_list와 같이 처리 필요 : "/higherProcess/getUFhigherprocess",
         dataType: "json", // xml, html, script, json 미지정시 자동판단
         timeout: 30000, //제한 시간
         cache: false,
@@ -775,7 +782,8 @@ function getHigherNm(targetSelect) {
     $.ajax({
         type: "GET",
         async: true,
-        url: "/higherProcess/getHigherProcess",
+        //url: "/higherProcess/getHigherProcess",
+        url: "/higherProcess/getUFhigherprocess",
         dataType: "json", // xml, html, script, json 미지정시 자동판단
         timeout: 30000,
         cache: false,
@@ -845,6 +853,42 @@ function setLowerSelect(targetSelect, dataObj) {
 
 
 
+/**
+ * 회사 정보 조회
+ */
+function getCompany() {
+    $.ajax({
+        type: "GET",
+        async: true,
+        url: "/company/getUFCompany/",
+        contentType: "application/json",
+        //data : reqParam,
+        dataType: "json",
+        error: function (request, status, error) {
+            alert("getCompany : " + error + " " + request.responseText);
+        },
+        success: function (data) {
+            setCompany(data);
+            getHigherProcessList();
+            
+        }
+    });
+}
 
+/**
+ * 회사 정보 세팅
+ */
+function setCompany(data) {
+    $('#company_cd').empty();
+    if (data.length == 1) {
+        $('#company_cd').append("<option value='" + data[0]["company_cd"] + "' >" + data[0]["company_nm"] + "</option>");
+        $('#company_cd').val(data[0]["company_cd"]);
+    } else {
+        $('#company_cd').append("<option value='*' selected>전체</option>");
+        
+        for (var i = 0; i < data.length; i++) {
+            $('#company_cd').append("<option value='" + data[i]["company_cd"] + "'>" + data[i]["company_nm"] + "</option>");
+        }
+    }
 
-
+}
