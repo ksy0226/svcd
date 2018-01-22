@@ -100,7 +100,13 @@ module.exports = {
         }
         //추가 끝
         
-        
+        logger.debug("0 ================incident service=================");
+        logger.debug("0 incident service user_flag == 1 ",company_cd);
+        logger.debug("0 =================================================");
+
+        logger.debug("00 ================incident service=================");
+        logger.debug("00 req.query.user :  ",req.query.user);
+        logger.debug("00 =================================================");
 
         
 
@@ -163,6 +169,12 @@ module.exports = {
                         request_company_cd: company_cd
                     });
                 }
+            }else if(req.query.user == "manager"){
+                if (company_cd != '*') {
+                    AndQueries.push({
+                        request_company_cd: company_cd
+                    });
+                }
             }
 
         //업무관리자 (user_flag = 3)이면
@@ -172,34 +184,51 @@ module.exports = {
             //logger.debug("incident service user_flag == 3 req.query.user : ",req.query.user);
             //logger.debug("=================================================");
 
-            if(req.query.user != "manager"){
+            //if(req.query.user != "manager"){
                 if(req.query.user == "managerall"){
                     if (company_cd != '*') {
                         AndQueries.push({
                             request_company_cd: company_cd
                         });
                     }
-                }else{
+                } else if(req.query.user == "manager"){
+                    if (company_cd != '*') {
+                        AndQueries.push({
+                            request_company_cd: company_cd
+                        });
+                    }
+                } else {
                     AndQueries.push({
                         manager_dept_cd: req.session.dept_cd
                         //manager_dept_cd: "ISU_STISU_ST005"
                     });
                 }
-            }
+            //}
 
         }else if(req.session.user_flag == "1") {
 
-            logger.debug("================incident service=================");
-            logger.debug("incident service user_flag == 1 ",company_cd);
-            logger.debug("=================================================");
+            if(req.query.user == "managerall" ){
+                //logger.debug("================incident service=================");
+                //logger.debug("req.query.user",req.query.user);
+                //logger.debug("=================================================");
 
-            if(req.query.user == "managerall"){
+                if (company_cd != '*') {
+                    AndQueries.push({
+                        request_company_cd: company_cd
+                    });
+                }
+            } else if(req.query.user == "manager"){
+                //logger.debug("================incident service=================");
+                //logger.debug("req.query.user = manager : ",req.query.user);
+                //logger.debug("=================================================");
+
                 if (company_cd != '*') {
                     AndQueries.push({
                         request_company_cd: company_cd
                     });
                 }
             }
+            
 
         }
 
