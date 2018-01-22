@@ -173,7 +173,8 @@ function setUserInfo(item){
     $('input[name="incident[request_dept_cd]"]').val(item.dept_cd);
     $('input[name="incident[request_dept_nm]"]').val(item.dept_nm);
     $('input[name="incident[request_position_nm]"]').val(item.position_nm);
-    $('input[name="incident[request_id]"]').val(item.sabun);
+    //$('input[name="incident[request_id]"]').val(item.sabun);
+    $('input[name="incident[request_id]"]').val(item.email);
     $('input[name="incident[request_email]"]').val(item.email);
     $('input[name="incident[request_hp_telno]"]').val(item.hp_telno);
     $('input[name="incident[request_office_tel_no]"]').val(item.office_tel_no);
