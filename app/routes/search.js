@@ -19,4 +19,5 @@ router.route('/qna_detail/:id').get(ssc.sessionCheck, controller.qna_detail);
 router.route('/download/:path1/:path2').get(ssc.sessionCheck, controller.download);
 
 
+
 module.exports = router;

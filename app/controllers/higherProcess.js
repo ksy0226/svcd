@@ -3,6 +3,8 @@
 const mongoose = require('mongoose');
 const async = require('async');
 const HigherProcessModel = require('../models/HigherProcess');
+const MyProcess = require('../models/MyProcess');
+const CompanyProcessModel = require('../models/CompanyProcess');
 const service = require('../services/higherProcess');
 const logger = require('log4js').getLogger('app');
 
@@ -154,6 +156,7 @@ module.exports = {
             if (req.query.company_cd != null) {
                 condition.company_cd = req.query.company_cd;
             }
+            
 
             HigherProcessModel.find(condition, function (err, higherProcess) {
                 if (err) {
@@ -169,6 +172,7 @@ module.exports = {
             logger.debug(e);
         }
     },
+
 
     /**
      * 회사별 상위업무 조회 페이지 - 상위업무조회
@@ -198,7 +202,111 @@ module.exports = {
             }).sort('higher_cd');
         } catch (e) {
             logger.error("HigherProcessModel error : ", e);
-        } finally {}
-    }
+        } finally { }
+    },
+    /**
+  * 상위업무 리스트 조회
+  */
+    getUFhigherprocess: (req, res, next) => {
+        logger.debug("=============================================");
+        logger.debug("getUFhigherprocess : ");
+        logger.debug("=============================================");
+
+        try {
+
+            if (req.session.user_flag == "3" || req.session.user_flag == "4") {
+
+                var cdt = {};
+                cdt.email = req.session.email; //업무담당자는 본인 업무만 조회
+
+                /** MyProcess, HigherProcessModel 모델구분 */
+                MyProcess.find(cdt).distinct('higher_cd').exec(function (err, myHigherProcess) {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+
+                        //logger.debug("=============================================");
+                        //logger.debug("search.mng_list higherprocess ", JSON.stringify(myHigherProcess));
+                        //logger.debug("=============================================");
+
+                        var condition = {};
+                        condition.higher_cd = {
+                            "$in": myHigherProcess
+                        }
+
+                        HigherProcessModel.find(condition, function (err, higherprocess) {
+                            if (err) {
+                                return res.json({
+                                    success: false,
+                                    message: err
+                                });
+                            } else {
+                                res.json(higherprocess);
+                            }
+                        });
+                    }
+                });
+
+            } else if (req.session.user_flag == "5") {
+
+                var condition = {};
+                condition.company_cd = req.session.company_cd; //고객사관리자는 해당회사만 조회
+
+                /** MyProcess, HigherProcessModel 모델구분 */
+                CompanyProcessModel.find(condition, function (err, higherprocess) {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+                        res.json(higherprocess);
+                    }
+                });
+
+            } else { //일반사용자에게는 권한이 없고 그룹관리자
+                logger.debug("=============================================");
+                logger.debug("getUFhigherprocess : ");
+                logger.debug("=============================================");
+
+
+                /** MyProcess, HigherProcessModel 모델구분 */
+                HigherProcessModel.find({}, function (err, higherprocess) {
+                    logger.debug("=============================================");
+                    logger.debug("UFhigherprocess  higherprocess : "+ higherprocess);
+                    logger.debug("=============================================");
+
+                    if (err) {
+                        logger.debug("=============================================");
+                        logger.debug("UFhigherprocess  higherprocess err : "+ err);
+                        logger.debug("=============================================");
+
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+
+                    } else {
+                        logger.debug("=============================================");
+                        logger.debug("UFhigherprocess  higherprocess : "+ higherprocess);
+                        logger.debug("=============================================");
+
+                        res.json(higherprocess);
+                    }
+                });
+
+            }
+        } catch (e) {
+
+            logger.error("=============================================");
+            logger.error("search.mng_list err : ", e);
+            logger.error("=============================================");
+
+        } finally { }
+
+    },
 
 };

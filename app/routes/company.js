@@ -16,5 +16,6 @@ router.route('/:id/delete').get(ssc.sessionCheck,controller.delete);
 
 router.route('/exceldownload').get(ssc.sessionCheck,controller.exceldownload);
 router.route('/getCompany').get(ssc.sessionCheck,controller.getCompany);
+router.route('/getUFCompany/').get(ssc.sessionCheck,controller.getUFCompany);
 
 module.exports = router;

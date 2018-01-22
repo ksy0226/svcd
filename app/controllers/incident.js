@@ -752,7 +752,12 @@ module.exports = {
      * 엑셀다운로드 기능
      */
     exceldownload: (req, res, next) => {
+        //logger.debug("=============================================");
+        //logger.debug("exceldownload : ");
+        //logger.debug("=============================================");
 
+        /*
+        //기존 엑셀다운로드
         var search = service.createSearch(req);
 
 
@@ -833,7 +838,137 @@ module.exports = {
         });
 
     }
-};
+    */
+    var search = service.createSearch(req);
+
+        var condition = {};
+        /*
+        if (req.query.user != 'managerall') {
+            if (search.findIncident.$and == null) {
+
+                search.findIncident.$and = [{
+                    "request_id": req.session.email
+                }];
+
+            } else {
+
+                search.findIncident.$and.push({
+                    "request_id": req.session.email
+                });
+            }
+        }
+        */
+
+        //logger.debug("===============search control================");
+        //logger.debug(" exceldownload search.findIncident : ", JSON.stringify(search.findIncident));
+        //logger.debug("=============================================");
+
+        try {
+
+            async.waterfall([function (callback) {
+
+                //상위업무가 전체이고, SD 담당자일때만 나의 상위 업무만 조회
+                if (req.query.higher_cd == "*" && (req.session.user_flag == "3" || req.session.user_flag == "4")) {
+
+
+                    condition.email = req.session.email;
+
+                    MyProcess.find(condition).distinct('higher_cd').exec(function (err, myHigherProcess) {
+
+                        if (search.findIncident.$and == null) {
+
+                            //logger.debug("=============================================");
+                            //logger.debug("exceldownload search.findIncident.$and is null : ", myHigherProcess);
+                            //logger.debug("=============================================");
+
+                            search.findIncident.$and = [{
+                                "higher_cd": {
+                                    "$in": myHigherProcess
+                                }
+                            }];
+                        } else {
+
+                            //logger.debug("=============================================");
+                            //logger.debug("exceldownload search.findIncident.$and is not null : ", myHigherProcess);
+                            //logger.debug("=============================================");
+
+                            search.findIncident.$and.push({
+                                "higher_cd": {
+                                    "$in": myHigherProcess
+                                }
+                            });
+                        }
+
+                        //logger.debug("exceldownload =============================================");
+                        //logger.debug("exceldownload search.findIncident : ", search.findIncident);
+                        //logger.debug("exceldownload =============================================");
+
+                        callback(null);
+                    });
+                } else {
+                    callback(null);
+                }
+
+            },
+            function (callback) {
+                Incident.count(search.findIncident, function (err, totalCnt) {
+                    if (err) {
+                        logger.error("incident : ", err);
+
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+
+                        //logger.debug("=============================================");
+                        //logger.debug("incidentCnt : ", totalCnt);
+                        //logger.debug("=============================================");
+
+                        callback(null, totalCnt)
+                    }
+                });
+            }
+            ], function (err, totalCnt) {
+
+                Incident.find(search.findIncident, function (err, incident) {
+                    if (err) {
+
+                        //logger.debug("=============================================");
+                        //logger.debug("incident : ", err);
+                        //logger.debug("=============================================");
+
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+
+                        //incident에 페이징 처리를 위한 전체 갯수전달
+                        //var rtnData = {};
+                        //rtnData.incident = incident;
+                        //rtnData.totalCnt = totalCnt
+
+                        //logger.debug("=============================================");
+                        //logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
+                        //logger.debug("rtnData : ", JSON.stringify(rtnData));
+                        //logger.debug("=============================================");
+
+                        res.json(incident);
+
+                    }
+                })
+                    .sort('-register_date');
+            });
+        } catch (err) {
+
+            //logger.debug("===============search control================");
+            //logger.debug("search list error : ", err);
+            //logger.debug("=============================================");
+
+        } finally { }
+    },
+}
 
 
 
