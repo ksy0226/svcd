@@ -40,7 +40,7 @@ $(document).ready(function () {
     //paging(totalData, dataPerPage, pageCount, 1);
 
     //최초 조회
-    //getDataList(1);
+    getDataList(1);
 
     //조회버튼 클릭 시
     $('#searchBtn').on('click', function () {
@@ -172,6 +172,8 @@ function getDataList(selectedPage) {
     if ($('#lower_cd').val() == "") {
         $('#lower_cd').val() = "*";
     }
+    alert("111"+$('#company_cd').val());
+    
     //나의업무처리현황 user 구분 추가
     //user=manager 시, 관리자가 본인이 접수해야할 것만 Incident 보이도록 처리
     var reqParam = 'user=manager&page=' + selectedPage + '&perPage=' + dataPerPage + '&searchType=' + $('#searchType').val() + '&status_cd=' + $('#status_cd').val()
@@ -179,6 +181,9 @@ function getDataList(selectedPage) {
         + '&lower_cd=' + $('#lower_cd').val()  + '&reg_date_from='
         + $('#reg_date_from').val() + '&reg_date_to=' + $('#reg_date_to').val()
         + '&searchText=' + encodeURIComponent($('#searchText').val());
+    
+        alert("reqParam : "+reqParam);  
+
     $.ajax({
         type: "GET",
         async: true,
@@ -869,7 +874,8 @@ function getCompany() {
         },
         success: function (data) {
             setCompany(data);
-            getHigherProcessList();
+            //getHigherProcessList();
+            research(1);
             
         }
     });
@@ -880,11 +886,17 @@ function getCompany() {
  */
 function setCompany(data) {
     $('#company_cd').empty();
+    //if ($('#company_cd').val() == "null") {
+    //    $('#company_cd').val() = "*";
+    //}
+
     if (data.length == 1) {
+        alert(1);
         $('#company_cd').append("<option value='" + data[0]["company_cd"] + "' >" + data[0]["company_nm"] + "</option>");
         $('#company_cd').val(data[0]["company_cd"]);
     } else {
-        $('#company_cd').append("<option value='*' selected>전체</option>");
+        alert(2);
+        $('#company_cd').append("<option value='*'>전체</option>");
         
         for (var i = 0; i < data.length; i++) {
             $('#company_cd').append("<option value='" + data[i]["company_cd"] + "'>" + data[i]["company_nm"] + "</option>");

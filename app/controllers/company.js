@@ -255,9 +255,9 @@ module.exports = {
                     });
                 } else {
 
-                    //logger.debug("==========================================CompanyModel.find({}========================================");
-                    //logger.debug("companyJsonData : ",companyJsonData);
-                    //logger.debug("====================================================================================================");
+                    logger.debug("==========================================CompanyModel.find({}========================================");
+                    logger.debug("companyJsonData : ",companyJsonData);
+                    logger.debug("====================================================================================================");
 
                     res.json(companyJsonData);
                 };
