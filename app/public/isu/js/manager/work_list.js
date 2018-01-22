@@ -172,7 +172,6 @@ function getDataList(selectedPage) {
     if ($('#lower_cd').val() == "") {
         $('#lower_cd').val() = "*";
     }
-    alert("111"+$('#company_cd').val());
     
     //나의업무처리현황 user 구분 추가
     //user=manager 시, 관리자가 본인이 접수해야할 것만 Incident 보이도록 처리
@@ -181,8 +180,6 @@ function getDataList(selectedPage) {
         + '&lower_cd=' + $('#lower_cd').val()  + '&reg_date_from='
         + $('#reg_date_from').val() + '&reg_date_to=' + $('#reg_date_to').val()
         + '&searchText=' + encodeURIComponent($('#searchText').val());
-    
-        alert("reqParam : "+reqParam);  
 
     $.ajax({
         type: "GET",
@@ -891,13 +888,10 @@ function setCompany(data) {
     //}
 
     if (data.length == 1) {
-        alert(1);
         $('#company_cd').append("<option value='" + data[0]["company_cd"] + "' >" + data[0]["company_nm"] + "</option>");
         $('#company_cd').val(data[0]["company_cd"]);
     } else {
-        alert(2);
         $('#company_cd').append("<option value='*'>전체</option>");
-        
         for (var i = 0; i < data.length; i++) {
             $('#company_cd').append("<option value='" + data[i]["company_cd"] + "'>" + data[i]["company_nm"] + "</option>");
         }
