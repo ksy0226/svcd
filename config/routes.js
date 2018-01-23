@@ -27,7 +27,6 @@ module.exports = () => {
     router.use('/api', require('../app/routes/api'));
 
 
-
     /// catch 404 and forward to error handler
     router.use(function(req, res, next) {
 
