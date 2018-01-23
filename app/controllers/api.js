@@ -11,8 +11,14 @@ module.exports = {
     hr: (req, res, next) => {
         var condition = {};
         condition.higher_cd = 'H008'; //OPTI-HR 코드
-        condition.register_yyyy = req.query.yyyy;
-        condition.register_mm = req.query.mm;
+        
+        if(req.query.yyyy != null){
+            condition.register_yyyy = req.query.yyyy;
+        }
+        if(req.query.mm != null){
+            condition.register_mm = req.query.mm;
+        }
+        
 
         try{
             IncidentModel.find(condition, function (err, incident) {
@@ -80,11 +86,15 @@ module.exports = {
     },
 
     company: (req, res, next) => {
+        logger.debug("==api company==");
         CompanyModel.find({}, function (err, company) {
+            
             if (err) {
                 res.json(null);
             }else{
-
+                logger.debug("=====================");
+                logger.debug("company : ", company);
+                logger.debug("=====================");
                 var newCompany = {};
 
                 newCompany.company_cd             = company.company_cd               //회사코드
