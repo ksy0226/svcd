@@ -10,7 +10,7 @@ var IncidentSchema = new Schema({
     status_nm               : {type : String, default : '접수중'},  //진행상태명            
     process_speed           : {type : String},  //긴급구분                                                                   
     course_flag             : {type : String},                                                                           
-    title                   : {type : String, required : true, validate : [isEmpty, "제목은 꼭 입력해주세요."] }, //제목                                                             ."] }},
+    title                   : {type : String, required : true, validate : [isEmpty, "제목은 꼭 입력해주세요."] }, //제목 
     content                 : {type : String},  //내용                                                                       
     request_company_cd      : {type : String},  //요청자 회사코드
     request_company_nm      : {type : String},  //요청자 회사명                                                              
