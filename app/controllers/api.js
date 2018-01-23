@@ -30,7 +30,11 @@ module.exports = {
                 }else{
 
                     var newIncident = {};
+                    logger.debug("=====================");
+                    logger.debug("newIncident : ", JSON.stringify(incident));
+                    logger.debug("=====================");
 
+                    /*
                     newIncident.higher_cd             = incident.higher_cd               //상위업무 코드
                     newIncident.higher_nm             = incident.higher_nm               //상위업무 이름                                             
                     newIncident.lower_cd              = incident.lower_cd                //하위업무 코드
@@ -79,12 +83,13 @@ module.exports = {
                     newIncident.valuation             = incident.valuation               //평가점수                                                                         
                     newIncident.valuation_content     = incident.valuation_content       //평가내용                                                                                                                                                                                                                 
                     newIncident.created_at            = incident.created_at              //생성일
+                    */
 
                     logger.debug("=====================");
-                    logger.debug("newIncident : ", JSON.stringify(newIncident));
+                    logger.debug("incident : ", JSON.stringify(incident));
                     logger.debug("=====================");
 
-                    res.json(newIncident);
+                    res.json(incident);
                 }
             }).sort('-register_date');
         }catch(e){
@@ -99,16 +104,17 @@ module.exports = {
             if (err) {
                 res.json(null);
             }else{
-                var newCompany = {};
 
-                newCompany.company_cd             = company.company_cd               //회사코드
-                newCompany.company_nm             = company.company_nm               //회사이름                                             
+                //var newCompany = {};
+
+                //newCompany.company_cd             = company.company_cd               //회사코드
+                //newCompany.company_nm             = company.company_nm               //회사이름                                             
 
                 logger.debug("=====================");
-                logger.debug("newCompany : ", JSON.stringify(newCompany));
+                logger.debug("newCompany : ", JSON.stringify(company));
                 logger.debug("=====================");
 
-                res.json(newCompany);
+                res.json(company);
             }
         }).sort({
             group_flag: -1,
