@@ -209,7 +209,6 @@ module.exports = {
                             if (data.grp[i].status_cd == '3' || data.grp[i].status_cd == '4') {
                                 stCnt3_4 = stCnt3_4 + data.grp[i].count;
                             }
-
                         }
 
                         data.totalCnt = totalCnt;
