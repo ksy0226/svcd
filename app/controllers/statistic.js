@@ -135,6 +135,11 @@ module.exports = {
      * 상위별 하위업무 통계 데이타 조회
      */
     getHighLower: (req, res, next) => {
+        
+        logger.debug("==================================================");
+        logger.debug(" IncidentModel getHighLower : ");
+        logger.debug("==================================================");
+
 
         var svc = service.high_lower(req);
 
@@ -143,9 +148,9 @@ module.exports = {
 
                 if (err) {
 
-                    //logger.debug("==================================================");
-                    //logger.debug(" IncidentModel.aggregate error ", err);
-                    //logger.debug("==================================================");
+                    logger.debug("==================================================");
+                    logger.debug(" IncidentModel.aggregate error ", err);
+                    logger.debug("==================================================");
 
                     return res.json({
                         success: false,
@@ -156,10 +161,10 @@ module.exports = {
 
                     incident.forEach(function (data, idx, incident) {
 
-                        //logger.debug("==================================================");
-                        //logger.debug("data ", JSON.stringify(data));
-                        //logger.debug("data.grp.length ", data.grp.length);
-                        //logger.debug("==================================================");
+                        logger.debug("==================================================");
+                        logger.debug("data ", JSON.stringify(data));
+                        logger.debug("data.grp.length ", data.grp.length);
+                        logger.debug("==================================================");
 
 
                         var totalCnt = 0; //전체 개수
@@ -223,16 +228,16 @@ module.exports = {
                             data.valAvg = 0;
                         }
 
-                        //logger.debug("==================================================");
-                        //logger.debug("data.totalCnt : ", data.totalCnt);
-                        //logger.debug("data.stCnt1 : ", data.stCnt1);
-                        //logger.debug("data.stCnt2 : ", data.stCnt2);
-                        //logger.debug("data.stCnt3 : ", data.stCnt3);
-                        //logger.debug("data.stCnt4 : ", data.stCnt4);
-                        //logger.debug("data.solRatio : ", data.solRatio);
-                        //logger.debug("data.valuationSum : ", data.valuationSum);
-                        //logger.debug("data.valAvg : ", data.valAvg);
-                        //logger.debug("==================================================");
+                        logger.debug("==================================================");
+                        logger.debug("data.totalCnt : ", data.totalCnt);
+                        logger.debug("data.stCnt1 : ", data.stCnt1);
+                        logger.debug("data.stCnt2 : ", data.stCnt2);
+                        logger.debug("data.stCnt3 : ", data.stCnt3);
+                        logger.debug("data.stCnt4 : ", data.stCnt4);
+                        logger.debug("data.solRatio : ", data.solRatio);
+                        logger.debug("data.valuationSum : ", data.valuationSum);
+                        logger.debug("data.valAvg : ", data.valAvg);
+                        logger.debug("==================================================");
 
                     });
 

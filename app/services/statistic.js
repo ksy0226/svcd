@@ -171,7 +171,7 @@ module.exports = {
         ]
 
         logger.debug("==================================================");
-        logger.debug('high_lower ', JSON.stringify(aggregatorOpts));
+        logger.debug('high_lower :  ', JSON.stringify(aggregatorOpts));
         logger.debug("==================================================");
 
         return {
