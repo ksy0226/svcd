@@ -76,6 +76,8 @@ function setHighLower(dataObj){
     var stCnt5Sum = 0;
     var solRatioAvg = 0;
     var valAvg = 0;
+    var valSum = 0;
+    var sumCnt = 0;
 
 
     if (dataObj.length > 0) {
@@ -100,6 +102,14 @@ function setHighLower(dataObj){
             stCnt5Sum = Number(stCnt5Sum + dataObj[i].stCnt5);
             solRatioAvg = (stCnt3_4Sum / totalCntSum * 100).toFixed(2);
 
+            if(dataObj[i].valAvg > 0){
+                sumCnt++;
+                valSum = valSum + dataObj[i].valAvg;
+                
+            }
+            valAvg = Number(valSum / sumCnt);
+
+
             var higher_nm1 = "";
             var higher_nm2 = "";
             higher_nm1 = dataObj[i]._id.higher_nm;
@@ -117,7 +127,7 @@ function setHighLower(dataObj){
                 addList += "    <td class='text-center' id='stCnt3_4Sum'>" + stCnt3_4Sum + "</td>";
                 addList += "    <td class='text-center'>" + stCnt5Sum + "</td>";
                 addList += "    <td class='text-center'>" + solRatioAvg + "</td>";
-                addList += "    <td class='text-center' id='average'></td>";
+                addList += "    <td class='text-center' id='average'>" + valAvg + "</td>";
                 addList += "</tr>";
 
                 totalCntSum = 0;
