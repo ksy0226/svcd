@@ -11,8 +11,14 @@ module.exports = {
     hr: (req, res, next) => {
         var condition = {};
         condition.higher_cd = 'H008'; //OPTI-HR 코드
-        condition.register_yyyy = req.query.yyyy;
-        condition.register_mm = req.query.mm;
+        
+        if(req.query.yyyy != null){
+            condition.register_yyyy = req.query.yyyy;
+        }
+        if(req.query.mm != null){
+            condition.register_mm = req.query.mm;
+        }
+        
 
         try{
             IncidentModel.find(condition, function (err, incident) {
