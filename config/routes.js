@@ -24,6 +24,8 @@ module.exports = () => {
     router.use('/statistic', require('../app/routes/statistic'));
     router.use('/usermanageAccess', require('../app/routes/usermanageAccess'));
     router.use('/companyProcess', require('../app/routes/companyProcess'));
+    router.use('/api', require('../app/routes/api'));
+
 
 
     /// catch 404 and forward to error handler

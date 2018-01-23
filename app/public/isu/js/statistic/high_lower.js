@@ -24,8 +24,20 @@ $(document).ready(function () {
         getHighLowerSt();
     });
     
+
 });
 
+/**
+ * rowSpan 합치기
+*/
+function rowSpan(){
+    $("#target-table").rowspanizer({
+        //합치고자 하는 row 지정
+        //cols : [0, 1, 4], 
+        cols : [0],
+        vertical_align: "middle"
+    });
+}
 
 /**
  * 상위업무별 하위업무 통계 가져오기
@@ -47,6 +59,7 @@ function getHighLowerSt(){
         },         
         success: function( data ) { 
             setHighLower(data);
+            //addSum(data);
             
         }             
     }); 
@@ -69,9 +82,9 @@ function setHighLower(dataObj){
         for (var i = 0; i < dataObj.length; i++) {
     
             var addList = "";
-            addList += "<tr>";
-            addList += "    <td class='text-left'>" + dataObj[i]._id.higher_nm + "</td>";
-            addList += "    <td class='text-left'>" + dataObj[i]._id.lower_nm + "</td>";
+            addList += "<tr class='target-tr'>";
+            addList += "    <td class='text-left' id='val1'>" + dataObj[i]._id.higher_nm + "</td>";
+            addList += "    <td class='text-left' id='val2'>" + dataObj[i]._id.lower_nm + "</td>";
             addList += "    <td class='text-center'>" + dataObj[i].totalCnt + "</td>";
             addList += "    <td class='text-center'>" + dataObj[i].stCnt2+ "</td>";
             addList += "    <td class='text-center'>" + dataObj[i].stCnt3_4 + "</td>";
@@ -79,24 +92,67 @@ function setHighLower(dataObj){
             addList += "    <td class='text-center'>" + dataObj[i].solRatio + "</td>";
             addList += "    <td class='text-center' id='valAvg'>" + dataObj[i].valAvg + "</td>";
             addList += "</tr>";
-            
-            //var table = $('#target-table').DataTable();
-            //alert("table"+table);
-            //var avg = table.column( 7 ).data().average();
-
+                
+                //else{
+                    
+                //}
+                
+                
+                
+            //}
            
 
+            $("#more_list").append(addList);
+            
+            
+            
 
-            //if(dataObj[i]._id.higher_nm == "그룹웨어"){
+        }
+        
+        
+
+    } else {
+        var addList = "";
+        addList += "<tr>";
+        addList += "    <td colspan='8' class='text-center'>조회된 데이타가 없습니다.</td>";
+        addList += "</tr>";
+
+        $("#more_list").append(addList);
+    }
+
+    rowSpan();
+
+
+}
+
+
+/**
+ * 소계 추가작업
+ */
+function addSum(dataObj){
+    alert("addSum()");
+    alert(JSON.stringify(dataObj));
+
+    var totalCntSum = 0;
+    var stCnt2Sum = 0;
+    var stCnt3_4Sum = 0;
+    var stCnt5Sum = 0;
+    var solRatioAvg = 0;
+    var valAvg = 0;
+
+
+    if (dataObj.length > 0) {
+        for (var i = 0; i < dataObj.length; i++) {
+            
                 totalCntSum = Number(totalCntSum + dataObj[i].totalCnt);
                 stCnt2Sum = Number(stCnt2Sum + dataObj[i].stCnt2);
                 stCnt3_4Sum = Number(stCnt3_4Sum + dataObj[i].stCnt3_4);
                 stCnt5Sum = Number(stCnt5Sum + dataObj[i].stCnt5);
                 solRatioAvg = (stCnt3_4Sum / totalCntSum * 100).toFixed(2);
-        
 
                 if(dataObj[i]._id.higher_nm != dataObj[i+1]._id.higher_nm  || dataObj[i+1]._id.higher_nm == null){
-
+                    
+                    var addList = "";
                     addList += "<tr bgcolor='#D4F4FA'>";
                     addList += "    <td class='text-left'>" + dataObj[i]._id.higher_nm + "</td>";
                     addList += "    <td class='text-center'>소 계</td>";
@@ -108,31 +164,27 @@ function setHighLower(dataObj){
                     addList += "    <td class='text-center' id='average'></td>";
                     addList += "</tr>";
 
-                    totalCntSum = 0;
-                    stCnt2Sum = 0;
-                    stCnt3_4Sum = 0;
-                    stCnt5Sum = 0;
-                    solRatioAvg = 0;
+
+                    //if(dataObj[i]._id.higher_nm == dataObj[i+1]._id.higher_nm){
+                    //    alert(dataObj[i]._id.higher_nm );
+                    //   rowSpan();
+                    //}
 
                 }
+                
             //}
            
 
             $("#more_list").append(addList);
-            rowSpan();
+            
+
         }
 
-        
+    } 
 
-    } else {
-        var addList = "";
-        addList += "<tr>";
-        addList += "    <td colspan='8' class='text-center'>조회된 데이타가 없습니다.</td>";
-        addList += "</tr>";
+    rowSpan();
 
-        $("#more_list").append(addList);
-    }
-    
+
 }
 
 
@@ -177,16 +229,6 @@ function setCompany(data) {
 
 
 
-/**
- * rowSpan 합치기
- */
-function rowSpan(){
-    $(".target-table").rowspanizer({
-        //합치고자 하는 row 지정
-        //cols : [0, 1, 4], 
-        cols : [0],
-        vertical_align: "middle"
-    });
-}
+
 
 
