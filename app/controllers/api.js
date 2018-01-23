@@ -19,9 +19,9 @@ module.exports = {
             condition.register_mm = req.query.mm;
         }
         
-        logger.debug("=====================");
-        logger.debug("condition : ", condition);
-        logger.debug("=====================");
+        //logger.debug("=====================");
+        //logger.debug("condition : ", condition);
+        //logger.debug("=====================");
 
         try{
             IncidentModel.find(condition, function (err, incident) {
@@ -29,9 +29,9 @@ module.exports = {
                     res.json(null);
                 }else{
 
-                    logger.debug("=====================");
-                    logger.debug("newIncident : ", JSON.stringify(incident));
-                    logger.debug("=====================");
+                    //logger.debug("=====================");
+                    //logger.debug("newIncident : ", JSON.stringify(incident));
+                    //logger.debug("=====================");
 
                     var rtnVal = [];
 
@@ -91,9 +91,9 @@ module.exports = {
                         rtnVal.push(newIncident);
                 });
 
-                    logger.debug("=====================");
-                    logger.debug("rtnVal : ", rtnVal);
-                    logger.debug("=====================");
+                    //logger.debug("=====================");
+                    //logger.debug("rtnVal : ", rtnVal);
+                    //logger.debug("=====================");
 
                     res.json(rtnVal);
                 }
@@ -111,9 +111,9 @@ module.exports = {
                 res.json(null);
             }else{
 
-                logger.debug("=====================");
-                logger.debug("company : ", company);
-                logger.debug("=====================");
+                //logger.debug("=====================");
+                //logger.debug("company : ", company);
+                //logger.debug("=====================");
 
                 var rtnVal = [];
 
@@ -127,9 +127,9 @@ module.exports = {
                 });
                                                       
 
-                logger.debug("=====================");
-                logger.debug("rtnVal : ", rtnVal);
-                logger.debug("=====================");
+                //logger.debug("=====================");
+                //logger.debug("rtnVal : ", rtnVal);
+                //logger.debug("=====================");
 
                 res.json(rtnVal);
             }
