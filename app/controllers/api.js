@@ -35,9 +35,10 @@ module.exports = {
 
                     var rtnVal = [];
 
-                    incident.forEach(function(value, index, array){
+                    incident.forEach(function(incident, index, incidentArray){
+                        
                         var newIncident = {};
-
+                        
                         newIncident.higher_cd             = incident.higher_cd               //상위업무 코드
                         newIncident.higher_nm             = incident.higher_nm               //상위업무 이름                                             
                         newIncident.lower_cd              = incident.lower_cd                //하위업무 코드
@@ -116,7 +117,7 @@ module.exports = {
 
                 var rtnVal = [];
 
-                company.forEach(function(value, index, array){
+                company.forEach(function(company, index, companyArray){
 
                     var newCompany = {};
                     newCompany.company_cd             = company.company_cd               //회사코드
