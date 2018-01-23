@@ -80,11 +80,15 @@ module.exports = {
     },
 
     company: (req, res, next) => {
+        logger.debug("==api company==");
         CompanyModel.find({}, function (err, company) {
+            
             if (err) {
                 res.json(null);
             }else{
-
+                logger.debug("=====================");
+                logger.debug("company : ", company);
+                logger.debug("=====================");
                 var newCompany = {};
 
                 newCompany.company_cd             = company.company_cd               //회사코드
