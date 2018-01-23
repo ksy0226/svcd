@@ -3,6 +3,7 @@
 const mongoose = require('mongoose');
 const async = require('async');
 const IncidentModel = require('../models/Incident');
+const CompanyModel = require('../models/Company');
 const logger = require('log4js').getLogger('app');
 
 module.exports = {
@@ -76,5 +77,24 @@ module.exports = {
         }catch(e){
             
         }finally{}
+    },
+
+    company: (req, res, next) => {
+        CompanyModel.find({}, function (err, company) {
+            if (err) {
+                res.json(null);
+            }else{
+
+                var newCompany = {};
+
+                newCompany.company_cd             = company.company_cd               //회사코드
+                newCompany.company_nm             = company.company_nm               //회사이름                                             
+
+                res.json(newCompany);
+            }
+        }).sort({
+            group_flag: -1,
+            company_nm: 1
+        });
     },
 };

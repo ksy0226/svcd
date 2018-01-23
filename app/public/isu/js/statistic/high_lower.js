@@ -93,20 +93,9 @@ function setHighLower(dataObj){
             addList += "    <td class='text-center' id='valAvg'>" + dataObj[i].valAvg + "</td>";
             addList += "</tr>";
                 
-                //else{
-                    
-                //}
-                
-                
-                
-            //}
-           
 
             $("#more_list").append(addList);
             
-            
-            
-
         }
         
         
