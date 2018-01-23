@@ -19,6 +19,9 @@ module.exports = {
             condition.register_mm = req.query.mm;
         }
         
+        logger.debug("=====================");
+        logger.debug("condition : ", condition);
+        logger.debug("=====================");
 
         try{
             IncidentModel.find(condition, function (err, incident) {
@@ -77,6 +80,10 @@ module.exports = {
                     newIncident.valuation_content     = incident.valuation_content       //평가내용                                                                                                                                                                                                                 
                     newIncident.created_at            = incident.created_at              //생성일
 
+                    logger.debug("=====================");
+                    logger.debug("newIncident : ", JSON.stringify(newIncident));
+                    logger.debug("=====================");
+
                     res.json(newIncident);
                 }
             }).sort('-register_date');
@@ -92,13 +99,14 @@ module.exports = {
             if (err) {
                 res.json(null);
             }else{
-                logger.debug("=====================");
-                logger.debug("company : ", company);
-                logger.debug("=====================");
                 var newCompany = {};
 
                 newCompany.company_cd             = company.company_cd               //회사코드
                 newCompany.company_nm             = company.company_nm               //회사이름                                             
+
+                logger.debug("=====================");
+                logger.debug("newCompany : ", JSON.stringify(newCompany));
+                logger.debug("=====================");
 
                 res.json(newCompany);
             }
