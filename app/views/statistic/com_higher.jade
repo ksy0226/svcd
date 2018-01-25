@@ -8,7 +8,7 @@ block head
     script(src='/vendor/jquery/jquery-ui.1.11.0.js')
     script(src='/vendor/jquery/jquery.min.js')
 
-    script(src='/isu/js/statistic/jquery.rowspanizer.js', type='text/javascript')
+    script(src='/plugins/rowspan/jquery.rowspanizer.js', type='text/javascript')
     script(src='/isu/js/statistic/com_higher.js', type='text/javascript')
 
 
@@ -31,6 +31,10 @@ block content
                         .card-box.m-t-10
                             form.form-horizontal.group-border-dashed(action='#')
                                 .form-group
+                                    label.col-sm-2.control-label 회사명
+                                    .col-sm-4
+                                        select#company_cd.form-control
+                                .form-group
                                     label.col-sm-2.control-label 검색년도
                                     .col-sm-2
                                         select#yyyy.form-control
@@ -39,8 +43,8 @@ block content
                                             option(value='2014') 2014
                                             option(value='2015') 2015
                                             option(value='2016') 2016
-                                            option(selected='2017') 2017
-                                            option(value='2018') 2018
+                                            option(value='2017') 2017
+                                            option(selected='2018') 2018
                                             option(value='2019') 2019
                                             option(value='2020') 2020
                                             option(value='2021') 2021
