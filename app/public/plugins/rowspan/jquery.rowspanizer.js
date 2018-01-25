@@ -8,7 +8,6 @@
  * https://github.com/jquery-boilerplate/boilerplate/
  */
 
-;
 (function($, window, document, undefined) {
 	"use strict";
 
@@ -79,9 +78,9 @@
 
 	$.fn[rowspanizer] = function(options) {
 		return this.each(function() {
-			if (!$.data(this, "plugin_" + rowspanizer)) {
+			//if (!$.data(this, "plugin_" + rowspanizer)) {
 				$.data(this, "plugin_" + rowspanizer, new f(this, options));
-			}
+			//}
 		});
 	};
 

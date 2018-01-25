@@ -97,6 +97,10 @@ module.exports = {
 
         var condition = {};
         var OrQueries = [];
+        
+        if (req.query.company_cd != null && req.query.company_cd != '*') {
+            condition.request_company_cd = req.query.company_cd;
+        }
 
         if (req.query.higher_cd != null && req.query.higher_cd != '*') {
             condition.higher_cd = req.query.higher_cd;
@@ -166,12 +170,12 @@ module.exports = {
                 }
             }
             
-            ,{ "$sort": { "_id.request_company_cd" : 1, "_id.higher_cd" : 1 } }
+            ,{ "$sort": { "_id.request_company_cd" : -1, "_id.higher_cd" : 1 } }
 
         ]
 
         logger.debug("==================================================");
-        logger.debug('high_lower :  ', JSON.stringify(aggregatorOpts));
+        logger.debug('com_higher :  ', JSON.stringify(aggregatorOpts));
         logger.debug("==================================================");
 
         return {
