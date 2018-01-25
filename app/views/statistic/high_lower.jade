@@ -2,13 +2,12 @@ extends ../layouts/default
 block head
     title 3-3 상위별 하위업무통계
     
-    script(src='/assets/js/jquery.core.js')
-    script(src='/assets/js/jquery.app.js')
+    //script(src='/assets/js/jquery.core.js')
+    //script(src='/assets/js/jquery.app.js')
 
     script(src='/vendor/jquery/jquery-ui.1.11.0.js')
     script(src='/vendor/jquery/jquery.min.js')
 
-    //script(src='https://cdn.datatables.net/plug-ins/1.10.16/api/average().js')
 
 
     script(src='/isu/js/statistic/jquery.rowspanizer.js', type='text/javascript')
@@ -35,6 +34,9 @@ block content
                         .card-box.m-t-10
                             form.form-horizontal.group-border-dashed(action='#')
                                 .form-group
+                                    label.col-sm-1.control-label 회사명
+                                    .col-sm-3
+                                        select#company_cd.form-control
                                     label.col-sm-2.control-label 검색년도
                                     .col-sm-2
                                         select#yyyy.form-control
@@ -63,9 +65,6 @@ block content
                                             option(value='10') 10월
                                             option(value='11') 11월
                                             option(value='12') 12월
-                                    label.col-sm-1.control-label 회사명
-                                    .col-sm-3
-                                        select#company_cd.form-control
                                     .col-sm-2
                                         button#searchBtn.btn.btn-primary(type='button')
                                             i.fa.fa-search.m-r-5
@@ -73,7 +72,7 @@ block content
                 .row
                     .col-lg-12
                         .card-box
-                            table#target-table.table.table-bordered(class='target-table')
+                            table#target-table.table.table-bordered
                                 thead
                                     tr
                                         th.font-12(class='text-center' width='') 상위업무명
@@ -84,7 +83,7 @@ block content
                                         th.font-12(class='text-center' width='10%') 미해결건수
                                         th.font-12(class='text-center' width='10%') 해결률(%)
                                         th.font-12(class='text-center' width='10%' ) 평점
-                                tbody#more_list(class='target-table')
+                                tbody#more_list
                                     
 
 block footer
