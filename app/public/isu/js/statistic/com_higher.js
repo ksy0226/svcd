@@ -54,7 +54,7 @@ function rowSpan(){
 function getComHigherSt(){
 
 
-    var reqParam = 'company_cd=' + $('#company_cd').val() +'&higher_cd=' + $('#higher_cd').val() + '&yyyy=' + $('#yyyy').val() + '&mm=' + $('#mm').val() ;
+    var reqParam = 'company_cd=' + encodeURIComponent($('#company_cd').val()) +'&higher_cd=' + $('#higher_cd').val() + '&yyyy=' + $('#yyyy').val() + '&mm=' + $('#mm').val() ;
     $.ajax({          
         type: "GET",
         async: true,

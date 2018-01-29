@@ -48,7 +48,7 @@ function getHighLowerSt(){
 
     $("#more_list").empty();
 
-    var reqParam = 'company_cd=' + $('#company_cd').val() + '&yyyy=' + $('#yyyy').val() + '&mm=' + $('#mm').val() ;
+    var reqParam = 'company_cd=' + encodeURIComponent($('#company_cd').val()) + '&yyyy=' + $('#yyyy').val() + '&mm=' + $('#mm').val() ;
     $.ajax({          
         type: "GET",
         async: true,
@@ -162,69 +162,6 @@ function setHighLower(dataObj){
 
 
 }
-
-
-/**
- * 소계 추가작업
- */
-function addSum(dataObj){
-    alert("addSum()");
-    alert(JSON.stringify(dataObj));
-
-    var totalCntSum = 0;
-    var stCnt2Sum = 0;
-    var stCnt3_4Sum = 0;
-    var stCnt5Sum = 0;
-    var solRatioAvg = 0;
-    var valAvg = 0;
-
-
-    if (dataObj.length > 0) {
-        for (var i = 0; i < dataObj.length; i++) {
-            
-                totalCntSum = Number(totalCntSum + dataObj[i].totalCnt);
-                stCnt2Sum = Number(stCnt2Sum + dataObj[i].stCnt2);
-                stCnt3_4Sum = Number(stCnt3_4Sum + dataObj[i].stCnt3_4);
-                stCnt5Sum = Number(stCnt5Sum + dataObj[i].stCnt5);
-                solRatioAvg = (stCnt3_4Sum / totalCntSum * 100).toFixed(2);
-
-                if(dataObj[i]._id.higher_nm != dataObj[i+1]._id.higher_nm  || dataObj[i+1]._id.higher_nm == null){
-                    
-                    var addList = "";
-                    addList += "<tr bgcolor='#D4F4FA'>";
-                    addList += "    <td class='text-left'>" + dataObj[i]._id.higher_nm + "</td>";
-                    addList += "    <td class='text-center'>소 계</td>";
-                    addList += "    <td class='text-center' id='totalCntSum'>" + totalCntSum + "</td>";
-                    addList += "    <td class='text-center'>" + stCnt2Sum + "</td>";
-                    addList += "    <td class='text-center' id='stCnt3_4Sum'>" + stCnt3_4Sum + "</td>";
-                    addList += "    <td class='text-center'>" + stCnt5Sum + "</td>";
-                    addList += "    <td class='text-center'>" + solRatioAvg + "</td>";
-                    addList += "    <td class='text-center' id='average'></td>";
-                    addList += "</tr>";
-
-
-                    //if(dataObj[i]._id.higher_nm == dataObj[i+1]._id.higher_nm){
-                    //    alert(dataObj[i]._id.higher_nm );
-                    //   rowSpan();
-                    //}
-
-                }
-                
-            //}
-           
-
-            $("#more_list").append(addList);
-            
-
-        }
-
-    } 
-
-    rowSpan();
-
-
-}
-
 
 
 /**
