@@ -1,7 +1,6 @@
 'use strict';
 
 $(document).ready(function () {
-    alert(1);
     getManager();
 
     //getCompany();
@@ -49,13 +48,11 @@ function rowSpan(){
  * 담당자별 월별 통계 가져오기
  */
 function getMngMonthSt(){
-    alert("getMngMonthSt function!!!");
     $("#more_list").empty();
     
     //var reqParam = 'company_cd=' + encodeURIComponent($('#company_cd').val()) + '&yyyy=' + $('#yyyy').val() + '&mm=' + $('#mm').val() ;
     var reqParam = 'yyyy=' + $('#yyyy').val();
 
-    alert("reqParam : "+reqParam);
     
     $.ajax({          
         type: "GET",
@@ -182,7 +179,7 @@ function setMngMonthSt(dataObj){
         $("#more_list").append(addList);
     }
 
-    //rowSpan();
+    rowSpan();
 
 
 }
