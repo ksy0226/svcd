@@ -189,7 +189,7 @@ module.exports = {
     mng_month: (req) => {
         
         logger.debug("==========================================statistic service=========================================");
-        logger.debug("mng_month >>>>>>>: ", );
+        logger.debug("mng_month >>>>>>>: ");
         logger.debug("====================================================================================================");
         
         var condition = {};
