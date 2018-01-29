@@ -194,7 +194,12 @@ module.exports = {
         
         var condition = {};
         var OrQueries = [];
-
+        
+        
+        if (req.query.higher_cd != null && req.query.higher_cd != '*') {
+            condition.higher_cd = req.query.higher_cd;
+        }
+        
         if (req.query.yyyy != null) {
             condition.register_yyyy = req.query.yyyy;
         }
