@@ -18,5 +18,6 @@ router.route('/deptchartLoad').get(ssc.sessionCheck, controller.chartLoad);
 router.route('/getHighLower').get(ssc.sessionCheck, controller.getHighLower);
 router.route('/getComHigher').get(ssc.sessionCheck, controller.getComHigher);
 router.route('/userCntLoad').get(ssc.sessionCheck, controller.cntload);
+router.route('/getMngMonth').get(ssc.sessionCheck, controller.getMngMonth);
 
 module.exports = router;
