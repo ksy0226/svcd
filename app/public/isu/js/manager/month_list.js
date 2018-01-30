@@ -1,7 +1,6 @@
 'use strict';
 
 $(document).ready(function () {
-    getManager();
 
     getHigherProcess();
 
@@ -122,6 +121,12 @@ function setMngMonthSt(dataObj){
                 higher_nm2 = dataObj[i+1]._id.higher_nm;
             }
 
+            var register_mm1 = "";
+            var register_mm2 = "";
+            register_mm1 = dataObj[i]._id.register_mm;
+            if( i < dataObj.length - 1){
+                register_mm2 = dataObj[i+1]._id.register_mm;
+            }
 
             if(dataObj[i].valAvg > 0){
                 valSum = Number(valSum) + Number(dataObj[i].valAvg); 
@@ -131,7 +136,7 @@ function setMngMonthSt(dataObj){
 
 
 
-            if(higher_nm1 != higher_nm2 ){
+            if((higher_nm1 != higher_nm2) || (register_mm1 != register_mm2) ){
                 
                 addList += "<tr bgcolor='#D4F4FA'>";
                 addList += "    <td class='text-left'>" + dataObj[i]._id.register_mm + "</td>";
@@ -336,44 +341,6 @@ function setCompany(data) {
 
 }
 */
-/**
- * 담당자 정보 조회
- */
-function getManager() {
-    //var reqParam = 'company_cd=' + company_cd ;
-    $.ajax({
-        type: "GET",
-        async: true,
-        url: "/manager/getManager/",
-        contentType: "application/json",
-        //data : reqParam,
-        dataType: "json",
-        error: function (request, status, error) {
-            alert("getManager : " + error + " " + request.responseText);
-        },
-        success: function (data) {
-            setManager(data);
-        }
-    });
-}
-
-/**
- * 담당자 정보 세팅
- */
-function setManager(data) {
-    $('#manager').empty();
-    $('#manager').append("<option value='*' selected>전체</option>");
-    for (var i = 0; i < data.length; i++) {
-        $('#manager').append("<option value='" + data[i]["employee_nm"] + "'>" + data[i]["employee_nm"] + "</option>");
-    }
-
-    //회사 세팅이 끝나면 조회한다.
-    //getHighLowerSt();
-    getMngMonthSt();
-
-
-}
-
 
 /**
  * 상위 업무 조회
