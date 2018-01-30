@@ -98,7 +98,7 @@ module.exports = {
                     }else{
                         callback(null);
                     }
-                });
+                }); 
             }], function(){
                 var condition = {};
                 var setQuery = {};
