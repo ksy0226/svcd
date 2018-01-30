@@ -3,6 +3,8 @@
 const mongoose = require('mongoose');
 const async = require('async');
 const CompanyModel = require('../models/Company');
+const UsermanageModel = require('../models/Usermanage');
+const IncidentModel = require('../models/Incident');
 const service = require('../services/company');
 const logger = require('log4js').getLogger('app');
 const Iconv = require('iconv-lite');
@@ -62,23 +64,66 @@ module.exports = {
     },
 
     update: (req, res, next) => {
-        CompanyModel.findOneAndUpdate({
-            _id: req.params.id
-        }, req.body.company, function (err, company) {
-            if (err) {
-                res.render("http/500", {
-                    err: err
+        try{
+
+            //logger.debug("=================================")
+            //logger.debug("req.body.company ",JSON.stringify(req.body.company));
+            //logger.debug("=================================")
+
+            async.waterfall([function (callback) {
+                CompanyModel.findOneAndUpdate({
+                    _id: req.params.id
+                }, req.body.company, function (err, company) {
+                    if (err) {
+                        res.render("http/500", {
+                            err: err
+                        });
+                    } else {
+                        callback(null);
+                    }
                 });
-            } else {
-                if (!company) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                } else {
-                    res.redirect('/company/');
-                }
-            }
-        });
+            }, function (callback){
+                var condition = {};
+                var setQuery = {};
+                var option = {};
+                condition.request_company_cd = req.body.company.company_cd;
+                setQuery.$set = { "request_company_nm" : req.body.company.company_nm };
+                option.multi = true;
+                //incident 회사명 수정
+                IncidentModel.update(condition, setQuery, option, function(err, tasks){                        
+                    if(err){
+                        res.render("http/500", {
+                            err: err
+                        });
+                    }else{
+                        callback(null);
+                    }
+                });
+            }], function(){
+                var condition = {};
+                var setQuery = {};
+                var option = {};
+                condition.company_cd = req.body.company.company_cd;
+                setQuery.$set = { "company_nm" : req.body.company.company_nm };
+                option.multi = true;
+                //사용자 회사명 수정
+                UsermanageModel.update(condition, setQuery, option, function(err, tasks){                        
+                    if(err){
+                        res.render("http/500", {
+                            err: err
+                        });
+                    }else{
+                        res.redirect('/company/');
+                    }
+                });
+            });
+        }catch(e){
+
+            logger.error("=================================");
+            logger.error("company update error : ",e);
+            logger.error("=================================");
+
+        }finally{}
     },
 
     delete: (req, res, next) => {
