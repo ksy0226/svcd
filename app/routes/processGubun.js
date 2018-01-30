@@ -13,5 +13,6 @@ router.route('/edit/:id').get(ssc.sessionCheck, controller.edit)
 router.route('/delete/:id').get(ssc.sessionCheck, controller.delete);
 router.route('/getJSON/:higher_cd').get(ssc.sessionCheck, controller.getJSON);
 router.route('/list').get(ssc.sessionCheck, controller.list);
+router.route('/getProcessStatus').get(ssc.sessionCheck, controller.getProcessStatus);
 
 module.exports = router;

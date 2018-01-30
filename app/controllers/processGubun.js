@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const async = require('async');
 const HigherProcessModel = require('../models/HigherProcess');
 const ProcessGubunModel = require('../models/ProcessGubun');
+const ProcessStatusModel = require('../models/ProcessStatus');
 const logger = require('log4js').getLogger('app');
 const service = require('../services/processgubun');
 
@@ -255,6 +256,20 @@ module.exports = {
                 });
             }
             res.send(processGubun);
+        });
+    },
+
+    getProcessStatus: (req, res, next) => {
+        ProcessStatusModel.find({}, function (err, processStatus) {
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: err
+                });
+            } else {
+                res.json(processStatus);
+            }
+
         });
     }
 };

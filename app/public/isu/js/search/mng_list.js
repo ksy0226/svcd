@@ -40,6 +40,8 @@ $(document).ready(function () {
 
     getCompany();
 
+    getStatus();
+
     //조회버튼 클릭 시
     $('#searchBtn').on('click', function () {
         research(1);
@@ -47,8 +49,12 @@ $(document).ready(function () {
 
     //회사 선택 시
     $('#company_cd').on('change', function () {
-
         //getHigherProcessList(); //회사에 따라 상위업무 세팅
+        research(1);
+    });
+
+    //진행상태 선택 시
+    $('#status_cd').on('change', function () {
         research(1);
     });
 
@@ -74,6 +80,45 @@ function research(selectedPage) {
     getDataList(selectedPage);
 }
 
+
+/**
+ * 진행상태 가져오기
+ */
+function getStatus(){
+    $.ajax({
+        type: "GET",
+        async: true,
+        url: "/ProcessGubun/getProcessStatus",
+        dataType: "json", // xml, html, script, json 미지정시 자동판단
+        timeout: 30000, //제한 시간
+        cache: false,
+        //data: "", // $($('form')).serialize()
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        error: function (request, status, error) {
+            alert("getStatus error : " + error);
+        },
+        beforeSend: function () {
+        },
+        success: function (dataObj) {
+            setStatus(dataObj);
+            research(1);
+        }
+    });
+}
+
+/**
+ * 진행상태 뿌리기
+ */
+function setStatus(data) {
+    
+$('#status_cd').empty();
+$('#status_cd').append("<option value='*'> 전체</option>");
+
+for (var i = 0; i < data.length; i++) {
+    var status_cdVal = data[i]["status_cd"];
+    $('#status_cd').append("<option value='" + status_cdVal + "'>" + data[i]["status_nm"] + "</option>")
+}
+}
 
 /**
  * 상위업무 가져오기
@@ -175,7 +220,7 @@ function setContent(data) {
 function getDataList(selectedPage) {
     //전체내용검색 user 구분 추가
     //user=managerall 시, 전체 Incident 보이도록 처리
-    var reqParam = 'user=managerall&page=' + selectedPage + '&perPage=' + dataPerPage + '&searchType=' + $('#searchType').val() + '&company_cd=' + encodeURIComponent($('#company_cd').val()) + '&higher_cd=' + $('#higher_cd').val() + '&lower_cd=' + $('#lower_cd').val() + '&reg_date_from=' + $('#reg_date_from').val() + '&reg_date_to=' + $('#reg_date_to').val() + '&searchText=' + encodeURIComponent($('#searchText').val());
+    var reqParam = 'user=managerall&page=' + selectedPage + '&perPage=' + dataPerPage + '&searchType=' + $('#searchType').val() + '&status_cd=' + $('#status_cd').val()+ '&company_cd=' + encodeURIComponent($('#company_cd').val()) + '&higher_cd=' + $('#higher_cd').val() + '&lower_cd=' + $('#lower_cd').val() + '&reg_date_from=' + $('#reg_date_from').val() + '&reg_date_to=' + $('#reg_date_to').val() + '&searchText=' + encodeURIComponent($('#searchText').val());
     
     $.ajax({
         type: "GET",
