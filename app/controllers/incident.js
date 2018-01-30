@@ -716,7 +716,7 @@ module.exports = {
                         } else {
                             //평가 완료 업데이트 성공 시 메일 전송
                             Usermanage.findOne({
-                                email: Incident.request_id
+                                email: Incident.manager_email
                             }, function (err, usermanage) {
                                 if (err) {
                                     return res.json({

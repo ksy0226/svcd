@@ -434,4 +434,38 @@ module.exports = {
         res.download(filepath);
     },
 
+    /**
+     * 담당자 정보 조회
+     */
+    getManager: (req, res, next) => {
+        try {
+
+            logger.debug("==========================================manager getManager========================================");
+            logger.debug("====================================================================================================");
+         
+            Usermanage.find({company_cd : "ISU_ST"}, function (err, managerJsonData) {
+                if (err) {
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
+
+                    //logger.debug("==========================================CompanyModel.find({}========================================");
+                    //logger.debug("companyJsonData : ",companyJsonData);
+                    //logger.debug("====================================================================================================");
+
+                    res.json(managerJsonData);
+                };
+
+            })
+            .sort({
+                //group_flag: -1,
+                manager_nm: 1
+            });
+        } catch (e) {
+            logger.error("getManager error : ", e);
+        } finally {}
+    },
+
 };
