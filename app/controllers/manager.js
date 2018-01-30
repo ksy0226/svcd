@@ -175,6 +175,12 @@ module.exports = {
      * 담당자 월별 처리 내역
      */
     month_list: (req, res, next) => {
+        logger.debug('===============manager month_list===============');
+        logger.debug('month_list');
+        logger.debug('================================================');
+
+        res.render("manager/month_list");
+        /*
         Incident.find(req.body.incident, function (err, incident) {
             //logger.debug('err', err, '\n');
             logger.debug('list 호출');
@@ -187,6 +193,7 @@ module.exports = {
                 incident: incident
             });
         }).sort('-created_at');
+        */
     },
 
     /**
