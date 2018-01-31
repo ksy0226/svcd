@@ -508,8 +508,14 @@ function setDetail(dataObj) {
     $('#_receipt_date').html(dataObj.receipt_date);
     $('#_complete_reserve_date').html(dataObj.complete_reserve_date);
     $('#_business_level').html(dataObj.business_level);
-    $('#_complete_content').html(dataObj.complete_content); 
-    //$('#_complete_content').html(dataObj.complete_content.replace(/\r\n/gi,"<br/>"));
+    
+    /*관리자가 처리한 내용 그대로 보이도록 처리*/
+    if(dataObj.complete_content != undefined){
+        $('#_complete_content').html(dataObj.complete_content.replace(/\r\n/gi,"<br/>"));
+    }else{
+        $('#_complete_content').html(dataObj.complete_content); 
+    }
+
     $('#_complete_date').html(dataObj.complete_date);
     $('#_need_minute').html(dataObj.need_minute);
     $('#_delay_reason').html(dataObj.delay_reason);
