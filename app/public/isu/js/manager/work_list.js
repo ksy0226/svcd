@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 var incident_id = ''; //선택 인시던트 id
 var higher_cd = '000'//선택 상위코드
@@ -508,7 +508,7 @@ function setDetail(dataObj) {
     $('#_receipt_date').html(dataObj.receipt_date);
     $('#_complete_reserve_date').html(dataObj.complete_reserve_date);
     $('#_business_level').html(dataObj.business_level);
-    $('#_complete_content').html(dataObj.complete_content);
+    $('#_complete_content').html(dataObj.complete_content); 
     //$('#_complete_content').html(dataObj.complete_content.replace(/\r\n/gi,"<br/>"));
     $('#_complete_date').html(dataObj.complete_date);
     $('#_need_minute').html(dataObj.need_minute);
