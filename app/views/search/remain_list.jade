@@ -13,6 +13,8 @@ block head
     link(href='/assets/css/menu_light.css', rel='stylesheet', type='text/css')
     link(href='/assets/css/responsive.css', rel='stylesheet', type='text/css')
 
+
+
     //첨부파일
     link(href='/vendor/fileupload/css/fileinput.css', media='all', rel='stylesheet', type='text/css')
 
@@ -51,6 +53,7 @@ block head
 
     //첨부파일
     script(src='/vendor/fileupload/js/fileinput.js', type='text/javascript')
+    script(src='/isu/js/incident/new.js', type='text/javascript')
 
     script(src='/isu/js/search/remain_list.js', type='text/javascript')
 
@@ -73,16 +76,10 @@ block content
                         .card-box
                             form.form-horizontal.group-border-dashed(action='#', onsubmit='return false;')
                                 .form-group
-                                    label.col-sm-2.control-label 상위업무 
+                                    label.col-sm-2.control-label 상위업무
                                     .col-sm-3
                                         select.form-control(id='higher_cd' name='higher_cd')
                                             option(value ='*') 전체
-                                            - if (higherprocess.length > 0) {
-                                                - for( var i = 0 ; length = higherprocess.length > i ; i++ ){ //속도가 느리다고 알고 있음.
-                                                    option(value ='#{higherprocess[i].higher_cd}') #{higherprocess[i].higher_nm}
-                                                - }
-                                            - } 
-
                                     
                                 .form-group
                                     label.col-sm-2.control-label 검색기간
@@ -115,11 +112,12 @@ block content
                             table.table.table-bordered(id='lists')
                                 thead
                                     tr
-                                        th(class='text-center' width='16%') 상위업무명
-                                        th(class='text-center' width='16%') 하위업무명
+                                        th(class='text-center' width='14%') 상위업무명
+                                        th(class='text-center' width='14%') 하위업무명
                                         th(class='text-center') 제목
-                                        th(class='text-center' width='15%') 등록일
-                                        th(class='text-center' width='15%') 담당자
+                                        th(class='text-center' width='14%') 등록일
+                                        th(class='text-center' width='14%') 담당자
+                                        th(class='text-center' width='8%') 해결여부
                                 tbody(id='more_list')
                         .row
                             .col-sm-4

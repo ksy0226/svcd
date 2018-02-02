@@ -229,26 +229,202 @@ module.exports = {
      * 연도별 미처리 리스트
      */
     remain_list: (req, res, next) => {
-        async.waterfall([function (callback) {
-            HigherProcessModel.find({}, function (err, higherprocess) {
-                if (err) {
-                    res.render("http/500", {
-                        err: err
-                    });
-                }
-                callback(null, higherprocess)
-            });
-        }], function (err, higherprocess) {
-            if (err) {
-                res.render("http/500", {
-                    err: err
-                });
+        try {
+            res.render("search/remain_list")
+        } catch (e) {
+
+            logger.error("=============================================");
+            logger.error("search.remain_list err : ", e);
+            logger.error("=============================================");
+
+        } finally { }
+    },
+     
+    getRemainList: (req, res, next) => {
+       
+        //logger.debug("=============================================");
+        //logger.debug("search.remain_list  : ");
+        //logger.debug("=============================================");
+        
+        var search = service.createSearch(req);
+        
+        var page = 1;
+        var perPage = 15;
+        var condition = {};
+        //condition.solution_flag ='N';
+
+        if (req.query.page != null && req.query.page != '') page = Number(req.query.page);
+        if (req.query.perPage != null && req.query.perPage != '') perPage = Number(req.query.perPage);
+        
+        //미처리현황 페이지 구분 gbn=remain
+        if(req.query.gbn == 'remain'){
+            //조건추가 해결여부 'N' 
+            if (search.findIncident.$and == null) {
+                search.findIncident.$and = [{
+                    "solution_flag": "N"
+                }];
             } else {
-                res.render("search/remain_list", {
-                    higherprocess: higherprocess
+                search.findIncident.$and.push({
+                    "solution_flag": "N"
                 });
             }
-        });
+            
+            //조건추가 진행상태 '1' 제외
+            if (search.findIncident.$and == null) {
+                search.findIncident.$and = [{
+                    $or: [{
+                        status_cd: "2"
+                    }, {
+                        status_cd: "3"
+                    }, {
+                        status_cd: "4"
+                    }]
+                }];
+            } else {
+                search.findIncident.$and.push({
+                    $or: [{
+                        status_cd: "2"
+                    }, {
+                        status_cd: "3"
+                    }, {
+                        status_cd: "4"
+                    }]
+                });
+            }
+        }
+        if (req.query.user != 'managerall' && req.query.gbn != 'remain') {
+
+            //logger.debug("===============search remain_list ======================================");
+            //logger.debug(" remain_list req.query.user  : ", req.query.user );
+            //logger.debug("========================================================================");
+
+            if (search.findIncident.$and == null) {
+
+                search.findIncident.$and = [{
+                    "request_id": req.session.email
+                }];
+
+            } else {
+
+                search.findIncident.$and.push({
+                    "request_id": req.session.email
+                });
+            }
+        }
+        //logger.debug("===============search remain_list control======================================");
+        //logger.debug(" remain_list search.findIncident : ", JSON.stringify(search.findIncident));
+        //logger.debug("===============================================================================");
+        try {
+        
+            async.waterfall([function (callback) {
+                //상위업무가 전체이고, SD 담당자일때만 나의 상위 업무만 조회
+                if (req.query.higher_cd == "*" && (req.session.user_flag == "3" || req.session.user_flag == "4")) {
+
+                    condition.email = req.session.email;
+
+                    MyProcess.find(condition).distinct('higher_cd').exec(function (err, myHigherProcess) {
+
+                        if (search.findIncident.$and == null) {
+
+                            //logger.debug("=============================================");
+                            //logger.debug("search.findIncident.$and is null : ", myHigherProcess);
+                            //logger.debug("=============================================");
+
+                            search.findIncident.$and = [{
+                                "higher_cd": {
+                                    "$in": myHigherProcess
+                                }
+                            }];
+                        } else {
+
+                            //logger.debug("=============================================");
+                            //logger.debug("search.findIncident.$and is not null : ", myHigherProcess);
+                            //logger.debug("=============================================");
+
+                            search.findIncident.$and.push({
+                                "higher_cd": {
+                                    "$in": myHigherProcess
+                                }
+                            });
+                        }
+                        //logger.debug("getIncident =============================================");
+                        //logger.debug("page : ", page);
+                        //logger.debug("perPage : ", perPage);
+                        //logger.debug("req.query.perPage : ", req.query.perPage);
+                        //logger.debug("search.findIncident : ", search.findIncident);
+                        //logger.debug("getIncident =============================================");
+
+                        callback(null);
+                    });
+                } else {
+                    //logger.debug("else =============================================");
+                    //logger.debug("test : ");
+                    //logger.debug("else =============================================");
+                    callback(null);
+                }
+            },
+            function (callback) {
+                IncidentModel.count(search.findIncident, function (err, totalCnt) {
+                    if (err) {
+                        //logger.error("incident : ", err);
+
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+
+                        //logger.debug("=============================================");
+                        //logger.debug("incidentCnt : ", totalCnt);
+                        //logger.debug("=============================================");
+
+                        callback(null, totalCnt)
+                    }
+                });
+            }
+            ], function (err, totalCnt) {
+
+                IncidentModel.find(search.findIncident, function (err, incident) {
+                    if (err) {
+
+                        //logger.debug("=============================================");
+                        //logger.debug("incident : ", err);
+                        //logger.debug("=============================================");
+
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+
+                        //incident에 페이징 처리를 위한 전체 갯수전달
+                        var rtnData = {};
+                        rtnData.incident = incident;
+                        rtnData.totalCnt = totalCnt
+
+                        //logger.debug("=============================================");
+                        //logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
+                        //logger.debug("rtnData : ", JSON.stringify(rtnData));
+                        //logger.debug("=============================================");
+
+                        res.json(rtnData);
+
+                    }
+                })
+                    .sort('-register_date')
+                    .skip((page - 1) * perPage)
+                    .limit(perPage);
+            });
+        
+        } catch (err) {
+
+            //logger.debug("===============search control================");
+            //logger.debug("search remain_list error : ", err);
+            //logger.debug("=============================================");
+
+        } finally { }
+        
+        
     },
 
     /**
@@ -339,11 +515,11 @@ module.exports = {
             }
         }
 
-        logger.debug("===============search control================");
+        //logger.debug("===============search control================");
         //logger.debug("page : ", page);
         //logger.debug("perPage : ", perPage);
-        logger.debug(" list search.findIncident : ", JSON.stringify(search.findIncident));
-        logger.debug("=============================================");
+        //logger.debug(" list search.findIncident : ", JSON.stringify(search.findIncident));
+        //logger.debug("=============================================");
 
         try {
 
@@ -359,9 +535,9 @@ module.exports = {
 
                         if (search.findIncident.$and == null) {
 
-                            logger.debug("=============================================");
-                            logger.debug("search.findIncident.$and is null : ", myHigherProcess);
-                            logger.debug("=============================================");
+                            //logger.debug("=============================================");
+                            //logger.debug("search.findIncident.$and is null : ", myHigherProcess);
+                            //logger.debug("=============================================");
 
                             search.findIncident.$and = [{
                                 "higher_cd": {
@@ -370,9 +546,9 @@ module.exports = {
                             }];
                         } else {
 
-                            logger.debug("=============================================");
-                            logger.debug("search.findIncident.$and is not null : ", myHigherProcess);
-                            logger.debug("=============================================");
+                            //logger.debug("=============================================");
+                            //logger.debug("search.findIncident.$and is not null : ", myHigherProcess);
+                            //logger.debug("=============================================");
 
                             search.findIncident.$and.push({
                                 "higher_cd": {
@@ -381,12 +557,12 @@ module.exports = {
                             });
                         }
 
-                        logger.debug("getIncident =============================================");
-                        logger.debug("page : ", page);
-                        logger.debug("perPage : ", perPage);
-                        logger.debug("req.query.perPage : ", req.query.perPage);
-                        logger.debug("search.findIncident : ", search.findIncident);
-                        logger.debug("getIncident =============================================");
+                        //logger.debug("getIncident =============================================");
+                        //logger.debug("page : ", page);
+                        //logger.debug("perPage : ", perPage);
+                        //logger.debug("req.query.perPage : ", req.query.perPage);
+                        //logger.debug("search.findIncident : ", search.findIncident);
+                        //logger.debug("getIncident =============================================");
 
                         callback(null);
                     });
