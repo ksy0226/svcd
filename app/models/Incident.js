@@ -42,7 +42,7 @@ var IncidentSchema = new Schema({
     receipt_date            : {type : String},  //접수일
     business_level          : {type : String},  //난이도
     complete_reserve_date   : {type : String, default : ''},  //완료예정일
-    solution_flag           : {type : String, default : 'N'},  //해결여부
+    solution_flag           : {type : String, default : 'Y'},  //해결여부
     complete_content        : {type : String},  //완료 코멘트
     add_complete_content    : {type : String},  //추가 완료 코멘트                                                                         
     program_id              : {type : String},                                                                           
