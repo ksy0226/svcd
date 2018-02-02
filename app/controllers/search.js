@@ -273,21 +273,21 @@ module.exports = {
             if (search.findIncident.$and == null) {
                 search.findIncident.$and = [{
                     $or: [{
-                        status_cd: "2"
-                    }, {
                         status_cd: "3"
                     }, {
                         status_cd: "4"
+                    },{
+                        status_cd: "5"
                     }]
                 }];
             } else {
                 search.findIncident.$and.push({
                     $or: [{
-                        status_cd: "2"
-                    }, {
                         status_cd: "3"
                     }, {
                         status_cd: "4"
+                    },{
+                        status_cd: "5"
                     }]
                 });
             }
