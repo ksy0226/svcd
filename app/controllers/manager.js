@@ -311,6 +311,9 @@ module.exports = {
                 var date = m.format("YYYY-MM-DD HH:mm:ss");
 
                 upIncident.receipt_content = "* 상/하위업무변경 : " + req.session.user_nm + "-" + date;
+                //업무변경 시, 상태값 다시 업데이트 (최예화과장 요청)
+                upIncident.status_cd = "1";
+                upIncident.status_nm = "접수중";
 
                 //logger.debug("===========================================");
                 //logger.debug("saveHChange req.body : " + JSON.stringify(req.body));
