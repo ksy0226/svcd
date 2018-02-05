@@ -153,10 +153,15 @@ module.exports = {
     getHigherProcess: (req, res, next) => {
         try {
             var condition = {};
+            condition.use_yn = "사용";
+
             if (req.query.company_cd != null) {
                 condition.company_cd = req.query.company_cd;
             }
             
+            logger.debug("=============================================");
+            logger.debug("getHigherProcess condition : ", condition);
+            logger.debug("=============================================");
 
             HigherProcessModel.find(condition, function (err, higherProcess) {
                 if (err) {

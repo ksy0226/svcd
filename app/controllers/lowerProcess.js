@@ -167,6 +167,8 @@ module.exports = {
     getLowerProcess: (req, res, next) => {
         try {
             var condition = {};
+            condition.use_yn = "사용";
+
             if (req.query.higher_cd != null && req.query.higher_cd != "*") {
                 condition.higher_cd = req.query.higher_cd;
             }

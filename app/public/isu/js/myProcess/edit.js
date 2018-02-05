@@ -191,6 +191,7 @@ function setMyProcess(data){
 function saveMyProcess(){
     var myProcess = $("#myProcessSelect").val().toString();
     var reqParam = "higher_cd=" + $('#higher_cd').val()+"&myProcess="+encodeURIComponent(myProcess);
+
     $.ajax({
         type: "POST",
         async: true,

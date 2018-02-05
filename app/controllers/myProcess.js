@@ -112,9 +112,9 @@ module.exports = {
             condition.company_cd    = req.session.company_cd; //회사코드
             condition.email         = req.session.email; //이메일
 
-            //logger.debug("==========================================getMyProcess=======================================");
-            //logger.debug("condition : ",condition);
-            //logger.debug("=============================================================================================");
+            logger.debug("==========================================getMyProcess=======================================");
+            logger.debug("condition : ",condition);
+            logger.debug("=============================================================================================");
             
             MyProcessModel.find(condition, function (err, myProcess) {
                 if (err){ 
@@ -124,9 +124,9 @@ module.exports = {
                     });
                 }else{
 
-                    //logger.debug("==========================================getMyProcess=======================================");
-                    //logger.debug("getmyProcess : ",JSON.stringify(myProcess));
-                    //logger.debug("=============================================================================================");
+                    logger.debug("==========================================getMyProcess=======================================");
+                    logger.debug("getmyProcess : ",JSON.stringify(myProcess));
+                    logger.debug("=============================================================================================");
 
                     res.json(myProcess);
                 }
