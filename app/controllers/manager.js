@@ -449,6 +449,79 @@ module.exports = {
 
     },
 
+    /**
+     * 보류내용 등록
+     */
+    saveHold: (req, res, next) => {
+        ////logger.debug("saveComplete =====================> " + JSON.stringify(req.body));
+        ////logger.debug("req.body.incident : ", req.body.incident);
+        try {
+            async.waterfall([function (callback) {
+                var upIncident = req.body.incident;
+
+                var m = moment();
+                var date = m.format("YYYY-MM-DD HH:mm:ss");
+
+                //upIncident.complete_date = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+                upIncident.complete_date = date;
+                upIncident.status_cd = '5';
+                upIncident.status_nm = '보류';
+
+                callback(null, upIncident);
+            }], function (err, upIncident) {
+                if (err) {
+                    res.json({
+                        success: false,
+                        message: "No data found to update"
+                    });
+                } else {
+                    Incident.findOneAndUpdate({
+                        _id: req.params.id
+                    }, upIncident, function (err, Incident) {
+                        if (err) return res.json({
+                            success: false,
+                            message: err
+                        });
+                        if (!Incident) {
+                            return res.json({
+                                success: false,
+                                message: "No data found to update"
+                            });
+                        } else {
+                            //완료 업데이트 성공 시 메일 전송
+                            Usermanage.findOne({ email: Incident.request_id }, function (err, usermanage) {
+                                if (err) {
+                                    return res.json({
+                                        success: false,
+                                        message: err
+                                    });
+                                } else {
+                                    if(usermanage != null){
+                                        if (usermanage.email_send_yn == 'Y') {
+                                            mailer.finishSend(Incident, upIncident);
+                                        }
+                                    }
+                                }
+                            });
+                            return res.json({
+                                success: true,
+                                message: "update successed"
+                            });
+                        }
+                    });
+                }
+            });
+
+        } catch (e) {
+            logger.error("manager control saveComplete : ", e);
+            return res.json({
+                success: false,
+                message: err
+            });
+        }
+
+    },
+
     /** 
      * incident 첨부파일 다운로드
      */

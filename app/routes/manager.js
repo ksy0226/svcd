@@ -15,5 +15,8 @@ router.route('/month_list').get(ssc.sessionCheck, controller.month_list);
 router.route('/com_process').get(ssc.sessionCheck, controller.com_process);
 router.route('/getIncidentDetail/:id').get(ssc.sessionCheck, controller.getIncidentDetail);
 router.route('/getManager').get(ssc.sessionCheck, controller.getManager);
+router.route('/saveHold/:id').post(ssc.sessionCheck, controller.saveHold);
+
+
 
 module.exports = router;

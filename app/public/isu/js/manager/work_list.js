@@ -102,6 +102,13 @@ $(document).ready(function () {
 
     });
 
+    //보류저장버튼 클릭 시
+    $('#holdSaveBtn').on('click', function () {
+        holdSave();
+        research(1);
+
+    });
+
     //업무변경 상위업무 선택 시
     $('select[name="ch_higher_cd"]').on('change', function () {
         
@@ -147,6 +154,17 @@ $(document).ready(function () {
     });
     $('#complete_modal').on('hidden.bs.modal', function () {
         initCompleteModal();
+    });
+
+
+    /**
+     * 보류처리 화면
+     */
+    $('#hold_modal').on('show.bs.modal', function () {
+        //getQuestionType();
+    });
+    $('#hold_modal').on('hidden.bs.modal', function () {
+        initHoldModal();
     });
 
 });
@@ -396,6 +414,7 @@ function initDetail() {
     $('#receiptBtn').attr('style', 'display:none');
     $('#hChangeBtn').attr('style', 'display:none');
     $('#completeBtn').attr('style', 'display:none');
+    $('#holdBtn').attr('style', 'display:none');
 
 
     /**
@@ -452,6 +471,7 @@ function setDetail(dataObj) {
         $('#receiptBtn').attr('style', 'display:none');
         $('#hChangeBtn').attr('style', 'display:');
         $('#completeBtn').attr('style', 'display:');
+        $('#holdBtn').attr('style', 'display:');
     } else {
         $('#receiptBtn').attr('style', 'display:none');
         $('#hChangeBtn').attr('style', 'display:none');
@@ -739,6 +759,51 @@ function completeSave() {
  */
 function initCompleteModal() {
     $('select[name="incident[process_gubun]"]').empty();
+    $('textarea[name="incident[complete_content]"]').val('');
+    $('textarea[name="incident[work_time]"]').val('1');
+    $('textarea[name="incident[delay_reason]"]').val('');
+    $('textarea[name="incident[sharing_content]"]').val('');
+}
+
+//>>================== 보류처리 스크립트 ==============
+/**
+ * 보류 내용 저장
+ */
+function holdSave() {
+    var reqParam = $('#complete_form').serialize();
+    //reqParam += "&incident[process_nm]=" + $('select[name="incident[process_cd]"] option:selected').text();
+    $.ajax({
+        type: "POST",
+        async: true,
+        url: "/manager/saveHold/" + incident_id,
+        dataType: "json", // xml, html, script, json 미지정시 자동판단
+        timeout: 30000,
+        cache: false,
+        data: reqParam,
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        error: function (request, status, error) {
+            alert("holdSave error : " + error);
+        },
+        beforeSend: function () {
+        },
+        success: function (dataObj) {
+            if (dataObj.success) {
+                $('.modal').modal('hide');
+                initHoldModal();
+                //research(selectedPage);
+            } else {
+                alert('e : ' + JSON.stringify(dataObj));
+            }
+        }
+    });
+}
+
+
+/**
+ * 보류모달 초기화
+ */
+function initHoldModal() {
+    //$('select[name="incident[process_gubun]"]').empty();
     $('textarea[name="incident[complete_content]"]').val('');
     $('textarea[name="incident[work_time]"]').val('1');
     $('textarea[name="incident[delay_reason]"]').val('');
