@@ -315,6 +315,7 @@ module.exports = {
                 upIncident.status_cd = "1";
                 upIncident.status_nm = "접수중";
 
+
                 //logger.debug("===========================================");
                 //logger.debug("saveHChange req.body : " + JSON.stringify(req.body));
                 //logger.debug("saveHChange upIncident : " + JSON.stringify(upIncident));
@@ -323,6 +324,12 @@ module.exports = {
                 callback(null, upIncident);
 
             }], function (err, upIncident) {
+
+                //logger.debug("===========================================");
+                //logger.debug("saveHChange req.params.id : "+req.params.id )
+                //logger.debug("===========================================");
+
+
                 if (err) {
                     res.json({
                         success: false,
@@ -333,21 +340,27 @@ module.exports = {
                         _id: req.params.id
                     }, upIncident, function (err, Incident) {
                         if (err) {
+                            
                             return res.json({
                                 success: false,
                                 message: err
                             });
                         } else {
+                            
+                            //logger.debug("===========================================");
+                            //logger.debug("saveHChange Incident : "+Incident )
+                            //logger.debug("===========================================");
 
                             //******************************* */
                             // SD 업무담당자 사내메신저 호출
                             alimi.sendAlimi(req.body.incident.higher_cd);
                             //******************************* */
-
+                            
                             return res.json({
                                 success: true,
                                 message: "update successed"
                             });
+
                         }
                     });
                 }

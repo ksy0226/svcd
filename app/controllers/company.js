@@ -241,6 +241,13 @@ module.exports = {
     list: (req, res, next) => {
         var search = service.createSearch(req);
 
+        var page = 1;
+        var perPage = 15;
+
+        if (req.query.page != null && req.query.page != '') page = Number(req.query.page);
+        if (req.query.perPage != null && req.query.perPage != '') perPage = Number(req.query.perPage);
+
+
         async.waterfall([function (callback) {
             CompanyModel.find(search.findCompany, function (err, company) {
                     if (err) {
@@ -255,29 +262,104 @@ module.exports = {
                         logger.debug("================================================================================================");
                         */
 
-                        callback(null, company);
+                        //callback(null, company);
+                        callback(null);
                     }
                 })
+                /*
                 .sort({
                     group_flag: -1,
                     company_nm: 1
-                });
-        }], function (err, company) {
+                })
+                .skip((page - 1) * perPage)
+                .limit(perPage);
+                */
+
+        },
+        function (callback) {
+            CompanyModel.count(search.findCompany, function (err, totalCnt) {
+                if (err) {
+                    logger.error("incident : ", err);
+
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
+
+                    //logger.debug("=============================================");
+                    //logger.debug("incidentCnt : ", totalCnt);
+                    //logger.debug("=============================================");
+
+                    callback(null, totalCnt)
+                }
+            });
+        }
+        ], function (err, totalCnt) {
+
+            CompanyModel.find(search.findCompany, function (err, company) {
+                if (err) {
+
+                    //logger.debug("=============================================");
+                    //logger.debug("incident : ", err);
+                    //logger.debug("=============================================");
+
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
+
+                    //incident에 페이징 처리를 위한 전체 갯수전달
+                    var rtnData = {};
+                    rtnData.company = company;
+                    rtnData.totalCnt = totalCnt
+
+                    //logger.debug("=============================================");
+                    //logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
+                    //logger.debug("rtnData : ", JSON.stringify(rtnData));
+                    //logger.debug("=============================================");
+
+                    res.json(rtnData);
+
+                }
+            })
+                .sort({
+                    group_flag: -1,
+                    company_nm: 1
+                })
+                .skip((page - 1) * perPage)
+                .limit(perPage);
+        });
+    /*], function (err, company) {
             if (err) {
                 return res.json({
                     success: false,
                     message: err
                 });
             } else {
-                /*
+                
                 logger.debug("==========================================getcompany=======================================");
                 logger.debug("company list : ", JSON.stringify(company));
                 logger.debug("==================================================+++===========================================");
-                */
+                
 
-                res.send(company);
+                //res.send(company);
+                //incident에 페이징 처리를 위한 전체 갯수전달
+                var rtnData = {};
+                rtnData.company = company;
+                rtnData.totalCnt = totalCnt;
+
+                //logger.debug("=============================================");
+                //logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
+                //logger.debug("rtnData : ", JSON.stringify(rtnData));
+                //logger.debug("=============================================");
+
+                res.json(rtnData);
+
             }
         });
+        */
     },
     
     /**

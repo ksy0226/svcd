@@ -172,7 +172,7 @@ function getDataList(selectedPage) {
     if ($('#lower_cd').val() == "") {
         $('#lower_cd').val() = "*";
     }
-    
+
     //나의업무처리현황 user 구분 추가
     //user=manager 시, 관리자가 본인이 접수해야할 것만 Incident 보이도록 처리
     var reqParam = 'user=manager&page=' + selectedPage + '&perPage=' + dataPerPage + '&searchType=' + $('#searchType').val() + '&status_cd=' + $('#status_cd').val()
@@ -424,6 +424,7 @@ function initDetail() {
      */
     $('#_manager_nm').html('');
     $('#_receipt_date').html('');
+    $('#_receipt_content').html('');
     $('#_complete_reserve_date').html('');
     $('#_business_level').html('');
     $('#_complete_content').html('');
@@ -656,7 +657,7 @@ function initReceiptModal(dataObj) {
 
 //>>================== 업무변경 스크립트 ==============
 /**
- * 접수 내용 저장
+ * 업무 변경 저장
  */
 function hChangeSave() {
     var reqParam = "incident[higher_cd]="+$('select[name="ch_higher_cd"]').val();
@@ -682,7 +683,7 @@ function hChangeSave() {
             if (dataObj.success) {
                 $('.modal').modal('hide');
                 initHChangeModal(dataObj);
-                //research(selectedPage);
+                //research(1);
             } else {
                 alert('e : ' + JSON.stringify(dataObj));
             }
@@ -890,9 +891,7 @@ function getCompany() {
  */
 function setCompany(data) {
     $('#company_cd').empty();
-    //if ($('#company_cd').val() == "null") {
-    //    $('#company_cd').val() = "*";
-    //}
+    
 
     if (data.length == 1) {
         $('#company_cd').append("<option value='" + data[0]["company_cd"] + "' >" + data[0]["company_nm"] + "</option>");

@@ -222,7 +222,7 @@ module.exports = {
                 //logger.debug("req.query.user = manager : ",req.query.user);
                 //logger.debug("=================================================");
 
-                if (company_cd != '*') {
+                if (company_cd != '*' && company_cd != 'null' ) {
                     AndQueries.push({
                         request_company_cd: company_cd
                     });

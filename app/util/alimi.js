@@ -93,9 +93,9 @@ module.exports = {
                                     });
                                 }else{
 
-                                    logger.debug("=============================================");
-                                    logger.debug("util/alimi/sendAlimi aggregate!!! targetUser[i]  ", JSON.stringify(targetUser[i]));
-                                    logger.debug("=============================================");
+                                    //logger.debug("=============================================");
+                                    //logger.debug("util/alimi/sendAlimi aggregate!!! targetUser[i]  ", JSON.stringify(targetUser[i]));
+                                    //logger.debug("=============================================");
 
                                 }
                             }
