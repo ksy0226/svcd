@@ -295,6 +295,8 @@ module.exports = {
      * incident 삭제 
      */
     delete: (req, res, next) => {
+        
+
         Incident.findOneAndRemove({
             _id: req.params.id
             //,author: req.user._id
@@ -307,7 +309,31 @@ module.exports = {
                 success: false,
                 message: "No data found to delete"
             });
-            res.redirect('/incident');
+            res.send(incident);
+        });
+    },
+
+    deleteIncident: (req, res, next) => {
+      
+        Incident.findOneAndRemove({
+            _id: req.params.id
+            //,author: req.user._id
+        }, function (err, incident) {
+            if (err){ 
+                return res.json({
+                    success: false,
+                message: err
+                });
+            }else if (!incident){ return res.json({
+                    success: false,
+                    message: "No data found to delete"
+                });
+            }else{
+                return res.json({
+                    success: true,
+                    message: "삭제되었습니다."
+                });
+            }
         });
     },
 

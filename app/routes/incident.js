@@ -23,6 +23,7 @@ router.route('/download/:path1/:path2').get(ssc.sessionCheck, controller.downloa
 router.route('/valuationSave/:id').post(ssc.sessionCheck,controller.valuationSave);
 router.route('/exceldownload').get(ssc.sessionCheck, controller.exceldownload);
 router.route('/insertedImage').get(ssc.sessionCheck, controller.insertedImage);
+router.route('/deleteIncident/:id').post(ssc.sessionCheck, controller.deleteIncident);
 
 
 

@@ -56,6 +56,13 @@ $(document).ready(function () {
         initValuationModal();
     });
 
+    //삭제 버튼 클릭 시
+    $('#deleteBtn').on('click',function(){
+        if(confirm("삭제하시겠습니까?")){
+            deleteIncident();
+        }
+    });
+
 
     //말줄임
     /*
@@ -68,6 +75,9 @@ $(document).ready(function () {
     });
     */
 });
+
+
+
 
 //다시 조회
 function research() {
@@ -300,18 +310,23 @@ function setDetail(dataObj) {
         if (dataObj.status_cd == '1') {
             $('#_status_nm').addClass('label label-inverse');
             $('#valuationBtn').attr('style', 'display:none');
+            $('#deleteBtn').attr('style', 'display:');
         } else if (dataObj.status_cd == '2') {
             $('#_status_nm').addClass('label label-primary');
             $('#valuationBtn').attr('style', 'display:none');
+            $('#deleteBtn').attr('style', 'display:none');
         } else if (dataObj.status_cd == '3') {
             $('#_status_nm').addClass('label label-success');
             $('#valuationBtn').attr('style', 'display:');
+            $('#deleteBtn').attr('style', 'display:none');
         } else if (dataObj.status_cd == '4') {
             $('#_status_nm').addClass('label label-purple');
             $('#valuationBtn').attr('style', 'display:none');
+            $('#deleteBtn').attr('style', 'display:none');
         } else if (dataObj.status_cd == '5') {
             $('#_status_nm').addClass('label label-info');
             $('#valuationBtn').attr('style', 'display:none');
+            $('#deleteBtn').attr('style', 'display:none');
         }
     }
 
@@ -547,5 +562,38 @@ function RadioCheck() {
         }
     }
 }
+
+//>>================== 삭제처리 스크립트 ==============
+
+function deleteIncident(){
+    $.ajax({
+        type: "POST",
+        async: true,
+        url: "/incident/deleteIncident/"+incident_id,
+        dataType: "json", // xml, html, script, json 미지정시 자동판단
+        timeout: 30000, //제한 시간
+        cache: false,
+        //data: reqParam, // $($('form')).serialize()
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        error: function (request, status, error) {
+            alert("deleteIncident error : " + error+ " "+request.responseText);
+        },
+        beforeSend: function () {
+        },
+        success: function (dataObj) {
+            //alert(dataObj.message);
+            //research();
+
+            if (dataObj.success) {
+                $('.modal').modal('hide');
+                //initValuationModal();
+                research();
+            } else {
+                alert('e : ' + JSON.stringify(dataObj));
+            }
+        }
+    });
+}
+//>>================== 삭제처리 스크립트 ==============
 
 

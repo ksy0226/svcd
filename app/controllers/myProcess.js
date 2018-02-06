@@ -146,6 +146,7 @@ module.exports = {
             var condition = {}; //조건
             condition.company_cd    = req.session.company_cd; //회사코드
             condition.email         = req.session.email; //이메일
+            
 
             MyProcessModel.find(condition).distinct('higher_cd').exec(function(err, getMyHigherProcess){
 

@@ -47,7 +47,6 @@ block head
     script(src='/isu/js/incident/index.js', type='text/javascript')
 
 
-
 block content
     // ==============================================================
     // Start right Content here
@@ -135,6 +134,9 @@ block content
                                     button#valuationBtn.btn.btn-success.waves-effect.waves-light.m-l-5(data-target='#valuation_modal', data-toggle='modal', type='button', style='display: none;')
                                         i.fa.fa-edit
                                         | 서비스 평가
+                                    button#deleteBtn.btn.btn-danger.waves-effect.waves-light.m-l-5(data-target='#delete_modal', data-toggle='modal', type='button', style='display: none;')
+                                        i.fa.fa-remove
+                                        | 삭제
                     .row
                         .col-lg-12.m-t-20
                             .card-box
