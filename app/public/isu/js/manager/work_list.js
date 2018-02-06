@@ -769,7 +769,8 @@ function initCompleteModal() {
  * 보류 내용 저장
  */
 function holdSave() {
-    var reqParam = $('#complete_form').serialize();
+    var reqParam = $('#hold_form').serialize();
+    alert("reqParam >>> "+reqParam);
     //reqParam += "&incident[process_nm]=" + $('select[name="incident[process_cd]"] option:selected').text();
     $.ajax({
         type: "POST",
