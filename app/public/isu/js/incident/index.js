@@ -277,7 +277,6 @@ function initDetail() {
  * 상세조회 매핑
  */
 function setDetail(dataObj) {
-
     /**
      * 등록내용 세팅
      */
@@ -581,9 +580,6 @@ function deleteIncident(){
         beforeSend: function () {
         },
         success: function (dataObj) {
-            //alert(dataObj.message);
-            //research();
-
             if (dataObj.success) {
                 $('.modal').modal('hide');
                 //initValuationModal();
