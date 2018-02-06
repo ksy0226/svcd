@@ -368,9 +368,9 @@ function setDetail(dataObj){
         $('#_status_nm').removeClass();
         $('#_status_nm').addClass('label label-success');
     }else if(dataObj.status_cd == '4'){
-        $('#_status_nm').addClass('.label label-purple');
+        $('#_status_nm').addClass('label label-purple');
     }else if(dataObj.status_cd == '5'){
-        $('#_status_nm').addClass('.label label-info');
+        $('#_status_nm').addClass('label label-info');
     }
 
     /**
