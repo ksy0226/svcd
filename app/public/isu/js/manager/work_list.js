@@ -556,10 +556,9 @@ function setDetail(dataObj) {
     $('#_receipt_content').html(dataObj.receipt_content);
 
 
-
     /**
-         * 첨부파일
-         */
+    * 첨부파일
+    */
     if (dataObj.attach_file.length > 0) {
         $('#_attach').html('');
     
@@ -957,7 +956,6 @@ function getCompany() {
 function setCompany(data) {
     $('#company_cd').empty();
     
-
     if (data.length == 1) {
         $('#company_cd').append("<option value='" + data[0]["company_cd"] + "' >" + data[0]["company_nm"] + "</option>");
         $('#company_cd').val(data[0]["company_cd"]);
