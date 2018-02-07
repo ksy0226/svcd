@@ -724,8 +724,25 @@ function initHChangeModal(dataObj) {
  * 완료 내용 저장
  */
 function completeSave() {
+    //해결여부 checkbox
+    if($('input:checkbox[name="incident[solution_flag]"]').is(":checked") == true){
+        $('input:checkbox[name="incident[solution_flag]"]').val("Y");
+    }else{
+        $('input:checkbox[name="incident[solution_flag]"]').val("N");
+    }
+    //공개여부 checkbox
+    if($('input:checkbox[name="incident[complete_open_flag]"]').is(":checked") == true){
+        $('input:checkbox[name="incident[complete_open_flag]"]').val("Y");
+    }else{
+        $('input:checkbox[name="incident[complete_open_flag]"]').val("N");
+    }
+    
     var reqParam = $('#complete_form').serialize();
     reqParam += "&incident[process_nm]=" + $('select[name="incident[process_cd]"] option:selected').text();
+    reqParam += "&incident[solution_flag]=" + $('input:checkbox[name="incident[solution_flag]"]').val();
+    //reqParam += "&incident[complete_open_flag]=" + $('input:checkbox[name="incident[complete_open_flag]"]').val();
+    
+
     $.ajax({
         type: "POST",
         async: true,
@@ -761,6 +778,14 @@ function initCompleteModal() {
     $('textarea[name="incident[work_time]"]').val('1');
     $('textarea[name="incident[delay_reason]"]').val('');
     $('textarea[name="incident[sharing_content]"]').val('');
+
+    
+    
+    $('input[name="incident[solution_flag]"]').empty();
+    $('input[name="incident[complete_open_flag]"]').empty();
+
+    
+
 }
 
 //>>================== 보류처리 스크립트 ==============
@@ -768,8 +793,23 @@ function initCompleteModal() {
  * 보류 내용 저장
  */
 function holdSave() {
+    //해결여부 checkbox
+    if($('input:checkbox[name="incident[solution_flag2]"]').is(":checked") == true){
+        $('input:checkbox[name="incident[solution_flag2]"]').val("Y");
+    }else{
+        $('input:checkbox[name="incident[solution_flag2]"]').val("N");
+    }
+    //공개여부 checkbox
+    if($('input:checkbox[name="incident[complete_open_flag2]"]').is(":checked") == true){
+        $('input:checkbox[name="incident[complete_open_flag2]"]').val("Y");
+    }else{
+        $('input:checkbox[name="incident[complete_open_flag2]"]').val("N");
+    }
+
     var reqParam = $('#hold_form').serialize();
-    alert("reqParam >>> "+reqParam);
+    reqParam += "&incident[solution_flag]=" + $('input:checkbox[name="incident[solution_flag2]"]').val();
+    reqParam += "&incident[complete_open_flag]=" + $('input:checkbox[name="incident[complete_open_flag2]"]').val();
+    //alert("reqParam >>> "+reqParam);
     //reqParam += "&incident[process_nm]=" + $('select[name="incident[process_cd]"] option:selected').text();
     $.ajax({
         type: "POST",
@@ -807,6 +847,8 @@ function initHoldModal() {
     $('textarea[name="incident[work_time]"]').val('1');
     $('textarea[name="incident[delay_reason]"]').val('');
     $('textarea[name="incident[sharing_content]"]').val('');
+    $('input[name="incident[solution_flag2]"]').empty();
+    $('input[name="incident[complete_open_flag2]"]').empty();
 }
 
 /**
