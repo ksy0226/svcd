@@ -426,7 +426,6 @@ function initDetail() {
     * 긴급구분
     */
     $('#_process_speed').html('');
-
     $('#_higher_nm').html('');
     $('#_lower_nm').html('');
     $('#_request_company_nm-request_nm').html('');
