@@ -101,7 +101,7 @@ function getStatus(){
         },
         success: function (dataObj) {
             setStatus(dataObj);
-            research(1);
+            
         }
     });
 }
@@ -110,14 +110,16 @@ function getStatus(){
  * 진행상태 뿌리기
  */
 function setStatus(data) {
-    
-$('#status_cd').empty();
-$('#status_cd').append("<option value='*'> 전체</option>");
+        
+    $('#status_cd').empty();
+    $('#status_cd').append("<option value='*'> 전체</option>");
 
-for (var i = 0; i < data.length; i++) {
-    var status_cdVal = data[i]["status_cd"];
-    $('#status_cd').append("<option value='" + status_cdVal + "'>" + data[i]["status_nm"] + "</option>")
-}
+    for (var i = 0; i < data.length; i++) {
+        var status_cdVal = data[i]["status_cd"];
+        $('#status_cd').append("<option value='" + status_cdVal + "'>" + data[i]["status_nm"] + "</option>")
+    }
+
+    research(1);
 }
 
 /**
@@ -142,7 +144,7 @@ function getHigherProcessList() {
         },
         success: function (dataObj) {
             setHigherContent(dataObj);
-            research(1);
+            //research(1);
 
         }
     });
