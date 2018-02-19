@@ -112,7 +112,7 @@ function setDataList(dataObj, selectedPage) {
         addList += "								<td>" + dataObj[i - 1].description + "</td>";
         addList += "								<td class='text-center'>" + dataObj[i - 1].need_hour + "</td>";
         addList += "								<td class='text-center'>" + dataObj[i - 1].user_nm + "</td>";
-        addList += "								<td class='text-center'>" + dataObj[i - 1].created_at + "</td>";
+        addList += "								<td class='text-center'>" + dataObj[i - 1].register_date + "</td>";
         addList += "								<td class='text-center'>" + dataObj[i - 1].use_yn + "</td>";
         addList += "							</tr>";
 
