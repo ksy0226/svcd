@@ -107,7 +107,7 @@ function setDataList(dataObj, selectedPage) {
         addList += "							<tr onclick=location='/higherProcess/" + dataObj[i - 1]._id + "/edit'>";
         addList += "								<td>" + dataObj[i - 1].higher_nm + "</td>";
         addList += "								<td>" + dataObj[i - 1].description + "</td>";
-        addList += "								<td>" + dataObj[i - 1].created_at + "</td>";
+        addList += "								<td>" + dataObj[i - 1].register_date + "</td>";
         addList += "								<td class='text-center'>" + dataObj[i - 1].use_yn + "</td>";
         addList += "							</tr>";
 
