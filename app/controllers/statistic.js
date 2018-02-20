@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const async = require('async');
 const IncidentModel = require('../models/Incident');
 var MyProcess = require('../models/MyProcess');
+const ProcessGubunModel = require('../models/ProcessGubun');
 var service = require('../services/statistic');
 const logger = require('log4js').getLogger('app');
 
@@ -123,6 +124,117 @@ module.exports = {
             })
     },
 
+    process_gubun: (req, res, next) => {
+        res.render("statistic/process_gubun");
+    },
+
+    getProcessGubun: (req, res, next) => {
+        
+        //var svc = service.com_higher(req);
+        var svc = service.process_gubun(req);
+
+        IncidentModel.aggregate(svc.aggregatorOpts)
+            .exec(function (err, incident) {
+
+            if (err) {
+
+                //logger.debug("==================================================");
+                //logger.debug(" IncidentModel.aggregate error ", err);
+                //logger.debug("==================================================");
+
+                return res.json({
+                    success: false,
+                    message: err
+                });
+
+            } else {
+
+                incident.forEach(function (data, idx, incident) {
+
+                    //logger.debug("==================================================");
+                    //logger.debug("data ", JSON.stringify(data));
+                    //logger.debug("data.grp.length ", data.grp.length);
+                    //logger.debug("==================================================");
+
+
+                    var totalCnt = 0; //전체 개수
+                    var stCnt1 = 0; //신청중 개수
+                    var stCnt2 = 0; //처리중 개수
+                    var stCnt3 = 0; //미평가
+                    var stCnt4 = 0; //완료
+                    var stCnt5 = 0; //보류 개수
+                    var stCnt3_4 = 0; //미평가+완료 개수
+
+
+                    for (var i = 0; i < data.grp.length; i++) {
+                        //전체 개수
+                        totalCnt = totalCnt + data.grp[i].count;
+                            
+                        //신청중 개수
+                        if (data.grp[i].status_cd == '1') {
+                            stCnt1 = stCnt1 + data.grp[i].count;
+                        }
+
+                        //처리중 개수
+                        if (data.grp[i].status_cd == '2') {
+                            stCnt2 = stCnt2 + data.grp[i].count;
+                        }
+
+                        //미평가 개수
+                        if (data.grp[i].status_cd == '3') {
+                            stCnt3 = stCnt3 + data.grp[i].count;
+                        }
+
+                        //완료 개수
+                        if (data.grp[i].status_cd == '4') {
+                            stCnt4 = stCnt4 + data.grp[i].count;
+                        }
+
+                        //보류
+                        if (data.grp[i].status_cd == '5') {
+                            stCnt5 = stCnt5 + data.grp[i].count;
+                        }
+
+                        //완료 또는 미평가
+                        if (data.grp[i].status_cd == '3' || data.grp[i].status_cd == '4') {
+                            stCnt3_4 = stCnt3_4 + data.grp[i].count;
+                        }
+
+                    }
+
+                    data.totalCnt = totalCnt;
+                    data.stCnt1 = stCnt1;
+                    data.stCnt2 = stCnt2;
+                    data.stCnt3 = stCnt3;
+                    data.stCnt4 = stCnt4;
+                    data.stCnt5 = stCnt5;
+                    data.stCnt3_4 = stCnt3_4;
+                    data.solRatio = ((stCnt3_4 * 100) / totalCnt).toFixed(2);
+
+                    //평점
+                    if (data.valuationSum > 0) {
+                        data.valAvg = (data.valuationSum / stCnt4).toFixed(2);
+                    } else {
+                        data.valAvg = 0;
+                    }
+
+                    logger.debug("==================================================");
+                    logger.debug("data.totalCnt : ", data.totalCnt);
+                    logger.debug("data.stCnt1 : ", data.stCnt1);
+                    logger.debug("data.stCnt2 : ", data.stCnt2);
+                    logger.debug("data.stCnt3 : ", data.stCnt3);
+                    logger.debug("data.stCnt4 : ", data.stCnt4);
+                    logger.debug("data.solRatio : ", data.solRatio);
+                    logger.debug("data.valuationSum : ", data.valuationSum);
+                    logger.debug("data.valAvg : ", data.valAvg);
+                    logger.debug("==================================================");
+
+                });
+                //logger.debug("=====>>>>" + JSON.stringify(incident));
+                res.json(incident);
+            }
+        })
+    },
 
     /**
      * 상위별 하위업무 통계 화면
@@ -181,6 +293,7 @@ module.exports = {
                             totalCnt = totalCnt + data.grp[i].count;
 
                             //신청중 개수
+
                             if (data.grp[i].status_cd == '1') {
                                 stCnt1 = stCnt1 + data.grp[i].count;
                             }
@@ -1429,8 +1542,9 @@ module.exports = {
                 incident: incident
             });
         });
-    }
-
+    },
+    
+    
 };
 
 function setMonthData(srcData) {

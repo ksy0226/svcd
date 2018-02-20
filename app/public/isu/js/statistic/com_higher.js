@@ -66,6 +66,7 @@ function getComHigherSt(){
             alert("getHighLower : " + error+ " "+request.responseText);
         },         
         success: function( data ) { 
+            alert(JSON.stringify(data)); 
             setComHigherSt(data);
             
         }             
