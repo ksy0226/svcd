@@ -629,7 +629,7 @@ function setDatepickerToday(datepicker) {
  */
 function receiptSave() {
     var reqParam = $('#receipt_form').serialize();
-    reqParam += "&incident[lower_nm]=" + $('select[name="incident[lower_cd]"] option:selected').text() ;
+    reqParam += "&incident[lower_nm]=" + encodeURIComponent($('select[name="incident[lower_cd]"] option:selected').text()) ;
     $.ajax({
         type: "POST",
         async: true,
@@ -684,9 +684,9 @@ function initReceiptModal() {
  */
 function hChangeSave() {
     var reqParam = "incident[higher_cd]="+$('select[name="ch_higher_cd"]').val();
-    reqParam += "&incident[higher_nm]=" + $('select[name="ch_higher_cd"] option:selected').text() ;
+    reqParam += "&incident[higher_nm]=" + encodeURIComponent($('select[name="ch_higher_cd"] option:selected').text()) ;
     reqParam += "&incident[lower_cd]="+$('select[name="ch_lower_cd"]').val();
-    reqParam += "&incident[lower_nm]=" + $('select[name="ch_lower_cd"] option:selected').text() ;
+    reqParam += "&incident[lower_nm]=" + encodeURIComponent($('select[name="ch_lower_cd"] option:selected').text()) ;
     $.ajax({
         type: "POST",
         async: true,
