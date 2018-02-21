@@ -51,7 +51,7 @@ function getDataList(selectedPage) {
     //function getDataList(){    
 
     var reqParam = 'page=' + selectedPage + '&perPage=' + dataPerPage + '&searchText=' + encodeURIComponent($('#searchText').val());
-    alert("reqParam : " + reqParam);
+    //alert("reqParam : " + reqParam);
 
     $.ajax({
         type: "GET",
