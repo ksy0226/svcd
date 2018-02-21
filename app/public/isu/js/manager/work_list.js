@@ -745,7 +745,7 @@ function completeSave() {
 
 
     var reqParam = $('#complete_form').serialize();
-    reqParam += "&incident[process_nm]=" + $('select[name="incident[process_cd]"] option:selected').text();
+    reqParam += "&incident[process_nm]=" + encodeURIComponent($('select[name="incident[process_cd]"] option:selected').text());
     //reqParam += "&incident[solution_flag]=" + $('input:checkbox[name="incident[solution_flag]"]').val();
     //reqParam += "&incident[complete_open_flag]=" + $('input:checkbox[name="incident[complete_open_flag]"]').val();
     
