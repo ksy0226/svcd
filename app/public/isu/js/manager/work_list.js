@@ -36,6 +36,7 @@ $(document).ready(function () {
     });
 
     getCompany();
+
     //최초 페이징
     //paging(totalData, dataPerPage, pageCount, 1);
 
@@ -314,10 +315,9 @@ function setDataList(dataObj, selectedPage, totalDataCnt) {
 
 }
 
-
 /**
  * 페이징 처리
- */
+*/
 function paging(totalDataCnt, dataPerPage, pageCnt, currentPage) {
 
     var totalPage = Math.ceil(totalDataCnt/dataPerPage);    // 총 페이지 수
@@ -456,6 +456,7 @@ function initDetail() {
     $('#_delay_reason').html('');
     $('#_valuation').html('');
     $('#_complete_open_flag-reading_cnt').html('');
+    $('#_program_id').html('');
     $('#_sharing_content').html('');
 
 }
@@ -556,6 +557,7 @@ function setDetail(dataObj) {
     }
     //$('#_complete_open_flag-reading_cnt').html(dataObj.complete_open_flag+"/"+dataObj.reading_cnt);
     $('#_complete_open_flag').html(dataObj.complete_open_flag);
+    $('#_program_id').html(dataObj.program_id);
     $('#_sharing_content').html(dataObj.sharing_content);
     $('#_receipt_content').html(dataObj.receipt_content);
 

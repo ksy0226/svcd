@@ -513,6 +513,7 @@ function initDetail() {
         $('#_delay_reason').html('');
         $('#_valuation').html('');
         $('#_complete_open_flag-reading_cnt').html('');
+        $('#_program_id').html('');
         $('#_sharing_content').html('');
     
     }
@@ -595,6 +596,7 @@ function setDetail(dataObj) {
     }
     //$('#_complete_open_flag-reading_cnt').html(dataObj.complete_open_flag+"/"+dataObj.reading_cnt);
     $('#_complete_open_flag-reading_cnt').html(dataObj.complete_open_flag);
+    $('#_program_id').html(dataObj.program_id);
     $('#_sharing_content').html(dataObj.sharing_content);
 
 
