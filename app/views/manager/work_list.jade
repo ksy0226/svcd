@@ -78,7 +78,7 @@ block content
                                     label.col-sm-2.control-label 진행상태
                                     .col-sm-2
                                         select.form-control(id='status_cd' name='status_cd')
-                                            //option(value ='*') 전체
+                                            option(value ='*') 전체
                                             - if (status.length > 0) {
                                                 - for( var i = 0 ; length = status.length > i ; i++ ){ 
                                                     option(value ='#{status[i].status_cd}') #{status[i].status_nm}
