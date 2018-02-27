@@ -31,7 +31,6 @@ function fnTableToExcel(dvData){
 
 
 function fnAllExcel(JsonData){
-    alert("fnAllExcel()");
     var arrData = typeof JsonData != 'object' ? JSON.parse(JsonData) : JsonData;
 
     var tab_text="<table border='1px'>";
@@ -52,6 +51,7 @@ function fnAllExcel(JsonData){
     tab_text=tab_text+ "<th>완료일자</th>";
     tab_text=tab_text+ "<th>요청제목</th>";
     tab_text=tab_text+ "<th>고객요청내용</th>";
+    tab_text=tab_text+ "<th>담당자이름</th>";
     tab_text=tab_text+ "<th>처리내용</th>";
     tab_text=tab_text+ "<th>처리소요시간</th>";
 
@@ -116,6 +116,11 @@ function fnAllExcel(JsonData){
         }
         if(arrData[i]['content'] != null){
             tab_text += "<td>"+arrData[i]['content']+"</td>";
+        }else{
+            tab_text += "<td></td>";
+        }
+        if(arrData[i]['manager_nm'] != null){
+            tab_text += "<td>"+arrData[i]['manager_nm']+"</td>";
         }else{
             tab_text += "<td></td>";
         }
