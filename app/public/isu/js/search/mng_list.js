@@ -586,7 +586,8 @@ function setDetail(dataObj) {
     }
 
     $('#_complete_date').html(dataObj.complete_date);
-    $('#_need_minute').html(dataObj.need_minute);
+    //$('#_need_minute').html(dataObj.need_minute);
+    $('#_need_minute').html(dataObj.work_time);
     $('#_delay_reason').html(dataObj.delay_reason);
     $('#_valuation').html(dataObj.valuation);
     if (dataObj.complete_open_flag == 'Y') {
