@@ -559,7 +559,11 @@ function setDetail(dataObj) {
     //$('#_complete_open_flag-reading_cnt').html(dataObj.complete_open_flag+"/"+dataObj.reading_cnt);
     $('#_complete_open_flag').html(dataObj.complete_open_flag);
     $('#_program_id').html(dataObj.program_id);
-    $('#_sharing_content').html(dataObj.sharing_content);
+    if(dataObj.sharing_content != undefined){
+        $('#_sharing_content').html(dataObj.sharing_content.replace(/\r\n/gi,"<br/>"));
+    }else{
+        $('#_sharing_content').html(dataObj.sharing_content); 
+    }
     $('#_receipt_content').html(dataObj.receipt_content);
 
 
