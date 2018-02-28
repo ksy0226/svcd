@@ -450,6 +450,7 @@ function initDetail() {
     $('#_receipt_content').html('');
     $('#_complete_reserve_date').html('');
     $('#_business_level').html('');
+    $('#_process_nm').html('');
     $('#_complete_content').html('');
     $('#_complete_date').html('');
     $('#_need_minute').html('');
@@ -534,7 +535,7 @@ function setDetail(dataObj) {
     $('#_receipt_date').html(dataObj.receipt_date);
     $('#_complete_reserve_date').html(dataObj.complete_reserve_date);
     $('#_business_level').html(dataObj.business_level);
-    
+    $('#_process_nm').html(dataObj.process_nm);
     /*관리자가 처리한 내용 그대로 보이도록 처리*/
     if(dataObj.complete_content != undefined){
         $('#_complete_content').html(dataObj.complete_content.replace(/\r\n/gi,"<br/>"));
