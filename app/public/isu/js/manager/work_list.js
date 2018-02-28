@@ -544,9 +544,7 @@ function setDetail(dataObj) {
 
     $('#_complete_date').html(dataObj.complete_date);
     //$('#_need_minute').html(dataObj.need_minute);
-    alert("dataObj.need_minute : "+dataObj.work_time);
     $('#_need_minute').html(dataObj.work_time);
-    //$('#_need_minute').html('3');
     $('#_delay_reason').html(dataObj.delay_reason);
     $('#_valuation').html(dataObj.valuation);
     if (dataObj.status_cd == "3" || dataObj.status_cd == "4" || dataObj.status_cd == "5") {
