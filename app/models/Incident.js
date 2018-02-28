@@ -47,7 +47,7 @@ var IncidentSchema = new Schema({
     add_complete_content    : {type : String},  //추가 완료 코멘트                                                                         
     program_id              : {type : String},                                                                           
     delay_reason            : {type : String},  //지연사유                                                                           
-    work_time               : {type : Number},  //작업시간                                                                         
+    work_time               : {type : Number, default : 1},  //작업시간                                                                         
     complete_date           : {type : String, default : ''},  //완료일                                                                       
     reading_cnt             : {type : Number},                                                                           
     complete_open_flag      : {type : String, default : 'N'},  //완료후공개여부                                                                     
