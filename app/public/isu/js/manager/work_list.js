@@ -559,7 +559,13 @@ function setDetail(dataObj) {
     }
     //$('#_complete_open_flag-reading_cnt').html(dataObj.complete_open_flag+"/"+dataObj.reading_cnt);
     $('#_complete_open_flag').html(dataObj.complete_open_flag);
-    $('#_program_id').html(dataObj.program_id);
+    //$('#_program_id').html(dataObj.program_id);
+    if(dataObj.program_id != undefined){
+        $('#_program_id').html(dataObj.program_id.replace(/\r\n/gi,"<br/>"));
+    }else{
+        $('#_program_id').html(dataObj.program_id); 
+    }
+    
     if(dataObj.sharing_content != undefined){
         $('#_sharing_content').html(dataObj.sharing_content.replace(/\r\n/gi,"<br/>"));
     }else{
