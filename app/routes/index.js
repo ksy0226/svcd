@@ -11,7 +11,7 @@ router.get('/', ssc.sessionCheck, controller.index);
 
 router.route('/index').post(controller.logincheck)
                       .get(ssc.sessionCheck, controller.retry);
-router.route('/new').post(ssc.sessionCheck, controller.new);
+router.route('/new').post(controller.new);
 router.route('/index1').get(ssc.sessionCheck, controller.index1);  
 router.route('/index2').get(ssc.sessionCheck, controller.index2);
 router.route('/logout').get(ssc.sessionCheck, controller.logout);

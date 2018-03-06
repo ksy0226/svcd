@@ -1,107 +1,13 @@
 'use strict';
 
 $(document).ready(function () {
-
-    $('.button-checkbox').each(function () {
-        var $widget = $(this),
-            $button = $widget.find('button'),
-            $checkbox = $widget.find('input:checkbox'),
-            color = $button.data('color'),
-            settings = {
-                on: {
-                    icon: 'glyphicon glyphicon-check'
-                },
-                off: {
-                    icon: 'glyphicon glyphicon-unchecked'
-                }
-            };
-
-        $button.on('click', function () {
-            $checkbox.prop('checked', !$checkbox.is(':checked'));
-            $checkbox.triggerHandler('change');
-            updateDisplay();
-        });
-
-        $checkbox.on('change', function () {
-            updateDisplay();
-        });
-
-        function updateDisplay() {
-            var isChecked = $checkbox.is(':checked');
-            // Set the button's state
-            $button.data('state', (isChecked) ? "on" : "off");
-
-            // Set the button's icon
-            $button.find('.state-icon')
-                .removeClass()
-                .addClass('state-icon ' + settings[$button.data('state')].icon);
-
-            // Update the button's color
-            if (isChecked) {
-                $button
-                    .removeClass('btn-default')
-                    .addClass('btn-' + color + ' active');
-            } else {
-                $button
-                    .removeClass('btn-' + color + ' active')
-                    .addClass('btn-default');
-            }
-        }
-
-        function init() {
-            updateDisplay();
-            // Inject the icon if applicable
-            if ($button.find('.state-icon').length == 0) {
-                $button.prepend('<i class="state-icon ' + settings[$button.data('state')].icon + '"></i>');
-            }
-        }
-        init();
-        initMap();
-        resize();
-    });
-
-    $('#myModal').click(function () {
-        resize();
-    });
+    usermanageNew();
 
     //계정신청 모달 저장버튼 클릭 시
     $('#usermanageNewSaveBtn').on('click', function () {
-        if (checkValue()) {
-            if (confirm("등록하시겠습니까?")) {
-                receiptSave();
-            }
-        }
-    })
-});
-
-//구글맵 초기화
-function initMap() {
-    if ($("#map").length) {
-        var mapOptions = { //구글 맵 옵션 설정
-            zoom: 12, //기본 확대율                 
-            //center : new google.maps.LatLng(37.497983,126.9938672), // 지도 중앙 위치
-            center: new google.maps.LatLng(37.557983, 126.8938672), // 지도 중앙 위치
-            scrollwheel: false, //마우스 휠로 확대 축소 사용 여부
-            mapTypeControl: false //맵 타입 컨트롤 사용 여부
-        };
-
-        var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-        var marker = new google.maps.Marker({
-            //position: map.getCenter(), //마커 위치
-            position: new google.maps.LatLng(37.497983, 126.9938672), // 지도 중앙 위치
-            map: map,
-            icon: '/isu/images/isu_map_icon.png',
-        });
-    }
-}
-
-//구글맵 리사이즈(모달 시 적용필요)
-function resize() {
-    $('#myModal').on('shown.bs.modal', function () {
-        google.maps.event.trigger(map, "resize");
+        receiptSave();
     });
-}
+});
 
 //계정신청 폼 초기화
 function usermanageNew() {
@@ -115,6 +21,17 @@ function receiptSave() {
     if (checkValue()) {
         if (confirm("등록하시겠습니까?")) {
             var reqParam = $('#usermanageNew_form').serialize();
+            //var reqParam = "usermanage=aaa";
+            /*
+            reqParam += "&usermanage[userCompany_nm]=" + $('input[name = "usermanage[userCompany_nm]"]').val() 
+                      + "&usermanage[company_cd]=" + $('input[name = "usermanage[company_cd]"]').val()
+                      + "&usermanage[email]=" + $('input[name = "usermanage[email]"]').val()
+                      + "&usermanage[password]=" + $('input[name = "usermanage[password]"]').val()
+                      + "&usermanage[employee_nm]=" + $('input[name = "usermanage[employee_nm]"]').val()
+                      + "&usermanage[dept_nm]=" + $('input[name = "usermanage[dept_nm]"]').val()
+                      + "&usermanage[position_nm]=" + $('input[name = "usermanage[position_nm]"]').val()
+                      + "&usermanage[hp_telno]=" + $('input[name = "usermanage[hp_telno]"]').val();
+            */
 
             try {
                 $.ajax({
@@ -137,6 +54,7 @@ function receiptSave() {
                         } else {
                             alert("계정 신청이 완료되었습니다.");
                             $('#usermanageNew_modal').modal('hide');
+                            usermanageNew();
                         }
                     }
                 });

@@ -429,6 +429,7 @@ module.exports = {
 
     //계정신청
     new: (req, res, next) => {
+
         try {
             //logger.debug('Login controller New debug >>> ', req.body.usermanage);
             var usermanage = req.body.usermanage;
@@ -436,10 +437,12 @@ module.exports = {
             //미승인 세팅
             usermanage.access_yn = 'N';
 
-            //logger.debug("===============================")
-            //logger.debug("req.body.usermanage : ", JSON.stringify(req.body.usermanage));
-            //logger.debug("req.body.usermanage : ", JSON.stringify(usermanage.email));
-            //logger.debug("===============================")
+            /*
+            logger.debug("==============================================================")
+            logger.debug("req.body.usermanage : ", JSON.stringify(req.body.usermanage));
+            logger.debug("req.body.usermanage : ", JSON.stringify(usermanage.email));
+            logger.debug("==============================================================")
+            */
 
             async.waterfall([function (callback) {
                 Usermanage.count({ 'email': usermanage.email }, function (err, userCnt) {

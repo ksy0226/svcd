@@ -22,7 +22,24 @@ html
         //if lt IE 9
             script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
             script(src='https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js')
-        
+        script(src='assets/js/jquery.min.js')
+        script(src='assets/js/bootstrap.min.js')
+        script(src='assets/js/detect.js')
+        script(src='assets/js/fastclick.js')
+        script(src='assets/js/jquery.slimscroll.js')
+        script(src='assets/js/jquery.blockUI.js')
+        script(src='assets/js/waves.js')
+        script(src='assets/js/wow.min.js')
+        script(src='assets/js/jquery.nicescroll.js')
+        script(src='assets/js/jquery.scrollTo.min.js')
+        // Custom main Js
+        script(src='assets/js/jquery.core.js')
+        script(src='assets/js/jquery.app.js')
+        // Script to Activate the Carousel
+        script.
+            $('.carousel').carousel({
+                interval: 5000 //changes the speed
+            })
         script(src='/isu/js/index.js')
         
     body
@@ -143,48 +160,28 @@ html
                                     .form-group
                                         label.col-sm-3.control-label Email (ID)
                                         .col-sm-8
-                                            input.form-control(id='email' name='usermanage[email]' type='email' placeholder='isusystem@isu.co.kr' required value='')
+                                            input.form-control(name='usermanage[email]' type='email' placeholder='isusystem@isu.co.kr' required value='')
                                     .form-group
                                         label.col-sm-3.control-label 비밀번호
                                         .col-sm-8
-                                            input.form-control(id='password' name='usermanage[password]' type='password' required value='')
+                                            input.form-control(name='usermanage[password]' type='password' required value='')
                                     .form-group
                                         label.col-sm-3.control-label 비밀번호 확인
                                         .col-sm-8
-                                            input.form-control(id='passwordChk' name='usermanage[passwordChk]' type='password' required value='')
+                                            input.form-control(name='usermanage[passwordChk]' type='password' required value='')
                                     .form-group
                                         label.col-sm-3.control-label 이름
                                         .col-sm-8
-                                            input.form-control(id='employee_nm' name='usermanage[employee_nm]' type='text' required value='')
+                                            input.form-control(name='usermanage[employee_nm]' type='text' required value='')
                                     .form-group
                                         label.col-sm-3.control-label 부서명
                                         .col-sm-8
-                                            input.form-control(id='dept_nm' name='usermanage[dept_nm]' type='text' value='')
+                                            input.form-control(name='usermanage[dept_nm]' type='text' value='')
                                     .form-group
                                         label.col-sm-3.control-label 직위
                                         .col-sm-8
-                                            input.form-control(id='position_nm' name='usermanage[position_nm]' type='text' value='')
+                                            input.form-control(name='usermanage[position_nm]' type='text' value='')
                                     .form-group
                                         label.col-sm-3.control-label 연락처
                                         .col-sm-8
-                                            input.form-control(id='hp_telno' name='usermanage[hp_telno]' type='text' placeholder='010-0000-0000' value='')
-        // end login-box
-        // Main
-        script(src='assets/js/jquery.min.js')
-        script(src='assets/js/bootstrap.min.js')
-        script(src='assets/js/detect.js')
-        script(src='assets/js/fastclick.js')
-        script(src='assets/js/jquery.slimscroll.js')
-        script(src='assets/js/jquery.blockUI.js')
-        script(src='assets/js/waves.js')
-        script(src='assets/js/wow.min.js')
-        script(src='assets/js/jquery.nicescroll.js')
-        script(src='assets/js/jquery.scrollTo.min.js')
-        // Custom main Js
-        script(src='assets/js/jquery.core.js')
-        script(src='assets/js/jquery.app.js')
-        // Script to Activate the Carousel
-        script.
-            $('.carousel').carousel({
-                interval: 5000 //changes the speed
-            })
+                                            input.form-control(name='usermanage[hp_telno]' type='text' placeholder='010-0000-0000' value='')
