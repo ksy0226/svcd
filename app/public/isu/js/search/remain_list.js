@@ -142,7 +142,12 @@ function setDataList(dataObj, selectedPage, totalDataCnt) {
             }
             addList += "								<td class='text-center'>" + dataObj[i].register_date + "</td>";
             addList += "								<td class='text-center'>" + dataObj[i].manager_nm + "</td>";
-            addList += "								<td class='text-center'>" + dataObj[i].solution_flag + "</td>";
+            if(dataObj[i].solution_flag == "N"){
+                addList += "								<td class='text-center'>미해결</td>";
+            }else{
+                addList += "								<td class='text-center'></td>";
+            }
+            
             addList += "							</tr>";
 
             $("#more_list").append(addList);
@@ -166,17 +171,20 @@ function setDataList(dataObj, selectedPage, totalDataCnt) {
             /**
              * 진행상태
              */
-            if ($(this).find('td:eq(5)').html() == "접수" || $(this).find('td:eq(5)').html() == "접수대기" || $(this).find('td:eq(5)').html() == "접수중") {
-                $(this).find('td:eq(5)').html('<span class="label label-inverse">접수중</span>');
+            if ($(this).find('td:eq(5)').html() == "접수" || $(this).find('td:eq(5)').html() == "접수중" || $(this).find('td:eq(5)').html() == '접수대기') {
+                $(this).find('td:eq(5)').html('<span class="label label-inverse">접수대기</span>');
             } if ($(this).find('td:eq(5)').html() == "처리중") {
                 $(this).find('td:eq(5)').html('<span class="label label-primary">처리중</span>');
             } if ($(this).find('td:eq(5)').html() == "미평가") {
                 $(this).find('td:eq(5)').html('<span class="label label-success">미평가</span>');
-            } if ($(this).find('td:eq(5)').html() == "완료") {
-                $(this).find('td:eq(5)').html('<span class="label label-purple">완료</span>');
-            } if ($(this).find('td:eq(5)').html() == "보류") {
-                $(this).find('td:eq(5)').html('<span class="label label-info">보류</span>');
+            } if ($(this).find('td:eq(5)').html() == '처리완료') {
+                $(this).find('td:eq(5)').html('<span class="label label-purple">처리완료</span>');
+            } if ($(this).find('td:eq(5)').html() == '협의필요') {
+                $(this).find('td:eq(5)').html('<span class="label label-info">협의필요</span>');
+            } if ($(this).find('td:eq(5)').html() == '미처리') {
+                $(this).find('td:eq(5)').html('<span class="label label-default">미처리</span>');
             }
+
         })
     } else {
         var addList = "";        
@@ -371,6 +379,8 @@ function setDetail(dataObj){
         $('#_status_nm').addClass('label label-purple');
     }else if(dataObj.status_cd == '5'){
         $('#_status_nm').addClass('label label-info');
+    }else if(dataObj.status_cd == '9'){
+        $('#_status_nm').addClass('label label-default');
     }
 
     /**

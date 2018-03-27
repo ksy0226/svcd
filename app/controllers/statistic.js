@@ -50,7 +50,7 @@ module.exports = {
                         var stCnt2 = 0; //처리중 개수
                         var stCnt3 = 0; //미평가
                         var stCnt4 = 0; //완료
-                        var stCnt5 = 0; //보류 개수
+                        var stCnt5 = 0; //협의필요  개수
                         var stCnt3_4 = 0; //미평가+완료 개수
 
 
@@ -78,7 +78,7 @@ module.exports = {
                                 stCnt4 = stCnt4 + data.grp[i].count;
                             }
 
-                            //보류
+                            //협의필요 
                             if (data.grp[i].status_cd == '5') {
                                 stCnt5 = stCnt5 + data.grp[i].count;
                             }
@@ -162,7 +162,7 @@ module.exports = {
                     var stCnt2 = 0; //처리중 개수
                     var stCnt3 = 0; //미평가
                     var stCnt4 = 0; //완료
-                    var stCnt5 = 0; //보류 개수
+                    var stCnt5 = 0; //협의필요  개수
                     var stCnt3_4 = 0; //미평가+완료 개수
 
 
@@ -190,7 +190,7 @@ module.exports = {
                             stCnt4 = stCnt4 + data.grp[i].count;
                         }
 
-                        //보류
+                        //협의필요 
                         if (data.grp[i].status_cd == '5') {
                             stCnt5 = stCnt5 + data.grp[i].count;
                         }
@@ -284,7 +284,7 @@ module.exports = {
                         var stCnt2 = 0; //처리중 개수
                         var stCnt3 = 0; //미평가
                         var stCnt4 = 0; //완료
-                        var stCnt5 = 0; //보류 개수
+                        var stCnt5 = 0; //협의필요  개수
                         var stCnt3_4 = 0; //미평가+완료 개수
 
 
@@ -313,7 +313,7 @@ module.exports = {
                                 stCnt4 = stCnt4 + data.grp[i].count;
                             }
 
-                            //보류
+                            //협의필요 
                             if (data.grp[i].status_cd == '5') {
                                 stCnt5 = stCnt5 + data.grp[i].count;
                             }
@@ -1452,7 +1452,7 @@ module.exports = {
                     var stCnt2 = 0; //처리중 개수
                     var stCnt3 = 0; //미평가
                     var stCnt4 = 0; //완료
-                    var stCnt5 = 0; //보류 개수
+                    var stCnt5 = 0; //협의필요  개수
                     var stCnt3_4 = 0; //미평가+완료 개수
 
 
@@ -1480,7 +1480,7 @@ module.exports = {
                             stCnt4 = stCnt4 + data.grp[i].count;
                         }
 
-                        //보류
+                        //협의필요 
                         if (data.grp[i].status_cd == '5') {
                             stCnt5 = stCnt5 + data.grp[i].count;
                         }

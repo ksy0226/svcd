@@ -716,7 +716,7 @@ module.exports = {
             async.waterfall([function (callback) {
                 var upIncident = req.body.incident;
                 upIncident.status_cd = '4';
-                upIncident.status_nm = '완료';
+                upIncident.status_nm = '처리완료';
                 callback(null, upIncident);
             }], function (err, upIncident) {
                 //logger.debug("=========> upIncident ", upIncident);

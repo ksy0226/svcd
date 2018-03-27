@@ -172,6 +172,8 @@ function setContent(Obj) {
             addList += "										<span class='btn-outline outline-purple'>" + dataObj[i].status_nm + "</span>";
         } else if (dataObj[i].status_cd == '5') {
             addList += "										<span class='btn-outline outline-info'>" + dataObj[i].status_nm + "</span>";
+        } else if (dataObj[i].status_cd == '9') {
+            addList += "										<span class='btn-outline outline-default'>" + dataObj[i].status_nm + "</span>";
         }
         addList += "									</div>";
         addList += "									<div class='col-md-11'>";
@@ -283,7 +285,7 @@ function setDetail(dataObj) {
     if (dataObj.status_nm != "접수대기") {
         $('#_status_nm').html(dataObj.status_nm);
     } else {
-        $('#_status_nm').html("접수중");
+        $('#_status_nm').html('접수대기');
     }
     //긴급구분
     if (dataObj.process_speed == "2") {
@@ -324,6 +326,10 @@ function setDetail(dataObj) {
             $('#deleteBtn').attr('style', 'display:none');
         } else if (dataObj.status_cd == '5') {
             $('#_status_nm').addClass('label label-info');
+            $('#valuationBtn').attr('style', 'display:none');
+            $('#deleteBtn').attr('style', 'display:none');
+        } else if (dataObj.status_cd == '9') {
+            $('#_status_nm').addClass('label label-default');
             $('#valuationBtn').attr('style', 'display:none');
             $('#deleteBtn').attr('style', 'display:none');
         }

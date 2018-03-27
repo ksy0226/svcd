@@ -16,6 +16,7 @@ router.route('/com_process').get(ssc.sessionCheck, controller.com_process);
 router.route('/getIncidentDetail/:id').get(ssc.sessionCheck, controller.getIncidentDetail);
 router.route('/getManager').get(ssc.sessionCheck, controller.getManager);
 router.route('/saveHold/:id').post(ssc.sessionCheck, controller.saveHold);
+router.route('/saveNComplete/:id').post(ssc.sessionCheck, controller.saveNComplete);
 
 
 

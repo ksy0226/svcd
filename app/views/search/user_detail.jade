@@ -80,6 +80,9 @@ block content
                                             - }else if( incident.status_cd == '5'){
                                                 td
                                                     span.label.label-info #{incident.status_nm}       
+                                            - }else if( incident.status_cd == '9'){
+                                                td
+                                                    span.label.label-default #{incident.status_nm}       
                                             - }
                                             th.bg-muted 긴급구분
                                             - if( incident.process_speed == '1'){

@@ -7,7 +7,7 @@ var logger = require('log4js').getLogger('app');
 var IncidentSchema = new Schema({
     register_num            : {type : Number, require : true},                                                                                                                      
     status_cd               : {type : String, default : '1'},  //진행상태(processStatus 모델)  
-    status_nm               : {type : String, default : '접수중'},  //진행상태명            
+    status_nm               : {type : String, default : '접수대기'},  //진행상태명            
     process_speed           : {type : String},  //긴급구분                                                                   
     course_flag             : {type : String},                                                                           
     title                   : {type : String, required : true, validate : [isEmpty, "제목은 꼭 입력해주세요."] }, //제목 
@@ -42,7 +42,7 @@ var IncidentSchema = new Schema({
     receipt_date            : {type : String},  //접수일
     business_level          : {type : String},  //난이도
     complete_reserve_date   : {type : String, default : ''},  //완료예정일
-    solution_flag           : {type : String, default : 'N'},  //해결여부
+    solution_flag           : {type : String, default : 'Y'},  //해결여부
     complete_content        : {type : String},  //완료 코멘트
     add_complete_content    : {type : String},  //추가 완료 코멘트                                                                         
     program_id              : {type : String},                                                                           
@@ -74,6 +74,12 @@ var IncidentSchema = new Schema({
                                     path            : {type : String},
                                     size            : {type : Number}
                                 }], //첨부이미지
+
+    hold_content        : {type : String},  //협의필요 코멘트
+    hold_date           : {type : String, default : ''},  //협의필요 코멘트일 
+    nc_content        : {type : String},  //미처리 코멘트
+    nc_date           : {type : String, default : ''},  //미처리 코멘트일 
+
     created_at              : {type : String},
     updated_at              : {type : Date},
     deleted_att             : {type : Date}

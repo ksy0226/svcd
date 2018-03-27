@@ -35,7 +35,7 @@ module.exports = {
                     });
                 }
                 callback(null, status);
-            });
+            }).sort('sort_lvl');
         }, function (status, callback) {
 
             var condition = {};
@@ -84,7 +84,9 @@ module.exports = {
                 });
 
             }, function (incident, callback) {
-                LowerProcess.find({ "higher_cd": incident.higher_cd }).sort('lower_nm').exec(function (err, lowerprocess) {
+                LowerProcess.find({
+                    "higher_cd": incident.higher_cd
+                }).sort('lower_nm').exec(function (err, lowerprocess) {
                     if (err) {
                         res.render("http/500", {
                             err: err
@@ -264,14 +266,16 @@ module.exports = {
                             });
                         } else {
                             //접수 업데이트 성공 시 메일 전송
-                            Usermanage.findOne({ email: Incident.request_id }, function (err, usermanage) {
+                            Usermanage.findOne({
+                                email: Incident.request_id
+                            }, function (err, usermanage) {
                                 if (err) {
                                     return res.json({
                                         success: false,
                                         message: err
                                     });
                                 } else {
-                                    if(usermanage != null){
+                                    if (usermanage != null) {
                                         if (usermanage.email_send_yn == 'Y') {
                                             mailer.receiveSend(Incident, upIncident);
                                         }
@@ -313,7 +317,7 @@ module.exports = {
                 upIncident.receipt_content = "* 상/하위업무변경 : " + req.session.user_nm + "-" + date;
                 //업무변경 시, 상태값 다시 업데이트 (최예화과장 요청)
                 upIncident.status_cd = "1";
-                upIncident.status_nm = "접수중";
+                upIncident.status_nm = '접수대기';
 
 
                 //logger.debug("===========================================");
@@ -340,13 +344,13 @@ module.exports = {
                         _id: req.params.id
                     }, upIncident, function (err, Incident) {
                         if (err) {
-                            
+
                             return res.json({
                                 success: false,
                                 message: err
                             });
                         } else {
-                            
+
                             //logger.debug("===========================================");
                             //logger.debug("saveHChange Incident : "+Incident )
                             //logger.debug("===========================================");
@@ -355,7 +359,7 @@ module.exports = {
                             // SD 업무담당자 사내메신저 호출
                             alimi.sendAlimi(req.body.incident.higher_cd);
                             //******************************* */
-                            
+
                             return res.json({
                                 success: true,
                                 message: "update successed"
@@ -416,14 +420,16 @@ module.exports = {
                             });
                         } else {
                             //완료 업데이트 성공 시 메일 전송
-                            Usermanage.findOne({ email: Incident.request_id }, function (err, usermanage) {
+                            Usermanage.findOne({
+                                email: Incident.request_id
+                            }, function (err, usermanage) {
                                 if (err) {
                                     return res.json({
                                         success: false,
                                         message: err
                                     });
                                 } else {
-                                    if(usermanage != null){
+                                    if (usermanage != null) {
                                         if (usermanage.email_send_yn == 'Y') {
                                             mailer.finishSend(Incident, upIncident);
                                         }
@@ -450,9 +456,55 @@ module.exports = {
     },
 
     /**
-     * 보류내용 등록
+     * 협의필요 내용 등록
      */
     saveHold: (req, res, next) => {
+        try {
+            async.waterfall([function (callback) {
+                var upIncident = req.body.incident;
+
+                var m = moment();
+                var date = m.format("YYYY-MM-DD HH:mm:ss");
+
+                //upIncident.complete_date = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+                upIncident.hold_date = date;
+                upIncident.status_cd = '5';
+                upIncident.status_nm = '협의필요';
+
+                callback(null, upIncident);
+            }], function (err, upIncident) {
+
+                Incident.findOneAndUpdate({
+                    _id: req.params.id
+                }, upIncident, function (err, Incident) {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+                        return res.json({
+                            success: true,
+                            message: "update successed"
+                        });
+                    }
+                });
+            });
+
+        } catch (e) {
+            logger.error("manager control saveHold : ", e);
+            return res.json({
+                success: false,
+                message: err
+            });
+        }
+
+    },
+
+    /**
+     * 미처리 내용 등록
+     */
+    saveNComplete: (req, res, next) => {
         ////logger.debug("saveComplete =====================> " + JSON.stringify(req.body));
         ////logger.debug("req.body.incident : ", req.body.incident);
         try {
@@ -463,57 +515,31 @@ module.exports = {
                 var date = m.format("YYYY-MM-DD HH:mm:ss");
 
                 //upIncident.complete_date = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
-                upIncident.complete_date = date;
-                upIncident.status_cd = '5';
-                upIncident.status_nm = '보류';
+                upIncident.nc_date = date;
+                upIncident.status_cd = '9';
+                upIncident.status_nm = '미처리';
 
                 callback(null, upIncident);
             }], function (err, upIncident) {
-                if (err) {
-                    res.json({
-                        success: false,
-                        message: "No data found to update"
-                    });
-                } else {
-                    Incident.findOneAndUpdate({
-                        _id: req.params.id
-                    }, upIncident, function (err, Incident) {
-                        if (err) return res.json({
+
+                Incident.findOneAndUpdate({
+                    _id: req.params.id
+                }, upIncident, function (err, Incident) {
+                    if (err) {
+                        return res.json({
                             success: false,
                             message: err
                         });
-                        if (!Incident) {
-                            return res.json({
-                                success: false,
-                                message: "No data found to update"
-                            });
-                        } else {
-                            //완료 업데이트 성공 시 메일 전송
-                            Usermanage.findOne({ email: Incident.request_id }, function (err, usermanage) {
-                                if (err) {
-                                    return res.json({
-                                        success: false,
-                                        message: err
-                                    });
-                                } else {
-                                    if(usermanage != null){
-                                        if (usermanage.email_send_yn == 'Y') {
-                                            mailer.finishSend(Incident, upIncident);
-                                        }
-                                    }
-                                }
-                            });
-                            return res.json({
-                                success: true,
-                                message: "update successed"
-                            });
-                        }
-                    });
-                }
+                    } else {
+                        return res.json({
+                            success: true,
+                            message: "update successed"
+                        });
+                    }
+                });
             });
-
         } catch (e) {
-            logger.error("manager control saveComplete : ", e);
+            logger.error("manager control saveNComplete : ", e);
             return res.json({
                 success: false,
                 message: err
@@ -538,27 +564,29 @@ module.exports = {
 
             logger.debug("==========================================manager getManager========================================");
             logger.debug("====================================================================================================");
-         
-            Usermanage.find({company_cd : "ISU_ST"}, function (err, managerJsonData) {
-                if (err) {
-                    return res.json({
-                        success: false,
-                        message: err
-                    });
-                } else {
 
-                    //logger.debug("==========================================CompanyModel.find({}========================================");
-                    //logger.debug("companyJsonData : ",companyJsonData);
-                    //logger.debug("====================================================================================================");
+            Usermanage.find({
+                    company_cd: "ISU_ST"
+                }, function (err, managerJsonData) {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
 
-                    res.json(managerJsonData);
-                };
+                        //logger.debug("==========================================CompanyModel.find({}========================================");
+                        //logger.debug("companyJsonData : ",companyJsonData);
+                        //logger.debug("====================================================================================================");
 
-            })
-            .sort({
-                //group_flag: -1,
-                manager_nm: 1
-            });
+                        res.json(managerJsonData);
+                    };
+
+                })
+                .sort({
+                    //group_flag: -1,
+                    manager_nm: 1
+                });
         } catch (e) {
             logger.error("getManager error : ", e);
         } finally {}

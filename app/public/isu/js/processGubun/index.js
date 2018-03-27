@@ -245,7 +245,7 @@ function detailShow(id){
     //if(dataObj.status_nm !="접수대기"){
     //    $('#_status_nm').html(dataObj.status_nm);
     //}else{
-    //    $('#_status_nm').html("접수중");
+    //    $('#_status_nm').html('접수대기');
     //}
 
     /**
@@ -278,6 +278,8 @@ function detailShow(id){
         $('#_status_nm').addClass('label label-purple');
     }else if(dataObj.status_cd == '5'){
         $('#_status_nm').addClass('label label-info');
+    }else if(dataObj.status_cd == '9'){
+        $('#_status_nm').addClass('label label-default');
     }
     */
     /**

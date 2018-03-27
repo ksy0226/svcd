@@ -189,12 +189,15 @@ block content
                                         button#receiptBtn.btn.btn-inverse.waves-effect.waves-light.m-l-5(type='button', data-toggle='modal', data-target='#receipt_modal', style='display: none;')
                                             i.fa.fa-edit
                                             | 접수
+                                        button#holdBtn.btn.btn.btn-pink.waves-effect.waves-light.m-l-5(type='button', data-toggle='modal', data-target='#hold_modal', style='display: none;')
+                                            i.fa.fa-thumb-tack
+                                            | 협의필요 
                                         button#completeBtn.btn.btn-purple.waves-effect.waves-light.m-l-5(type='button', data-toggle='modal', data-target='#complete_modal', style='display: none;')
                                             i.fa.fa-check
                                             | 완료
-                                        button#holdBtn.btn.btn.btn-pink.waves-effect.waves-light.m-l-5(type='button', data-toggle='modal', data-target='#hold_modal', style='display: none;')
-                                            i.fa.fa-thumb-tack
-                                            | 보류  
+                                        button#n_completeBtn.btn.btn-default.waves-effect.waves-light.m-l-5(type='button', data-toggle='modal', data-target='#n_complete_modal', style='display: none;')
+                                            i.fa.fa-check
+                                            | 미처리  
 
                                         //button.btn.btn-primary.waves-effect.waves-light.m-l-5(type='button', onclick='window.print()')
                                         //    i.fa.fa-print
@@ -449,7 +452,7 @@ block content
                     button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
                     h4#custom-width-modalLabel.modal-title
                         b 완료
-                    small.text-muted 완료내용을 입력하세요
+                    small.text-muted 완료 내용을 입력하세요
                 .modal-body
                     // Start Button Area
                     .row
@@ -502,15 +505,15 @@ block content
                                         label.col-sm-2.control-label 처리공유
                                         .col-sm-10
                                             textarea.form-control(name='incident[sharing_content]', rows='4')
-    //보류모달
+    //협의필요 모달
     #hold_modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='custom-width-modalLabel', aria-hidden='true', style='display: none;')
         .modal-dialog(style='width:55%;')
             .modal-content
                 .modal-header
                     button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
                     h4#custom-width-modalLabel.modal-title
-                        b 보류
-                    small.text-muted 보류내용을 입력하세요
+                        b 협의필요 
+                    small.text-muted 협의필요 내용을 입력하세요.
                 .modal-body
                     // Start Button Area
                     .row
@@ -527,37 +530,37 @@ block content
                             .card-box.m-r-5
                                 form#hold_form.form-horizontal.group-border-dashed(action='#')
                                     .form-group
-                                        label.col-sm-2.control-label 해결여부
-                                        .col-sm-2
-                                            .checkbox.checkbox-primary.checkbox-single.p-t-10
-                                                input(name='incident[solution_flag]', type='checkbox', aria-label='Single checkbox One',checked, value='Y')
-                                                label
-                                        //label.col-sm-2.control-label 처리구분
-                                        //.col-sm-6
-                                            select.form-control(name='incident[process_cd]')
-                                    .form-group
-                                        label.col-sm-2.control-label 보류내용
+                                        label.col-sm-2.control-label 협의필요 내용
                                         .col-sm-10
                                             textarea.form-control(name='incident[hold_content]', rows='8')
-                                                
-                                    hr
+    //미처리 모달
+    #n_complete_modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='custom-width-modalLabel', aria-hidden='true', style='display: none;')
+        .modal-dialog(style='width:55%;')
+            .modal-content
+                .modal-header
+                    button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                    h4#custom-width-modalLabel.modal-title
+                        b 미처리
+                    small.text-muted 미처리 내용을 입력하세요
+                .modal-body
+                    // Start Button Area
+                    .row
+                        .col-sm-12
+                            .btn-toolbar.m-b-10(role='toolbar')
+                                .pull-right
+                                    button#n_completeSaveBtn.btn.btn-sm.btn-primary.waves-effect.waves-light(type='button')
+                                        i.fa.fa-check.m-l-5
+                                        |  저장
+                    // End Button Area
+                    // start Insert Area
+                    .row
+                        .col-sm-12
+                            .card-box.m-r-5
+                                form#n_complete_form.form-horizontal.group-border-dashed(action='#')
                                     .form-group
-                                        label.col-sm-2.control-label 공개여부
-                                        .col-sm-2
-                                            .checkbox.checkbox-primary.checkbox-single.p-t-10
-                                                input(name='incident[complete_open_flag]', type='checkbox', aria-label='Single checkbox One', value='Y')
-                                                label
-                                        label.col-sm-2.control-label 처리시간
-                                        .col-sm-3
-                                            input.form-control.fw-60(name='incident[work_time]', type='text', style='display:inline-block', value='1')
-                                            span(style='display:inline-block; padding-left:10px;') 시간
-                                    //.form-group
-                                        label.col-sm-2.control-label 지연사유
+                                        label.col-sm-2.control-label 미처리 사유
                                         .col-sm-10
-                                            textarea.form-control(name='incident[delay_reason]', rows='2')
-                                    .form-group
-                                        label.col-sm-2.control-label 처리공유
-                                        .col-sm-10
-                                            textarea.form-control(name='incident[sharing_content]', rows='4')
+                                            textarea.form-control(name='incident[nc_content]', rows='8')
+
 
 block footer    

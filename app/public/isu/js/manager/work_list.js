@@ -103,12 +103,19 @@ $(document).ready(function () {
 
     });
 
-    //보류저장버튼 클릭 시
+    //협의필요 저장버튼 클릭 시
     $('#holdSaveBtn').on('click', function () {
         holdSave();
         research(1);
 
     });
+
+    //미처리 저장버튼 클릭 시
+    $('#n_completeSaveBtn').on('click', function () {
+        n_completeSave();
+        research(1);
+
+    });    
 
     //업무변경 상위업무 선택 시
     $('select[name="ch_higher_cd"]').on('change', function () {
@@ -164,7 +171,7 @@ $(document).ready(function () {
 
 
     /**
-     * 보류처리 화면
+     * 협의필요 처리 화면
      */
     $('#hold_modal').on('show.bs.modal', function () {
         //getQuestionType();
@@ -173,6 +180,15 @@ $(document).ready(function () {
         initHoldModal();
     });
 
+    /**
+     * 미처리 화면
+     */
+    $('#n_complete_modal').on('show.bs.modal', function () {
+        //getQuestionType();
+    });
+    $('#n_complete_modal').on('hidden.bs.modal', function () {
+        initNCompleteModal();
+    });
 });
 
 
@@ -300,15 +316,17 @@ function setDataList(dataObj, selectedPage, totalDataCnt) {
          * 진행상태
          */
         if ($(this).find('td:eq(1)').html() == "1") {
-            $(this).find('td:eq(1)').html('<span class="label label-inverse">접수중</span>');
+            $(this).find('td:eq(1)').html('<span class="label label-inverse">접수대기</span>');
         } if ($(this).find('td:eq(1)').html() == "2") {
             $(this).find('td:eq(1)').html('<span class="label label-primary">처리중</span>');
         } if ($(this).find('td:eq(1)').html() == "3") {
             $(this).find('td:eq(1)').html('<span class="label label-success">미평가</span>');
         } if ($(this).find('td:eq(1)').html() == "4") {
-            $(this).find('td:eq(1)').html('<span class="label label-purple">완료</span>');
+            $(this).find('td:eq(1)').html('<span class="label label-purple">처리완료</span>');
         } if ($(this).find('td:eq(1)').html() == "5") {
-            $(this).find('td:eq(1)').html('<span class="label label-info">보류</span>');
+            $(this).find('td:eq(1)').html('<span class="label label-info">협의필요</span>');
+        } if ($(this).find('td:eq(1)').html() == "9") {
+            $(this).find('td:eq(1)').html('<span class="label label-default">미처리</span>');
         }
 
     })
@@ -419,6 +437,7 @@ function initDetail() {
     $('#receiptBtn').attr('style', 'display:none');
     $('#hChangeBtn').attr('style', 'display:none');
     $('#completeBtn').attr('style', 'display:none');
+    $('#n_completeBtn').attr('style', 'display:none');
     $('#holdBtn').attr('style', 'display:none');
 
 
@@ -469,19 +488,36 @@ function initDetail() {
 function setDetail(dataObj) {
 
     //업무처리 버튼처리
-    if (dataObj.status_cd == "1") {
+    if (dataObj.status_cd == '1') {
         $('#receiptBtn').attr('style', 'display:');
         $('#hChangeBtn').attr('style', 'display:');
+        $('#holdBtn').attr('style', 'display:');
         $('#completeBtn').attr('style', 'display:none');
-    } else if (dataObj.status_cd == "2") {
+        $('#n_completeBtn').attr('style', 'display:none');
+    } else if (dataObj.status_cd == '2') {
         $('#receiptBtn').attr('style', 'display:none');
         $('#hChangeBtn').attr('style', 'display:');
+        $('#holdBtn').attr('style', 'display:none');
         $('#completeBtn').attr('style', 'display:');
-        $('#holdBtn').attr('style', 'display:');
+        $('#n_completeBtn').attr('style', 'display:');
+    } else if (dataObj.status_cd == '5') {
+        $('#receiptBtn').attr('style', 'display:none');
+        $('#hChangeBtn').attr('style', 'display:');
+        $('#holdBtn').attr('style', 'display:none');
+        $('#completeBtn').attr('style', 'display:');
+        $('#n_completeBtn').attr('style', 'display:none');
+    } else if (dataObj.status_cd == '9') {
+        $('#receiptBtn').attr('style', 'display:none');
+        $('#hChangeBtn').attr('style', 'display:');
+        $('#holdBtn').attr('style', 'display:none');
+        $('#completeBtn').attr('style', 'display:');
+        $('#n_completeBtn').attr('style', 'display:none');
     } else {
         $('#receiptBtn').attr('style', 'display:none');
         $('#hChangeBtn').attr('style', 'display:none');
+        $('#holdBtn').attr('style', 'display:none');
         $('#completeBtn').attr('style', 'display:none');
+        $('#n_completeBtn').attr('style', 'display:none');
     }
 
 
@@ -494,7 +530,7 @@ function setDetail(dataObj) {
     if (dataObj.status_nm != "접수대기") {
         $('#_status_nm').html(dataObj.status_nm);
     } else {
-        $('#_status_nm').html("접수중");
+        $('#_status_nm').html('접수대기');
     }
 
     /**
@@ -526,6 +562,8 @@ function setDetail(dataObj) {
         $('#_status_nm').addClass('label label-purple');
     } else if (dataObj.status_cd == '5') {
         $('#_status_nm').addClass('label label-info');
+    } else if (dataObj.status_cd == '9') {
+        $('#_status_nm').addClass('label label-default');
     }
 
     /**
@@ -795,7 +833,7 @@ function completeSave() {
  */
 function initCompleteModal() {
     $('select[name="incident[process_gubun]"]').empty();
-    $('textarea[name="incident[complete_content]"]').val('');
+    $('textarea[name="incident[complete_content]"]').val('처리되었습니다.');
     $('textarea[name="incident[work_time]"]').val('1');
     $('textarea[name="incident[delay_reason]"]').val('');
     $('textarea[name="incident[sharing_content]"]').val('');
@@ -806,9 +844,9 @@ function initCompleteModal() {
     
 }
 
-//>>================== 보류처리 스크립트 ==============
+//>>================== 협의필요 처리 스크립트 ==============
 /**
- * 보류 내용 저장
+ * 협의필요  내용 저장
  */
 function holdSave() {
     
@@ -842,18 +880,59 @@ function holdSave() {
 
 
 /**
- * 보류모달 초기화
+ * 협의필요 모달 초기화
  */
 function initHoldModal() {
     //$('select[name="incident[process_gubun]"]').empty();
-    $('textarea[name="incident[complete_content]"]').val('');
-    $('textarea[name="incident[work_time]"]').val('1');
-    $('textarea[name="incident[delay_reason]"]').val('');
-    $('textarea[name="incident[sharing_content]"]').val('');
-
-    $('input[name="incident[solution_flag]"]').prop('checked',true);
-    $('input[name="incident[complete_open_flag]"]').prop('checked',false);
+    $('textarea[name="incident[hold_content]"]').val('');
 }
+
+//<<================== 협의필요 처리 스크립트 ==============
+
+//>>================== 미처리 스크립트 ==============
+/**
+ * 미처리  내용 저장
+ */
+function n_completeSave() {
+    
+    var reqParam = $('#n_complete_form').serialize();
+   
+    $.ajax({
+        type: "POST",
+        async: true,
+        url: "/manager/saveNComplete/" + incident_id,
+        dataType: "json", // xml, html, script, json 미지정시 자동판단
+        timeout: 30000,
+        cache: false,
+        data: reqParam,
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        error: function (request, status, error) {
+            alert("NComplete error : " + error);
+        },
+        beforeSend: function () {
+        },
+        success: function (dataObj) {
+            if (dataObj.success) {
+                $('.modal').modal('hide');
+                initNCompleteModal();
+                //research(selectedPage);
+            } else {
+                alert('e : ' + JSON.stringify(dataObj));
+            }
+        }
+    });
+}
+
+
+/**
+ * 미처리 모달 초기화
+ */
+function initNCompleteModal() {
+    $('textarea[name="incident[nc_content]"]').val('');
+}
+
+//<<================== 미처리 스크립트 ==============
+
 
 /**
  * 요청타입 세팅
@@ -890,7 +969,6 @@ function setQuestionType(dataObj) {
     }
 }
 
-//<<================== 완료처리 스크립트 ==============
 
 
 

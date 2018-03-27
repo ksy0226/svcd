@@ -270,6 +270,6 @@ module.exports = {
                 res.json(processStatus);
             }
 
-        });
+        }).sort('sort_lvl');
     }
 };

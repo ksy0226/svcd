@@ -349,16 +349,18 @@ function setDataList(dataObj) {
 
         // 진행상태
         $('#more_list > tr').each(function () {
-            if ($(this).find('td:eq(3)').html() == "접수" || $(this).find('td:eq(3)').html() == "접수대기" || $(this).find('td:eq(4)').html() == "접수중") {
-                $(this).find('td:eq(3)').html('<span class="label label-inverse">접수중</span>');
+            if ($(this).find('td:eq(3)').html() == "접수" || $(this).find('td:eq(3)').html() == "접수중" || $(this).find('td:eq(4)').html() == '접수대기') {
+                $(this).find('td:eq(3)').html('<span class="label label-inverse">접수대기</span>');
             } if ($(this).find('td:eq(3)').html() == "처리중") {
                 $(this).find('td:eq(3)').html('<span class="label label-primary">처리중</span>');
             } if ($(this).find('td:eq(3)').html() == "미평가") {
                 $(this).find('td:eq(3)').html('<span class="label label-success">미평가</span>');
-            } if ($(this).find('td:eq(3)').html() == "완료") {
-                $(this).find('td:eq(3)').html('<span class="label label-purple">완료</span>');
-            } if ($(this).find('td:eq(3)').html() == "보류") {
-                $(this).find('td:eq(3)').html('<span class="label label-info">보류</span>');
+            } if ($(this).find('td:eq(3)').html() == '처리완료') {
+                $(this).find('td:eq(3)').html('<span class="label label-purple">처리완료</span>');
+            } if ($(this).find('td:eq(3)').html() == '협의필요') {
+                $(this).find('td:eq(3)').html('<span class="label label-info">협의필요</span>');
+            } if ($(this).find('td:eq(3)').html() == '미처리') {
+                $(this).find('td:eq(3)').html('<span class="label label-default">미처리</span>');
             }
         })
     }

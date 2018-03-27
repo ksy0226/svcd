@@ -4,6 +4,7 @@ var moment = require('moment');
 var processStatusSchema = mongoose.Schema({
   status_cd: {type:String, required:true, unique:true},
   status_nm: {type:String},
+  sort_lvl: {type:Number}, //정렬순서
   delete_flag : { type : String, default : 'N' }, //삭제여부  
   createdAt : {type:String},
   updatedAt : { type : Date },
