@@ -290,7 +290,7 @@ function setDataList(dataObj, selectedPage, totalDataCnt) {
                 addList += "								<td>" + dataObj[i].higher_nm + " / " + dataObj[i].lower_nm + "</td>";
             }
             */
-           if (dataObj[i].lower_nm != "undefined") {
+           if (dataObj[i].lower_nm == null) {
                 addList += "								<td>" + dataObj[i].higher_nm + " / " + " " + "</td>";
             } else {
 
