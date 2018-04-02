@@ -281,12 +281,22 @@ function setDataList(dataObj, selectedPage, totalDataCnt) {
 
 
             addList += "							<tr onclick=detailShow('" + dataObj[i]._id + "') style='cursor:pointer'>";
+            
+            /*
             if (dataObj[i].status_cd == "1") {
                 addList += "								<td>" + dataObj[i].higher_nm + " / " + " " + "</td>";
             } else {
 
                 addList += "								<td>" + dataObj[i].higher_nm + " / " + dataObj[i].lower_nm + "</td>";
             }
+            */
+           if (dataObj[i].lower_nm != "undefined") {
+                addList += "								<td>" + dataObj[i].higher_nm + " / " + " " + "</td>";
+            } else {
+
+                addList += "								<td>" + dataObj[i].higher_nm + " / " + dataObj[i].lower_nm + "</td>";
+            }
+
 
             if (dataObj[i].complete_open_flag == "Y") {
                 addList += "								<td>" + dataObj[i].title + "</td>";
