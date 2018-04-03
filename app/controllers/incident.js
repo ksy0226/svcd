@@ -545,7 +545,7 @@ module.exports = {
                             }];
                             //{"$and":[{"higher_cd":{"$in":["H004","H006","H012","H024","H001"]}}]}
                             
-                            if(req.query.status_cd != "1"){
+                            if(req.query.status_cd != "1" && req.query.status_cd != "5"){
                                 search.findIncident.$and.push({"manager_email":req.session.email})
                             }
 
@@ -562,19 +562,19 @@ module.exports = {
                                 }
                             });
                             
-                            if(req.query.status_cd != "1"){
+                            if(req.query.status_cd != "1" && req.query.status_cd != "5"){
                                 search.findIncident.$and.push({"manager_email":req.session.email})
                             }
 
                             //'$and': [ { lower_cd: 'L004' } ] }
                         }
 
-                        //logger.debug("getIncident =============================================");
-                        //logger.debug("page : ", page);
-                        //logger.debug("perPage : ", perPage);
-                        //logger.debug("req.query.perPage : ", req.query.perPage);
-                        //logger.debug("search.findIncident : ", JSON.stringify(search.findIncident));
-                        //logger.debug("getIncident =============================================");
+                        logger.debug("getIncident =============================================");
+                        logger.debug("page : ", page);
+                        logger.debug("perPage : ", perPage);
+                        logger.debug("req.query.perPage : ", req.query.perPage);
+                        logger.debug("search.findIncident : ", JSON.stringify(search.findIncident));
+                        logger.debug("getIncident =============================================");
 
                         callback(err);
                     });

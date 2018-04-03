@@ -319,6 +319,16 @@ module.exports = {
                 upIncident.status_cd = "1";
                 upIncident.status_nm = '접수대기';
 
+                upIncident.manager_company_cd = '';//담당자 회사코드
+                upIncident.manager_company_nm = '';//담당자 회사명
+                upIncident.manager_nm = '';//담당자 명
+                upIncident.manager_dept_cd = '';//담당자 부서코드
+                upIncident.manager_dept_nm = '';//담당자 부서명
+                upIncident.manager_position = '';//담당자 직위명
+                upIncident.manager_email = ''; //담당자 이메일
+                upIncident.manager_phone = '';//담당자 전화
+                upIncident.receipt_date = ''; //접수일
+                upIncident.complete_reserve_date = '';//완료예정일
 
                 //logger.debug("===========================================");
                 //logger.debug("saveHChange req.body : " + JSON.stringify(req.body));
@@ -333,13 +343,15 @@ module.exports = {
                 //logger.debug("saveHChange req.params.id : "+req.params.id )
                 //logger.debug("===========================================");
 
-
                 if (err) {
                     res.json({
                         success: false,
                         message: "No data found to update"
                     });
                 } else {
+
+                    //Incident.find({_id: req.params.id}).forEach(function(e){db.myDB.update({"_id":e._id},{$set{"name":'More' + e.name + ' '}});
+
                     Incident.findOneAndUpdate({
                         _id: req.params.id
                     }, upIncident, function (err, Incident) {
