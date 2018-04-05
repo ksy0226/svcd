@@ -16,6 +16,7 @@ module.exports = {
             logger.debug('list 호출');
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             } else {
