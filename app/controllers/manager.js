@@ -584,6 +584,7 @@ module.exports = {
     download: (req, res, next) => {
         var filepath = path.join(__dirname, '../../', CONFIG.fileUpload.directory, req.params.path1, req.params.path2);
         res.download(filepath);
+        //res.download(filepath, req.params.filename);
     },
 
     /**

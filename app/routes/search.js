@@ -16,7 +16,7 @@ router.route('/getlowerprocess').get(ssc.sessionCheck, controller.getlowerproces
 router.route('/list').get(ssc.sessionCheck, controller.list);
 router.route('/getqnalist').get(controller.getqnalist);
 router.route('/qna_detail/:id').get(ssc.sessionCheck, controller.qna_detail);
-router.route('/download/:path1/:path2').get(ssc.sessionCheck, controller.download);
+router.route('/download/:path1/:path2/:filename').get(ssc.sessionCheck, controller.download);
 router.route('/getRemainList').get(ssc.sessionCheck, controller.getRemainList);
 
 

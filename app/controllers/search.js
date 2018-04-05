@@ -229,8 +229,15 @@ module.exports = {
      * incident 첨부파일 다운로드
      */
     download: (req, res, next) => {
+
+        //logger.error("===============model.search.download=============");
+        //logger.error("req.params.path1 ", req.params.path1);
+        //logger.error("req.params.path2 ", req.params.path2);
+        //logger.error("req.params.filename ", req.params.filename);
+        //logger.error("=================================================");
+
         var filepath = path.join(__dirname, '../../', CONFIG.fileUpload.directory, req.params.path1, req.params.path2);
-        res.download(filepath);
+        res.download(filepath, req.params.filename);
     },
 
     /**
@@ -461,30 +468,13 @@ module.exports = {
      * 하위업무 리스트 조회
      */
     getlowerprocess: (req, res, next) => {
-        //logger.debug(1);
-        logger.debug("================================");
-        logger.debug("getlowerprocess : ");
-        logger.debug("================================");
         var condition = {};
         if (req.query.higher_cd != null) {
             condition.higher_cd = req.query.higher_cd;
         }
 
-        logger.debug("================================");
-        logger.debug("getlowerprocess condition : ", condition);
-        logger.debug("================================");
-
         LowerProcessModel.find(condition, function (err, lowerprocess) {
-            logger.debug("================================");
-            logger.debug("LowerProcessModel condition : ", condition);
-            logger.debug("================================");
 
-            logger.debug("================================");
-            logger.debug("LowerProcessModel lowerprocess : ", lowerprocess);
-            logger.debug("================================");
-
-
-            //logger.debug('lowerprocess.lower_nm', req.body.lowerprocess);
             if (err) {
                 return res.json({
                     success: false,
@@ -493,7 +483,7 @@ module.exports = {
             } else {
                 res.json(lowerprocess);
             }
-        });
+        }).sort('lower_nm');
     },
 
     /**

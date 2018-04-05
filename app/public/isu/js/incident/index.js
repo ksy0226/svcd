@@ -454,7 +454,7 @@ function setDetail(dataObj) {
         $('#_attach_box').append(addList);
         for (var cnt = 0; cnt < dataObj.attach_file.length; cnt++) {
             var addList = "";
-            addList += "<a href='/incident/download/" + dataObj.attach_file[cnt].path + "'>";
+            addList += "<a href='/incident/download/" + dataObj.attach_file[cnt].path + "/"+ dataObj.attach_file[cnt].originalname + "'>";
             addList += "<span class='text-pink'> " + dataObj.attach_file[cnt].originalname + "</span>";
             $('#_attach_box').append("<td class='i fa fa-paperclip m-r-10 m-b-10'>" + addList + "</td>");
             $('#_attach_box').append("<tr>" + addList + "</tr>");
@@ -472,7 +472,7 @@ function setDetail(dataObj) {
         $('#_attach_img_box').append(addList);
         for (var cnt = 0; cnt < dataObj.attach_file.length; cnt++) {
             var addList = "";
-            addList += "<a href='/incident/download/" + dataObj.attach_file[cnt].path + "'>";
+            addList += "<a href='/incident/download/" + dataObj.attach_file[cnt].path + "/" + dataObj.attach_file[cnt].originalname + "'>";
             addList += "<img src='" + dataObj.attach_file[cnt].path + "' alt=" + dataObj.attach_file[cnt].originalname + " class='img-thumbnail img-responsive'>";
             $('#_attach_img_box').append("<td class='col-sm-3 col-xs-3'>" + addList + "</td>");
         }

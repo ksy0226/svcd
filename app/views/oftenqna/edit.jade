@@ -79,7 +79,7 @@ block content
                                                             i.ti-save.text-primary.m-r-10
                                                             | #{oftenqna.attach_file[i].originalname}
                                                             span.text-muted.m-l-10 (#{oftenqna.attach_file[i].size} Byte)
-                                                            a.m-l-10(href='/oftenqna/download/#{oftenqna.attach_file[i].path}') 저장
+                                                            a.m-l-10(href='/oftenqna/download/#{oftenqna.attach_file[i].path}/#{oftenqna.attach_file[i].originalname}') 저장
                                                     - }
                                                 - }
                                                 // end : text 형식 첨부파일 영역
@@ -93,7 +93,7 @@ block content
                                                         - for( var i = 0 ; oftenqna.attach_file.length > i ; i++ ){
                                                             - if(oftenqna.attach_file[i].mimetype == 'image'){
                                                                 .col-sm-2.col-xs-4
-                                                                    a(href='/oftenqna/download/#{oftenqna.attach_file[i].path}')
+                                                                    a(href='/oftenqna/download/#{oftenqna.attach_file[i].path}/#{oftenqna.attach_file[i].originalname}')
                                                                         img.img-thumbnail.img-responsive(src='/#{oftenqna.attach_file[i].path}', alt='#{oftenqna.attach_file[i].originalname}')
                                                             - }
                                                         - }
