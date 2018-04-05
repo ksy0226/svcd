@@ -372,7 +372,6 @@ function setDetail(dataObj){
     }
     //$('#_complete_open_flag-reading_cnt').html(dataObj.complete_open_flag+"/"+dataObj.reading_cnt);
     $('#_complete_open_flag-reading_cnt').html(dataObj.complete_open_flag);
-    $('#_sharing_content').html(dataObj.sharing_content);
 
     /**
      * 첨부파일
