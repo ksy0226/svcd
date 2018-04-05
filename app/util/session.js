@@ -53,6 +53,7 @@ module.exports = {
                 var remember_me = req.cookies.remember_me;
 
                 res.render('index', {
+                    cache : true,
                     email: email,
                     remember_me: remember_me
                 });

@@ -11,7 +11,7 @@ module.exports = {
      * 회사별 상위업무 통계 화면
      */
     com_higher: (req, res, next) => {
-        res.render("statistic/com_higher");
+        res.render("statistic/com_higher",{cache : true});
     },
 
     /**
@@ -125,7 +125,7 @@ module.exports = {
     },
 
     process_gubun: (req, res, next) => {
-        res.render("statistic/process_gubun");
+        res.render("statistic/process_gubun",{cache : true});
     },
 
     getProcessGubun: (req, res, next) => {
@@ -240,7 +240,7 @@ module.exports = {
      * 상위별 하위업무 통계 화면
      */
     high_lower: (req, res, next) => {
-        res.render("statistic/high_lower");
+        res.render("statistic/high_lower",{cache : true});
     },
 
     /**
@@ -910,6 +910,7 @@ module.exports = {
             }], function (err, condition) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 } else {
@@ -1408,7 +1409,7 @@ module.exports = {
      * 담당자별 월별처리 내역
      */
     mng_month: (req, res, next) => {
-        res.render("statistic/mng_month");
+        res.render("statistic/mng_month",{cache : true});
     },
 
     /**
@@ -1535,10 +1536,12 @@ module.exports = {
             //logger.debug('list 호출');
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             }
             res.render("statistic/status_list", {
+                cache : true,
                 incident: incident
             });
         });

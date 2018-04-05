@@ -18,7 +18,7 @@ module.exports = {
         //logger.debug("====================================================================================================");
 
         try {
-            res.render("companyProcess/edit");
+            res.render("companyProcess/edit",{cache : true});
         } catch (e) {
             logger.error("companyProcess edit error ", e);
         } finally {}

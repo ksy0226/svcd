@@ -17,6 +17,7 @@ module.exports = {
             HigherProcessModel.find({}, function (err, higherprocess) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }
@@ -25,10 +26,12 @@ module.exports = {
         }], function (err, higherprocess) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             } else {
                 res.render("oftenqna/index", {
+                    cache : true,
                     higherprocess: higherprocess
                 });
             }
@@ -64,6 +67,7 @@ module.exports = {
             HigherProcessModel.find({}, function (err, higher) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }
@@ -72,10 +76,12 @@ module.exports = {
         }], function (err, higher) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             } else {
                 res.render("oftenqna/new", {
+                    cache : true,
                     higher: higher,
                     user_nm: req.session.user_nm,
                     sabun: req.session.sabun,
@@ -94,6 +100,7 @@ module.exports = {
         OftenQnaModel.create(newOftenqna, function (err, newOftenqna) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             } else {
@@ -107,6 +114,7 @@ module.exports = {
             HigherProcessModel.find({}, function (err, higher) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }
@@ -136,10 +144,12 @@ module.exports = {
                     oftenqna.save(function (err) {
                         if (err) {
                             res.render("http/500", {
+                                cache : true,
                                 err: err
                             });
                         } else {
                             res.render("oftenqna/edit", {
+                                cache : true,
                                 higher: higher,
                                 oftenqna: oftenqna,
                                 user: req.user
@@ -162,10 +172,12 @@ module.exports = {
         }, newOftenqna, function (err, newOftenqna) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             } else {
-                res.redirect('/oftenqna/');
+                //res.redirect('/oftenqna/');
+                res.render('/oftenqna/',{cache : true});
             }
         });
     },
@@ -210,6 +222,7 @@ module.exports = {
                 OftenQnaModel.find(search.findOftenqna, function (err, oftenqna) {
                     if (err) {
                         res.render("http/500", {
+                            cache : true,
                             err: err
                         });
                     } else {
@@ -219,6 +232,7 @@ module.exports = {
             }], function (err, oftenqna) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 } else {

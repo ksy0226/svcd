@@ -15,10 +15,11 @@ module.exports = {
             HigherProcessModel.find({}, function (err, higherprocess) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }else{
-                    res.render("myProcess/edit");
+                    res.render("myProcess/edit",{cache : true});
                 }
             });
         }catch(e){

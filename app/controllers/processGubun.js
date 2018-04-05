@@ -18,6 +18,7 @@ module.exports = {
             ProcessGubunModel.find({},function (err, processGubun) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }
@@ -26,10 +27,12 @@ module.exports = {
         }], function (err, processGubun) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             }else{
                 res.render("processGubun/", {
+                    cache : true,
                     processGubun: processGubun
                 });
             }
@@ -45,6 +48,7 @@ module.exports = {
             HigherProcessModel.find({}, function (err, higher) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }
@@ -53,10 +57,12 @@ module.exports = {
         }], function (err, higher) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             } else {
                 res.render("processGubun/new", {
+                    cache : true,
                     higher: higher,
                     user_id: req.session.user_id,
                     user_nm: req.session.user_nm
@@ -74,6 +80,7 @@ module.exports = {
         ProcessGubunModel.create(req.body.processGubun, function (err, processGubun) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             } else {
@@ -94,6 +101,7 @@ module.exports = {
                 HigherProcessModel.find({}, function (err, higher) {
                     if (err) {
                         res.render("http/500", {
+                            cache : true,
                             err: err
                         });
                     }
@@ -103,6 +111,7 @@ module.exports = {
             }], function (err, higher) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 } else {
@@ -122,6 +131,7 @@ module.exports = {
                         //logger.debug("================================");
 
                         res.render("processGubun/edit", {
+                            cache : true,
                             higher : higher,
                             processGubun: processGubun
                             //,user: req.user
@@ -141,6 +151,7 @@ module.exports = {
         } catch (e) {
             logger.error(e);
             res.render("http/500", {
+                cache : true,
                 err: err
             });
         }
@@ -171,6 +182,7 @@ module.exports = {
         } catch (e) {
             logger.error(e);
             res.render("http/500", {
+                cache : true,
                 err: err
             });
         }
@@ -186,6 +198,7 @@ module.exports = {
             }, function (err, processGubun) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 } else {
@@ -195,6 +208,7 @@ module.exports = {
         } catch (e) {
             logger.error(e);
             res.render("http/500", {
+                cache : true,
                 err: err
             });
         }
@@ -244,6 +258,7 @@ module.exports = {
             ProcessGubunModel.find(search.findIncident, function (err, processGubun) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }
@@ -252,6 +267,7 @@ module.exports = {
         }], function (err, processGubun) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             }

@@ -6,14 +6,14 @@ exports.http404 = function(req, res){
     res.send({ error: 'Resource not found.' });
   }
   else {
-    res.render('http/404');
+    res.render('http/404',{cache : true});
   }
 };
 
 exports.http500 = function(err, req, res, next){
   res.status(500);
 
-  var data = { err: {} };
+  var data = { cache : true, err: {} };
   if (req.app.get('env') === 'development') {
     data.err = err;
     console.log(err.stack);

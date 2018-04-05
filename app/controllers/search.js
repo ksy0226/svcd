@@ -47,6 +47,7 @@ module.exports = {
                     //logger.debug("===========================================");
 
                     res.render("search/user_list", {
+                        cache : true,
                         myProcess: myProcess
                     });
                 }
@@ -70,6 +71,7 @@ module.exports = {
             }, function (err, incident) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 } else {
@@ -82,6 +84,7 @@ module.exports = {
                     //incident.complete_date = new Date(incident.complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
 
                     res.render("search/user_detail", {
+                        cache : true,
                         incident: incident
                     });
                 }
@@ -89,6 +92,7 @@ module.exports = {
         } catch (e) {
             //logger.debug(e);
             res.render("http/500", {
+                cache : true,
                 err: err
             });
         }
@@ -102,6 +106,7 @@ module.exports = {
             HigherProcessModel.find({}, function (err, higherprocess) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }
@@ -110,10 +115,12 @@ module.exports = {
         }], function (err, higherprocess) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             } else {
                 res.render("search/user_qna", {
+                    cache : true,
                     higherprocess: higherprocess
                 });
             }
@@ -161,7 +168,7 @@ module.exports = {
     mng_list: (req, res, next) => {
 
         try {
-            res.render("search/mng_list")
+            res.render("search/mng_list",{cache : true})
         } catch (e) {
 
             logger.error("=============================================");
@@ -211,6 +218,7 @@ module.exports = {
 
 
                 res.render("search/mng_detail", {
+                    cache : true,
                     incident: incident
                 });
             }
@@ -230,7 +238,7 @@ module.exports = {
      */
     remain_list: (req, res, next) => {
         try {
-            res.render("search/remain_list")
+            res.render("search/remain_list",{cache : true})
         } catch (e) {
 
             logger.error("=============================================");
@@ -437,10 +445,12 @@ module.exports = {
             //logger.debug('list 호출');
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             }
             res.render("search/status_list", {
+                cache : true,
                 incident: incident
             });
         });
@@ -645,6 +655,7 @@ module.exports = {
                 OftenQnaModel.find(search2.findOftenqna, function (err, oftenqna) {
                     if (err) {
                         res.render("http/500", {
+                            cache : true,
                             err: err
                         });
                     } else {
@@ -654,6 +665,7 @@ module.exports = {
             }], function (err, oftenqna) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 } else {

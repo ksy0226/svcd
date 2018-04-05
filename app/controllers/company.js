@@ -20,6 +20,7 @@ module.exports = {
                 });
             } else {
                 res.render("company/index", {
+                    cache : true,
                     company: company
                 });
             }
@@ -27,7 +28,7 @@ module.exports = {
     },
 
     new: (req, res, next) => {
-        res.render("company/new");
+        res.render("company/new",{cache : true});
     },
 
     save: (req, res, next) => {
@@ -38,10 +39,11 @@ module.exports = {
             logger.debug('save 호출');
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             } else {
-                res.redirect('/company');
+                res.redirect('/company',{cache : true});
             }
         });
     },
@@ -50,10 +52,12 @@ module.exports = {
         CompanyModel.findById(req.params.id, function (err, company) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             } else {
                 res.render("company/edit", {
+                    cache : true,
                     company: company
                 });
             }
@@ -76,6 +80,7 @@ module.exports = {
                 }, req.body.company, function (err, company) {
                     if (err) {
                         res.render("http/500", {
+                            cache : true,
                             err: err
                         });
                     } else {
@@ -93,6 +98,7 @@ module.exports = {
                 IncidentModel.update(condition, setQuery, option, function(err, tasks){                        
                     if(err){
                         res.render("http/500", {
+                            cache : true,
                             err: err
                         });
                     }else{
@@ -110,6 +116,7 @@ module.exports = {
                 UsermanageModel.update(condition, setQuery, option, function(err, tasks){                        
                     if(err){
                         res.render("http/500", {
+                            cache : true,
                             err: err
                         });
                     }else{
@@ -134,15 +141,17 @@ module.exports = {
         }, function (err, company) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             } else {
                 if (!company) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 } else {
-                    res.redirect('/company/');
+                    res.redirect('/company/',{cache : true});
                 }
             }
         });

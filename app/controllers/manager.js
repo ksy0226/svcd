@@ -31,6 +31,7 @@ module.exports = {
             ProcessStatus.find({}, function (err, status) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }
@@ -44,6 +45,7 @@ module.exports = {
             MyProcess.find(condition).sort('higher_cd').sort('lower_nm').exec(function (err, lowerprocess) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }
@@ -52,10 +54,19 @@ module.exports = {
         }], function (err, status, lowerprocess) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             } else {
+                /*
                 res.render("manager/work_list", {
+                    status: status,
+                    lowerprocess: lowerprocess
+                });
+                */
+               var options = {cache: true , title: 'Express'};
+                res.render("manager/work_list.jade", {
+                    cache: true,
                     status: status,
                     lowerprocess: lowerprocess
                 });
@@ -89,6 +100,7 @@ module.exports = {
                 }).sort('lower_nm').exec(function (err, lowerprocess) {
                     if (err) {
                         res.render("http/500", {
+                            cache : true,
                             err: err
                         });
                     }
@@ -97,6 +109,7 @@ module.exports = {
             }], function (err, incident, lowerprocess) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 } else {
@@ -110,6 +123,7 @@ module.exports = {
                     //incident.complete_date = new Date(incident.complete_date).toISOString().replace(/T/, ' ').replace(/\..+/, '');
 
                     res.render("manager/work_detail", {
+                        cache : true,
                         incident: incident,
                         lowerprocess: lowerprocess
                     });
@@ -164,10 +178,12 @@ module.exports = {
             logger.debug('list 호출');
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             }
             res.render("manager/work_assign", {
+                cache : true,
                 incident: incident
             });
         }).sort('-createdAt');
@@ -181,7 +197,7 @@ module.exports = {
         logger.debug('month_list');
         logger.debug('================================================');
 
-        res.render("manager/month_list");
+        res.render("manager/month_list",{cache : true});
         /*
         Incident.find(req.body.incident, function (err, incident) {
             //logger.debug('err', err, '\n');
@@ -207,10 +223,12 @@ module.exports = {
             logger.debug('list 호출');
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             }
             res.render("manager/com_process", {
+                cache : true,
                 incident: incident
             });
         }).sort('-createdAt');

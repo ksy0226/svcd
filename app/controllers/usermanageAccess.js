@@ -20,6 +20,7 @@ module.exports = {
             Usermanage.find({}, function (err, usermanageAccess) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }
@@ -29,6 +30,7 @@ module.exports = {
             CompanyModel.find({}, function (err, company) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }
@@ -41,6 +43,7 @@ module.exports = {
         }], function (err, usermanageAccess, company) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             } else {
@@ -51,6 +54,7 @@ module.exports = {
                 //logger.debug("===============================")
 
                 res.render("usermanageAccess/index", {
+                    cache : true,
                     company: company,
                     usermanageAccess: usermanageAccess
                 });
@@ -64,6 +68,7 @@ module.exports = {
         Usermanage.create(req.body.usermanageAccess, function (err, usermanageAccess) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             } else {
@@ -77,6 +82,7 @@ module.exports = {
             CompanyModel.find({}, function (err, company) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }
@@ -89,10 +95,12 @@ module.exports = {
             Usermanage.findById(req.params.id, function (err, usermanageAccess) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 } else {
                     res.render("usermanageAccess/edit", {
+                        cache : true,
                         usermanageAccess: usermanageAccess,
                         user: req.user,
                         company: company

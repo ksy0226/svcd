@@ -14,10 +14,12 @@ module.exports = {
         HigherProcessModel.find(req.body.higherProcess, function (err, higherProcess) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             } else {
                 res.render("higherProcess/index", {
+                    cache : true,
                     higherProcess: higherProcess
                 });
             }
@@ -25,7 +27,7 @@ module.exports = {
     },
 
     new: (req, res, next) => {
-        res.render("higherProcess/new");
+        res.render("higherProcess/new",{cache : true});
     },
 
     save: (req, res, next) => {
@@ -46,6 +48,7 @@ module.exports = {
         HigherProcessModel.create(higherProcess, function (err, higherProcess) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             } else {
@@ -65,6 +68,7 @@ module.exports = {
                 });
             } else {
                 res.render("higherProcess/edit", {
+                    cache : true,
                     higherProcess: higherProcess
                 });
             }

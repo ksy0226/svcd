@@ -16,6 +16,7 @@ module.exports = {
             //logger.debug('index 호출');
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             } else {
@@ -23,6 +24,7 @@ module.exports = {
                 //if(lowerProcess.register_date != '') lowerProcess.register_date = lowerProcess.register_date.substring(0,10);
 
                 res.render("lowerProcess/index", {
+                    cache : true,
                     lowerProcess: lowerProcess
                 });
             }
@@ -34,6 +36,7 @@ module.exports = {
             HigherProcessModel.find({}, function (err, higher) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }
@@ -43,6 +46,7 @@ module.exports = {
             CompanyModel.find({}, function (err, company) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }
@@ -51,10 +55,12 @@ module.exports = {
         }], function (err, higher, company) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             } else {
                 res.render("lowerProcess/new", {
+                    cache : true,
                     higher: higher,
                     company: company
                 });
@@ -71,6 +77,7 @@ module.exports = {
         LowerProcessModel.create(lowerProcess, function (err, lowerProcess) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             } else {
@@ -86,6 +93,7 @@ module.exports = {
                 message: err
             });
             res.render("lowerProcess/edit", {
+                cache : true,
                 lowerProcess: lowerProcess
             });
         });

@@ -21,15 +21,15 @@ module.exports = {
      */
     index: (req, res) => {
         if (req.session.user_flag == '1') {
-            res.render("main/admin");
+            res.render("main/admin",{cache : true});
         } else if (req.session.user_flag == '3') {
-            res.render("main/admin3");
+            res.render("main/admin3",{cache : true});
         } else if (req.session.user_flag == '4') {
-            res.render("main/admin4");
+            res.render("main/admin4",{cache : true});
         } else if (req.session.user_flag == '5') {
-            res.render("main/admin5");
+            res.render("main/admin5",{cache : true});
         } else {
-            res.render("main/user");
+            res.render("main/user",{cache : true});
         }
     },
 
@@ -56,6 +56,7 @@ module.exports = {
                 }).exec(function (err, usermanage) {
                     if (err) {
                         res.render('index', {
+                            cache : true,
                             email: email,
                             remember_me: remember_me,
                             message: "error : 담당자에게 문의하세요."
@@ -116,6 +117,7 @@ module.exports = {
             }], function (err, userInfo) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 } else {
@@ -130,15 +132,15 @@ module.exports = {
                         //>>>>>==================================================
                         //권한에 따른 분기
                         if (req.session.user_flag == '1') {
-                            res.render("main/admin");
+                            res.render("main/admin",{cache : true});
                         } else if (req.session.user_flag == '3') {
-                            res.render("main/admin3");
+                            res.render("main/admin3",{cache : true});
                         } else if (req.session.user_flag == '4') {
-                            res.render("main/admin4");
+                            res.render("main/admin4",{cache : true});
                         } else if (req.session.user_flag == '5') {
-                            res.render("main/admin5");
+                            res.render("main/admin5",{cache : true});
                         } else {
-                            res.render("main/user");
+                            res.render("main/user",{cache : true});
                         }
                         //<<<<<==================================================
 
@@ -147,12 +149,14 @@ module.exports = {
                             //승인여부에 따른 메세지 변경
                             if (userInfo.access_yn == 'N') {
                                 res.render('index', {
+                                    cache : true,
                                     email: email,
                                     remember_me: remember_me,
                                     message: "미승인 계정입니다.<br>관리팀에 권한을 요청하세요."
                                 });
                             } else {
                                 res.render('index', {
+                                    cache : true,
                                     email: email,
                                     remember_me: remember_me,
                                     message: "등록된 계정이 없습니다.<br>다시 시도해주세요."
@@ -160,6 +164,7 @@ module.exports = {
                             }
                         } else {
                             res.render('index', {
+                                cache : true,
                                 email: email,
                                 remember_me: remember_me,
                                 message: "등록된 계정이 없습니다.<br>다시 시도해주세요."
@@ -216,6 +221,7 @@ module.exports = {
             }], function (err, userInfo) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 } else {
@@ -236,6 +242,7 @@ module.exports = {
                         }).exec(function (err, usermanage) {
                             if (err) {
                                 res.render('index', {
+                                    cache : true,
                                     email: email,
                                     remember_me: remember_me,
                                     message: "error : 담당자에게 문의하세요."
@@ -261,15 +268,15 @@ module.exports = {
                                 //>>>>>==================================================
                                 //권한에 따른 분기
                                 if (req.session.user_flag == '1') {
-                                    res.render("main/admin");
+                                    res.render("main/admin",{cache : true});
                                 } else if (req.session.user_flag == '3') {
-                                    res.render("main/admin3");
+                                    res.render("main/admin3",{cache : true});
                                 } else if (req.session.user_flag == '4') {
-                                    res.render("main/admin4");
+                                    res.render("main/admin4",{cache : true});
                                 } else if (req.session.user_flag == '5') {
-                                    res.render("main/admin5");
+                                    res.render("main/admin5",{cache : true});
                                 } else {
-                                    res.render("main/user");
+                                    res.render("main/user",{cache : true});
                                 }
                                 //<<<<<==================================================
                             }
@@ -277,6 +284,7 @@ module.exports = {
                     } else {
 
                         res.render('index', {
+                            cache : true,
                             email: email,
                             remember_me: remember_me,
                             message: "등록된 계정이 없습니다.<br>다시 시도해주세요."
@@ -307,6 +315,7 @@ module.exports = {
             }).exec(function (err, userInfo) {
                 if (err) {
                     res.render('index', {
+                        cache : true,
                         email: email,
                         remember_me: remember_me,
                         message: "error : 담당자에게 문의하세요."
@@ -334,20 +343,21 @@ module.exports = {
                         //>>>>>==================================================
                         //권한에 따른 분기
                         if (req.session.user_flag == '1') {
-                            res.render("main/admin");
+                            res.render("main/admin",{cache : true});
                         } else if (req.session.user_flag == '3') {
-                            res.render("main/admin3");
+                            res.render("main/admin3",{cache : true});
                         } else if (req.session.user_flag == '4') {
-                            res.render("main/admin4");
+                            res.render("main/admin4",{cache : true});
                         } else if (req.session.user_flag == '5') {
-                            res.render("main/admin5");
+                            res.render("main/admin5",{cache : true});
                         } else {
-                            res.render("main/user");
+                            res.render("main/user",{cache : true});
                         }
                         //<<<<<==================================================
 
                     } else { //key 일치하지 않으면 
                         res.render('index', {
+                            cache : true,
                             email: email,
                             remember_me: remember_me,
                             message: "등록된 계정이 없습니다.<br>다시 시도해주세요."
@@ -360,6 +370,7 @@ module.exports = {
                     //logger.debug("=================================================================");
 
                     res.render('index', {
+                        cache : true,
                         email: email,
                         remember_me: remember_me,
                         message: "등록된 계정이 없습니다.<br>다시 시도해주세요."
@@ -396,6 +407,7 @@ module.exports = {
         if (email == null) email = "";
 
         res.render('index', {
+            cache : true,
             email: email,
             remember_me: remember_me
         });
@@ -409,10 +421,11 @@ module.exports = {
         user_flag = req.cookies.user_flag;
 
         if (req.session.email) {
-            res.render('main/main');
+            res.render('main/main',{cache : true});
         } else {
             if (email == null) email = "";
             res.render('index', {
+                cache : true,
                 email: email,
                 remember_me: remember_me
             });
@@ -420,11 +433,11 @@ module.exports = {
     },
 
     index1: (req, res, next) => {
-        res.render("index1");
+        res.render("index1",{cache : true});
     },
 
     index2: (req, res, next) => {
-        res.render("index2");
+        res.render("index2",{cache : true});
     },
 
     //계정신청

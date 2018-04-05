@@ -17,6 +17,7 @@ module.exports = {
             Usermanage.find({}, function (err, usermanage) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }
@@ -30,6 +31,7 @@ module.exports = {
             CompanyModel.find({}, function (err, company) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }
@@ -46,10 +48,12 @@ module.exports = {
         }], function (err, usermanage, company) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             } else {
                 res.render("usermanage/index", {
+                    cache : true,
                     company: company,
                     usermanage: usermanage
                 });
@@ -117,6 +121,7 @@ module.exports = {
             CompanyModel.find({}, function (err, company) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }
@@ -125,10 +130,12 @@ module.exports = {
         }], function (err, company) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             }
             res.render("usermanage/new", {
+                cache : true,
                 company: company
             });
         });
@@ -169,6 +176,7 @@ module.exports = {
                 Usermanage.create(req.body.usermanage, function (err, usermanage) {
                     if (err) {
                         res.render("http/500", {
+                            cache : true,
                             err: err
                         });
                     } else {
@@ -184,6 +192,7 @@ module.exports = {
             CompanyModel.find({}, function (err, company) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }
@@ -193,10 +202,12 @@ module.exports = {
             Usermanage.findById(req.params.id, function (err, usermanage) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 } else {
                     res.render("usermanage/edit", {
+                        cache : true,
                         usermanage: usermanage,
                         user: req.user,
                         company: company
@@ -213,11 +224,13 @@ module.exports = {
         }, req.body.usermanage, function (err, usermanage) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             }
             if (!usermanage) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             }
@@ -231,11 +244,13 @@ module.exports = {
         }, function (err, usermanage) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             }
             if (!usermanage) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             }
@@ -248,6 +263,7 @@ module.exports = {
             CompanyModel.find({}, function (err, company) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }
@@ -263,10 +279,12 @@ module.exports = {
 
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 } else {
                     res.render("myPage/edit", {
+                        cache : true,
                         usermanage: usermanage,
                         user: req.user,
                         company: company
@@ -289,11 +307,13 @@ module.exports = {
 
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             }
             if (!usermanage) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             }

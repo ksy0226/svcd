@@ -28,6 +28,7 @@ module.exports = {
             ProcessStatus.find({}, function (err, ProcessStatus) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }
@@ -36,10 +37,12 @@ module.exports = {
         }], function (err, ProcessStatus) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             } else {
                 res.render("incident/index", {
+                    cache : true,
                     ProcessStatus: ProcessStatus
                 });
             }
@@ -56,6 +59,7 @@ module.exports = {
             }, function (err, companyProcess) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }
@@ -64,6 +68,7 @@ module.exports = {
         }], function (err, companyProcess) {
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             }
@@ -78,6 +83,7 @@ module.exports = {
             }
 
             res.render("incident/new", {
+                cache : true,
                 companyProcess: companyProcess,
                 user_nm: req.session.user_nm,
                 sabun: req.session.sabun,
@@ -92,7 +98,7 @@ module.exports = {
      * incident 등록 화면(담당자)
      */
     new_mng: (req, res, next) => {
-        res.render("incident/new_mng");
+        res.render("incident/new_mng",{cache : true});
         //res.render("incident/new_mng");
         /*
         async.waterfall([function (callback) {
@@ -157,6 +163,7 @@ module.exports = {
             Incident.create(newincident, function (err, newincident) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }
@@ -172,6 +179,7 @@ module.exports = {
             //logger.debug("trace 2");
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             }
@@ -179,10 +187,12 @@ module.exports = {
             ProcessStatus.find({}, function (err, ProcessStatus) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 } else {
                     res.render("incident/index", {
+                        cache : true,
                         ProcessStatus: ProcessStatus
                     });
                 }
@@ -210,6 +220,7 @@ module.exports = {
             Incident.create(newincident, function (err, newincident) {
                 if (err) {
                     res.render("http/500", {
+                        cache : true,
                         err: err
                     });
                 }
@@ -225,6 +236,7 @@ module.exports = {
             //logger.debug("trace 2");
             if (err) {
                 res.render("http/500", {
+                    cache : true,
                     err: err
                 });
             } else {
@@ -232,6 +244,7 @@ module.exports = {
                     ProcessStatus.find({}, function (err, status) {
                         if (err) {
                             res.render("http/500", {
+                                cache : true,
                                 err: err
                             });
                         }
@@ -241,6 +254,7 @@ module.exports = {
                     LowerProcess.find().sort('higher_cd').sort('lower_nm').exec(function (err, lowerprocess) {
                         if (err) {
                             res.render("http/500", {
+                                cache : true,
                                 err: err
                             });
                         }
@@ -249,10 +263,12 @@ module.exports = {
                 }], function (err, status, lowerprocess) {
                     if (err) {
                         res.render("http/500", {
+                            cache : true,
                             err: err
                         });
                     } else {
                         res.render("manager/work_list", {
+                            cache : true,
                             status: status,
                             lowerprocess: lowerprocess
                         });
@@ -267,6 +283,7 @@ module.exports = {
      */
     show: (req, res, next) => {
         res.render("incident/show", {
+            cache : true,
             incident: incident,
             urlQuery: req._parsedUrl.query,
             user: req.user,
@@ -279,6 +296,7 @@ module.exports = {
      */
     edit: (req, res, next) => {
         res.render("incident/edit", {
+            cache : true,
             incident: incident,
             user: req.user
         });
@@ -375,6 +393,7 @@ module.exports = {
                         }
                     }
                     res.render("incident/viewDetail", {
+                        cache : true,
                         incident: incident,
                         user: req.user
                     });
