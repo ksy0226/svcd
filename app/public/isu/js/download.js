@@ -34,9 +34,6 @@ function fnAllExcel(JsonData){
 
     var arrData = typeof JsonData != 'object' ? JSON.parse(JsonData) : JsonData;
 
-    alert("JsonData : "+ JsonData);
-    alert("arrData : "+ arrData);
-
     var tab_text="<table border='1px'>";
     tab_text += "<tr bgcolor='#87AFC6'>";
     
