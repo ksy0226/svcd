@@ -116,7 +116,7 @@ function fnAllExcel(JsonData){
             tab_text += "<td></td>";
         }
         if(arrData[i]['content'] != null){
-            tab_text += "<td>"+arrData[i]['content'].replace(/<br>/g,"")+"</td>";
+            tab_text += "<td>"+arrData[i]['content'].replace(/<br>/g,"").replace(/<\/p>/g, "").replace(/<p>/g, "")+"</td>";
         }else{
             tab_text += "<td></td>";
         }
@@ -126,7 +126,7 @@ function fnAllExcel(JsonData){
             tab_text += "<td></td>";
         }
         if(arrData[i]['complete_content'] != null){
-            tab_text += "<td>"+arrData[i]['complete_content'].replace(/<br>/g,"")+"</td>";
+            tab_text += "<td>"+arrData[i]['complete_content'].replace(/<br>/g,"").replace(/<\/p>/g, "").replace(/<p>/g, "")+"</td>";
         }else{
             tab_text += "<td></td>";
         }
@@ -147,7 +147,7 @@ function fnAllExcel(JsonData){
     tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
     tab_text = tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
     tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
-    //tab_text = tab_text.replace(/\r/g, "");//
+
 
     var ua = window.navigator.userAgent;
     var msie = ua.indexOf("MSIE "); 
