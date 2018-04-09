@@ -31,7 +31,11 @@ function fnTableToExcel(dvData){
 
 
 function fnAllExcel(JsonData){
+
     var arrData = typeof JsonData != 'object' ? JSON.parse(JsonData) : JsonData;
+
+    alert("JsonData : "+ JsonData);
+    alert("arrData : "+ arrData);
 
     var tab_text="<table border='1px'>";
     tab_text += "<tr bgcolor='#87AFC6'>";
@@ -57,7 +61,7 @@ function fnAllExcel(JsonData){
 
 
     tab_text += "</tr>";
-    
+
     for (var i = 0; i < arrData.length; i++) {
         tab_text += "<tr>";    
         /*for (var index in arrData[i]) {
@@ -115,7 +119,7 @@ function fnAllExcel(JsonData){
             tab_text += "<td></td>";
         }
         if(arrData[i]['content'] != null){
-            tab_text += "<td>"+arrData[i]['content']+"</td>";
+            tab_text += "<td>"+arrData[i]['content'].replace(/<br>/g,"")+"</td>";
         }else{
             tab_text += "<td></td>";
         }
@@ -125,7 +129,7 @@ function fnAllExcel(JsonData){
             tab_text += "<td></td>";
         }
         if(arrData[i]['complete_content'] != null){
-            tab_text += "<td>"+arrData[i]['complete_content']+"</td>";
+            tab_text += "<td>"+arrData[i]['complete_content'].replace(/<br>/g,"")+"</td>";
         }else{
             tab_text += "<td></td>";
         }
@@ -134,12 +138,9 @@ function fnAllExcel(JsonData){
         }else{
             tab_text += "<td></td>";
         }
-
-
         //.select ('title content')
         //.select('status_nm higher_nm lower_nm request_nm request_company_nm request_dept_nm register_date receipt_date complete_date title content complete_content work_time')
         //.sort('-created_at');
-        
         tab_text += "</tr>";
     }
      
@@ -149,6 +150,7 @@ function fnAllExcel(JsonData){
     tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
     tab_text = tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
     tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+    //tab_text = tab_text.replace(/\r/g, "");//
 
     var ua = window.navigator.userAgent;
     var msie = ua.indexOf("MSIE "); 
@@ -178,6 +180,7 @@ function fnJsonToExcel(JsonData){
         row += index + ',';
     }
     row = row.slice(0, -1);
+    //tab_text += row + '\r\n';
     tab_text += row + '\r\n';
 
     for (var i = 0; i < arrData.length; i++) {
@@ -188,6 +191,7 @@ function fnJsonToExcel(JsonData){
         row.slice(0, row.length - 1);
         tab_text += row + '\r\n';
     }
+
     
     if (tab_text == '') {
         return;
