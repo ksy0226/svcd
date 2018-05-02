@@ -128,8 +128,8 @@ module.exports = {
         if (reg_date_from && reg_date_to) {
             AndQueries.push({
                 register_date: {
-                    "$gt": reg_date_from,
-                    "$lt": reg_date_to
+                    "$gte": reg_date_from,
+                    "$lte": reg_date_to
                 }
             });
         }
