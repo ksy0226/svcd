@@ -82,12 +82,14 @@ module.exports = {
         var reg_date_to = req.query.reg_date_to;
 
         //검색기간 조회 수정 + $gte, $lte 적용 
-        var df = new Date(reg_date_from);
-        var df2 = df.toISOString(); 
-        
-        var dt = new Date(reg_date_to);
-        var dt2 = dt.toISOString(); 
-        
+        if(reg_date_from&&reg_date_to){
+            var df = new Date(reg_date_from);
+            var df2 = df.toISOString(); 
+            var dt = new Date(reg_date_to);
+            var dt2 = dt.toISOString(); 
+        }
+
+
 
         //진행상태가 존재하면
         if (status_cd != '*') {
@@ -133,18 +135,16 @@ module.exports = {
             });
         }
 
-        //검색기간 조건 추가
-        if (reg_date_from && reg_date_to) {
+       //검색기간 조건 추가
+        if (reg_date_from  && reg_date_to ) {
             AndQueries.push({
                 register_date: {
                     $gte: df2,
                     $lte: dt2
                 }
             });
-
-
-           
         }
+        
 
         //일반사용자
         if (req.session.user_flag == "9") {
