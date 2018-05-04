@@ -105,7 +105,7 @@ module.exports = {
                 var df2 = df.toISOString(); 
 
                 var dt = new Date(reg_date_to);
-                dt.setDate(dt.getDate()+1);
+                //dt.setDate(dt.getDate()+1);
                 var dt2 = dt.toISOString();
             } 
             
