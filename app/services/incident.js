@@ -85,18 +85,31 @@ module.exports = {
         
         if(reg_date_from&&reg_date_to){
             if(reg_date_from == reg_date_to){  
+                logger.debug("====reg_date_from==== : "+ reg_date_from);
+                logger.debug("====reg_date_to==== : "+ reg_date_to);
                 /*
                 var df = new Date(reg_date_from);
-                //var df2 = df.toISOString();
-                var df2 = df.toLocaleString(); 
-                var dt = new Date(reg_date_to) ;
-                var dt2 = dt.toLocaleString();
-                logger.debug("====same==== : "+ dt2);
+                //df = df.setDate(df.getDate()-1);
+                logger.debug("df0000" + df);
+                df2 = df.setDate(df.getDate()-1);
+                logger.debug("df1111" + df2);
                 */
+                /*
+                var df2 = df.toISOString();
+                var fff = reg_date_from + "T00:00:00.000Z";
+                var ttt = reg_date_to + "T00:00:00.00Z";
+                logger.debug("====fff==== : "+ fff);
+                logger.debug("====ttt==== : "+ ttt);
+
+                df2 = fff;
+                dt2 = ttt;
+                */
+                
                 var df = new Date(reg_date_from);
-                var df2 = df.toISOString(); 
+                var df2 = df.setDate(df.getDate()-1);
                 var dt = new Date(reg_date_to);
                 var dt2 = dt.toISOString();
+                
             }else{        
                 var df = new Date(reg_date_from);
                 var df2 = df.toISOString(); 
