@@ -81,49 +81,32 @@ module.exports = {
         var reg_date_from = req.query.reg_date_from;
         var reg_date_to = req.query.reg_date_to;
 
-        //검색기간 조회 수정 + $gte, $lte 적용 
+        /*2018-05-04, 검색기간 조회 로직 수정
+            String의 경우, $gte, $lte 동작 안함
+            1) from to 같을 경우, from 을 하루 전으로 조정함
+            2) mongodb에서 쿼리 가능하도록 toISOString() 처리
+        */  
         
         if(reg_date_from&&reg_date_to){
             if(reg_date_from == reg_date_to){  
-                logger.debug("====reg_date_from==== : "+ reg_date_from);
-                logger.debug("====reg_date_to==== : "+ reg_date_to);
-                /*
-                var df = new Date(reg_date_from);
-                //df = df.setDate(df.getDate()-1);
-                logger.debug("df0000" + df);
-                df2 = df.setDate(df.getDate()-1);
-                logger.debug("df1111" + df2);
-                */
-                /*
-                var df2 = df.toISOString();
-                var fff = reg_date_from + "T00:00:00.000Z";
-                var ttt = reg_date_to + "T00:00:00.00Z";
-                logger.debug("====fff==== : "+ fff);
-                logger.debug("====ttt==== : "+ ttt);
-
-                df2 = fff;
-                dt2 = ttt;
-                */
                 
                 var df = new Date(reg_date_from);
-                var df2 = df.setDate(df.getDate()-1);
+                df.setDate(df.getDate()-1);
+                var df2 = df.toISOString();
+
                 var dt = new Date(reg_date_to);
                 var dt2 = dt.toISOString();
-                
+
             }else{        
+
                 var df = new Date(reg_date_from);
                 var df2 = df.toISOString(); 
+
                 var dt = new Date(reg_date_to);
                 var dt2 = dt.toISOString();
             } 
             
         }
-
-
-        logger.debug("=====df2 : "+df2);
-        logger.debug("=====dt2 : "+dt2);
-
-
 
         //진행상태가 존재하면
         if (status_cd != '*') {
