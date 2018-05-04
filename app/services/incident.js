@@ -91,18 +91,21 @@ module.exports = {
             if(reg_date_from == reg_date_to){  
                 
                 var df = new Date(reg_date_from);
-                df.setDate(df.getDate()-1);
+                df.setDate(df.getDate()-1);  
                 var df2 = df.toISOString();
 
                 var dt = new Date(reg_date_to);
                 var dt2 = dt.toISOString();
 
+
             }else{        
 
                 var df = new Date(reg_date_from);
+                df.setDate(df.getDate()-1);
                 var df2 = df.toISOString(); 
 
                 var dt = new Date(reg_date_to);
+                dt.setDate(dt.getDate()+1);
                 var dt2 = dt.toISOString();
             } 
             
