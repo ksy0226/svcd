@@ -836,6 +836,7 @@ function initCompleteModal() {
     $('textarea[name="incident[complete_content]"]').val('처리되었습니다.');
     $('textarea[name="incident[work_time]"]').val('1');
     $('textarea[name="incident[delay_reason]"]').val('');
+    $('textarea[name="incident[program_id]"]').val('');
     $('textarea[name="incident[sharing_content]"]').val('');
 
     $('input[name="incident[solution_flag]"]').prop('checked',true);

@@ -82,12 +82,33 @@ module.exports = {
         var reg_date_to = req.query.reg_date_to;
 
         //검색기간 조회 수정 + $gte, $lte 적용 
+        
         if(reg_date_from&&reg_date_to){
-            var df = new Date(reg_date_from);
-            var df2 = df.toISOString(); 
-            var dt = new Date(reg_date_to);
-            var dt2 = dt.toISOString(); 
+            if(reg_date_from == reg_date_to){  
+                /*
+                var df = new Date(reg_date_from);
+                //var df2 = df.toISOString();
+                var df2 = df.toLocaleString(); 
+                var dt = new Date(reg_date_to) ;
+                var dt2 = dt.toLocaleString();
+                logger.debug("====same==== : "+ dt2);
+                */
+                var df = new Date(reg_date_from);
+                var df2 = df.toISOString(); 
+                var dt = new Date(reg_date_to);
+                var dt2 = dt.toISOString();
+            }else{        
+                var df = new Date(reg_date_from);
+                var df2 = df.toISOString(); 
+                var dt = new Date(reg_date_to);
+                var dt2 = dt.toISOString();
+            } 
+            
         }
+
+
+        logger.debug("=====df2 : "+df2);
+        logger.debug("=====dt2 : "+dt2);
 
 
 
