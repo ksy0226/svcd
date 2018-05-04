@@ -84,7 +84,7 @@ module.exports = {
         /*2018-05-04, 검색기간 조회 로직 수정
             String의 경우, $gte, $lte 동작 안함
             1) from to 같을 경우, from 을 하루 전으로 조정함
-            2) mongodb에서 쿼리 가능하도록 toISOString() 처리
+            2) toISOString() 처리
         */  
         
         if(reg_date_from&&reg_date_to){
