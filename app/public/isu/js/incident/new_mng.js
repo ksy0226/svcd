@@ -185,7 +185,7 @@ function setUserInfo(item){
 //요청자 회사에 상위업무를 조회
 function setHighProcess(company_cd){
 
-    var reqParam = 'company_cd=' + company_cd ;
+    var reqParam = 'company_cd=' + encodeURIComponent(company_cd) ;
     
     $.ajax({          
         type: "GET",
@@ -199,8 +199,8 @@ function setHighProcess(company_cd){
             alert("set higherProcess error : " + error+ " "+request.responseText);
         },         
         success: function( data ) { 
-
             addOption(data);
+            
         }             
     }); 
 }
