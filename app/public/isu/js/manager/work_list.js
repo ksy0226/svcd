@@ -982,7 +982,7 @@ function getHigherNm(targetSelect) {
         type: "GET",
         async: true,
         //url: "/higherProcess/getHigherProcess",
-        url: "/higherProcess/getUFhigherprocess",
+        url: "/higherProcess/getUFhigherprocessManager",
         dataType: "json", // xml, html, script, json 미지정시 자동판단
         timeout: 30000,
         cache: false,

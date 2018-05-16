@@ -213,9 +213,10 @@ module.exports = {
             logger.error("HigherProcessModel error : ", e);
         } finally { }
     },
+    
     /**
-  * 상위업무 리스트 조회
-  */
+    * 상위업무 리스트 조회
+    */
     getUFhigherprocess: (req, res, next) => {
         logger.debug("=============================================");
         logger.debug("getUFhigherprocess : ");
@@ -317,5 +318,111 @@ module.exports = {
         } finally { }
 
     },
+
+    /**
+     * 관리자 업무변경 시 상위업무 조회 getUFhigherprocessManager
+     */
+    getUFhigherprocessManager: (req, res, next) => {
+        logger.debug("=============================================");
+        logger.debug("getUFhigherprocess : ");
+        logger.debug("=============================================");
+
+        try {
+
+            //if (req.session.user_flag == "3" || req.session.user_flag == "4") {
+            if (req.session.user_flag == "3") {
+
+                var cdt = {};
+                cdt.email = req.session.email; //업무담당자는 본인 업무만 조회
+
+                /** MyProcess, HigherProcessModel 모델구분 */
+                MyProcess.find(cdt).distinct('higher_cd').exec(function (err, myHigherProcess) {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+
+                        //logger.debug("=============================================");
+                        //logger.debug("search.mng_list higherprocess ", JSON.stringify(myHigherProcess));
+                        //logger.debug("=============================================");
+
+                        var condition = {};
+                        condition.higher_cd = {
+                            "$in": myHigherProcess
+                        }
+
+                        HigherProcessModel.find(condition, function (err, higherprocess) {
+                            if (err) {
+                                return res.json({
+                                    success: false,
+                                    message: err
+                                });
+                            } else {
+                                res.json(higherprocess);
+                            }
+                        });
+                    }
+                });
+
+            } else if (req.session.user_flag == "5") {
+
+                var condition = {};
+                condition.company_cd = req.session.company_cd; //고객사관리자는 해당회사만 조회
+
+                /** MyProcess, HigherProcessModel 모델구분 */
+                CompanyProcessModel.find(condition, function (err, higherprocess) {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+                    } else {
+                        res.json(higherprocess);
+                    }
+                });
+
+            } else { //일반사용자에게는 권한이 없고 그룹관리자
+                logger.debug("=============================================");
+                logger.debug("getUFhigherprocess : ");
+                logger.debug("=============================================");
+
+
+                /** MyProcess, HigherProcessModel 모델구분 */
+                HigherProcessModel.find({}, function (err, higherprocess) {
+                    logger.debug("=============================================");
+                    logger.debug("UFhigherprocess  higherprocess : "+ higherprocess);
+                    logger.debug("=============================================");
+
+                    if (err) {
+                        logger.debug("=============================================");
+                        logger.debug("UFhigherprocess  higherprocess err : "+ err);
+                        logger.debug("=============================================");
+
+                        return res.json({
+                            success: false,
+                            message: err
+                        });
+
+                    } else {
+                        logger.debug("=============================================");
+                        logger.debug("UFhigherprocess  higherprocess : "+ higherprocess);
+                        logger.debug("=============================================");
+
+                        res.json(higherprocess);
+                    }
+                });
+
+            }
+        } catch (e) {
+
+            logger.error("=============================================");
+            logger.error("search.mng_list err : ", e);
+            logger.error("=============================================");
+
+        } finally { }
+
+    }
 
 };

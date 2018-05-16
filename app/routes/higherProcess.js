@@ -18,5 +18,6 @@ router.route('/getHigherProcess').get(ssc.sessionCheck,controller.getHigherProce
 //router.route('/exceldownload').get(controller.exceldownload);
 router.route('/getHigher').get(ssc.sessionCheck,controller.getHigher);
 router.route('/getUFhigherprocess').get(ssc.sessionCheck,controller.getUFhigherprocess);
+router.route('/getUFhigherprocessManager').get(ssc.sessionCheck,controller.getUFhigherprocessManager);
 
 module.exports = router;
