@@ -279,7 +279,6 @@ function initDetail() {
  * 상세조회 매핑
  */
 function setDetail(dataObj) {
-    alert("111111 :"+ dataObj.content);
     /**
      * 등록내용 세팅
      */
