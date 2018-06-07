@@ -54,6 +54,7 @@ module.exports = {
      */
     new: (req, res, next) => {
         async.waterfall([function (callback) {
+
             CompanyProcess.find({
                 "company_cd": req.session.company_cd
             }, function (err, companyProcess) {
@@ -89,7 +90,10 @@ module.exports = {
                 sabun: req.session.sabun,
                 office_tel_no: req.session.office_tel_no,
                 hp_telno: req.session.hp_telno,
-                real_contact: real_contact
+                real_contact: real_contact,
+                title: req.query.title,
+                content: req.query.content,
+                higher_cd: req.query.higher_cd
             });
         });
     },
@@ -173,6 +177,11 @@ module.exports = {
                 alimi.sendAlimi(req.body.incident.higher_cd);
                 //******************************* */
 
+                //******************************* */
+                // SD 업무담당자 그룹웨어 메일 호출
+                //mailer.mailAlimiSend(req.body.incident.higher_cd);
+                //******************************* */
+
                 callback(null);
             });
         }], function (err) {
@@ -228,6 +237,11 @@ module.exports = {
                 //******************************* */
                 // SD 업무담당자 사내메신저 호출
                 alimi.sendAlimi(req.body.incident.higher_cd);
+                //******************************* */
+
+                //******************************* */
+                // SD 업무담당자 그룹웨어 메일 호출
+                mailer.mailAlimiSend(newincident);
                 //******************************* */
 
                 callback(null);
@@ -294,6 +308,7 @@ module.exports = {
     /** 
      * incident 수정 화면
      */
+    /*
     edit: (req, res, next) => {
         res.render("incident/edit", {
             cache : true,
@@ -301,6 +316,9 @@ module.exports = {
             user: req.user
         });
     },
+    */
+
+    
 
     /** 
      * incident 수정 등록
@@ -1012,6 +1030,81 @@ module.exports = {
             //logger.debug("=============================================");
 
         } finally { }
+    },
+    /**
+     * Incident 상세 JSON 데이타 조회
+     */
+    reRegister: (req, res, next) => {
+
+        logger.debug("reRegister ...... : ", req.params.id);
+
+
+        try {
+            Incident.findById({
+                _id: req.params.id
+            }, function (err, incident) {
+                if (err) {
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
+                    logger.debug('****************', incident);
+
+                    //res.json(incident);
+
+                    
+                    res.render("incident/reRegister", {
+                        incident : incident
+                    });
+                    
+                   //res.render("incident/reRegister", {
+                   // incident: incident
+                ///});
+                }
+            });
+        } catch (e) {
+            logger.debug('****************', e);
+        }
+    },
+
+    /**
+     * Incident 상세 JSON 데이타 조회
+     */
+    edit: (req, res, next) => {
+
+        logger.debug("edit ...... : ", req.params.id);
+
+
+        try {
+            Incident.findById({
+                _id: req.params.id
+            }, function (err, incident) {
+                if (err) {
+                    return res.json({
+                        success: false,
+                        message: err
+                    });
+                } else {
+                    logger.debug('****************', incident);
+
+                    //res.json(incident);
+
+                    
+                    res.render("incident/edit", {
+                        incident : incident,
+                        user_nm: req.session.user_nm
+
+                    });
+                    
+                   //res.render("incident/reRegister", {
+                   // incident: incident
+                ///});
+                }
+            });
+        } catch (e) {
+            logger.debug('****************', e);
+        }
     },
 }
 
