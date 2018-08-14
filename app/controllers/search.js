@@ -293,6 +293,8 @@ module.exports = {
                         status_cd: "4"
                     },{
                         status_cd: "5"
+                    },{
+                        status_cd: "9"
                     }]
                 }];
             } else {
@@ -303,6 +305,8 @@ module.exports = {
                         status_cd: "4"
                     },{
                         status_cd: "5"
+                    },{
+                        status_cd: "9"
                     }]
                 });
             }

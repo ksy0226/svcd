@@ -331,12 +331,63 @@ function detailShow(id){
         beforeSend: function () {
         },
         success: function (dataObj) {
+            initDetail();
             setDetail(dataObj);
             $('#wdetail_modal').modal('show');
         }
     });
 }
 
+/**
+ * 상세조회 초기화
+ */
+function initDetail() {
+    
+        //$('#receiptBtn').attr('style', 'display:none');
+        //$('#hChangeBtn').attr('style', 'display:none');
+        //$('#completeBtn').attr('style', 'display:none');
+        //$('#holdBtn').attr('style', 'display:none');
+    
+        /**
+         * 등록내용 세팅
+         */
+        $('#_status_nm').html('');
+    
+        /**
+        * 긴급구분
+        */
+        $('#_process_speed').html('');
+        $('#_higher_nm').html('');
+        $('#_lower_nm').html('');
+        $('#_request_company_nm-request_nm').html('');
+        $('#_request_complete_date').html('');
+        $('#_app_menu').html('');
+        $('#_register_nm-register_date').html('');
+        $('#_title').html('');
+        $('#_content').html('');
+    
+        $('#_status_nm').removeClass();
+    
+        /**
+         * 처리내용 세팅
+         */
+        $('#_manager_nm').html('');
+        $('#_receipt_date').html('');
+        $('#_receipt_content').html('');
+        $('#_complete_reserve_date').html('');
+        $('#_business_level').html('');
+        $('#_process_nm').html('');
+        $('#_complete_content').html('');
+        $('#_complete_date').html('');
+        $('#_need_minute').html('');
+        $('#_delay_reason').html('');
+        $('#_valuation').html('');
+        $('#_complete_open_flag-reading_cnt').html('');
+        $('#_program_id').html('');
+        $('#_sharing_content').html('');
+        $('#_hold_content_nc_content').html('');
+    
+    }
 /**
  * 상세조회 매핑
  */
@@ -403,5 +454,16 @@ function setDetail(dataObj){
     //$('#_complete_open_flag-reading_cnt').html(dataObj.complete_open_flag+"/"+dataObj.reading_cnt);
     $('#_complete_open_flag-reading_cnt').html(dataObj.complete_open_flag);
     $('#_sharing_content').html(dataObj.sharing_content);
+
+    //협의필요 시, 담당자 코멘트
+    if(dataObj.hold_content){
+         $('#_hold_content_nc_content').html(dataObj.hold_content);
+    }
+
+    //미처리 시, 담당자 코멘트
+    if(dataObj.nc_content){
+        $('#_hold_content_nc_content').html(dataObj.nc_content);
+    }
+    
 
 }
