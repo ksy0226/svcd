@@ -905,22 +905,22 @@ module.exports = {
     var search = service.createSearch(req);
 
         var condition = {};
-        /*
-        if (req.query.user != 'managerall') {
+        
+        if (req.query.company_cd != '*') {
             if (search.findIncident.$and == null) {
 
                 search.findIncident.$and = [{
-                    "request_id": req.session.email
+                    "request_company_cd": req.query.company_cd
                 }];
 
             } else {
 
                 search.findIncident.$and.push({
-                    "request_id": req.session.email
+                    "request_company_cd": req.query.company_cd
                 });
             }
         }
-        */
+        
 
         //logger.debug("===============search control================");
         //logger.debug(" exceldownload search.findIncident : ", JSON.stringify(search.findIncident));
@@ -1008,14 +1008,19 @@ module.exports = {
                     } else {
 
                         //incident에 페이징 처리를 위한 전체 갯수전달
-                        //var rtnData = {};
-                        //rtnData.incident = incident;
-                        //rtnData.totalCnt = totalCnt
+                        var rtnData = {};
+                        rtnData.incident = incident;
+                        rtnData.totalCnt = totalCnt
 
                         //logger.debug("=============================================");
                         //logger.debug("rtnData.totalCnt : ", rtnData.totalCnt);
                         //logger.debug("rtnData : ", JSON.stringify(rtnData));
                         //logger.debug("=============================================");
+
+                        console.log("=============================================");
+                        console.log("rtnData.totalCnt : ", rtnData.totalCnt);
+                        console.log("rtnData : ", JSON.stringify(rtnData));
+                        console.log("=============================================");
 
                         res.json(incident);
 

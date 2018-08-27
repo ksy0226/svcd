@@ -282,7 +282,8 @@ module.exports = {
         //reg_date_from = reg_date_from.toISODate();
          
           
-        //console.log('findIncident : ' + JSON.stringify(findIncident));
+        console.log('findIncident : ' + JSON.stringify(findIncident));
+        logger.debug('incidents findIncident : ' + JSON.stringify(findIncident));
 
         return {
             searchType: req.query.searchType,
