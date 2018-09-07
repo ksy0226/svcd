@@ -478,6 +478,7 @@ function initDetail() {
     $('#_complete_open_flag-reading_cnt').html('');
     $('#_program_id').html('');
     $('#_sharing_content').html('');
+    $('#_hold_content_nc_content').html('');
 
 }
 
@@ -610,6 +611,16 @@ function setDetail(dataObj) {
         $('#_sharing_content').html(dataObj.sharing_content); 
     }
     $('#_receipt_content').html(dataObj.receipt_content);
+
+    //협의필요 시, 담당자 코멘트
+    if(dataObj.hold_content){
+         $('#_hold_content_nc_content').html(dataObj.hold_content.replace(/\r\n/gi,"<br/>"));
+    }
+
+    //미처리 시, 담당자 코멘트
+    if(dataObj.nc_content){
+        $('#_hold_content_nc_content').html(dataObj.nc_content.replace(/\r\n/gi,"<br/>"));
+    }
 
 
     /**
