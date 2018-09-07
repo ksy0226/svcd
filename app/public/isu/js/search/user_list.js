@@ -184,7 +184,7 @@ function setDataList(dataObj, selectedPage, totalDataCnt) {
         addList += "							<tr onclick=detailShow('" + dataObj[i]._id + "') style='cursor:pointer' >";
         //상위업무 제외
         //addList += "								<td>" + dataObj[i-1].higher_nm + "</td>";
-        addList += "								<td class='text-center'>" + dataObj[i].lower_nm + "</td>";
+        addList += "								<td class='text-center'>" + dataObj[i].higher_nm + "</td>";
         addList += "								<td>" + dataObj[i].title + "</td>";
         addList += "								<td class='text-center'>" + dataObj[i].register_date + "</td>";
         addList += "								<td class='text-center'>" + dataObj[i].manager_nm + "</td>";
@@ -372,6 +372,18 @@ function setDetail(dataObj){
     }
     //$('#_complete_open_flag-reading_cnt').html(dataObj.complete_open_flag+"/"+dataObj.reading_cnt);
     $('#_complete_open_flag-reading_cnt').html(dataObj.complete_open_flag);
+
+
+    
+    //협의필요 시, 담당자 코멘트
+    if(dataObj.hold_content){
+         $('#_hold_content_nc_content').html(dataObj.hold_content.replace(/\r\n/gi,"<br/>"));
+    }
+
+    //미처리 시, 담당자 코멘트
+    if(dataObj.nc_content){
+        $('#_hold_content_nc_content').html(dataObj.nc_content.replace(/\r\n/gi,"<br/>"));
+    }
 
     /**
      * 첨부파일

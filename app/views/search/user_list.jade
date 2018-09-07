@@ -120,7 +120,7 @@ block content
                                 thead
                                     tr
                                         //th(class='text-center' width='16%') 상위업무명
-                                        th(class='text-center' width='18%') 하위업무
+                                        th(class='text-center' width='18%') 상위업무
                                         th(class='text-center' id='title') 제목
                                         th(class='text-center' width='15%') 등록일
                                         th(class='text-center' width='15%') 담당자
@@ -273,6 +273,9 @@ block content
                                         tr
                                             th.bg-muted 지연사유
                                             td#_delay_reason(colspan='3')
+                                        tr
+                                            th.bg-muted.text-danger 미처리/협의필요 사유
+                                            td#_hold_content_nc_content(colspan='3')
                                         //tr
                                             th.bg-muted 평가
                                             td#_valuation
