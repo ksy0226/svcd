@@ -371,6 +371,7 @@ module.exports = {
 
         logger.debug("==================================================");
         logger.debug('mng_month aggregatorOpts>> ', JSON.stringify(aggregatorOpts));
+        console.log('mng_month aggregatorOpts>> ', JSON.stringify(aggregatorOpts));
         logger.debug("==================================================");
 
         return {
